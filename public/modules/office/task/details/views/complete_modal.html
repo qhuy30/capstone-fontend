@@ -1,0 +1,104 @@
+<div class="modal fade" id="modal_Task_Complete" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{ctrl.actionAccess === 'approve' ? ('Approve' | l) : ('NotApproved' | l)}}"></modal-header>
+
+            <div class="modal-body" >
+                <form class="form-horizontal " name="CompleteForm">
+
+                    <div class="input-group w-100 mb-3" style="width: auto; align-items: center" ng-if="ctrl.actionAccess === 'refuse'">
+                        <label
+                            class="input-group-text"
+                            style="
+                                border-top-right-radius: 0;
+                                border-bottom-right-radius: 0;
+                                padding-top: 4.7px;
+                                padding-bottom: 4.7px;
+                            "
+                            for="Progress">
+                            {{'EvaluateCurrentProgress'|l}} <span style="color: red">*</span>
+                        </label>
+                        <input
+                            type="number"
+                            id="Progress"
+                            ng-model="ctrl.progress"
+                            class="form-control"
+                            style="width: 68px; height: 32px"
+                            min="1"
+                            max="100"
+                            step="1"
+                            required
+                        />
+                        <span
+                            class="input-group-text"
+                            style="
+                                padding-bottom: 4.7px;
+                                padding-top: 4.7px;
+                                border-top-left-radius: 0;
+                                border-bottom-left-radius: 0;
+                            ">%
+                        </span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="completeTask_content" class="form-control" aria-describedby="basic-addon1">                       
+                    </div>
+                    <div class="message-container" style="margin-top: 20px;">                   
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="file w-100">
+                                   <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="inputGroupFileAddon01">{{'Attachment'|l}}</span>
+                                    </div>
+                                    <div class="custom-file">
+                                      <input                                    
+                                        type="file" 
+                                        file-reading="ctrl.filesProof" 
+                                        max-file-size="2"
+                                        on-file-exceeds-limit="ctrl.onProofFileExceedsLimit(params)" 
+                                        size="1" multiple 
+                                        class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                      <label class="custom-file-label" for="inputGroupFile01">{{'UploadFile'|l}}</label>
+                                    </div>
+                                  </div>                            
+                            </div>
+                            
+                        </div>
+                        <div class="attachment">
+                            <span class="item" ng-repeat="at in ctrl.filesProof">
+                                {{at.name}}
+                                <i class="fas fa-times text-danger p-2"
+                                    ng-click="ctrl.removeFilesProof(at.name)">
+                                </i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-approval
+                    ng-show="ctrl.actionAccess === 'approve'"      
+                    modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-approval-objname="Task"
+                    modal-button-approval-actionname="complete"
+                    modal-button-approval-invalid="CompleteForm.$invalid"
+                    modal-button-approval-func="ctrl.complete()"
+                    modal-button-confirm-text="ApproveSuccessForThisTask"
+                    modal-button-approval-label="{{'Approve' |l }}"
+                />
+
+                <modal-button-reject
+                    ng-show="ctrl.actionAccess === 'refuse'"
+                    modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-reject-objname="Task" 
+                    modal-button-reject-actionname="refune"
+                    modal-button-reject-invalid="CompleteForm.$invalid"
+                    modal-button-reject-func="ctrl.refuneTask()"
+                    modal-button-confirm-text="RejectSuccessForThisTask"
+                    modal-button-reject-label="{{'Submit'|l}}"
+                >
+                </modal-button-reject>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Group_Qna_Update">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="Cập nhật nhóm câu hỏi"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="updateGroupQnaForm">
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">Tiêu đề</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input type="text" ng-model="ctrl._update_value.title_vi" class="form-control"
+                                name="insertUser_title_vi" placeholder="Nhập tiêu đề tiếng việt" required
+                                ng-class="{ 'is-invalid': updateGroupQnaForm.insertUser_title_vi.$invalid }" />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">Tiêu đề(en)</span>
+                            </div>
+                            <input type="text" ng-model="ctrl._update_value.title_en" class="form-control"
+                                name="insertUser_title_en" placeholder="Nhập tiêu đề tiếng anh"
+                                ng-class="{ 'is-invalid': updateGroupQnaForm.insertUser_title_en.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">Giá trị</span>
+                            </div>
+                            <input type="text" ng-model="ctrl._update_value.value" class="form-control"
+                                name="insertUser_value" placeholder="Nhập giá trị"
+                                ng-class="{ 'is-invalid': updateGroupQnaForm.insertUser_value.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input-checkbox input-checkbox-label="{{'IsActive'|l}}"
+                            input-checkbox-model="ctrl._update_value.active">
+                        </input-checkbox>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="QuestionAnswer" modal-button-save-actionname="update"
+                    modal-button-save-invalid="updateGroupQnaForm.$invalid"
+                    modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

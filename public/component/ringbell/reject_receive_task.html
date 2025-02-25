@@ -1,0 +1,31 @@
+<a class="waves-effect ringbell-header-item notify_need_approve"     
+    href="/task-details?code={{item.params.parent_code}}"
+>
+    <i class="fas fa-newspaper"></i>
+    <div class="content">
+        <div>
+            <span>
+                <span>{{'Task'|l}}</span>&nbsp;
+                <span class="title">[{{item.params.parent_code}}]&nbsp;{{item.params.title}}</span>&nbsp;
+                <!-- <span class="text-lowercase">{{'CreatedBy'|l}}</span>&nbsp;
+                <show-department department="item.params.from_department" /> -->
+            </span>
+        </div>
+        <div class="ringbell-action">
+            <div class="ringbell-action ">
+                <show-department department="item.params.department" />
+                <span class="danger"> 
+                    <i class="fas fa-book"></i>&nbsp;{{'Rejected receive task'|l}}
+                </span>
+            </div>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.params.time">
+                </time-show>
+            </small>
+        </div>
+    </div> 
+</a>

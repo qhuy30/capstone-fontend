@@ -1,0 +1,78 @@
+<div class="modal fade " tabindex="-1" id="modal_Group_Info" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'DetailsInfo'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span>
+                            </div>
+                            <div class="form-control bg-light">
+                                {{ctrl._info_value.title}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Key'|l}}</span>
+                            </div>
+                            <div class="form-control bg-light">
+                                {{ctrl._info_value.key}}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'UserName'|l}}</span>
+                            </div>
+                            <div class="form-control bg-light" ng-show="ctrl._info_value.username.length==0">
+                                {{'NoData'|l}}
+                            </div>
+                            <div class="multiple choosen" ng-show="ctrl._info_value.username.length>0">
+                                <div class="option" ng-repeat="item in ctrl._info_value.username"> {{item}} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Role'|l}}</span>
+                            </div>
+                            <div class="form-control bg-light" ng-show="ctrl._info_value.role.length==0">
+                                {{'NoData'|l}}
+                            </div>
+                            <div class="multiple choosen" ng-show="ctrl._info_value.role.length>0">
+                                <div class="option" ng-repeat="item in ctrl._info_value.role"> {{item}} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Rule'|l}}</span>
+                            </div>
+                            <div class="form-control bg-light" ng-show="ctrl._info_value.rule.length==0">
+                                {{'NoData'|l}}
+                            </div>
+                            <div class="multiple choosen" ng-show="ctrl._info_value.rule.length>0">
+                                <div class="option" ng-repeat="item in ctrl._info_value.rule"> {{item}} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'IsActive'|l}}</span>
+                            </div>
+                            <div class="form-control bg-light">
+                                <isactive isactive-value="ctrl._info_value.isactive"></isactive>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

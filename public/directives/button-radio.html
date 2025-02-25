@@ -1,0 +1,14 @@
+<div class="form-group row">
+    <div class="btn-group" data-toggle="buttons">
+        <span 
+        ng-repeat="item in buttonRadioParams"
+        class="btn btn-light" 
+        ng-class="{'active':buttonRadioModel == item.val}"
+        ng-click="buttonRadioClick(item.val)">
+            <input type="radio" ng-model="buttonRadioModel" ng-value="item.val"
+                ng-disabled="disable"
+                ng-checked="buttonRadioModel == item.val">
+            {{item.label|l}}
+        </span>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Project_Dir_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'UpdateProjectInformation'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="updateProjectForm">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span>
+                                </div>
+                                <input
+                                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','updateProject','doing')"
+                                    type="text" ng-model="ctrl._update_project_value.title" class="form-control"
+                                    name="update_project_title" placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': updateForm.update_project_title.$invalid }" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <date id-value="ctrl._update_project_value.from_date"
+                                func="ctrl.chooseFromDate_update_project(params)" label="{{'FromDate'|l}}"
+                                disabled="$root.statusValue.get(ctrl._ctrlName,'Task','updateProject','doing')"
+                                required="true"
+                                ></date>
+                                <div class="errorMsg" ng-show="ctrl.fromDate_ErrorMsg">{{ ctrl.fromDate_ErrorMsg }}</div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <date id-value="ctrl._update_project_value.to_date"
+                                func="ctrl.chooseToDate_update_project(params)" label="{{'ToDate'|l}}"
+                                disabled="$root.statusValue.get(ctrl._ctrlName,'Task','updateProject','doing')"
+                                required="true" endday="true"
+                                ></date>
+                                <div class="errorMsg" ng-show="ctrl.toDate_ErrorMsg">{{ ctrl.toDate_ErrorMsg }}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <pick-user-multi
+                                    pick-func="ctrl.pickParticipant_project_update(params)"
+                                    id-value="ctrl._update_project_value.participant" label="{{'Coordinator'|l}}"
+                                    require="true"></pick-user-multi>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <pick-modal-advance extend="" pick-func="ctrl.chooseWFP_update_project(params)"
+                                id-value="ctrl._update_project_value.workflowPlay_id" label="{{'IntegrationWithWorkflowPlay'|l}}"
+                                disable="$root.statusValue.get(ctrl._ctrlName,'Task','updateProject','doing')" require="false"
+                                load-data-func="ctrl.load_WFP(params)" count-func="ctrl.count_WFP(params)" localized="false"
+                                load-details-func="ctrl.loadWFP_details(params)">
+                            </pick-modal-advance>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="Task"
+                    modal-button-save-actionname="updateProject"
+                    modal-button-save-invalid="updateProjectForm.$invalid  || ctrl.toDate_ErrorMsg || ctrl.fromDate_ErrorMsg"
+                    modal-button-save-func="ctrl.updateProject()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

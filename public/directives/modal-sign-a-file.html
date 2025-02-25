@@ -1,0 +1,38 @@
+<div class="modal fade" id="{{ctrl._ctrlName}}" role="dialog" tabindex="-1">
+    <div class="modal-dialog" style="width: 100%; max-width: 420px;">
+        <div class="modal-content text-center">
+            <modal-header modal-header-title="{{'ExecutingASignature'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'Are you sure you sign this document'|l:({filename:modalSignAFileName}) }}
+                <div style="display: block; overflow: hidden;margin: 0 auto;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>{{'Signature'|l}}</div>
+                            <div ng-if="modalSignAFileSign">
+                                <img ng-src="{{modalSignAFileSign}}" alt="User Signature" style="width: 100%;">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>{{'Quotation mark'|l}}</div>
+                            <div ng-if="modalSignAFileQuotationMark">
+                                <img ng-src="{{modalSignAFileQuotationMark}}" alt="User Quotation mark"
+                                    style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button 
+                    class="btn btn-primary" 
+                    type="button" 
+                    ng-class='{"btn-sm":modalSignAFileType==="small"}'
+                    ng-disabled="modalSignAFileInvalid||$root.statusValue.get(modalSignAFileCtrlname,modalSignAFileObjname,modalSignAFileActionname,'doing')"
+                    ng-click="modalSignAFileClick()">
+                    <i class="fas fas fa-check"></i>&nbsp;{{modalSignAFileLabel ?modalSignAFileLabel:('ExecutingASignature'|l)}}
+                </button>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

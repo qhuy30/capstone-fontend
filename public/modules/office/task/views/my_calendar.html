@@ -1,0 +1,113 @@
+
+<div ng-controller="quick_handle_my_callendar_controller as ctrlCalendar" class="task-personal-feature room_meeting_calendar my_calendar">
+    
+    <div class="assigned container">
+        <div class="content" style="min-height: 400px">
+            <div class="task-container" style="padding: 0 1.25rem;">
+                <div style="min-height: calc(100vh - 45px);">
+
+                    <div class="form-group row align-items-center">
+
+                        <div class="d-flex align-items-center" ng-if="ctrlCalendar.show_checkbox_room">
+                            <legend-check-box
+                                ng-repeat="lengend in ctrlCalendar.legendItems" 
+                                color="{{lengend.color}}"
+                                label="{{lengend.label|l}}"
+                                legend="lengend"
+                                check-func="ctrlCalendar.load_my_calendar(params)"
+                                style="margin-right: 10px;"
+                            />
+                        </div>
+
+                    
+                        <div class="event-filter-item col-md-2">
+            
+                            
+            
+                            <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px">
+                                {{'FromDate' | l}}
+                            </div>
+                            <div class="value" style="display: flex; align-items: center">
+                                <input
+                                    type="date"
+                                    ng-model="ctrlCalendar.weekDays[0].date"
+                                    ng-change="ctrlCalendar.refresh_calendar()"
+                                    style="border: none; outline: none; background: transparent; font-size: 14px;"
+                                />
+                            </div>
+                        </div>
+                        <div class="event-filter-item col-md-2">
+                            <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px">
+                                {{'ToDate' | l}}
+                            </div>
+                            <div class="value" style="display: flex; align-items: center">
+                                <input
+                                    type="date"
+                                    ng-model="ctrlCalendar.weekDays[ctrlCalendar.weekDays.length - 1].date"
+                                    ng-change="ctrlCalendar.refresh_calendar()"
+                                    style="border: none; outline: none; background: transparent; font-size: 14px;"
+                                />
+                            </div>
+                        </div>                        
+                    </div>
+
+                  
+                    <div class="table" style="height: auto;">
+                        <table
+                            class="table table-bordered"
+                            style="width: fit-content; background-color: #fff; border-collapse: collapse;">
+                            <thead>
+                                <!-- Merged header row -->
+                                <tr style="background-color: #007bff; color: white">
+                                    <th colspan="{{ 3 + ctrlCalendar.weekDays.length }}" class="text-center">
+                                        {{'My calendar' | l}}
+                                    </th>
+                                </tr>
+                                <!-- Original header row -->
+                                <tr style="background-color: #f2f2f2">
+                                    <th ng-repeat="day in ctrlCalendar.weekDays" style="width: 200px">
+                                        {{ day.dayKey | l }}<br />{{ day.date | date:'dd/MM' }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr>
+                                    <td ng-repeat="day in ctrlCalendar.day_events" style="vertical-align: top">
+                                        <div
+                                            ng-repeat="e in day.events"
+                                            class="mb-1"
+                                            
+                                        >
+                                            
+
+                                            <room-item-calendar
+                                                ng-if="e.feature === 'room'"
+                                                e="e"
+                                                item-background="{{ctrlCalendar.color.room.bg}}"
+                                                item-background-hover="{{ctrlCalendar.color.room.hover}}"
+                                            />
+                                            <car-item-calendar
+                                                ng-if="e.feature === 'car'"
+                                                e="e"
+                                                item-background="{{ctrlCalendar.color.car.bg}}"
+                                                item-background-hover="{{ctrlCalendar.color.car.hover}}"
+                                            />
+                                            <event-calendar-item
+                                                ng-if="e.feature === 'event_calendar'"
+                                                e="e"
+                                                item-background="{{ctrlCalendar.color.event_calendar.bg}}"
+                                                item-background-hover="{{ctrlCalendar.color.event_calendar.hover}}"
+                                            />
+                                        </div>
+                                    </td>
+                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+  

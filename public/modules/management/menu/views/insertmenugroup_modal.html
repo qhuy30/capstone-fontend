@@ -1,0 +1,88 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_menugroup_insert">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'InsertMenuGroup'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="insertMenuGroupForm">
+                    <div class="form-group">
+                        <my-async async-ctrlname="{{ctrl._ctrlName}}" async-objname="MenuGroup"
+                            async-actionname="getOrderNumberForInsert">
+                            <async-success>
+                                <div class="input-group-new">
+
+                                    <div class="input-group-prepend-new"><span
+                                            class="input-group-text-new">{{'OrderNumber'|l}}</span>
+                                            <span class="require-sympton">*</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MenuGroup','insert','doing')"
+                                        type="number" ng-model="ctrl._insertMenuGroup_value.ordernumber"
+                                        class="form-control" name="insertMenuGroup_ordernumber" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:1}"
+                                        ng-class="{ 'is-invalid': insertMenuGroupForm.insertMenuGroup_ordernumber.$invalid }"
+                                        required />
+                                </div>
+                                <invalid
+                                    invalid-status="insertMenuGroupForm.insertMenuGroup_ordernumber.$error.vldsync">
+                                    {{'AtLeast'|l:({title:1})}}.
+                                </invalid>
+
+                            </async-success>
+                        </my-async>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new"><span 
+                                class="input-group-text-new">{{'Title'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MenuGroup','insert','doing')"
+                                type="text" ng-model="ctrl._insertMenuGroup_value.title['vi-VN']" class="form-control"
+                                name="insert_title_vi" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': insertMenuGroupForm.insert_title_vi.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new"><span
+                                    class="input-group-text-new">{{'Title'|l}}(en)</span>
+                                    <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MenuGroup','insert','doing')"
+                                type="text" ng-model="ctrl._insertMenuGroup_value.title['en-US']" class="form-control"
+                                name="insert_title_en" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': insertMenuGroupForm.insert_title_en.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new"><span 
+                                class="input-group-text-new">{{'Icon'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MenuGroup','insert','doing')"
+                                type="text" ng-model="ctrl._insertMenuGroup_value.icon" class="form-control"
+                                name="insertMenuGroup_icon" placeholder="input icon of group menu"
+                                ng-class="{ 'is-invalid': insertMenuGroupForm.insertMenuGroup_icon.$invalid }"
+                                required />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input-checkbox input-checkbox-label="{{'IsActive'|l}}"
+                            input-checkbox-model="ctrl._insertMenuGroup_value.isactive"
+                            input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'MenuGroup','insert','doing')">
+                        </input-checkbox>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="MenuGroup"
+                    modal-button-new-actionname="insert" modal-button-new-invalid="insertMenuGroupForm.$invalid"
+                    modal-button-new-func="ctrl.insertMenuGroup_func()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

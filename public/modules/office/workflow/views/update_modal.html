@@ -1,0 +1,558 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Workflow_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'UpdateWorkflowInformation'|l}}"></modal-header>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" ng-click="ctrl._update_value.tab ='general'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._update_value.tab =='general'}">{{'GeneralInfo'|l}}
+                            <span ng-show="updateForm_general.$invalid || ctrl.isInvalidOtherFields_update()"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="updateForm_general.$invalid || ctrl.isInvalidOtherFields_update()"><i
+                                    class="far fa-check-circle text-success"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-class="{ 'disabled': updateForm_general.$invalid || ctrl.isInvalidOtherFields_update() }" ng-click="ctrl.onClickWorkflowTab_update(updateForm_general)">
+                        <a class="nav-link " ng-class="{'active':ctrl._update_value.tab =='workflow'}">{{'Workflow'|l}}
+                            <span ng-show="ctrl.nodesErrorCode_update() !== ''"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="ctrl.nodesErrorCode_update() !== ''"><i
+                                    class="far fa-check-circle text-success"></i></span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show">
+                        <form class="form-horizontal " name="updateForm_general"
+                            ng-show="ctrl._update_value.tab=='general'">
+                            <div class="card">
+                                <div class="card-body" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Title'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.title['vi-VN']"
+                                                class="form-control" ng-change="ctrl.changeTitle()"
+                                                name="update_title_vi" placeholder="{{'InputTitle'|l}}"
+                                                ng-class="{ 'is-invalid': updateForm.update_title_vi.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.title['en-US']"
+                                                class="form-control" name="update_title_en" placeholder="{{'InputTitle'|l}}"
+                                                ng-class="{ 'is-invalid': updateForm.update_title_en.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <!-- <div class="form-group " ng-if="ctrl.currentDepartment !== 'all'">
+                                        <organization label="{{'Department'|l}}"
+                                            id-value="ctrl._update_value.department" require="true"
+                                            disable="true">
+                                        </organization>
+                                    </div>
+                                    <div class="form-group" ng-if="ctrl.currentDepartment === 'all'">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input checked" type="radio" ng-model="ctrl.currentDepartment" name="department"
+                                                id="all_departments" value="all">
+                                            <label class="form-check-label font-weight-normal text-reset" for="all_departments">{{'All'|l}} {{'Department'|l}}</label>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <!-- is_personal -->
+                                        <div class="form-group col-md-6 p-0">
+                                          <input-checkbox
+                                            input-checkbox-label="{{'IsPersonal'|l}}"
+                                            input-checkbox-model="ctrl._update_value.is_personal"
+                                          >
+                                          </input-checkbox>
+                                        </div>
+                                        <!-- is_department -->
+                                        <div class="form-group col-md-6 p-0">
+                                          <input-checkbox
+                                            input-checkbox-label="{{'IsDepartment'|l}}"
+                                            input-checkbox-model="ctrl._update_value.is_department"
+                                          >
+                                          </input-checkbox>
+                                        </div> 
+                                      </div>
+                                    <div class="form-group ">
+                                        <pick-modal-directory extend="ctrl.DocumentType_Config"
+                                            pick-func="ctrl.chooseWFT_update(params)" id-value="ctrl._update_value.key"
+                                            label="{{'DocumentType'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                            require="true"
+                                            >
+                                        </pick-modal-directory>
+                                    </div>
+                                    <div class="form-group" style="display:flex;">
+                                        <div class="input-group-new col-md-6">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'File type'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" ng-model="ctrl._update_value.file_type" name="update_file_type"
+                                                    ng-change="ctrl.handleSelectFileType_update()" id="update_radio_custom_template" value="custom_template">
+                                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_custom_template">{{'File generated by template'|l}}</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" ng-model="ctrl._update_value.file_type" name="update_file_type"
+                                                    ng-change="ctrl.handleSelectFileType_update()" id="update_radio_file_upload" value="file_upload">
+                                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_file_upload">{{'User upload manually'|l}}</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-group-new col-md-6">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">Cho phép tải lên Phụ lục/Hồ sơ đính kèm</span>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" ng-model="ctrl._update_value.allow_appendix" name="update_allow_appendix"
+                                                    id="update_radio_allow_appendix_true" value="true">
+                                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_allow_appendix_true">Có</label>
+                                            </div>
+                                            <div class="form-check form-check-inline" style="padding-left: 24px;">
+                                                <input class="form-check-input" type="radio" ng-model="ctrl._update_value.allow_appendix" name="update_allow_appendix"
+                                                    id="update_radio_allow_appendix_false" value="false">
+                                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_allow_appendix_false">Không</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="display:flex">
+                                        <div class="input-group-new col-md-6">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'AllowsUsersToChooseTheDestination' | l}}</span>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" ng-model="ctrl._update_value.allow_choose_destination" name="update_allow_choose_destination"
+                                                    id="update_radio_allow_choose_destination_true" value="true">
+                                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_allow_choose_destination_true">{{'Yes' | l}}</label>
+                                            </div>
+                                            <div class="form-check form-check-inline" style="padding-left: 24px;">
+                                                <input class="form-check-input" type="radio" ng-model="ctrl._update_value.allow_choose_destination" name="update_allow_choose_destination"
+                                                    id="update_radio_allow_choose_destination_false" value="false">
+                                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_allow_choose_destination_false">{{'No' | l}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-show="ctrl._update_value.key && ctrl._update_value.key.includes('studentform')">                                        
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Fee'|l}}</span>                                                 
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.fee"
+                                                class="form-control"
+                                                name="update_fee" placeholder="Input fee"
+                                                ng-class="{ 'is-invalid': updateForm.update_fee.$invalid }"
+                                                />
+                                        </div>                                        
+                                    </div>
+                                    <div class="form-group" ng-show="ctrl._update_value.key && ctrl._update_value.key.includes('studentform')">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'EstimateTime'|l}}</span>                                                    
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.estimate_time"
+                                                class="form-control" 
+                                                name="update_estimate_time" placeholder="Input day"
+                                                ng-class="{ 'is-invalid': updateForm.update_estimate_time.$invalid }"
+                                                />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-show="ctrl._update_value.key && ctrl._update_value.key.includes('studentform')">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'ReceiveTime'|l}}</span>                                                 
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.receive_time"
+                                                class="form-control" 
+                                                name="update_receive_time" placeholder="Input day"
+                                                ng-class="{ 'is-invalid': updateForm.update_receive_time.$invalid }"
+                                                />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" ng-if="ctrl._update_value.file_type === 'file_upload'">
+                                <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                                    <div class="col-md-6" style="border-right: 1px solid #eee">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr class="text-muted">
+                                                        <th>#</th>
+                                                        <th>
+                                                            <div class="input-group-new">
+                                                                <div class="input-group-prepend-new">
+                                                                    <span class="input-group-text-new">{{'TemplateFile'|l}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ctrl._update_value.files">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>
+                                                            <attachment-just-show my-item="item"></attachment-just-show>
+                                                        </td>
+                                                        <td>
+                                                            <i class="fas fa-times text-danger" ng-click="ctrl.removeFile_update(item)"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                                                        <div class="diskuf-uploader">
+                                                            <span class="wd-fa-add-file-light">
+                                                                <span class="wd-fa-add-file-light-text">
+                                                                    <span class="wd-fa-add-file-light-title">
+                                                                        <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                                    </span>
+                                                                    <span
+                                                                        class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                                </span>
+                                                            </span>
+                                                            <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                                                                file-reading="ctrl._update_value.files" size="1" multiple style="width: 100%" />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-12 pt-3">
+                                        <div class="form-group border-top pt-3">
+                                            <div class="input-group-new">
+                                                <div class="input-group-prepend-new">
+                                                    <span class="input-group-text-new">{{'FormatUploadedFile'|l}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <table class="w-100 tags-table" ng-if="ctrl._update_value.templateTags.length">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{'Tag (in the file)'|l}}</th>
+                                                        <th>{{'Tag name'|l}}</th>
+                                                        <th>{{'Tag type'|l}}</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="tag in ctrl._update_value.templateTags">
+                                                        <td class="py-1">
+                                                            <div class="input-group-new d-flex">
+                                                                <span class="text-center" style="width: 12px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; line-height: 28px; background-color: #d3d9e2;">{</span>
+                                                                <input class="form-control" style="border-radius: 0;" placeholder="{{'e.g. sign_headofdep'|l}}"
+                                                                    ng-model="ctrl._update_value.templateTags[$index].name" template-tag-name required maxlength="20">
+                                                                <span class="text-center" style="width: 12px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; line-height: 28px; background-color: #d3d9e2;">}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <div class="input-group-new">
+                                                                <input class="form-control" placeholder="{{'InputTagName'|l}}"
+                                                                    ng-model="ctrl._update_value.templateTags[$index].label" required>
+                                                            </div>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <pick-modal-generic
+                                                                data="ctrl.tagTypeOptionsForFileUpload"
+                                                                invalid-value-func="ctrl.chooseTagType_update($index, {})"
+                                                                pick-func="ctrl.chooseTagType_update($index, params)"
+                                                                id-value="ctrl._update_value.templateTags[$index].type"
+                                                                require="true" class="size-sm"
+                                                            ></pick-modal-generic>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <button type="button" class="btn btn-outline-dark btn-sm" ng-click="ctrl.removeFileUploadTag_update($index)">
+                                                                <i class="far fa-trash-alt"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn btn-outline-primary mt-2 mb-4"
+                                                ng-click="ctrl.addFileUploadTag_update()">
+                                                <i class="fas fa-plus-circle"></i> {{'Add Signature/Quotation mark tag'|l}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card" ng-if="ctrl._update_value.file_type === 'custom_template'">
+                                <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                                    <div class="col-md-6" style="border-right: 1px solid #eee">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <div class="input-group-new">
+                                                                <div class="input-group-prepend-new">
+                                                                    <span class="input-group-text-new">{{'TemplateFile'|l}}</span>
+                                                                    <span class="require-sympton">*</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-if="ctrl._update_value.customTemplate">
+                                                        <td>
+                                                            <attachment-just-show
+                                                                my-item="ctrl._update_value.customTemplate"></attachment-just-show>
+                                                        </td>
+                                                        <td>
+                                                            <i class="fas fa-times text-danger" ng-click="ctrl.removeCustomTemplate_update()"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan="0">
+                                                        <div class="diskuf-uploader">
+                                                            <span class="wd-fa-add-file-light">
+                                                                <span class="wd-fa-add-file-light-text">
+                                                                    <span class="wd-fa-add-file-light-title">
+                                                                        <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                                    </span>
+                                                                    <span
+                                                                        class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                                </span>
+                                                            </span>
+                                                            <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                                                                accept=".doc,.docx" file-reading-single="ctrl._update_value.customTemplate"
+                                                                file-single-func="ctrl.parseCustomTemplate_update(params)" size="1"
+                                                                style="width: 100%" required />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-12 pt-3" ng-if="ctrl._update_value.templateTags.length">
+                                        <div class="form-group border-top pt-3">
+                                            <div class="input-group-new">
+                                                <div class="input-group-prepend-new">
+                                                    <span class="input-group-text-new">{{'FormatUploadedFile'|l}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <table class="w-100 tags-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{'Tag (in the file)'|l}}</th>
+                                                        <th>{{'Tag name'|l}}</th>
+                                                        <th>{{'Tag type'|l}}</th>
+                                                        <th>{{'Format'|l}}/{{'Directory'|l}}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="tag in ctrl._update_value.templateTags">
+                                                        <td class="py-1">
+                                                            <div class="input-group-new">
+                                                                <input class="form-control" placeholder="{{ '\{' + tag.name + '\}' }}" disabled>
+                                                            </div>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <div class="input-group-new">
+                                                                <input class="form-control" placeholder="{{'InputTagName'|l}}"
+                                                                    ng-model="ctrl._update_value.templateTags[$index].label" required>
+                                                            </div>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <pick-modal-generic
+                                                                data="ctrl.tagTypeOptions"
+                                                                invalid-value-func="ctrl.chooseTagType_update($index, {})"
+                                                                pick-func="ctrl.chooseTagType_update($index, params)"
+                                                                id-value="ctrl._update_value.templateTags[$index].type"
+                                                                require="true" class="size-sm"
+                                                            ></pick-modal-generic>
+                                                        </td>
+                                                        <td class="py-1">
+                                                            <div class="input-group-new" ng-if="ctrl._update_value.templateTags[$index].type === 'date'">
+                                                                <input class="form-control" ng-model="ctrl._update_value.templateTags[$index].format" placeholder="{{'Format'|l}}" required>
+                                                            </div>
+                                                            <div class="input-group-new" ng-if="ctrl._update_value.templateTags[$index].type === 'dropdown'">
+                                                                <pick-modal-master-directory
+                                                                    pick-func="ctrl.chooseTagDirectory_update($index, params)"
+                                                                    id-value="ctrl._update_value.templateTags[$index].masterKey"
+                                                                    require="true" no-pagination="true" num-of-item-per-page="100" class="size-sm">
+                                                                </pick-modal-master-directory>
+                                                            </div>
+                                                            <div class="input-group-new" ng-if="ctrl._update_value.templateTags[$index].type === 'pick'">
+                                                                <pick-modal-generic 
+                                                                    data="ctrl.tagPickOptions" 
+                                                                    invalid-value-func="ctrl.chooseTagPick_update($index, {})"
+                                                                    pick-func="ctrl.chooseTagPick_update($index, params)" 
+                                                                    id-value="ctrl._update_value.templateTags[$index].pickKey"
+                                                                    require="true" class="size-sm"
+                                                                    ></pick-modal-generic>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group">
+                                        <button-choose-l button-choose-label="{{'Competence'|l}}"
+                                            button-choose-data="ctrl.Competences"
+                                            button-choose-disabled="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                            button-choose-func="ctrl.chooseCompetence_update(params)"
+                                            button-choose-model="ctrl._update_value.competence"
+                                            button-choose-key="title" button-choose-keyval="value">
+                                        </button-choose-l>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group">
+                                        <button-choose-l button-choose-label="{{'Job'|l}}" button-choose-data="ctrl.Job"
+                                            button-choose-disabled="$root.statusValue.get(ctrl._ctrlName,'Workflow','update','doing')"
+                                            button-choose-func="ctrl.chooseJob_update(params)"
+                                            button-choose-model="ctrl._update_value.job" button-choose-key="title"
+                                            button-choose-keyval="value">
+                                        </button-choose-l>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group">
+                                        <pick-modal-directory-multi extend="ctrl.Role_Config"
+                                            pick-func="ctrl.chooseRole_update(params)"
+                                            id-value="ctrl._update_value.role" label="{{'Role'|l}}" require="true">
+                                        </pick-modal-directory-multi>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div ng-show="ctrl._update_value.tab=='workflow'"
+                            style="display: flex;overflow-x: auto;height: auto;overflow-y: hidden;">
+                            <div style="height: 160px; display: flex;" ng-repeat="item in ctrl._update_value.flow">
+                                <div 
+                                ng-click="ctrl.prepareEditNode(item.id,item)"
+                            modal-toggle="#modal_Workflow_Node_Update"
+                                style="
+                                height: 160px;
+                                 max-width: 250px;
+                                 padding: 10px;
+                                 border-right:2px solid #20a8d8;
+                                 border-bottom:2px solid #20a8d8;
+                                 overflow-y: auto;
+                                 " class="generic-shadow">
+                                    <div style="text-align: center;border-bottom:1px solid #20a8d8;width: 100%;">
+                                        {{item.title}}
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <i class="fas fa-signature text-primary"></i>
+                                        {{item.type|getFieldL:'key':'title':ctrl.Type}}
+                                    </div>
+                                    <div style="margin-top: 4px;">
+                                        <i class="fas fa-clock text-success"></i> &nbsp;{{'NormTime'|l}}:&nbsp;{{item.duration.amount}} ({{'day'|l}})
+                                    </div>
+                                    <div ng-repeat="itemNode in item.items" style="line-height: 26px;">
+                                        <i class="fas fa-genderless text-success"></i>&nbsp;&nbsp;
+                                        <span ng-show="itemNode.competence">
+                                            {{'Competence'|l}}:&nbsp;
+                                            <get-field field="title"
+                                                load-details-func="ctrl.loadCompetence_details(params)"
+                                                id-value="itemNode.competence" localization="true"></get-field>-
+                                        </span>
+                                        <span ng-show="itemNode.role">
+                                            {{'Role'|l}}:&nbsp;
+                                            <get-field-directory id-value="itemNode.role"
+                                                extend="ctrl.Role_Config" localization="true">
+                                            </get-field-directory>-
+                                        </span>
+                                        <span ng-show="itemNode.processType">
+                                            {{'Competence'|l}}:&nbsp;
+                                            <get-field-type-workflow-directory id-value="itemNode.processType"
+                                                extend="ctrl.Role_Config" localization="true">
+                                            </get-field-type-workflow-directory>
+                                        </span>
+                                        
+                                        <get-field field="title" load-details-func="ctrl.loadDepartment_details(params)"
+                                            id-value="itemNode.department" localization="true"></get-field>
+                                        
+                                    </div>
+                                    
+                                </div>
+
+                                <div style="text-align: center;width: 80px; height: 160px;">
+                                    <i class="fas fa-arrow-alt-circle-right fa-3x"
+                                        style="line-height: 160px; color: #20a8d8;"></i>
+                                </div>
+                            </div>
+
+
+                            <div style="height:60px;width: 60px; margin-top:50px;
+                             text-align: center;
+                             margin-bottom: 40px;
+                             border:2px solid #20a8d8; margin-right: 10px" class="generic-shadow">
+                                <i class="fas fa-plus fa-3x" style="line-height: 56px;cursor: pointer; color: #20a8d8;"
+                                    ng-click="ctrl.prepareAddNode()" modal-toggle="#modal_Workflow_Node"></i>
+                            </div>
+                        </div>
+                        <div class="text-danger mt-3" ng-if="ctrl._update_value.tab=='workflow' && (ctrl.nodesErrorCode_update() === 'MISSING_SIGNATURES' || ctrl.nodesErrorCode_update() === 'MISSING_QUOTATION_MARKS')">
+                            {{'Workflow is missing Signatures/Quotation marks'|l}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}" modal-button-save-objname="Workflow"
+                    modal-button-save-actionname="update" modal-button-save-invalid="
+                    ctrl.nodesErrorCode_update() !== ''
+                    || updateForm_general.$invalid || ctrl.isInvalidOtherFields_update()" modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Confirm_Done_Modal">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'ConfirmationCompleted'|l}}"></modal-header>
+
+            <div class="modal-body">               
+                <div
+                    class="input-group w-100 mb-3"
+                    style="width: auto; align-items: center"
+                >
+                    <label
+                        class="input-group-text"
+                        style="
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                            padding-top: 4.7px;
+                            padding-bottom: 4.7px;
+                        "
+                        for="worktimes"
+                    >
+                        {{'CompletionTime'|l}} 
+                        <span class="require-sympton p-0 m-0" style="margin-left: 5px!important;">*</span>
+                    </label>
+                    <input
+                        type="number"
+                        id="worktimes"
+                        ng-model="ctrl.Item.worktimes"
+                        class="form-control"
+                        style="width: 68px; height: 32px"
+                        min="1"
+                        step="1"
+                        required
+                    />
+                    <span
+                        class="input-group-text"
+                        style="
+                            padding-bottom: 4.7px;
+                            padding-top: 4.7px;
+                            border-top-left-radius: 0;
+                            border-bottom-left-radius: 0;
+                        "
+                    >
+                        {{'Hours'|l}}
+                    </span>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" id="doneTask_content" class="form-control" aria-describedby="basic-addon1">
+                  </div>                
+                <div class="message-container" style="margin-top: 20px;">                   
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="file w-100">
+                               <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="inputGroupFileAddon01">{{'Attachment'|l}}</span>
+                                </div>
+                                <div class="custom-file">
+                                  <input                                    
+                                    type="file" 
+                                    file-reading="ctrl.filesProof" 
+                                    max-file-size="2"
+                                    on-file-exceeds-limit="ctrl.onProofFileExceedsLimit(params)" 
+                                    size="1" multiple 
+                                    class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                  <label class="custom-file-label" for="inputGroupFile01">{{'UploadFile'|l}}</label>
+                                </div>
+                              </div>                            
+                        </div>
+                        
+                    </div>
+                    <div class="attachment">
+                        <span class="item" ng-repeat="at in ctrl.filesProof"
+                            ng-click="ctrl.removeFilesProof(at.name)">
+                            {{at.name}}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row p-0" ng-if="ctrl.hasAttachments(ctrl._done_value.work_items)">
+                    <div style="font-weight: 600; margin-bottom: 10px;">
+                        {{'ChildTaskAttachment'|l}}
+                    </div>
+
+                    <div class="col-md-12" 
+                        ng-repeat="work_item in ctrl._done_value.work_items"
+                        ng-if="work_item.proof[work_item.proof.length - 1].attachment.length > 0"
+                    >
+                        <div class="title" style="margin-bottom: 4px">{{work_item.title}}</div>
+                        <div>
+                            <div ng-repeat="file in work_item.proof[work_item.proof.length - 1].attachment">
+                                <label>
+                                    <input type="checkbox" 
+                                           ng-model="file.checked" 
+                                           ng-change="ctrl.updateSubAttachment(file)">
+                                    <attachment-show
+                                        attachment-show-item="file"
+                                        attachment-show-func="ctrl.loadfile(params)"
+                                        attachment-show-params="{id:work_item._id, name:file.name}"
+                                    ></attachment-show>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row p-0" ng-if="ctrl.hasAttachments(ctrl.receive_task)">
+                    <div style="font-weight: 600; margin-bottom: 10px;">
+                        {{'TransferTaskAttachment'|l}}
+                    </div>
+
+                    <div class="col-md-12" 
+                        ng-repeat="task in ctrl.receive_task"
+                        ng-if="task.proof[task.proof.length - 1].attachment.length > 0"
+                    >
+                        <div class="title" style="margin-bottom: 4px">{{task.title}}</div>
+                        <div>
+                            <div ng-repeat="file in task.proof[task.proof.length - 1].attachment">
+                                <label>
+                                    <input
+                                        style="cursor: pointer;"
+                                        type="checkbox" 
+                                        ng-model="file.checked" 
+                                        ng-change="ctrl.updateSubAttachment(file)"
+                                    >
+                                    <attachment-show
+                                        attachment-show-item="file"
+                                        attachment-show-func="ctrl.loadfile(params)"
+                                        attachment-show-params="{id:task._id, name:file.name}"
+                                    ></attachment-show>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+               
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                modal-button-save-objname="Task" modal-button-save-actionname="done"
+                modal-button-save-func="ctrl.confirmDoneAction()"
+                modal-button-save-invalid="!ctrl.Item.worktimes"
+                modal-button-save-label="{{'Submit'|l}}"
+                >
+              </modal-button-save>
+              <modal-button-close ng-click="ctrl.resetProcess()"></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

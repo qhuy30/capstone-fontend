@@ -1,0 +1,33 @@
+<my-async async-status-label="'Restoring...'" async-ctrlname="{{modalButtonRestoreCtrlname}}"
+    async-objname="{{modalButtonRestoreObjname}}" async-actionname="{{modalButtonRestoreActionname}}">
+    <async-default>
+        <button class="btn btn-success" type="button" ng-class='{"btn-sm":modalButtonRestoreType==="small"}'
+            ng-disabled="modalButtonRestoreInvalid||$root.statusValue.get(modalButtonRestoreCtrlname,modalButtonRestoreObjname,modalButtonRestoreActionname,'doing')"
+            ng-click="modalButtonRestoreFunc()">
+            <i class="fas fa-trash-restore"></i>&nbsp;{{modalButtonRestoreLabel ?modalButtonRestoreLabel :('Restore'|l)}}</button>
+    </async-default>
+    <async-doing>
+        <div class="sk-wave">
+            <div class="sk-rect sk-rect1"></div>
+            <div class="sk-rect sk-rect2"></div>
+            <div class="sk-rect sk-rect3"></div>
+            <div class="sk-rect sk-rect4"></div>
+            <div class="sk-rect sk-rect5"></div>
+        </div> {{loadingLabel ||'Restoring...'}}
+    </async-doing>
+    <async-success>
+        <span class="btn " style="color: #4dbd74;" ng-class='{"btn-sm":modalButtonRestoreType==="small"}'>
+            {{'SuccessRestore'|l}}
+        </span>
+    </async-success>
+    <async-fail>
+        <span class="btn " style="color: #f86c6b;" ng-class='{"btn-sm":modalButtonRestoreType==="small"}'>
+            {{$root.statusValue.get(modalButtonRestoreCtrlname,modalButtonRestoreObjname,modalButtonRestoreActionname,'message')|l}}
+        </span>
+        <button class="btn btn-outline-success" type="button" ng-class='{"btn-sm":modalButtonRestoreType==="small"}'
+            ng-disabled="modalButtonRestoreInvalid||$root.statusValue.get(modalButtonRestoreCtrlname,modalButtonRestoreObjname,modalButtonRestoreActionname,'doing')"
+            ng-click="modalButtonRestoreClick()">
+            <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+        </button>
+    </async-fail>
+</my-async>

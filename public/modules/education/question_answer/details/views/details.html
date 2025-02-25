@@ -1,0 +1,105 @@
+<my-content class="task-details-container">
+    <content-content>
+        <div ng-controller="qna_details_controller as ctrl">
+            <div class="first">
+                <div class="part">
+                    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"
+                        ng-hide="ctrl.status == 'see'">
+                    </div>
+                    <div class="question-details-container">
+                        <div style="width: 100%;">
+                            <p class="grey-text">{{'WrittenBy'|l}}
+                                <a>
+                                    <show-username username="ctrl.Item.entity.his[0].createdby">
+                                    </show-username>
+                                </a>, <time-show time-show-data="ctrl.Item.event[0].time" time-show-type="long">
+                                </time-show><small class="grey-text" ng-if="ctrl.Item.has_time">
+                                    , {{ctrl.Item.hours}} {{'NumberOfHours'|l}}
+                                </small>
+                            </p>
+
+                        </div>
+                        <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"></div>
+                        <div id="answer_content">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="part">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" ng-click="ctrl.tab ='event'">
+                            <a class="nav-link " ng-class="{'active':ctrl.tab =='event'}"><i
+                                    class="fas fa-history"></i>&nbsp;&nbsp;{{'Events'|l}}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+
+                            <div ng-show="ctrl.tab =='responsibility'">
+                                <div>
+                                    <span style="line-height: 28px;">- {{'MainPerson'|l}}:&nbsp;</span>
+
+                                    <span ng-repeat="item in ctrl.Item.main_person">
+                                        <show-username username="item" just-name="true">
+                                        </show-username>
+                                        <span ng-show="$last">.</span>
+                                        <span ng-show="!$last">,&nbsp;</span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span style="line-height: 28px;">- {{'Participant'|l}}:&nbsp;</span>
+                                    <span ng-repeat="item in ctrl.Item.participant">
+                                        <show-username username="item" just-name="true">
+                                        </show-username>
+                                        <span ng-show="$last">.</span>
+                                        <span ng-show="!$last">,&nbsp;</span>
+                                    </span>
+                                    <i ng-show="ctrl.Item.participant.length ===0">
+                                        {{'NoData'|l}}
+                                    </i>
+                                </div>
+                                <div>
+                                    <span style="line-height: 28px;">- {{'Observer'|l}}:&nbsp;</span>
+                                    <span ng-repeat="item in ctrl.Item.observer">
+                                        <show-username username="item" just-name="true">
+                                        </show-username>
+                                        <span ng-show="$last">.</span>
+                                        <span ng-show="!$last">,&nbsp;</span>
+                                    </span>
+                                    <i ng-show="ctrl.Item.observer.length ===0">
+                                        {{'NoData'|l}}
+                                    </i>
+                                </div>
+                            </div>
+                            <div class="table-responsive" ng-show="ctrl.tab =='event'">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl.Item.event|orderBy:'-time'"">
+                                            <td class=" hour"><small><span class="grey-text float-left"><i
+                                                        class="fa fa-clock" aria-hidden="true"></i>
+                                                    <time-show time-show-type="short" time-show-data="item.time">
+                                                    </time-show>
+                                                </span></small>
+                                            </td>
+                                            <td>
+                                                <show-username username="item.username">
+                                                </show-username>
+                                            </td>
+                                            <td>
+                                                {{item.action|l}}
+                                            </td>
+                                            <td>
+                                                {{item.comment}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

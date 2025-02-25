@@ -1,0 +1,545 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_NurseReport_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="updateForm">
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'TotalNurse_Technicians'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.total_nurse" class="form-control"
+                                        name="update_total_nurse" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_total_nurse.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_total_nurse.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'AdministrativeNursing_Technicians'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.administrative_nursing"
+                                        class="form-control" name="update_administrative_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_administrative_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_administrative_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'OutShiftNursing_Technicians'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.out_shift_nursing"
+                                        class="form-control" name="update_out_shift_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_out_shift_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_out_shift_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NursingOutHospital'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.out_hospital_nursing"
+                                        class="form-control" name="update_out_hospital_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_out_hospital_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_out_hospital_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'MorningShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.morning_shift" class="form-control"
+                                        name="update_morning_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_morning_shift.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_morning_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'AfternoonShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.afternoon_shift" class="form-control"
+                                        name="update_afternoon_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_afternoon_shift.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_afternoon_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NightShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.night_shift" class="form-control"
+                                        name="update_night_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_night_shift.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_night_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'OverShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.over_shift" class="form-control"
+                                        name="update_over_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_over_shift.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_over_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'LeaveShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.leave_shift" class="form-control"
+                                        name="update_leave_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_leave_shift.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_leave_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NursingAtClinic'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.at_clinic" class="form-control"
+                                        name="update_at_clinic" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_at_clinic.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_at_clinic.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'LeaveNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.leave" class="form-control"
+                                        name="update_leave" vld-sync vld-sync-func="$root.validate.min(model,params)"
+                                        vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_leave.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_leave.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'MaternityLeaveNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.maternity_leave" class="form-control"
+                                        name="update_maternity_leave" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_maternity_leave.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_maternity_leave.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'SickLeaveNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.sick_leave" class="form-control"
+                                        name="update_sick_leave" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_sick_leave.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_sick_leave.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NursingGoSchool'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.go_school" class="form-control"
+                                        name="update_go_school" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_go_school.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_go_school.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ApprenticeNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.apprentice_nursing"
+                                        class="form-control" name="update_apprentice_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_apprentice_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_apprentice_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ProbationaryNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.probationary_nursing"
+                                        class="form-control" name="update_probationary_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_probationary_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_probationary_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'OtherCase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.other_case" class="form-control"
+                                        name="update_other_case" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_other_case.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_other_case.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'RealBed'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.real_bed" class="form-control"
+                                        name="update_real_bed" vld-sync vld-sync-func="$root.validate.min(model,params)"
+                                        vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_real_bed.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_real_bed.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'PatientNumber'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.patient_number" class="form-control"
+                                        name="update_patient_number" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_patient_number.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_patient_number.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'Level1Care'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.level_1_care" class="form-control"
+                                        name="update_level_1_care" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_level_1_care.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_level_1_care.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'FinalPhasePatient'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.final_phase_patient"
+                                        class="form-control" name="update_final_phase_patient" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_final_phase_patient.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_final_phase_patient.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'VentilatorBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.ventilator_base" class="form-control"
+                                        name="update_ventilator_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_ventilator_base.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_ventilator_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveVentilator'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.active_ventilator"
+                                        class="form-control" name="update_active_ventilator" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_active_ventilator.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_active_ventilator.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'MonitorBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.monitor_base" class="form-control"
+                                        name="update_monitor_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_monitor_base.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_monitor_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveMonitor'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.active_monitor" class="form-control"
+                                        name="update_active_monitor" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_active_monitor.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_active_monitor.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ElectricSyringeBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.electric_syringe_base"
+                                        class="form-control" name="update_electric_syringe_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_electric_syringe_base.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_electric_syringe_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveElectricSyringe'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.active_electric_syringe"
+                                        class="form-control" name="update_active_electric_syringe" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_active_electric_syringe.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_active_electric_syringe.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'DropsCounterBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.drops_counter_base"
+                                        class="form-control" name="update_drops_counter_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_drops_counter_base.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_drops_counter_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveDropsCounter'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.active_drops_counter"
+                                        class="form-control" name="update_active_drops_counter" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': updateForm.update_active_drops_counter.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="updateForm.update_active_drops_counter.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="col-md-12">
+                                {{'Note'|l}}
+                            </div>
+                            <div class="col-md-12"
+                                style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea id="updateNurseReport_content" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}" modal-button-save-objname="NurseReport"
+                    modal-button-save-actionname="update" modal-button-save-invalid="updateForm.$invalid|| !ctrl.checkModify(ctrl._update_value)"
+                    modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

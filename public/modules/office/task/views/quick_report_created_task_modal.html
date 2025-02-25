@@ -1,0 +1,55 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_quick_report_created_task">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'QuickReport'|l}}"></modal-header>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 chart">
+                        <div class="chart-container with-value">
+                            <div class="chart-value">
+                                <div class="main-value">
+                                    <div class="label">
+                                        {{'Completed'|l}}:
+                                    </div>
+                                    <div class="value">
+                                        {{ctrlChild.statistic_count_created.percent}}%
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-item">
+                                <canvas class="chart chart-doughnut"
+                                    chart-data="ctrlChild.statistic_count_created.data"
+                                    chart-labels="ctrlChild.statistic_count_created.label"
+                                    chart-options="ctrlChild.statistic_count_created.options"
+                                    chart-colors="ctrlChild.statistic_count_created.colors">
+                                </canvas>
+                            </div>
+                            <div ng-if="ctrlChild.tasks_created.length ==0" class="no-data-text-in-modal">                                    
+                                <i class="fas fa-exclamation-triangle"></i> {{'NoData'|l}}
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6 chart">
+                        <div class="chart-container">
+                            <div class="chart-item">
+                                <canvas class="chart chart-line"
+                                    chart-data="ctrlChild.statistic_growth_created.data"
+                                    chart-labels="ctrlChild.statistic_growth_created.label"
+                                    chart-series="ctrlChild.statistic_growth_created.series"
+                                    chart-options="ctrlChild.statistic_growth_created.options"
+                                    chart-colors="ctrlChild.statistic_growth_created.colors"
+                                    chart-dataset-override="ctrlChild.statistic_growth_created.override">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="modal-footer">               
+                <modal-button-close></modal-button-close>
+            </div>      
+        </div>
+    </div>
+</div>

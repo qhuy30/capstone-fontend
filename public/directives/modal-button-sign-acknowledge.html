@@ -1,0 +1,57 @@
+<span>
+    <my-async async-status-label="'Signing...'" async-ctrlname="{{modalButtonSignAcknowledgeCtrlname}}"
+        async-objname="{{modalButtonSignAcknowledgeObjname}}" async-actionname="{{modalButtonSignAcknowledgeActionname}}">
+        <async-default ng-show="modalButtonSignAcknowledgeShowButton">
+            <button class="btn btn-primary" type="button"
+                ng-class='{"btn-sm":modalButtonSignAcknowledgeType==="small"}'
+                modal-toggle="#{{ctrl._ctrlName}}">
+                {{modalButtonSignAcknowledgeLabel ?modalButtonSignAcknowledgeLabel
+                :('SignToAcknowledge'|l)}}</button>
+        </async-default>
+        <async-doing>
+            <div class="sk-wave">
+                <div class="sk-rect sk-rect1"></div>
+                <div class="sk-rect sk-rect2"></div>
+                <div class="sk-rect sk-rect3"></div>
+                <div class="sk-rect sk-rect4"></div>
+                <div class="sk-rect sk-rect5"></div>
+            </div> {{loadingLabel ||'Sign...'}}
+        </async-doing>
+        <async-success>
+            <span class="btn" style="color: #4dbd74;" ng-class='{"btn-sm":modalButtonSignAcknowledgeType==="small"}'>
+                {{'SuccessSign'|l}}
+            </span>
+        </async-success>
+        <async-fail>
+            <span class="btn" style="color: #f86c6b;" ng-class='{"btn-sm":modalButtonSignAcknowledgeType==="small"}'>
+                {{$root.statusValue.get(modalButtonSignAcknowledgeCtrlname,modalButtonSignAcknowledgeObjname,modalButtonSignAcknowledgeActionname,'message')|l}}
+            </span>
+            <button class="btn btn-outline-warning" type="button"
+                ng-class='{"btn-sm":modalButtonSignAcknowledgeType==="small"}'
+                ng-disabled="modalButtonSignAcknowledgeInvalid||$root.statusValue.get(modalButtonSignAcknowledgeCtrlname,modalButtonSignAcknowledgeObjname,modalButtonSignAcknowledgeActionname,'doing')"
+                ng-click="modalButtonSignAcknowledgeClick()">
+                <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+            </button>
+        </async-fail>
+    </my-async>
+
+    <div class="modal fade" id="{{ctrl._ctrlName}}" role="dialog" tabindex="-1">
+        <div class="modal-dialog" style="width: 100%; max-width: 420px;">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{'SignToAcknowledge'|l }}"></modal-header>
+                <div class="modal-body">
+                    {{'Are you sure you want to sign acknowledge?'|l }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button"
+                        ng-class='{"btn-sm":modalButtonSignAcknowledgeType==="small"}'
+                        ng-disabled="modalButtonSignAcknowledgeInvalid||$root.statusValue.get(modalButtonSignAcknowledgeCtrlname,modalButtonSignAcknowledgeObjname,modalButtonSignAcknowledgeActionname,'doing')"
+                        ng-click="modalButtonSignAcknowledgeClick()">
+                        <i class="fas fas fa-check"></i>&nbsp;{{modalButtonSignAcknowledgeLabel ?modalButtonSignAcknowledgeLabel
+                        :('SignToAcknowledge'|l)}}</button>
+                    <modal-button-close></modal-button-close>
+                </div>
+            </div>
+        </div>
+    </div>
+</span>

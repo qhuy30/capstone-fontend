@@ -1,0 +1,203 @@
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="modal_CardMnanagement_Update"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header
+        modal-header-title="{{'UpdateCarInformation'|l}}"
+      ></modal-header>
+      <div class="modal-body">
+        <div class="part">
+          <form class="form-horizontal" name="updateCardManagementForm">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new"
+                        >{{'CreditCardName'|l}}</span
+                      >
+                      <span class="require-sympton">*</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrlCard._ctrlName,'CardManagement','update','doing')"
+                      type="text"
+                      ng-model="ctrlCard._update_value.title[$root.Language.current]"
+                      class="form-control"
+                      name="updateCarManagement_name"
+                      placeholder="input displayname"
+                      ng-class="{ 'is-invalid': updateCardManagementForm.updateCardManagement_name.$invalid }"
+                      vld-sync
+                      vld-sync-func="$root.validate.min(model,params)"
+                      vld-sync-params="{min:1}"
+                      required
+                    />
+                    <invalid
+                      invalid-status="updateCardManagementForm.updateCarManagement_name.$error.vldsync"
+                    >
+                      {{'AtLeast'|l:({title:1})}}.
+                    </invalid>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new"
+                        >{{'Value'|l}}</span
+                      >
+                      <span class="require-sympton">*</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrlCard._ctrlName,'CardManagement','update','doing')"
+                      type="text"
+                      ng-model="ctrlCard._update_value.value"
+                      class="form-control"
+                      name="updateCardManagement_value"
+                      placeholder="{{'Input value'|l}}"
+                      ng-class="{ 'is-invalid': updateCardManagementForm.updateCardManagement_value.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new"
+                        >{{'CreditCardNumber'|l}}</span
+                      >
+                      <span class="require-sympton">*</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrlCard._ctrlName,'CardManagement','update','doing')"
+                      type="text"
+                      ng-model="ctrlCard._update_value.number_card"
+                      class="form-control"
+                      name="updateCardManagement_numberCard"
+                      placeholder="{{'Input number card'|l}}"
+                      ng-class="{ 'is-invalid': updateCardManagementForm.updateCardManagement_numberCard.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'Status'|l}}</span>
+                      <span class="require-sympton">*</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <label
+                        class="form-check d-flex align-items-center justify-content-between p-2"
+                        style="color: white; cursor: pointer"
+                        ng-style="{'background-color': ctrlCard._update_value.status ? 'rgb(66, 133, 244)' : 'rgb(146, 159, 186)'}"
+                      >
+                        <input
+                          style="position: relative; cursor: pointer"
+                          class="form-check-input m-0 mr-1"
+                          type="radio"
+                          ng-model="ctrlCard._update_value.status_value"
+                          value="active"
+                          id="update-card-status-active"
+                          ng-change="ctrlCard.change_status_update(true)"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="update-card-status-active"
+                          style="
+                            background-color: transparent;
+                            font-size: 0.9rem;
+                            color: white;
+                            font-weight: 400;
+                            cursor: pointer;
+                            user-select: none;
+                          "
+                        >
+                          {{'CreditCardActive'|l}}
+                        </label>
+                      </label>
+
+                      <label
+                        class="form-check d-flex align-items-center justify-content-between p-2"
+                        style="color: white; cursor: pointer"
+                        ng-style="{'background-color': (!ctrlCard._update_value.status) ? 'rgb(66, 133, 244)' : 'rgb(146, 159, 186)'}"
+                      >
+                        <input
+                          style="position: relative; cursor: pointer"
+                          class="form-check-input m-0 mr-1"
+                          type="radio"
+                          ng-model="ctrlCard._update_value.status_value"
+                          ng-change="ctrlCard.change_status_update(false)"
+                          value="busy"
+                          id="update-card-status-inactive"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="update-card-status-inactive"
+                          style="
+                            background-color: transparent;
+                            font-size: 0.9rem;
+                            color: white;
+                            font-weight: 400;
+                            cursor: pointer;
+                            user-select: none;
+                          "
+                        >
+                          {{'CreditCardBussy'|l}}
+                        </label>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div
+                    class="d-flex align-items-end form-check"
+                    style="font-size: 0.8rem"
+                  >
+                    <input
+                      ng-model="ctrlCard._update_value.isactive"
+                      type="checkbox"
+                      class="form-check-input"
+                      id="update-card-active"
+                    />
+                    <label
+                      style="user-select: none; cursor: pointer"
+                      class="form-check-label"
+                      for="update-card-active"
+                    >
+                      {{'Active'|l}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <modal-button-save
+          modal-button-save-ctrlname="{{ctrlCard._ctrlName}}"
+          modal-button-save-objname="CardManagement"
+          modal-button-save-actionname="update"
+          modal-button-save-invalid="updateCardManagementForm.$invalid"
+          modal-button-save-func="ctrlCard.update()"
+        >
+        </modal-button-save>
+      </div>
+    </div>
+  </div>
+</div>

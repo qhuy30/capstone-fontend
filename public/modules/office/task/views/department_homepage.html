@@ -1,0 +1,212 @@
+<div ng-controller="task_department_homepage_controller as ctrlChild" class="task-department-homepage-feature"
+    ng-if="['Office.Task.Show_DepartmentTab']|checkRule">
+    <div ng-include="ctrlChild._urlInsertHeadTaskModal"></div>
+    <div class="home-container">
+        <div style="width: 100%" class="task-department-tooltip">
+            <div style="float: left;">
+                <button-new ng-show="''|checkRuleCreateTaskAll" button-new-func="ctrlChild.prepareInsert()"
+                    button-new-label=" {{'AddTask'|l}}"
+                    button-new-modal="#modal_Head_Task_Insert_In_Department_Dashboard">
+                </button-new>
+                <input-search load-data-func="ctrlChild.search_department(params)" />
+            </div>
+            <div class="mode-control"
+                style="float: right; margin-top: 24px;line-height: 36px;text-align: right;">
+                <i class="fas fa-th-large" ng-click="ctrlChild.switchView('grid')"
+                    ng-class="{'active': ctrlChild.view ==='grid'}"></i>
+                <i class="fas fa-solid fa-list" ng-click="ctrlChild.switchView('list')"
+                    ng-class="{'active': ctrlChild.view ==='list'}"></i>
+            </div>
+        </div>
+        <div class="filter-container">
+            <div class="filter-item">
+                <div class="title">{{'FromDate'|l}}:</div>
+                <div class="value">
+                    <div>
+                        <input type="date" ng-model="ctrlChild._filterFromDate_Department_Dashboard"
+                            ng-change="ctrlChild.refreshData_Department_Dashboard()" />
+                    </div>
+                    <div>
+                        <time-show2 time-show-data="ctrlChild._filterFromDate_Department_Dashboard"
+                            time-show-type="just_date" bind-object="true"></time-show2>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-item">
+                <div class="title">{{'ToDate'|l}}:</div>
+                <div class="value">
+                    <div>
+                        <input type="date" ng-model="ctrlChild._filterToDate_Department_Dashboard"
+                            ng-change="ctrlChild.refreshData_Department_Dashboard()" />
+                    </div>
+                    <div>
+                        <time-show2 time-show-data="ctrlChild._filterToDate_Department_Dashboard"
+                            time-show-type="just_date" bind-object="true">
+                        </time-show2>
+                    </div>
+
+                </div>
+            </div>
+            <div class="filter-item large">
+                <div class="title">{{'SortBy'|l}}:</div>
+                <div class="value">
+                    <div class="dropdown">
+                        <div class="dropdown-selected">{{ctrlChild.sortBy_department_dashboard.title|l}}</div>
+                        <div class="dropdown-options">
+                            <div ng-repeat="item in ctrlChild.sortByList" ng-click="ctrlChild.selectSortBy(item)">
+                                {{item.title|l}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-item large">
+                <div class="title">{{'SortingOrder'|l}}:</div>
+                <div class="value">
+                    <div class="dropdown">
+                        <div class="dropdown-selected">{{ctrlChild.sortingOrder_department_dashboard.title|l}}</div>
+                        <div class="dropdown-options">
+                            <div ng-repeat="item in ctrlChild.sortingOrderList"
+                                ng-click="ctrlChild.selectSortingOrder(item)">{{item.title|l}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-item">
+                <button type="button" style="padding: 0 7px;
+                margin-left: 5px;
+                border-color: transparent;
+                box-shadow: none;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                border-radius: 5px;
+                height: 30px;
+                font-weight: 400; color: black;" class="btn btn-square btn-outline-primary ng-binding ng-isolate-scope"
+                    ng-click="ctrlChild.exportDepartmentReport()">
+                    <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;"
+                        class="fas fa-file-excel"></i>
+                    &nbsp;{{'Download'|l}}&nbsp;<i class="fas fa-download"></i>
+                </button>
+            </div>
+        </div>
+        <div class="grid-container" ng-show="ctrlChild.view ==='grid'">
+            <div ng-repeat="item in ctrlChild.Departments" class="item" link-details
+                link-details-display="{{item.title[$root.Language.current]}}"
+                link-details-url="/task-department-details?id={{item.id}}&&_id={{item._id}}"
+                link-details-route="task-department-details" department="{{item}}"
+                ng-click="ctrlChild.chooseDepartment(item)" link-details-step="step-1">
+                <div>
+                    <div class="title">
+                        <p style="font-size: 14px;color: #818287;">
+                            {{item.title[$root.Language.current]}}
+                        </p>
+                        <div class="show-user">
+                            <img ng-src="{{item.leader.userInfo.avatar.url}}" style="width: 100%" />
+                        </div>
+                    </div>
+                    <p><i class="fas fa-user"></i><span
+                            class="text-bold">&nbsp;&nbsp;{{item.total_employee}}</span>&nbsp;{{'Employees'|l}}</p>
+                </div>
+                <div class="content">
+                    <p>{{'CurrentTask'|l}}:&nbsp;<span
+                            style="font-weight: bold;font-size: 14px">&nbsp;&nbsp;{{item.task_static.open}}</span></p>
+                    <p>{{'CompletedTask'|l}}:&nbsp;<span
+                            style="font-weight: bold;font-size: 14px">&nbsp;&nbsp;{{item.task_static.closed}}</span></p>
+                </div>
+                <div class="task-label">
+                    <p class="label"><i class="fas fa-circle"
+                            style="color: #ff0000a8"></i>&nbsp;<span>&nbsp;&nbsp;{{item.task_static.over_due}}</span>
+                        {{'Overdue'|l}}</p>
+                    <p class="label"><i class="fas fa-circle"
+                            style="color: #ffa300"></i>&nbsp;<span>&nbsp;&nbsp;{{item.task_static.gonna_late}}</span>
+                        {{'GonnaLate'|l}}</p>
+                    <p class="label"><i class="fas fa-circle"
+                            style="color: #4285f4"></i>&nbsp;<span>&nbsp;&nbsp;{{item.task_static.on_schedule}}</span>
+                        {{'Open'|l}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="list-container" ng-show="ctrlChild.view ==='list'">
+            <div class="table-responsive">
+                <table class="table table-hover border" ng-class="{'no-data':ctrlChild.Departments.length ===0}"
+                    id="departmentReport">
+                    <thead class="bg-secondary">
+                        <tr>
+                            <td rowspan="2" class="text-center" style="border-right: 1px solid #a4b7c1;">#</td>
+                            <td rowspan="2" class="text-center text-bold text-big"
+                                style="border-right: 1px solid #a4b7c1;">
+                                {{'Department'|l}}
+                            </td>
+                            <td rowspan="2" class="text-center text-bold text-big"
+                                style="border-right: 1px solid #a4b7c1;">
+                                {{'Employee'|l}}
+                            </td>
+                            <td colspan="5" class="text-center text-bold text-big"
+                                style="border-right: 1px solid #a4b7c1;">
+                                {{'HeadTask'|l}}
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="text-center" style="border-right: 1px solid #a4b7c1;">
+                                {{'CurrentTask'|l}}
+                            </td>
+                            <td class="text-center" style="border-right: 1px solid #a4b7c1;">
+                                {{'CompletedTask'|l}}
+                            </td>
+                            <td class="text-center" style="border-right: 1px solid #a4b7c1;">
+                                <i class="fas fa-circle" style="color: #ff0000a8"></i>&nbsp;{{'Overdue'|l}}
+                            </td>
+                            <td class="text-center" style="border-right: 1px solid #a4b7c1;">
+                                <i class="fas fa-circle" style="color: #ffa300"></i>&nbsp;{{'GonnaLate'|l}}
+                            </td>
+                            <td class="text-center" style="border-right: 1px solid #a4b7c1;">
+                                <i class="fas fa-circle" style="color: #4285f4"></i>&nbsp;{{'Open'|l}}
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="taskList">
+                        <tr ng-repeat="item in ctrlChild.Departments track by $index" link-details
+                            link-details-display="{{item.title[$root.Language.current]}}"
+                            link-details-url="/task-department-details?department"
+                            link-details-route="task-department-details"
+                            choose-department="ctrlChild.chooseDepartment(params)" department="{{item}}"
+                            ng-click="ctrlChild.chooseDepartment(item)" link-details-step="step-1">
+                            <td class="text-center" style="border-right: 1px solid #a4b7c1;">
+                                {{$index+1}}
+                            </td>
+                            <td class="text-uppercase" style="text-align: left;">
+
+                                <div class="show-user" style="width: 26px;float: left;margin-left: 10px;">
+                                    <img ng-src="{{item.leader.userInfo.avatar.url}}" style="width: 100%" />
+                                </div>
+                                <span style="line-height: 26px;">
+                                    &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                </span>
+
+                            </td>
+                            <td class="text-center">
+                                {{item.total_employee}}&nbsp;<i class="fas fa-user"></i>
+                            </td>
+                            <td class="text-center">
+                                {{item.task_static.open}}
+                            </td>
+                            <td class="text-center">
+                                {{item.task_static.closed}}
+                            </td>
+                            <td class="text-center">
+                                {{item.task_static.over_due}}
+                            </td>
+                            <td class="text-center">
+                                {{item.task_static.gonna_late}}
+                            </td>
+                            <td class="text-center">
+                                {{item.task_static.on_schedule}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<a class="waves-effect ringbell-header-item workflow_need_approve" ng-href="{{ item.params.action === 'add_done' ? '/waiting-storage' : '/signing-details?code=' + item.params.code }}">
+    <i class="fas fa-code-branch"></i>
+    <div class="content">
+        <div ng-switch="item.params.document_type">
+            <span ng-switch-when="Transfer note">
+                <span>{{'TransferTicket'|l}}</span>
+                <span class="title">[{{item.params.code}}]&nbsp; - &nbsp;{{item.params.title}}</span>&nbsp;
+                <span ng-if="item.params.departmentBy">
+                    <span class="text-lowercase">{{'CreatedByDeparment'|l}}</span>
+                    <span style="font-weight: bold;">
+                        <show-department department="item.params.departmentBy"></show-department>
+                    </span>
+                </span>
+                <span ng-if="!item.params.departmentBy">
+                    <span class="text-lowercase">{{'CreatedBy'|l}}</span>&nbsp;
+                    <show-username-onlyname username="item.params.username_creator" without-tooltip="true">
+                    </show-username-onlyname>
+                </span>&nbsp;
+            </span>
+            <span ng-switch-default>
+                <span>{{'Signature WF'|l}}</span>
+                <span class="title">[{{item.params.code}}]&nbsp; - &nbsp;{{item.params.title}}</span>&nbsp;
+                <span class="text-lowercase ringbell-action success">{{'ApprovedBy'|l}}</span>&nbsp;
+                <show-username-onlyname username="item.params.username_creator" without-tooltip="true">
+                </show-username-onlyname>
+            </span>
+        </div>
+        <div class="ringbell-action danger" ng-switch="item.params.action">
+            <span ng-switch-when="process">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to process the document'|l}}
+            </span>
+            <span ng-switch-when="add_done">
+                <i class="fas fa-book"></i>&nbsp;{{'The signer has supplemented the dossier, which needs to be reviewed and archived'|l}}
+            </span>
+            <span ng-switch-when="return_creator_additional_document">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to review and additional document'|l}}
+            </span>
+            <span ng-switch-when="all">
+                <i class="fas fa-signature"></i>&nbsp;{{'Need you to approve'|l}}
+            </span>
+            <span ng-switch-when="one">
+                <i class="fas fa-signature"></i>&nbsp;{{'Need you to approve'|l}}
+            </span>
+
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+
+    </div>
+
+</a>

@@ -1,0 +1,71 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_MeetingRoom_Update">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'Update'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="updateForm">
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','update','doing')" type="text"
+                ng-model="ctrl._update_value.title['vi-VN']" class="form-control" name="update_title_vi"
+                placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': updateForm.update_title_vi.$invalid }"
+                required />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','update','doing')" type="text"
+                ng-model="ctrl._update_value.title['en-US']" class="form-control" name="update_title_en"
+                placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': updateForm.update_title_en.$invalid }"
+                required />
+            </div>
+          </div>
+          <div class="form-group" ng-repeat="control in ctrl.master_directory_item.extend" ng-switch="control.control">
+
+            <pick-modal-directory ng-switch-when="pick_modal" extend="control"
+              pick-func="ctrl.pickExtend_update(params,params2)" id-value="ctrl._update_value.item[control.name]"
+              label="{{control.label ? (control.label|l) : control.name.toUpperCase()}}"></pick-modal-directory>
+
+            <div class="input-prepend input-group" ng-switch-when="text_box">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{control.label ? (control.label|l) : control.name.toUpperCase()}}</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','update','doing')" type="text"
+                ng-model="ctrl._update_value.item[control.name]" class="form-control"
+                placeholder="{{'Input ' + (control.label ? (control.label|l) : control.name)}}" />
+            </div>
+
+            <div class="input-prepend input-group" ng-switch-when="number">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{control.label ? (control.label|l) : control.name.toUpperCase()}}</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','update','doing')" type="number"
+                ng-model="ctrl._update_value.item[control.name]" class="form-control" />
+            </div>
+
+          </div>
+          <div class="form-group">
+            <input-checkbox input-checkbox-label="{{'IsUse'|l}}" input-checkbox-model="ctrl._update_value.isactive"
+              input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','update','doing')">
+            </input-checkbox>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}" modal-button-save-objname="MeetingRoom"
+          modal-button-save-actionname="update"
+          modal-button-save-invalid="updateForm.$invalid || ctrl.fromDate_ErrorMsg || ctrl.toDate_ErrorMsg || ctrl.Number_Error_Msg"
+          modal-button-save-func="ctrl.update()">
+        </modal-button-save>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

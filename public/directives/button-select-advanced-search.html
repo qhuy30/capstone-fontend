@@ -1,0 +1,26 @@
+<div style="width: 100%">
+  <div class="input-group list-menu button-container">
+    <div class="dropdown-menu">
+      <a
+        class="dropdown-item"
+        ng-repeat="item in buttonSelectData"
+        ng-click="buttonSelectClick(item)">
+
+        <i class="fas fa-angle-double-right"></i>
+
+        <span >
+          {{item.title[currentLanguge]}}
+        </span>
+      </a>
+    </div>
+    <button
+      type="button"
+      class="btn dropdown-toggle"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      ng-disabled="buttonSelectDisabled">
+      {{showValue}}
+    </button>
+  </div>
+</div>

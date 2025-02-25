@@ -1,0 +1,25 @@
+<div id="accordion">
+    <div class="card">
+        <div class="card-body" style="border-left:2px solid #20a8d8">
+            <div class="row">
+                <h5 class="mb-0 col-md-12">
+                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                        data-target="{{targetId ? '#' + targetId : '#collapseTaskMoreOptions'}}" aria-expanded="false" aria-controls="{{targetId ? targetId : 'collapseMoreOptions'}}">
+                        {{'Add resolving task'|l}}
+                    </button>
+                </h5>
+            </div>
+            <div id="{{targetId ? targetId : 'collapseTaskMoreOptions'}}" class="collapse" aria-labelledby="headingTwo"
+                data-parent="#accordion" >
+                <div class="row">
+                    <div class="col-md-12" style="border-top:1px solid #eee;margin-bottom:15px;margin-top:15px;">
+
+                    </div>
+                </div>
+                <div ng-transclude="content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

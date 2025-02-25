@@ -1,0 +1,131 @@
+<div ng-controller="student_answer_controller as ctrlChild" class="task-personal-feature">
+    <div ng-include="ctrlChild._urlUpdateModal"></div>
+    <div ng-include="ctrlChild._urlInsertModal"></div>
+    <div ng-include="ctrlChild._urlDeleteModal"></div>
+    <div ng-include="ctrlChild._urlForwardModal"></div>
+    <div class="created container">
+        <div class="content">
+            <div class="task-container">
+                <div class="task-filter">
+                    <div class="task-filter-item">
+                        <div class="title">{{'FromDate'|l}}:</div>
+                        <div class="value">
+                            <div>
+                                <input type="date" ng-model="ctrlChild._filterFromDate"
+                                    ng-change="ctrlChild.refreshData()" />
+                            </div>
+                            <div>
+                                <time-show2 time-show-data="ctrlChild._filterFromDate" time-show-type="just_date"
+                                    bind-object="true"></time-show2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-filter-item">
+                        <div class="title">{{'ToDate'|l}}:</div>
+                        <div class="value">
+                            <div>
+                                <input type="date" ng-model="ctrlChild._filterToDate"
+                                    ng-change="ctrlChild.refreshData()" />
+                            </div>
+                            <div>
+                                <time-show2 time-show-data="ctrlChild._filterToDate" time-show-type="just_date"
+                                    bind-object="true">
+                                </time-show2>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #eee;margin-top:10px;">
+                </div>
+                <div class="task-content">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover"
+                            ng-class="{'no-data':ctrlChild.studentQuestions.length === 0}">
+                            <thead>
+                                <tr>
+                                    <td class="tool" style="font-weight: 600;vertical-align: middle;width: 630px;">
+                                        <!-- <div class="new">
+                                            <button-new button-new-func="ctrlChild.prepareInsert()"
+                                                button-new-label="Thêm câu hỏi và trả lời"
+                                                button-new-modal="#modal_Question_Insert">
+                                            </button-new>
+                                        </div> -->
+                                        <div class="search" style="max-width: none;">
+                                            <input type="text" ng-model="ctrlChild._searchByKeyToFilterData"
+                                                my-watch-text-input my-scope="ctrlChild._searchByKeyToFilterData"
+                                                my-func="ctrlChild.refreshData()" my-start="!ctrlChild._notyetInit"
+                                                placeholder="Tìm câu hỏi theo tên">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 160px;">
+                                        {{'Creator'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                        Phòng ban phụ trách
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                        Nhóm câu hỏi
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                        Ngày tạo
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 160px;">
+                                        {{'Status'|l}}
+                                    </td>
+                                </tr>
+
+                            </thead>
+                            <tbody id="taskList">
+                                <tr ng-repeat="item in ctrlChild.studentQuestions">
+                                    <td style="font-weight: 600;vertical-align: middle;width: 630px;">
+                                        <a class="text-dark" link-details link-details-display="{{item.subject}}"
+                                            link-details-url="/student-question-details?{{item._id}}"
+                                            link-details-route="student-question-details">{{item.subject}}</a>
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{ item.username }} - {{ item.fullName }}
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 180px;">
+                                        {{item.department.title[$root.Language.current]}}
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{ item.type_question.title[$root.Language.current] }}
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <time-show2 time-show-data="item.create_date" time-show-type="just_date">
+                                        </time-show2>
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <p class="text-dark" >{{item.status|l}}</p>
+                                    </td>
+                                  <td style="width: 100px;">
+                                       <button-forward-item  ng-if="['Education.ForwardQuestion.Use'] | checkRule" button-forward-item-modal="#modal_Forward_Update"
+                                            button-forward-item-func="ctrlChild.prepareUpdate(params)"
+                                            button-forward-item-params="item">
+                                        </button-forward-item>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div ng-if="ctrlChild.studentQuestions.length ==0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                    <pagination pagination-ctrlname="{{ctrlChild._ctrlName}}" 
+                        pagination-objname="QuestionAnswer"
+                        pagination-actionname="count_student_question" pagination-currentpage="ctrlChild.currentPage"
+                        pagination-noi="ctrlChild.numOfItemPerPage" pagination-total="ctrlChild.totalItems"
+                        pagination-func="ctrlChild.load_student_question(params)"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

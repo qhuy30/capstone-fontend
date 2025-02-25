@@ -1,0 +1,353 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_DA_Receive" data-backdrop="static">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'DA_Receive'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="receiveForm">
+                    <div class="card">
+                        <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                            <!--year -->
+                            <!-- <div class="col-md-6 form-group mt-2">
+                        <year-select
+                            id-value="ctrl._receive_value.year"
+                            select-year-func="ctrl.chooseReleaseDate_receive(params)"
+                            ng-model="ctrl._receive_value.year"
+                            label="{{'YearDocument' | l}}"
+                            ng-class="{ 'is-invalid': receiveForm.receive_year.$invalid }"
+                            disable="$root.statusValue.get(ctrl._ctrlName, 'DA', 'receive', 'doing')"
+                            require="true">
+                        </year-select>
+                        </div> -->
+                            <div class="w-100"></div>
+                            <!--code -->
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.IncommingDispatchBook_Config" filter="ctrl.IncommingBook_Filter_Internal"
+                                    pick-func="ctrl.pickDAB_receive(params)" id-value="ctrl._receive_value.code"
+                                    label="{{'Document number'|l}}" get-first-to-default="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'DA','receive','doing')"></pick-modal-directory>
+                            </div>
+                            <!--incoming_number -->
+                            <div class="form-group col-md-6">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{'DispatchArrivedNumber'|l}}</span>
+                                    </div>
+                                    <input 
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','receive','doing')"
+                                        type="number" 
+                                        ng-model="ctrl._receive_value.incoming_number"
+                                        ng-change="ctrl.change_incoming_number_receive()" 
+                                        class="form-control"
+                                        name="receive_incoming_number"
+                                        vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)"
+                                        vld-sync-params="{min:1}"
+                                        ng-class="{ 'is-invalid': receiveForm.receive_incoming_number.$invalid }"
+                                        required />
+                                    <p class="text-danger" ng-if="ctrl._receive_value.invalid_incoming_number">{{'Number
+                                        of existing documents'|l}}</p>
+                                </div>
+                            </div>
+
+                            <!--symbol_number-->
+                            <div class="form-group col-md-6">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{'Number symbol'|l}}</span>
+                                        <span class="require-sympton">*</span>
+                                    </div>
+                                    <input disabled="true" type="text" ng-model="ctrl._receive_value.symbol_number"
+                                        class="form-control" name="receive_symbol_number"
+                                        placeholder="{{'Input number symbol'|l}}"
+                                        ng-class="{ 'is-invalid': receiveForm.receive_symbol_number.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                            <!--incomming_date (Ngày đến) -->
+                            <div class="col-md-6 form-group">
+                                <date-old id-value="ctrl._receive_value.incomming_date"
+                                    func="ctrl.chooseIncommingDate_receive(params)" label="{{'Date of Arrival'|l}}"
+                                    disable="true" required="true"></date-old>
+                            </div>
+                            <!-- sending_place -->
+                            <div class="form-group col-md-12">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{'Agency promulgate'|l}}</span>
+                                        <span class="require-sympton">*</span>
+                                    </div>
+                                    <input disabled="true" type="text" ng-model="ctrl._receive_value.sending_place"
+                                        class="form-control" name="receive_sending_place"
+                                        placeholder="{{'Input Agency promulgate'|l}}"
+                                        ng-class="{ 'is-invalid': receiveForm.receive_sending_place.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <!--type-->
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.DocumentType_Config"
+                                    pick-func="ctrl.pickDAT_receive(params)" id-value="ctrl._receive_value.type"
+                                    label="{{'TypeName'|l}}" disable="true" require="true"
+                                    has-insert-button="true"></pick-modal-directory>
+                            </div>
+
+                            <!-- Field -->
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.Field_Config"
+                                    pick-func="ctrl.pickField_receive(params)" id-value="ctrl._receive_value.field"
+                                    label="{{'Field'|l}}" get-first-to-default="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'DA','receive','doing')"
+                                    require="true" has-insert-button="true"></pick-modal-directory>
+                            </div>
+                            <!--security_level -->
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.securityLevel_Config"
+                                    pick-func="ctrl.pick_receive_security_level(params)"
+                                    id-value="ctrl._receive_value.security_level" label="{{'ConfidentialityLevel'|l}}"
+                                    disable="true" require="true">
+                                </pick-modal-directory>
+                            </div>
+                            <!-- Nature == Priority -->
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.IncommingDispatchPririoty_Config"
+                                    pick-func="ctrl.pickUrgencyLevel_receive(params)"
+                                    id-value="ctrl._receive_value.urgency_level" label="{{'urgency'|l}}" disable="true"
+                                    require="true"></pick-modal-directory>
+                            </div>
+                            <!-- date_sign (Ngày ký) -->
+                            <div class="form-group col-md-6">
+                                <date-old id-value="ctrl._receive_value.date_sign"
+                                    func="ctrl.chooseDateSign_receive(params)" label="{{'Signing date'|l}}"
+                                    disable="true" required="true"></date-old>
+                            </div>
+                            <!-- expried (Thời hạn) -->
+                            <div class="form-group col-md-6">
+                                <date-old id-value="ctrl._receive_value.expried"
+                                    func="ctrl.chooseExpried_receive(params)" label="{{'Duration'|l}}" disable="true"
+                                    required="true"></date-old>
+                            </div>
+                            <!-- content -->
+                            <div class="form-group col-md-12">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{'Abstract'|l}}</span>
+                                        <span class="require-sympton">*</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea style="padding: 10px; width: 100%;" name="textarea" disabled="true"
+                                            rows="3">{{ctrl._receive_value.content}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- is_legal -->
+                            <!-- <div class="form-group col-md-6">
+                        <input-checkbox
+                            input-checkbox-label="{{'IsLegalDocument'|l}}"
+                            input-checkbox-model="ctrl._receive_value.is_legal"
+                            input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','receive','doing')"
+                        >
+                        </input-checkbox>
+                        </div> -->
+                            <!-- is_assign_task -->
+                            <!-- <div class="form-group col-md-6">
+                        <input-checkbox
+                            input-checkbox-label="{{'IsTheAssignmentDocument'|l}}"
+                            input-checkbox-model="ctrl._receive_value.is_assign_task"
+                            input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','receive','doing')"
+                        >
+                        </input-checkbox>
+                        </div>            -->
+                        </div>
+                    </div>
+                    <!-- Dispatch File -->
+                    <div class="card">
+                        <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                            <div class="col-md-6" style="border-right: 1px solid #eee">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>{{'FileDispatchArrived'|l}}</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in ctrl._receive_value.incoming_file">
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <attachment-just-show my-item="item"></attachment-just-show>
+                                                </td>
+                                                <td>
+                                                    <i class="fas fa-times text-danger"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                colspan=" 0">
+                                                <div class="diskuf-uploader">
+                                                    <span class="wd-fa-add-file-light">
+                                                        <span class="wd-fa-add-file-light-text">
+                                                            <span class="wd-fa-add-file-light-title">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                            </span>
+                                                            <span
+                                                                class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                        </span>
+                                                    </span>
+                                                    <input class="diskuf-fileUploader wd-test-file-light-inp" disabled
+                                                        type="file" file-reading="ctrl._receive_value.incoming_file"
+                                                        size="1" multiple style="width: 100%" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Attachment File -->
+                    <div class="card">
+                        <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                            <div class="col-md-6" style="border-right: 1px solid #eee">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>{{'Attachment'|l}}</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in ctrl._receive_value.attachments">
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <attachment-just-show my-item="item"></attachment-just-show>
+                                                </td>
+                                                <td>
+                                                    <i class="fas fa-times text-danger"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                colspan=" 0">
+                                                <div class="diskuf-uploader">
+                                                    <span class="wd-fa-add-file-light">
+                                                        <span class="wd-fa-add-file-light-text">
+                                                            <span class="wd-fa-add-file-light-title">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                            </span>
+                                                            <span
+                                                                class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                        </span>
+                                                    </span>
+                                                    <input class="diskuf-fileUploader wd-test-file-light-inp" disabled
+                                                        type="file" file-reading="ctrl._receive_value.attachments"
+                                                        size="1" multiple style="width: 100%" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Đơn vị nhận biết -->
+                    <!-- <div class="card">
+                        <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                            <div class="form-group col-md-12 mt-3">
+                                <organization-multi label="{{'Department receives to know'|l}}"
+                                    id-value="ctrl._receive_value.department_receiver_ar"
+                                    select-func="ctrl.pickViewOnlyDepartment_receive(params)" require="true">
+                                </organization-multi>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Đơn vị thực thi -->
+                    <!-- <div class="card">
+                        <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                            <div class="form-group col-md-12 mt-3">
+                                <organization-dispatch-arrived label="{{'DepartmentExecute'|l}}"
+                                    id-value="ctrl._receive_value.department_execute"
+                                    select-func="ctrl.chooseSubmissionDepartment_receive(params)" require="true">
+                                </organization-dispatch-arrived>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+
+                    <!-- Nhãn công việc -->
+                    <!-- <div class="card">
+                        <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                            <div class="form-group col-md-12">
+                                <pick-modal-advance-multi-2 label="{{'Task label'|l}}" require="false"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'DA','receive','doing')"
+                                    load-data-func="ctrl.loadLabel(params)" id-value="ctrl._receive_value.task_label"
+                                    load-details-func="ctrl.loadLabel_details(params)" localized="false"
+                                    pick-func="ctrl.pickLabel(params)">
+
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="card" ng-if="ctrl._receive_value.show_note">
+                        <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                            <div class="form-group col-md-12 mt-3 input-group-new">
+                                <div class="input-group-prepend-new">
+                                    <span>{{'AccessNote' | l}}</span>
+                                    <span class="require-sympton" ng-show="ctrl._receive_value.note_required">*</span>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <text-area-with-suggestions-2 ng-model="ctrl._receive_value.note" ng-required="true"
+                                        placeholder="{{ctrl._receive_value.note_placeholder}}"
+                                        function-apply="ctrl.function_apply_suggestions" />
+
+                                </div>
+                                <div>
+                                   <span 
+                                class="badge badge-light m-1" 
+                                style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                                ng-repeat="note in ctrl._hintNoteSet"
+                                ng-click="ctrl.set_hint_note(note)">
+                                {{note | l}}
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-approve-dispatch class="mr-2" modal-button-approve-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-approve-objname="DA" modal-button-approve-actionname="receive"
+                    modal-button-approve-func="ctrl.receive(params)"
+                    modal-button-approve-label="{{'DA_Receive'}}"
+                    modal-button-approve-invalid="receiveForm.$invalid"
+                    modal-header-content="{{'DA_Receive'|l}}"
+                    modal-button-confirm-text="{{'Are you sure you want to accept it?'}}"
+                    modal-button-approve-type="small"
+                    function-apply-suggestions="ctrl.function_apply_suggestions" />
+            </div>
+        </div>
+    </div>
+</div>

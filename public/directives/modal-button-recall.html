@@ -1,0 +1,34 @@
+<my-async async-status-label="'Recall...'" async-ctrlname="{{modalButtonRecallCtrlname}}"
+    async-objname="{{modalButtonRecallObjname}}" async-actionname="{{modalButtonRecallActionname}}">
+    <async-default>
+        <button class="btn btn-danger" type="button" ng-class='{"btn-sm":modalButtonRecallType==="small"}'
+            ng-disabled="modalButtonRecallInvalid||$root.statusValue.get(modalButtonRecallCtrlname,modalButtonRecallObjname,modalButtonRecallActionname,'doing')"
+            ng-click="modalButtonRecallClick()">
+            <i class="fas fa-rotate-right"></i>&nbsp;{{modalButtonRecallLabel ?modalButtonRecallLabel :('Recall'|l)}}
+        </button>
+    </async-default>
+    <async-doing>
+        <div class="sk-wave">
+            <div class="sk-rect sk-rect1"></div>
+            <div class="sk-rect sk-rect2"></div>
+            <div class="sk-rect sk-rect3"></div>
+            <div class="sk-rect sk-rect4"></div>
+            <div class="sk-rect sk-rect5"></div>
+        </div> {{loadingLabel ||'Recall...'}}
+    </async-doing>
+    <async-success>
+        <span class="btn" style="color: #4dbd74;" ng-class='{"btn-sm":modalButtonRecallType==="small"}'>
+            {{'SuccessDeleting'|l}}
+        </span>
+    </async-success>
+    <async-fail>
+        <span class="btn" style="color: #f86c6b;" ng-class='{"btn-sm":modalButtonRecallType==="small"}'>
+            {{$root.statusValue.get(modalButtonRecallCtrlname,modalButtonRecallObjname,modalButtonRecallActionname,'message')|l}}
+        </span>
+        <button class="btn btn-outline-danger" type="button" ng-class='{"btn-sm":modalButtonRecallType==="small"}'
+            ng-disabled="modalButtonRecallInvalid||$root.statusValue.get(modalButtonRecallCtrlname,modalButtonRecallObjname,modalButtonRecallActionname,'doing')"
+            ng-click="modalButtonRecallClick()">
+            <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+        </button>
+    </async-fail>
+</my-async>

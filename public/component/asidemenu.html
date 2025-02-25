@@ -1,0 +1,138 @@
+<div ng-controller="aside_controller as ctrl" id="aside-menu">
+  <div class="tool-friend-panel">
+    <i class="fa fa-search" aria-hidden="true"></i>
+    <i
+      class="fa fa-user-plus"
+      aria-hidden="true"
+      modal-toggle="#AddRequestFriendModal"
+      ng-click="ctrl.openAddRequestFriend_Modal();$event.stopPropagation();$event.preventDefault();"
+    ></i>
+  </div>
+  <div class="receive-request-panel" ng-if="ctrl.receive_request.length>0">
+    <div modal-toggle="#ReceiveRequestFriendModal">
+      <span class="receive-request-panel__label">{{'FriendRequest'|l}} </span>
+      <span class="receive-request-panel__count"
+        >{{ctrl.receive_request.length}}</span
+      >
+    </div>
+  </div>
+  <div class="add-friend-block">
+    <p class="add-friend-block__label">{{'FriendList'|l}}</p>
+    <div
+      class="add-friend-block__item"
+      ng-repeat="f in ctrl.add_friend"
+      ng-click="ctrl.start_chat_with_friend(f.request_id)"
+    >
+      <show-username username="f.friend"></show-username>
+    </div>
+  </div>
+  <div class="feature-panel-bottom">
+    <span
+      class="feature-panel-bottom__button"
+      ng-click="ctrl.toggle_chat_box()"
+    >
+      <i class="fa fa-comment" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="chat-box">
+    <div class="row">
+      <div class="chat-box-room col-md-4">
+        <div
+          class="chat-box-room-item"
+          ng-repeat="r in ctrl.room_list"
+          ng-class="{
+            'current-room':r._id ===  ctrl.current_room._id
+          }"
+        >
+          <div
+            class="chat-box-room-item__container"
+            ng-click="ctrl.chooseRoom(r)"
+          >
+            <show-username
+              username="r.members|getFriendUsername"
+              just-name="true"
+            ></show-username>
+            <i class="fa fa-times" aria-hidden="true" ng-click="ctrl.pull_show(r);$event.stopPropagation();$event.preventDefault();"></i>
+          </div>
+        </div>
+      </div>
+      <div class="chat-box-content col-md-8">
+        <div class="chat-box-content-panel">
+          <div class="chat-box-content-panel__username">
+            <show-username
+            ng-if="ctrl.current_room.members"
+              username="ctrl.current_room.members|getFriendUsername"
+            ></show-username>
+          </div>
+          <div class="chat-box-content-panel__tool">
+            <i
+              class="fa fa-minus"
+              aria-hidden="true"
+              ng-click="ctrl.toggle_chat_box()"
+            ></i>
+            <i class="fa fa-cog" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="chat-box-content-body">
+          <div
+            class="chat-box-content-body-box"
+            id="chat-box-content-body-box-friend"
+          >
+            <div
+              class="message"
+              ng-repeat="mes in ctrl.message_on_room"
+              ng-class="{
+                'message--out':$root.logininfo.username === mes.username,
+                'message--reply':$root.logininfo.username !== mes.username
+              }"
+            >
+              <div
+                class="message-data"
+                ng-if="$root.logininfo.username !== mes.username"
+              >
+                <show-username
+                  username="mes.username"
+                  just-name="true"
+                  hide-image="true"
+                ></show-username>
+              </div>
+              <div class="message-mes">
+                <div
+                  class="message-mes-item"
+                  ng-repeat="m in mes.mes track by $index"
+                >
+                  <p class="message-mes-item-text">{{m}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="chat-bubble" ng-show="ctrl.typing">
+              <div class="typing">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+            </div>
+            <div
+              class="anchor"
+              id="chat-box-content-body-box-friend__bottom"
+            ></div>
+
+          </div>
+          <textarea
+            id="chat-box-content-body__message"
+            type="text"
+            style="width: 100%"
+            ng-model="ctrl.message"
+            ng-enter="ctrl.send_message()"
+            placeholder="{{'SendMessage'|l}}..."
+            ng-watch="ctrl.message"
+            func="ctrl.focus_textarea_message()"
+            ng-blur="ctrl.blur_textarea_message()"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-include="ctrl._urlAddRequestFriend"></div>
+  <div ng-include="ctrl._urlReceiveRequestFriend"></div>
+</div>

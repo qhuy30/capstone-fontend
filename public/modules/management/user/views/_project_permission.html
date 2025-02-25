@@ -1,0 +1,571 @@
+<div class="project generic-animation" ng-class="{'active':ctrl.tabTask==='project'}">
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có hiển thị tab <b>{{'Project'|l}}</b> không ?
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Show_ProjectTab'].value"
+                        brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Show_ProjectTab'" />
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+    </div>
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Tạo mới <b>{{'Project'|l}}</b><br />
+                    <i class="small">(Cũng có thể tạo mới chỉnh sửa, xoá các dự án bạn đã tạo trước khi những dữ
+                        liệu này hoàn thành)</i>
+                    <br />
+                    <i class="small">(Khi tạo mới một dự án, bạn cũng được tính là tham gia dự án đó)</i>
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Create_Project'].value"
+                        brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Create_Project'" />
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Theo dõi các <b>{{'Project'|l}}</b> :
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Follow_Project'"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                            <pick-modal-multi 
+                                id-value="ctrl.rule['Office.Task.Edit_Task_Department'].project"
+                                load-func="ctrl.loadProject(params)"
+                                count-func="ctrl.countProject(params)"
+                                load-details-func="ctrl.loadProject_details_m(params)"
+                                pick-func="ctrl.update_Project_Permission(params)"
+                                show-field="title"
+                                disable="ctrl.rule['Office.Task.Follow_Project'].value!='Specific'"
+                                ></pick-modal-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Chỉnh sửa, xoá các <b>{{'Project'|l}}</b> :
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Edit_Project'"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </li>
+    </ul>
+    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+    </div>
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Theo dõi các <b>chiến lược - mục tiêu</b>, thuộc các dự án :<br />
+                    <i class="small">(Mặc định có thể theo dõi tất cả các chiến lược - mục tiêu đã tạo)</i>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được theo dõi
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Object_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Follow_Object_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án đã tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Object_Project'].value"
+                                value="Self" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án tham gia
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Object_Project'].value"
+                                value="Join" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Object_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Object_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Tạo mới <b>chiến lược - mục tiêu</b>, thuộc các dự án :<br />
+                    <i class="small">(Cũng có thể chỉnh sửa, xoá các chiến lược mục tiêu bạn đã tạo trước khi
+                        những dữ
+                        liệu này hoàn thành)</i>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Object_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Create_Object_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án đã tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Object_Project'].value"
+                                value="Self" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án được mời tham gia
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Object_Project'].value"
+                                value="Join" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Object_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Object_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Chỉnh sửa, xoá <b>chiến lược - mục tiêu</b> không phải do bạn tạo mới, thuộc các dự
+                    án:<br />
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được chỉnh sửa, xoá chiến lược - mục tiêu không do bạn tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Object_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Edit_Object_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án đã tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Object_Project'].value"
+                                value="Self" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án tham gia
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Object_Project'].value"
+                                value="Join" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Object_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Object_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+    </div>
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Theo dõi các <b>công việc</b> thuộc các dự án:<br />
+                    <i class="small">(Mặc định có thể theo dõi công việc đã tạo)</i>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được theo dõi
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Follow_Task_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án đã tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Project'].value"
+                                value="Self" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án tham gia
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Project'].value"
+                                value="Join" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Tạo mới <b>công việc</b>, thuộc các dự án :<br />
+                    <i class="small">(Cũng có thể chỉnh sửa, xoá các công việc bạn đã tạo trước khi
+                        những dữ
+                        liệu này hoàn thành)</i>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Create_Task_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án đã tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Project'].value"
+                                value="Self" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án tham gia
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Project'].value"
+                                value="Join" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Chỉnh sửa, xoá <b>công việc</b> không phải do bạn tạo mới, thuộc các dự
+                    án:<br />
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được chỉnh sửa, xoá công việc không do bạn tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Project'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Edit_Task_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án đã tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Project'].value"
+                                value="Self" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Dự án tham gia
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Project'].value"
+                                value="Join" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Nhận thông báo <b>Đầu việc / công việc</b> thuộc về phòng ban:<br />
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không nhận thông báo đầu việc/công việc không do bạn tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Notify_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

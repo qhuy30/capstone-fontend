@@ -1,0 +1,333 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_OD_Insert">
+  <div class="modal-dialog modal-full" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertForm">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <!-- code -->
+              <div class="form-group col-md-6">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Document number and notation'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')"
+                    type="text"
+                    ng-model="ctrl._insert_value.code"
+                    class="form-control"
+                    name="insert_code"
+                    placeholder="{{'Input Document number and notation'|l}}"
+                    ng-class="{ 'is-invalid': insertForm.insert_code.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <!-- od_number -->
+              <div class="form-group col-md-6">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'OutgoingReferenceNumber'|l}}</span>
+                  </div>
+                  <input 
+                    type="text" 
+                    ng-model="ctrl.totalItems + 1" 
+                    class="form-control" 
+                    name="insert_code" 
+                    placeholder="Input code"
+                    ng-class="{ 'is-invalid': insertForm.insert_code.$invalid }" 
+                    style="font-weight: bold; background-color: #eee;"
+                    disabled 
+                  />
+                </div>
+              </div>
+              <!-- od_book -->
+              <div class="form-group col-md-6">
+                <pick-modal-directory
+                  extend="ctrl.OutgoingDispatchBook_Config"
+                  pick-func="ctrl.pickODB_insert(params)"
+                  id-value="ctrl._insert_value.outgoing_dispatch_book"
+                  label="{{'OutgoingDispatchBook'|l}}"
+                  require="true"
+                ></pick-modal-directory>
+              </div>
+              <!-- type -->
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.DocumentType_Config"
+                  pick-func="ctrl.pickDAT_insert(params)" id-value="ctrl._insert_value.type"
+                  label="{{'TypeName'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')"
+                  require="true"></pick-modal-directory>
+              </div>
+              <!-- Date month year document -->
+              <div class="col-md-6 form-group">
+                <date
+                  id-value="ctrl._insert_value.document_date"
+                  func="ctrl.chooseReleaseDate_insert(params)"
+                  label="{{'DateMonthYearDocument'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')"
+                  required="true"
+                ></date>
+              </div>
+              <!-- priority -->
+              <div class="form-group col-md-6">
+                <pick-modal-directory
+                  extend="ctrl.IncommingDispatchPririoty_Config"
+                  pick-func="ctrl.choosePriority_insert(params)"
+                  id-value="ctrl._insert_value.priority"
+                  label="{{'EmergencyLevel'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')"
+                  require="true"
+                ></pick-modal-directory>
+              </div> 
+              <!-- transfer_date -->
+              <div class="col-md-6 form-group">
+                <date
+                  id-value="ctrl._insert_value.transfer_date"
+                  func="ctrl.chooseTransferDate_insert(params)"
+                  label="{{'Transfer date'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')"
+                  required="true"
+                ></date>
+              </div>
+              <!-- Workflow -->
+              <div class="form-group col-md-6">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Workflow'|l}}</span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="insert_workflow"
+                    placeholder="{{'DispatchOutgoing'|l}}"
+                    ng-class="{ 'is-invalid': insertForm.insert_workflow.$invalid }"
+                    style="font-weight: bold; background-color: #eee;"
+                    disabled
+                  />
+                </div>
+              </div>
+              <!-- Expiration Date -->
+              <div class="col-md-6 form-group">
+                <date 
+                  id-value="ctrl._insert_value.expiration_date"
+                  func="ctrl.chooseExpirationDate_insert(params)"
+                  label="{{'ExpirationDate'|l}}" 
+                  required="true"></date>
+                <div class="errorMsg" ng-show="ctrl.expirationDate_ErrorMsg && ctrl.Item.status !== 'SaveODB'">{{ ctrl.expirationDate_ErrorMsg }}</div>
+              </div>
+              <!-- note -->
+              <div class="form-group col-md-6">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span>{{'Note'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')"
+                    type="text" 
+                    ng-model="ctrl._insert_value.note" 
+                    class="form-control"
+                    name="insert_note" 
+                    placeholder="{{'InputNote'|l}}"
+                    ng-class="{ 'is-invalid': insertForm.insert_note.$invalid }" />
+                </div>
+              </div>
+              <!-- Quantity -->
+              <div class="form-group col-md-6">
+                <div class="input-label">
+                  {{'DocumentQuantity' | l}}
+                </div>
+                <input
+                  type="number"
+                  ng-model="ctrl._insert_value.document_quantity"
+                  class="form-control"
+                  name="insert_quantity"
+                  placeholder="{{'Input quantity'|l}}"
+                  ng-class="{'is-invalid': insertForm.insert_quantity.$invalid}"
+                  required
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')"
+                />
+              </div>
+              <!-- Signer -->
+              <div class="form-group col-md-6">
+                <div class="input-label">{{'TheSigner'|l}}</div>
+                <pick-user-multi 
+                  pick-func=""
+                  id-value="ctrl._insert_value.signers"
+                  require="true" 
+                  disable="$root.statusValue.get(ctrl._ctrlName,'OD','insert','doing')">
+                </pick-user-multi>
+              </div>
+              <!-- Typing -->
+              <div class="form-group col-md-6">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'SubmissionDepartment' | l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input
+                    name="insert_department"
+                    type="text"
+                    ng-model="ctrl._insert_value.department"
+                    class="form-control"
+                    placeholder="{{'Input the submission department'|l}}"
+                    ng-class="{'is-invalid': insertForm.insert_department.$invalid}"
+                  />
+                </div>
+              </div>
+              <!-- Receive department -->
+              <div class="form-group col-md-6">
+                <div class="input-label">
+                  {{'ReceivingDocumentDepartment' | l}}
+                </div>
+                <pick-user-department-multi
+                  pick-func="ctrl.pickUserAndDepartment_insert(params)"
+                  id-value="ctrl._insert_value.userAndDepartment">
+                </pick-user-department-multi>
+              </div>
+              <!-- excerpt -->
+              <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Excerpt'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <div class="form-group">
+                    <text-area-with-suggestions
+                      ng-model="ctrl._insert_value.excerpt"
+                      required="true"
+                    ></text-area-with-suggestions>
+                  </div>
+                </div>
+              </div>
+              <!-- Documents -->
+              <div class="col-md-6">
+                <div class="input-label">{{'OutgoingDocuments'|l}}</div>
+                <div class="row" style="border: 2px solid #f0f2f3; border-radius: 4px">
+                  <div class="col-md-6">
+                    <div ng-if="ctrl._insert_value.files.length ==0" class="no-data">
+                      {{'NoAttachment' | l}}
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table table-sm">
+                        <tbody>
+                        <tr ng-repeat="item in ctrl._insert_value.outgoing_documents">
+                          <td>{{$index + 1}}</td>
+                          <td>
+                            <attachment-just-show my-item="item"></attachment-just-show>
+                          </td>
+                          <td >
+                            <i class="fas fa-times text-danger"
+                              ng-click="ctrl.removeOutgoingDocuments_insert(item)">
+                            </i>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                      <tbody>
+                      <tr>
+                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                            colspan=" 0">
+                          <div class="diskuf-uploader">
+                            <span class="wd-fa-add-file-light">
+                              <span class="wd-fa-add-file-light-text">
+                                <span class="wd-fa-add-file-light-title">
+                                  <span class="wd-fa-add-file-light-title-text">{{'UploadFile' | l}}</span>
+                                </span>
+                                <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload' | l}}</span>
+                              </span>
+                            </span>
+                            <input 
+                              class="diskuf-fileUploader wd-test-file-light-inp " 
+                              type="file"
+                              file-reading="ctrl._insert_value.outgoing_documents" 
+                              size="1" 
+                              multiple style="width:100%;"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- Attachments -->
+              <div class="col-md-6">
+                <div class="input-label">{{'AttachDocuments'|l}}</div>
+                <div class="row" style="border: 2px solid #f0f2f3; border-radius: 4px">
+                  <div class="col-md-6">
+                    <div ng-if="ctrl._insert_value.attach_documents.length ==0" class="no-data">
+                      {{'NoAttachment' | l}}
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table table-sm">
+
+                        <tbody>
+                        <tr ng-repeat="item in ctrl._insert_value.attach_documents">
+                          <td>{{$index + 1}}</td>
+                          <td>
+                            <attachment-just-show my-item="item"></attachment-just-show>
+                          </td>
+                          <td>
+                            <i class="fas fa-times text-danger"
+                              ng-click="ctrl.removeAttachDocuments_insert(item)">
+                            </i>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                      <tbody>
+                      <tr>
+                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                            colspan=" 0">
+                          <div class="diskuf-uploader">
+                            <span class="wd-fa-add-file-light">
+                              <span class="wd-fa-add-file-light-text">
+                                <span class="wd-fa-add-file-light-title">
+                                  <span class="wd-fa-add-file-light-title-text">{{'UploadFile' | l}}</span>
+                                </span>
+                                <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload' | l}}</span>
+                              </span>
+                            </span>
+                            <input class="diskuf-fileUploader wd-test-file-light-inp " type="file"
+                              file-reading="ctrl._insert_value.attach_documents" size="1" multiple style="width:100%;">
+                          </div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new
+          modal-button-new-label="{{'Save'|l}}"
+          modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-new-objname="OD"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid="insertForm.$invalid || ctrl._insert_value.files.length===0"
+          modal-button-new-func="ctrl.insert()"
+        >
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

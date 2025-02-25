@@ -1,0 +1,70 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="AddRequestFriendModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'AddFriend'|l}}"></modal-header>
+      <div class="modal-body" ng-style="{{ctrl.modalStyle}}">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <p class="small">{{'SearchYourFriendByIdOrName'|l}}!!</p>
+            <div class="input-prepend input-group">
+              <input
+                type="text"
+                style="width: 100%"
+                ng-model="ctrl.search"
+                ng-watch="ctrl.search"
+                func="ctrl.load_for_add_friend()"
+              />
+            </div>
+          </div>
+          <div class="form-group" ng-show="ctrl.user_for_add_friend.length>0">
+            <p class="title">
+              {{'SearchResults'|l}}&nbsp;(<span class="small"
+                >{{ctrl.user_for_add_friend.length}}</span
+              >)
+            </p>
+            <div class="row">
+              <div
+                class="col-md-4 user-item"
+                ng-repeat="item in ctrl.user_for_add_friend"
+              >
+                <show-username username="item.username"></show-username>
+                <i
+                    ng-click="ctrl.insert(item.username)"
+                  class="fa fa-user-plus"
+                  aria-hidden="true"
+                  style="float: right; margin-top: 6px; margin-right: 6px"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-show="ctrl.request_sent.length>0">
+            <p class="title">
+              {{'FriendRequestHasBeenSent'|l}}&nbsp;(<span class="small"
+                >{{ctrl.request_sent.length}}</span
+              >)
+            </p>
+            <div class="row">
+              <div
+                class="col-md-4 user-item"
+                ng-repeat="item in ctrl.request_sent"
+              >
+                <show-username username="item.friend"></show-username>
+                <i
+                    ng-click="ctrl.delete(item._id)"
+                  class="fa fa-times"
+                  aria-hidden="true"
+                  style="float: right;margin-top: 6px;margin-right: 6px;"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div style="width: 100%;height:32px;">
+            <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close">
+                {{'Close'|l}}
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

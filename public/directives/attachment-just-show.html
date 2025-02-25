@@ -1,0 +1,10 @@
+<span 
+class="showfile" style="cursor: default;" title="{{myItem.name}}" >
+    <i style="color: blue;" class="fas fa-file-word" ng-if="myType == 'docx' || myType == 'doc'"></i>
+    <i style="color: green;" class="fas fa-file-excel" ng-if="myType == 'xls' || myType == 'xlsx'"></i>
+    <i style="color: red;" class="fas fa-file-pdf" ng-if="myType == 'pdf' "></i>
+    <i style="color: orange;" class="fas fa-file-powerpoint" ng-if="myType == 'ppt' || myType == 'pptx'"></i>
+    <i style="color: pink;" class="fas fa-file-image" ng-if="myType == 'png' || myType == 'jpg' || myType == 'ico'"></i>
+    <i style="color: purple;" class="fas fa-photo-video" ng-if="myType == 'mp3' || myType == 'mp4' || myType == 'wav'"></i>
+    <span>&nbsp;{{myItem.name}}</span>
+</span>

@@ -1,0 +1,60 @@
+<div class="comment">
+  <!-- <div class="add-comment" ng-if="ctrl.status !== 'completed'">
+    <div class="show-avatar">
+      <show-username
+        style="margin-top: 10px"
+        username="$root.logininfo.username"
+        just-image="true"
+      ></show-username>
+    </div>
+    <div class="input-comment">
+      <div
+        class="placeholder"
+        ng-hide="ctrl.showPushComment"
+        ng-click="ctrl.focusComment()"
+        style="border-radius: 10px"
+      >
+        {{'TypeCommentHere'|l}}
+      </div>
+      <div ng-show="ctrl.showPushComment">
+        <textarea id="Task_comment" class="form-control"></textarea>
+        <div style="margin-top: 3px; float: right">
+          <button class="btn btn-primary" ng-click="ctrl.comment()">
+            {{'Save'|l}}
+          </button>
+          <button class="btn btn-gray-300" ng-click="ctrl.blurPushComment()">
+            {{'Cancel'|l}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="comment-list">
+    <div class="label" style="margin-top: 15px">
+      <i class="far fa-comments"></i
+      >&nbsp;{{'Comment'|l}}&nbsp;({{ctrl.getCommentCountWithoutCancel(ctrl.Item.comment)}})
+    </div>
+    <hr />
+    <div
+      class="comment-item"
+      ng-repeat="item in ctrl.Item.comment|orderBy:'-time'"
+    >
+      <div class="show-avatar">
+        <show-username
+          style="margin-top: 6px"
+          username="item.username"
+          just-image="true"
+        ></show-username>
+      </div>
+      <div class="comment-content">
+        <show-username
+          username="item.username"
+          hide-image="true"
+        ></show-username
+        >,
+        <time-show time-show-type="long" time-show-data="item.time"></time-show>
+        <div class="content" ng-bind-html="item.content"></div>
+      </div>
+    </div>
+  </div>
+</div>

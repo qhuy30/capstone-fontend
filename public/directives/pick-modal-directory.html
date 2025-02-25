@@ -1,0 +1,138 @@
+<div class="container" ng-class="{ 'disabled': disable }">  
+  <div class="label">
+    {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+  </div>
+
+  <div class="main-container">
+    <div class="main-content">
+      <div  class="value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div ng-style="{ 'background-color': disable ? '#c2cfd6' : '' }" class="show-value" ng-click="init()">
+          {{selectedItem[showField][$root.Language.current]}}
+          <span class="dropdown-toggle">&nbsp;</span>
+        </div>
+
+      </div>
+      <input type="text" ng-required="require" ng-model="selectedItem[showField][$root.Language.current]" ng-show="false" />
+      <div class="dropdown-menu">
+
+        <div class="tool">
+          <div class="search">
+            <input type="text" ng-model="search" my-watch-text-input my-scope="search" my-func="init()"
+              my-start="!_notyetInit" placeholder="{{'FindByName'|l}}">
+            <i class="fas fa-search"></i>
+          </div>
+        </div>
+        <div class="table-responsive" style="margin-top: 35px">
+          <table class="table-hover" style="width: 100%;">
+            <tbody>
+              <tr ng-repeat="item in data|orderBy:sort.name:sort.value track by $index" ng-click="pick(item)" style="cursor: pointer;">
+                <!-- <td>
+                  <button type="button" class="btn btn-primary" >
+                    {{'Pick'|l}}
+                  </button>
+                </td> -->
+                <td><i class="fas fa-angle-double-right"></i>&nbsp;&nbsp;{{item[showField][$root.Language.current]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div ng-if="data.length ==0" class="no-data">{{'NoData'|l}}</div>
+        <pagination pagination-ctrlname="{{_ctrlName}}" pagination-objname="Count" pagination-actionname="count"
+          pagination-currentpage="currentPage" pagination-noi="numOfItemPerPage" pagination-total="totalItems"
+          pagination-func="load(params)"></pagination>
+      </div>
+    </div>
+
+    <button ng-if="hasInsertButton" type="button" class="btn btn-primary insert" ng-click="prepareInsert()" modal-toggle="#{{_id_modal_insert}}">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</div>
+
+<div ng-if="hasInsertButton" class="modal fade insert-directory" tabindex="-1" role="dialog" id="{{_id_modal_insert}}">
+  <div id="insert-directory">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+        <div class="modal-body">
+          <form class="form-horizontal" name="insertForm">
+            <div class="form-group">
+              <my-async async-ctrlname="{{_ctrlName}}" async-objname="Directory" async-actionname="getOrderNumber">
+                <async-success>
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'OrderNumber'|l}}</span>
+                      <span class="require-sympton">*</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(_ctrlName,'Directory','insert','doing') || ctrl.isDisabledOrderNumberEdit"
+                      type="number" ng-model="_insert_value.ordernumber" class="form-control"
+                      name="insert_ordernumber" ng-class="{ 'is-invalid': insertForm.insert_ordernumber.$invalid }"
+                      ng-required="{{isInsertModalOpen}}"  />
+                  </div>
+                  <invalid invalid-status="insertForm.insert_ordernumber.$error.vldsync">
+                    {{'AtLeast'|l:({title:1})}}.
+                  </invalid>
+                </async-success>
+              </my-async>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Title'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(_ctrlName,'Directory','insert','doing')" type="text"
+                  ng-model="_insert_value.title['vi-VN']" class="form-control" name="insert_title_vi"
+                  placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_vi.$invalid }" ng-required="{{isInsertModalOpen}}"  />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(_ctrlName,'Directory','insert','doing')" type="text"
+                  ng-model="_insert_value.title['en-US']" class="form-control" name="insert_title_en"
+                  placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_en.$invalid }" ng-required="{{isInsertModalOpen}}"  />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Value'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(_ctrlName,'Directory','insert','doing')" type="text"
+                  ng-model="_insert_value.value" class="form-control" name="insert_value" placeholder="Input value"
+                  ng-class="{ 'is-invalid': insertForm.insert_value.$invalid }" ng-required="{{isInsertModalOpen}}"  />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input-checkbox input-checkbox-label="{{'IsActive'|l}}" input-checkbox-model="_insert_value.isactive"
+                input-checkbox-disabled="$root.statusValue.get(_ctrlName,'Directory','insert','doing')">
+              </input-checkbox>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <modal-button-new 
+            modal-button-new-ctrlname="{{_ctrlName}}"
+            modal-button-new-objname="Directory"
+            modal-button-new-actionname="insert"
+            modal-button-new-invalid=" insertForm.$invalid || fromDate_ErrorMsg || toDate_ErrorMsg || Number_Error_Msg"
+            modal-button-new-func="insert()">
+          </modal-button-new>
+          <modal-button-close target-modal-id="{{_id_modal_insert}}"></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

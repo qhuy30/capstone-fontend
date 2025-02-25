@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="value">
+        {{showValue}}
+    </div>
+    <div class="icon">
+        <i class="fas fa-filter" ng-click="open()" ng-disabled="disable" modal-toggle="#{{_ctrlName}}"></i>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{_ctrlName}}">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <modal-header modal-header-title="{{label}}" modal-header-id={{_ctrlName}}></modal-header>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 part">
+                  <div class="tool" >
+                    <div class="search">
+                      <input type="text" ng-model="search" my-watch-text-input
+                        my-scope="search" my-func="refreshData()"
+                        my-start="_notyetInit" placeholder="{{'FindByName'|l}}">
+                      <i class="fas fa-search"></i>
+                    </div>
+                  </div>
+                  <table class="table table-sm" style="margin-top: 35px;">
+                    <thead>
+                      <tr>
+                        <td>
+                          #
+                        </td>
+                        <td>
+                          {{'Title'|l}}
+                        </td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in data">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          {{showField ==='title'?item.title[$root.Language.current]:item[showField]}}
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-primary " ng-click="pick(item[extend.load_details_column])" ng-disabled="disable" >
+                            {{'Pick'|l}}
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div ng-if="data.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                </div>
+                <pagination pagination-ctrlname="{{_ctrlName}}" pagination-objname="Count"
+                    pagination-actionname="count" pagination-currentpage="currentPage"
+                    pagination-noi="numOfItemPerPage" pagination-total="totalItems"
+                    pagination-func="load(params)"></pagination>
+                </div>
+                <div class="col-md-6 part">
+                  <div class="table-responsive" style="margin-top: 5px;">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <td>
+                            #
+                          </td>
+                          <td>
+                            {{label}}
+                          </td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="item in selectedItem">
+                          <td>{{$index+1}}</td>
+                          <td>
+                            {{showField ==='title'?item.title[$root.Language.current]:item[showField]}}
+                          </td>
+                          <td>
+                            <i class="fas fa-times text-danger" ng-click="remove(item[extend.load_details_column])"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" ng-click="close()">{{'Close'|l}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

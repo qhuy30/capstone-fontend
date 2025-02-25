@@ -1,0 +1,27 @@
+<div id="journey_time_form_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng quản lý giấy đi đường
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.JourneyTimeForm.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.JourneyTimeForm.Use'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng duyệt và quản trị thông tin giấy đi đường
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.JourneyTimeForm.Approval'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.JourneyTimeForm.Approval'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

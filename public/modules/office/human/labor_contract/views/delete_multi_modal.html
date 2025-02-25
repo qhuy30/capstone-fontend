@@ -1,0 +1,32 @@
+<div class="modal fade" id="modal_LaborContract_Delete_Multi" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'DoYouWantToDeleteFollowData'|l}}"></modal-header>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>{{'Name'|l}}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ctrl.checkAr|orderBy:ctrl.sort.name:ctrl.sort.value " ng-if="item.check">
+                                <td>{{$index +1}}</td>
+                                <td>{{item.fullname}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="LaborContract" modal-button-delete-actionname="delete_multi"
+                    modal-button-delete-func="ctrl.delete_multi()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,374 @@
+<my-content>
+  <content-content>
+    <div ng-controller="meeting_room_details_controller as ctrlChild">
+      <div class="detail-registration-car">
+        <div class="col-md-12 mt-2 row d-flex justify-content-start"
+          ng-controller="meeting_room_action_controller as ctrl">
+          <!-- Assess -->
+          <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_department"
+            button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_DepartmentApproval"
+            button-approval-item-func="ctrl.prepareDepartmentApproval(params)"
+            button-approval-item-params="{item:ctrlChild.Item}" button-label="{{'Accept'}}" />
+
+          <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_management"
+            button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrlChild.Item,action:'approve_management'}"
+            button-label="{{'Accept'}}" />
+
+          <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_lead"
+            button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrlChild.Item,action:'approve_lead'}"
+            button-label="{{'Accept'}}" />
+
+          <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_department"
+            button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-reject-item-func="ctrl.prepareAssess(params)"
+            button-reject-item-params="{item:ctrlChild.Item,action:'reject_department'}"
+            button-label="{{'Reject'}}" />
+
+          <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_management"
+            button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-reject-item-func="ctrl.prepareAssess(params)"
+            button-reject-item-params="{item:ctrlChild.Item,action:'reject_management'}"
+            button-label="{{'Reject'}}" />
+
+          <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_lead"
+            button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-reject-item-func="ctrl.prepareAssess(params)"
+            button-reject-item-params="{item:ctrlChild.Item,action:'reject_lead'}" button-label="{{'Reject'}}" />
+
+          <!-- Recall -->
+          <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_department"
+            button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrlChild.Item,action:'approve_recall_department'}"
+            button-label="{{'ApproveRecall'}}" />
+
+          <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_management"
+            button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrlChild.Item,action:'approve_recall_management'}"
+            button-label="{{'ApproveRecall'}}" />
+
+          <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_lead"
+            button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrlChild.Item,action:'approve_recall_lead'}"
+            button-label="{{'ApproveRecall'}}" />
+
+          <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_department"
+            button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-reject-item-func="ctrl.prepareAssess(params)"
+            button-reject-item-params="{item:ctrlChild.Item,action:'reject_recall_department'}"
+            button-label="{{'Reject'}}" />
+
+          <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_management"
+            button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-reject-item-func="ctrl.prepareAssess(params)"
+            button-reject-item-params="{item:ctrlChild.Item,action:'reject_recall_management'}"
+            button-label="{{'Reject'}}" />
+
+          <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_lead"
+            button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-reject-item-func="ctrl.prepareAssess(params)"
+            button-reject-item-params="{item:ctrlChild.Item,action:'reject_recall_lead'}"
+            button-label="{{'Reject'}}" />
+
+          <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_request_cancel"
+            button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+            button-reject-item-func="ctrl.prepareAssess(params)"
+            button-reject-item-params="{item:ctrlChild.Item,action:'request_cancel'}"
+            button-label="{{'RequestCancel'}}" />
+          <!-- End assess  -->
+          <button-edit-item class="mr-2" ng-if="ctrlChild.Item.allow_edit"
+            ng-show="['Office.MeetingRoomSchedule.Use']|checkRule"
+            button-edit-item-modal="#{{ctrl._ctrlName}}-modal_MeetingRoomSchedule_Update"
+            button-edit-item-func="ctrl.prepareUpdateRoomRegistration(params)"
+            button-edit-item-params="ctrlChild.Item" button-label="Edit">
+          </button-edit-item>
+
+          <div ng-include="ctrl._urlUpdateRegisterModal"></div>
+          <div ng-include="ctrl._urlDepartmentApprove"></div>
+          <div ng-include="ctrl._urlRoomAssess"></div>
+        </div>
+        <section class="pb-3">
+          <div class="text-center post-data">
+            <h2>
+              <a><strong>{{ctrlChild.Item.title}}</strong></a>
+            </h2>
+            <p class="grey-text">
+              <span> {{'WrittenBy'|l}} </span>
+              <span>
+                <a><show-username username="ctrlChild.Item.username"></show-username></a>&nbsp;
+              </span>
+              <span>
+                <time-show time-show-data="(ctrlChild.Item.entity.his[0].created)"></time-show>
+              </span>
+            </p>
+          </div>
+        </section>
+
+        <section class="pb-3">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+              <table class="col-md-12">
+                <!-- <tr>
+                  <td class="font-weight-bolder"> {{'TitleRegistrationRoom'|l}} </td>
+                  <td> {{ctrlChild.Item.title}} </td>
+                </tr> -->
+                <tr>
+                  <td class="font-weight-bolder"> {{'RegistrationCode'|l}} </td>
+                  <td colspan="5"> {{ctrlChild.Item.code}} </td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bolder"> {{'TypeRoom'|l}} </td>
+                  <td> {{ctrlChild.Item.type|l}} </td>
+
+                  <td class="font-weight-bolder"> {{'Room'|l}} </td>
+                  <td colspan="5">
+                    <get-field-directory id-value="ctrlChild.Item.room" extend="ctrlChild.room_config"
+                      localization="true" />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="width: 15%;" class="font-weight-bolder">{{'Start date use'|l}}</td>
+                  <td>
+                    <time-show time-show-type="justdate" time-show-data="ctrlChild.Item.date_start"></time-show>
+                  </td>
+
+                  <td style="width: 15%;" class="font-weight-bolder">{{'TimeStart'|l}}</td>
+                  <td>
+                    <time-show time-show-type="justtime" time-show-data="ctrlChild.Item.date_start"></time-show>
+                  </td>
+
+                  <td style="width: 15%;" class="font-weight-bolder">{{'TimeEnd'|l}}</td>
+                  <td>
+                    <time-show time-show-type="justtime" time-show-data="ctrlChild.Item.date_end"></time-show>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="font-weight-bolder"> {{'HostPerson'|l}} </td>
+                  <td colspan="5">
+                    <span ng-switch="ctrlChild.Item.host_scope">
+                      <span ng-switch-when="external">{{ctrlChild.Item.host_external}} ({{'External school unit'|l}})</span>
+                      <span ng-switch-when="internal">
+                        <show-username-onlyname username="ctrlChild.Item.host" hide-image="true">
+                        </show-username-onlyname>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr ng-if="ctrlChild.Item.participants.length > 0">
+                  <td class="font-weight-bolder"> {{'Participant'|l}} </td>
+                  <td colspan="5">
+                    <div class="d-flex flex-wrap">
+                      <span ng-repeat="item in ctrlChild.Item.participants">
+                        <show-username-onlyname hide-image="true" username="item">
+                        </show-username-onlyname><span ng-show="!$last">,&nbsp;</span>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr ng-if="ctrlChild.Item.other_participants.length > 0">
+                  <td class="font-weight-bolder"> {{'OtherParticipants'|l}} </td>
+                  <td colspan="5">
+                    <div class="d-flex flex-wrap">
+                      <span ng-repeat="item in ctrlChild.Item.other_participants track by $index">
+                        {{item}}<span ng-show="!$last">,&nbsp;</span>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr ng-if="ctrlChild.Item.to_department.length > 0">
+                  <td class="font-weight-bolder"> {{'ParticipateDepartments'|l}} </td>
+                  <td colspan="5">
+                    <div class="d-flex flex-wrap">
+                      <span ng-repeat="department in ctrlChild.Item.to_department">
+                        <show-department department="department"></show-department><span ng-show="!$last">,&nbsp;</span>
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr ng-if="ctrlChild.Item.service_proposal">
+                  <td class="font-weight-bolder"> {{'RecommendedService'|l}} </td>
+                  <td colspan="5">
+                    <span>{{ ctrlChild.Item.service_proposal_text }}</span>
+                  </td>
+                </tr>
+
+                <tr ng-if="ctrlChild.Item.helpdesk">
+                  <td class="font-weight-bolder"> {{'TechnicalSupport'|l}} </td>
+                  <td colspan="5">
+                    <span>{{ ctrlChild.Item.helpdesk_text }}</span>
+                  </td>
+                </tr>
+
+                <tr ng-if="ctrlChild.Item.teabreak">
+                  <td class="font-weight-bolder"> {{'TeaBreak'|l}} </td>
+                  <td colspan="5">
+                    <span>{{ ctrlChild.Item.teabreak_text }}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="font-weight-bolder">{{'Content'|l}}</td>
+                  <td colspan="5">
+                    <div ng-bind-html="ctrlChild.Item.content"></div>
+                  </td>
+                </tr>
+              </table>
+
+
+              <!-- <div class="col-md-12 mt-2 row d-flex justify-content-end"
+                ng-controller="meeting_room_action_controller as ctrl">
+                <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_department"
+                  button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_DepartmentApproval"
+                  button-approval-item-func="ctrl.prepareDepartmentApproval(params)"
+                  button-approval-item-params="{item:ctrlChild.Item}" button-label="{{'Accept'}}" />
+
+                <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_management"
+                  button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-approval-item-func="ctrl.prepareAssess(params)"
+                  button-approval-item-params="{item:ctrlChild.Item,action:'approve_management'}"
+                  button-label="{{'Accept'}}" />
+
+                <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_lead"
+                  button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-approval-item-func="ctrl.prepareAssess(params)"
+                  button-approval-item-params="{item:ctrlChild.Item,action:'approve_lead'}"
+                  button-label="{{'Accept'}}" />
+
+                <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_department"
+                  button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-reject-item-func="ctrl.prepareAssess(params)"
+                  button-reject-item-params="{item:ctrlChild.Item,action:'reject_department'}"
+                  button-label="{{'Reject'}}" />
+
+                <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_management"
+                  button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-reject-item-func="ctrl.prepareAssess(params)"
+                  button-reject-item-params="{item:ctrlChild.Item,action:'reject_management'}"
+                  button-label="{{'Reject'}}" />
+
+                <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_lead"
+                  button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-reject-item-func="ctrl.prepareAssess(params)"
+                  button-reject-item-params="{item:ctrlChild.Item,action:'reject_lead'}" button-label="{{'Reject'}}" />
+
+                <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_department"
+                  button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-approval-item-func="ctrl.prepareAssess(params)"
+                  button-approval-item-params="{item:ctrlChild.Item,action:'approve_recall_department'}"
+                  button-label="{{'ApproveRecall'}}" />
+
+                <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_management"
+                  button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-approval-item-func="ctrl.prepareAssess(params)"
+                  button-approval-item-params="{item:ctrlChild.Item,action:'approve_recall_management'}"
+                  button-label="{{'ApproveRecall'}}" />
+
+                <button-approval-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_lead"
+                  button-approval-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-approval-item-func="ctrl.prepareAssess(params)"
+                  button-approval-item-params="{item:ctrlChild.Item,action:'approve_recall_lead'}"
+                  button-label="{{'ApproveRecall'}}" />
+
+                <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_department"
+                  button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-reject-item-func="ctrl.prepareAssess(params)"
+                  button-reject-item-params="{item:ctrlChild.Item,action:'reject_recall_department'}"
+                  button-label="{{'Reject'}}" />
+
+                <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_management"
+                  button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-reject-item-func="ctrl.prepareAssess(params)"
+                  button-reject-item-params="{item:ctrlChild.Item,action:'reject_recall_management'}"
+                  button-label="{{'Reject'}}" />
+
+                <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_approve_recall_lead"
+                  button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-reject-item-func="ctrl.prepareAssess(params)"
+                  button-reject-item-params="{item:ctrlChild.Item,action:'reject_recall_lead'}"
+                  button-label="{{'Reject'}}" />
+
+                <button-reject-item class="mr-2" ng-if="ctrlChild.Item.allow_request_cancel"
+                  button-reject-item-modal="#{{ctrl._ctrlName}}-modal_RoomRegistration_Assess"
+                  button-reject-item-func="ctrl.prepareAssess(params)"
+                  button-reject-item-params="{item:ctrlChild.Item,action:'request_cancel'}"
+                  button-label="{{'RequestCancel'}}" />
+                <button-edit-item class="mr-2" ng-if="ctrlChild.Item.allow_edit"
+                  ng-show="['Office.MeetingRoomSchedule.Use']|checkRule"
+                  button-edit-item-modal="#{{ctrl._ctrlName}}-modal_MeetingRoomSchedule_Update"
+                  button-edit-item-func="ctrl.prepareUpdateRoomRegistration(params)"
+                  button-edit-item-params="ctrlChild.Item" button-label="Edit">
+                </button-edit-item>
+
+                <div ng-include="ctrl._urlUpdateRegisterModal"></div>
+                <div ng-include="ctrl._urlDepartmentApprove"></div>
+                <div ng-include="ctrl._urlRoomAssess"></div>
+              </div> -->
+            </div>
+
+          </div>
+        </section>
+
+
+
+        <section class="pb-3" ng-show="ctrlChild.Item.attachments.length>0">
+          <p class="note note-primary attachment">
+            <strong>{{"Attachment"|l}}:</strong>
+
+            <attachment-show ng-repeat="at in ctrlChild.Item.attachments" attachment-show-item="at"
+              attachment-show-func="ctrlChild.load_file_info(params)"
+              attachment-show-params="{id:ctrlChild.Item._id,name:at.name}"
+              attachment-show-service-name="'meeting_room'">
+            </attachment-show>
+          </p>
+        </section>
+      </div>
+
+      <div class="detail-registration-car comments-list text-center text-md-left">
+        <h4 class="text-center font-weight-bold mb-5 grey-text">
+          {{'Events'|l}}
+          <span class="badge pink">{{ctrlChild.Item.event.length}}</span>
+        </h4>
+
+        <!-- First row -->
+        <table class="table event-table">
+          <thead>
+            <tr>
+              <th style="text-align: center;">#</th>
+              <th style=" text-align: center;">{{'Time'|l}}</th>
+              <th style=" text-align: center">{{'PersonAction'|l}}</th>
+              <th style=" text-align: center">{{'Action'|l}}</th>
+              <th style=" text-align: center; max-width: 200px;">{{'Message'|l}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in ctrlChild.Item.event|orderBy:'time':-1">
+              <td style="text-align: center;"> {{$index +1}} </td>
+              <td class="hour">
+                <span class="grey-text"><i class="fa fa-clock" aria-hidden="true"></i>
+                  <time-show time-show-data="item.time"></time-show>
+                </span>
+              </td>
+              <td>
+                <show-username username="item.username"> </show-username>
+              </td>
+              <td>{{item.action|l}}</td>
+              <td style="max-width: 200px;">{{item.note}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </content-content>
+</my-content>

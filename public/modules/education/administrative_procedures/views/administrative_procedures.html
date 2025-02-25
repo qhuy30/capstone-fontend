@@ -1,0 +1,191 @@
+<my-content class="administrative-procedures-feature">
+    <content-content>
+        <div ng-controller="administrative_procedures_controller as ctrl">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <button-new button-new-func="ctrl._prepareInsert()" button-new-label="{{'New'|l}}"
+                            button-new-modal="#modal_administrative_procedures_insert">
+                        </button-new>
+                    </div>
+                    <more-option-bar>
+                        <bar-content class="row">
+                            <div class="col-md-3 form-group">
+                                <pick-modal-generic label="Lệ phí" data="ctrl.feeOptions" invalid-value-func=""
+                                    pick-func="" id-value="" class="size-sm"></pick-modal-generic>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <pick-modal-generic label="Biểu mẫu" data="ctrl.administrativeProcedureFormData"
+                                    invalid-value-func="" pick-func="" id-value="" class="size-sm"></pick-modal-generic>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <date id-value="ctrl._filterFromDate" func="ctrl.chooseFromDate(params)"
+                                    label="{{'FromDate'|l}}"
+                                    disabled="$root.statusValueSet.get(ctrl._ctrlName,'administrativeProcedures','load','doing')">
+                                </date>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <date id-value="ctrl._filterToDate" func="ctrl.chooseToDate(params)"
+                                    label="{{'ToDate'|l}}"
+                                    disabled="$root.statusValueSet.get(ctrl._ctrlName,'administrativeProcedures','load','doing')">
+                                </date>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <pick-modal-generic label="{{'Status'|l}}" data="ctrl.statusOptions"
+                                    invalid-value-func="" pick-func="" id-value="" class="size-sm"></pick-modal-generic>
+                            </div>
+                        </bar-content>
+                    </more-option-bar>
+
+                    <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+                        button-search-model="ctrl._searchByKeyToFilterData">
+                    </button-search>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" ng-click="ctrl.switchTab('all')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='all'}">{{'All'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('waitPay')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='waitPay'}">{{'WaitToPayFees'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('waitProgress')">
+                            <a class="nav-link"
+                                ng-class="{'active':ctrl.tab =='waitProgress'}">{{'WaitingForProgressing'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('additional')">
+                            <a class="nav-link"
+                                ng-class="{'active':ctrl.tab =='additional'}">{{'NeedAdditionalRecords'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('waitReceive')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='waitReceive'}">{{'WaitingToReceive'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('received')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='received'}">{{'Received'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('outDate')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='outDate'}">{{'OutOfDate'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('rejected')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='rejected'}">{{'Rejected'|l}}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="table-responsive main-data" ng-show="ctrl.tab=='all'">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                {{'BriefcaseCode'|l}}
+                                            </th>
+                                            <th class="text-center">
+                                                {{'Student'|l}}
+                                            </th>
+                                            <th class="text-center">
+                                                {{'Form'|l}}
+                                            </th>
+                                            <th class="text-center">
+                                                {{'RegisterDate'|l}}
+                                            </th>
+                                            <th class="text-center">
+                                                {{'Quantity'|l}}
+                                            </th>
+                                            <th class="text-center">
+                                                {{'Fees'|l}} (VND)
+                                            </th>
+                                            <th class="text-center">
+                                                {{'Status'|l}}
+                                            </th>
+                                            <th></th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl.administrativeProcedures"
+                                            ng-if="ctrl.administrativeProcedures.length > 0">
+                                            <td class="text-center">
+                                                <a class="text-dark briefcaseCode" link-details
+                                                    link-details-display="{{ item.formId }}"
+                                                    link-details-url="/administrative-procedure-details?{{ item._id }}"
+                                                    link-details-route="administrative-procedure-details">{{ $index+1 |
+                                                    padNumber:6 }}</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="" class="d-flex align-items-center justify-content-center">
+                                                    <img ng-src="" class="show-user__img">
+                                                    &nbsp;{{ item.studentName }}
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.formName }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.create_date | timestampToDateTime:'date' }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.quantity }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ (item.fee | currency:'':false).replace(',','.') }}
+                                            </td>
+                                            <td class="text-center">
+                                                <button ng-if="item.status == 'Approval'" class="btn-status"
+                                                    style="background: #00C851">{{
+                                                    'Approval'|l }}</button>
+                                                <button ng-if="item.status == 'WaitingForPayment'" class="btn-status"
+                                                    style="background: #00C851">{{
+                                                    'WaitToPayFees'|l }}</button>
+                                                <button ng-if="item.status == 'PendingProcessing'" class="btn-status"
+                                                    style="background: #4285F4">{{
+                                                    'WaitingForProgressing'|l }}</button>
+                                                <button ng-if="item.status == 'PendingReceive'" class="btn-status"
+                                                    style="background: #4285F4">{{
+                                                    'WaitingToReceive'|l }}</button>
+                                                <button ng-if="item.status == 'RequireAdditionalDocuments'"
+                                                    class="btn-status" style="background: #FFBB33">{{
+                                                    'NeedAdditionalRecords'|l }}</button>
+                                                <button ng-if="item.status == 'Received'" class="btn-status"
+                                                    style="background: #5CB85C">{{
+                                                    'Received'|l }}</button>
+                                                <button ng-if="item.status == 'Overdue'" class="btn-status"
+                                                    style="background: #FFBB33">{{
+                                                    'OutOfDate'|l }}</button>
+                                                <button ng-if="item.status == 'Rejected'" class="btn-status"
+                                                    style="background: #FF3F3F">{{
+                                                    'Rejected'|l }}</button>
+                                            </td>
+                                            <td class="text-center">
+                                                <button-edit-item
+                                                    button-edit-item-modal="#modal_administrative_procedures_update"
+                                                    button-edit-item-func="ctrl.prepareUpdate(params)"
+                                                    button-edit-item-params="item">
+                                                </button-edit-item>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ng-if="ctrl.administrativeProcedures.length == 0" class="no-data">
+                                {{'NoData'|l}}
+                            </div>
+                            <pagination pagination-ctrlname="{{ctrl._ctrlName}}"
+                                pagination-objname="administrativeProcedures" pagination-actionname="count"
+                                pagination-currentpage="ctrl.currentPage" pagination-noi="ctrl.numOfItemPerPage"
+                                pagination-total="ctrl.totalItems" pagination-func="ctrl.load(params)"></pagination>
+                        </div>
+                    </div>
+                    <div ng-include="ctrl._urlInsertModal"></div>
+
+                    <div ng-include="ctrl._urlUpdateModal"></div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

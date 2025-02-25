@@ -1,0 +1,38 @@
+<div style="min-height: 200px;">
+    <div class="search-form">
+        <!-- <div class="dropdown-container">
+            <select ng-model="ctrl.selectedYear">
+                <option ng-repeat="year in ctrl.years" value="{{year}}" class="year-dropdown" size="5">
+                    {{year}}
+                </option>
+            </select>
+        </div> -->
+        <button-select
+            button-select-label="{{'YearDocument'|l}}"
+            button-select-data="ctrl.yearData"
+            button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','load','doing')"
+            button-select-func="ctrl.chooseYear(params)"
+            button-select-model="ctrl._filterYear"
+            button-select-clear="false"> 
+        </button-select>
+        <pick-modal-directory-detail-dispatch 
+            extend="ctrl.DocumentType_Config"
+            pick-func="ctrl.pickDAT_insert(params)" id-value="ctrl._insert_value.type"
+            label="{{'TypeName'|l}}"
+            button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','load')"
+            >
+        </pick-modal-directory-detail-dispatch>
+        <input type="text" placeholder={{'NumberReference'|l}}>
+        
+        <input type="text" placeholder={{'ValueSearch'|l}}>
+        
+        <button>{{buttonSearchLabel?buttonSearchLabel:('Search'|l)}}</button>
+    </div>
+    
+    <div class="table-container">
+        <div ng-if="ctrl.Item.attachments && ctrl.Item.attachments.length > 0">
+            {{ctrl.Item.attachments[0].name}}
+        </div>
+        <div class="no-documents" ng-if="!ctrl.Item.attachments || ctrl.Item.attachments.length === 0">{{'NoData'|l}}</div>
+    </div>
+</div>

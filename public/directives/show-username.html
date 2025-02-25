@@ -1,0 +1,17 @@
+<div class="show-user" ng-mouseenter="showTooltip()" ng-mouseleave="hideTooltip()">
+  <div class="show-user__img mr-2" ng-if="!hideImage">
+    <img ng-if="selectedItem.avatar.url" ng-src="{{selectedItem.avatar.url}}" />
+  </div>
+  <div class=" show-user__title" ng-hide="justImage" ng-style="hideImage && {'float': 'none'}">
+    <span class="align-middle" ng-if="justName">{{selectedItem.title|getName}} </span>
+    <span class="align-middle" ng-if="withDepartment">{{selectedItem.title}}_<show-department show-abbreviation="showAbbreviation"
+        department="selectedItem.department"></show-department>
+        <span with-directory="withCompetence">
+          (<show-directory directory="selectedItem.competence"></show-directory>)
+        </span>
+      </span>
+    <span class="align-middle" ng-if="!justName && !withDepartment">{{selectedItem.title}}</span>
+  </div>
+  <div class="show-user__status" ng-if="selectedItem.online && !hideImage">
+  </div>
+</div>

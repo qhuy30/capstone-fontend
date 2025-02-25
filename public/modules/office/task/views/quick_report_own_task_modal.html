@@ -1,0 +1,52 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_quick_report_own_task">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'QuickReport'|l}}"></modal-header>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 chart">
+                        <div class="chart-container with-value">
+                            <div class="chart-value">
+                                <div class="main-value">
+                                    <div class="label">
+                                        {{'Completed'|l}}:
+                                    </div>
+                                    <div class="value">
+                                        {{ctrlChild.statistic_count_assigned.percent}}%
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-item">
+                                <canvas class="chart chart-doughnut"
+                                    chart-data="ctrlChild.statistic_count_assigned.data"
+                                    chart-labels="ctrlChild.statistic_count_assigned.label"
+                                    chart-options="ctrlChild.statistic_count_assigned.options"
+                                    chart-colors="ctrlChild.statistic_count_assigned.colors">
+                                </canvas>
+                            </div>
+                        </div>
+    
+    
+                    </div>
+                    <div class="col-md-6 chart">
+                        <div class="chart-container with-value">
+    
+                            <div class="chart-item">
+                                <canvas class="chart chart-line"
+                                    chart-data="ctrlChild.statistic_growth_assigned.data"
+                                    chart-labels="ctrlChild.statistic_growth_assigned.label"
+                                    chart-series="ctrlChild.statistic_growth_assigned.series"
+                                    chart-options="ctrlChild.statistic_growth_assigned.options"
+                                    chart-colors="ctrlChild.statistic_growth_assigned.colors">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="modal-footer">               
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<a class="waves-effect ringbell-header-item project_update_info"
+    href="/task?tab=project&id={{item.params.projectId}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span  >
+                <span >{{'Project'|l}}</span>
+                <span class="title">[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+                <span ng-switch="item.params.action">
+                    <span ng-switch-when="workflow play">
+                        {{'is updated signature link'|l}}
+                    </span>
+                    <span ng-switch-when="updateParticipants">
+                        {{'is updated participants'|l}}
+                    </span>
+                    <span ng-switch-when="title">
+                        {{'is updated title to'|l}}
+                    </span>
+                    <span ng-switch-when="project implementation time">
+                        {{'is updated time'|l}}
+                    </span>
+                </span>
+                <span class="title" ng-if="item.params.action === 'title'">{{item.params.to_title}}</span>
+                <span>
+                    {{'by'|l}}
+                </span>
+                <show-username-onlyname username="item.params.username_update"
+                without-tooltip="true">
+              </show-username-onlyname>
+            </span>
+        </div>
+   
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

@@ -1,0 +1,39 @@
+<a class="waves-effect ringbell-header-item project_update_info"
+    href="/car-registration-details?code={{item.params.code}}"
+>
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span  >
+                <show-username-onlyname username="item.params.action_by" 
+                without-tooltip="true"></show-username-onlyname>
+                <span class="ringbell-action danger" style="text-transform: lowercase;">{{'RequestCancel'|l}} {{'car'|l}}</span>
+                <span class="title" >[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+                <span class="text-lowercase" >{{'WrittenBy'|l}}</span>
+                <show-username-onlyname username="item.params.username_create_ticket" without-tooltip="true">
+                </show-username-onlyname>
+            </span>
+        </div>
+
+        <div class="ringbell-action danger" ng-switch="item.params.status">
+            <span ng-switch-when="Created">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to review and approve'|l}}
+            </span>
+            <span ng-switch-when="reviewer_approved">
+                <i class="fas fa-book"></i>&nbsp;{{'Department leader approved recall. Need you to review and approve'|l}}
+            </span>
+            <span ng-switch-when="manager_approved">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to review and recall'|l}}
+            </span>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fas fa-times" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+</a>

@@ -1,0 +1,37 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_DepartmentGroup_Insert">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'InsertDepartmentGroup'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="insertDepartmentGroupForm">
+                    <div class="form-group ">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Title'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'DepartmentGroup','insert','doing')"
+                                   type="text" ng-model="ctrl._insert_value.title" class="form-control"
+                                   name="insertDepartmentGroup_title" placeholder="input title of group"
+                                   ng-class="{ 'is-invalid': insertDepartmentGroupForm.insertDepartmentGroup_title.$invalid }" required />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <input-checkbox input-checkbox-label="{{'IsActive'|l}}"
+                                        input-checkbox-model="ctrl._insert_value.isActive"
+                                        input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'DepartmentGroup','insert','doing')">
+                        </input-checkbox>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="DepartmentGroup"
+                                  modal-button-new-actionname="insert" modal-button-new-invalid="insertDepartmentGroupForm.$invalid"
+                                  modal-button-new-func="ctrl.insert_func()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

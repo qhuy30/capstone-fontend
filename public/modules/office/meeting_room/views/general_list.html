@@ -1,0 +1,107 @@
+<div ng-controller="meeting_room_controller as ctrl">
+    <div>
+        <more-option-bar>
+            <bar-content class="row">
+                <div class="col-md-3 form-group">
+                    <button-select button-select-label="{{'Display'|l}}" button-select-data="[15,30,50,100]"
+                        button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','load','doing')"
+                        button-select-func="ctrl.chooseNumberItem(params)" button-select-model="ctrl.numOfItemPerPage || 20">
+                    </button-select>
+                </div>
+                <div class="col-md-3 form-group">
+                    <button-select 
+                        button-select-label="{{'Type'|l}}" 
+                        button-select-data="ctrl.roomTypes_filter_data"
+                        button-select-localization="true"
+                        button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','load','doing')"
+                        button-select-func="ctrl.chooseRoomType(params)" 
+                        button-select-model="ctrl.selectedRoomType || null">
+                    </button-select>
+                </div>
+            </bar-content>
+        </more-option-bar>
+        <button-search button-search-func="ctrl.refreshData_Room()" button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData">
+        </button-search>
+        <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="MeetingRoom" async-actionname="load">
+            <async-success>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" datatable>
+                        <thead>
+                            <tr>
+                                <th style="font-weight: 600; vertical-align: middle; width: 3%; text-align: center;">
+                                    #
+                                </th>
+                                <th style="font-weight: 600; vertical-align: middle;text-align: center; width: 8%;">
+                                    {{'RoomCode'|l}}
+                                    <order order-func="ctrl.refreshData_Room()" order-model="ctrl.sort"
+                                        order-name="code"></order>
+                                </th>
+                                <th style="font-weight: 600; vertical-align: middle;text-align: center; width: 20%;">
+                                    {{'RoomName'|l}}
+                                    <order order-func="ctrl.refreshData_Room()" order-model="ctrl.sort"
+                                        order-name="title"></order>
+                                </th>
+                                <th style="font-weight: 600; vertical-align: middle;text-align: center; width: 20%;">
+                                    {{'Type'|l}}
+                                    <order order-func="ctrl.refreshData_Room()" order-model="ctrl.sort"
+                                        order-name="title"></order>
+                                </th>
+                                <th style="font-weight: 600; vertical-align: middle;text-align: center; width: 8%;">
+                                    {{'Size'|l}}
+                                    <order order-func="ctrl.refreshData_Room()" order-model="ctrl.sort"
+                                        order-name="size"></order>
+                                </th>
+                                <th style="font-weight: 600; vertical-align: middle;text-align: center; width: 200px;">
+                                    {{'Description'|l}}
+                                    <order order-func="ctrl.refreshData_Room()" order-model="ctrl.sort"
+                                        order-name="isactive"></order>
+                                </th>
+                                <!-- <th>
+                                    {{'Status'|l}}
+                                    <order order-func="ctrl.refreshData_Room()" order-model="ctrl.sort"
+                                        order-name="isactive"></order>
+                                </th> -->
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr
+                                ng-repeat="item in ctrl.listRooms|orderBy:ctrl.sort.name:ctrl.sort.value track by $index">
+                                <td style="text-align: center;">
+                                    {{ $index +1 }}
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    {{ item.code }}
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    {{ item.title[$root.Language.current] }}
+                                </td style="padding-left: 10px;">
+                                <td>
+                                    {{ item.room_type|l }}
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    {{ item.size }} {{'person'|l}}
+                                </td>
+                                <td style="padding-left: 10px;">
+                                    {{ item.description }}
+                                </td>
+                                <!-- <td>
+                                    <isuse isuse-value="item.isactive"></isuse>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div ng-if="ctrl.listRooms.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                </div>
+                <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="MeetingRoom"
+                    pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                    pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                    pagination-func="ctrl.load_room(params)"></pagination>
+            </async-success>
+        </my-Async>
+    </div>
+</div>

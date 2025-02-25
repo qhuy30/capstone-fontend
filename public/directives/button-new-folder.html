@@ -1,0 +1,12 @@
+<button type="button" modal-toggle="{{buttonNewModal}}"
+    ng-click="buttonNewClick()" class="btn btn-blue-shadow">
+    <i class="fas fa-folder" style="color: #EF940D; font-size: 18px;"
+        ng-if="isFolder"> </i>
+
+    <i class="fas fa-file-alt" style="color: #265ac9; font-size: 18px;"
+        ng-if="isFile"> </i>
+
+    <span class="text">
+        {{buttonNewLabel}}
+    </span>
+</button>

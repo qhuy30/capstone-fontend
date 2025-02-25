@@ -1,0 +1,39 @@
+<style>
+    .tag-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    background: #f9f9f9;
+    overflow-y: auto;
+}
+.tag {
+    background: #4285F4;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin: 2px;
+    font-size: 14px;
+}
+.tag-input-field {
+    border: none;
+    outline: none;
+    padding: 5px;
+    flex-grow: 1;
+    min-width: 100px;
+    background: transparent;
+}
+</style>
+
+<div class="tag-input-container">
+    <div class="tag" ng-repeat="tag in tags">
+        {{ tag }}
+        <span class="remove-tag" ng-click="removeTag($index)">×</span>
+    </div>
+    <input type="text"
+           ng-model="newTag"
+           ng-keydown="handleKeydown($event)"
+           placeholder="{{ placeholder || 'Add a tag' }}"
+           class="tag-input-field" />
+</div>

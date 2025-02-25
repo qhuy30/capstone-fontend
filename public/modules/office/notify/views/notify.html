@@ -1,0 +1,286 @@
+<my-content class="notify-feature">
+  <content-content>
+    <div ng-controller="notify_controller as ctrl">
+      <div class="card">
+        <div class="card-body">
+          <div ng-show="['Office.Notify.Create']|checkRule" class="form-group row">
+            <notify-insert-modal on-success="ctrl.refreshData()" />
+          </div>
+          <br />
+          <div class="row justify-content-between align-items-center">
+            <button-select style="width:200px; display: block;" button-select-label="{{'Display'|l}}"
+              button-select-data="[15,30,50,100]"
+              button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Notify','load','doing')"
+              button-select-func="ctrl.chooseNumberItem(params)" button-select-model="ctrl.numOfItemPerPage">
+            </button-select>
+            <div class="col-md-6 text-right">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{'Show column'|l}}
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" onclick="event.stopPropagation()"
+                   style="transform: translate3d(-87px, 36px, 0px) !important; min-width: 200px !important;">
+                <div ng-repeat="column in ctrl.columnsArray" class="px-1">
+                  <label style="user-select: none; cursor: pointer;" class="overdue" for="column-id-{{column.key}}">
+                    <input id="column-id-{{column.key}}" type="checkbox"
+                           ng-model="column.show" 
+                           ng-change="ctrl.updateColumnVisibility(column.key, column.show)">
+                    &nbsp;{{column.title}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>          
+          <br />
+          <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData">
+          </button-search>
+          <br />
+
+          <span ng-if="ctrl.show_checkbox_created" style="margin-right: 15px; display: inline-flex; align-items: center;" class="overdue">
+            <input type="checkbox" ng-model="ctrl.checkbox_created"
+              ng-change="ctrl.refreshData()" />&nbsp;
+              <span class="tooltip-message-container">
+                {{'Created'|l}}
+              </span>
+          </span> 
+
+          <span ng-if="ctrl.show_checkbox_need_handle" style="margin-right: 15px; display: inline-flex; align-items: center;" class="overdue">
+            <input type="checkbox" ng-model="ctrl.checkbox_need_handle"
+              ng-change="ctrl.refreshData()" />&nbsp;{{'NeedToHandle'|l}}
+          </span>
+
+          <span ng-if="ctrl.show_checkbox_handled" style="margin-right: 15px; display: inline-flex; align-items: center;" class="overdue">
+            <input type="checkbox" ng-model="ctrl.checkbox_handled"
+              ng-change="ctrl.refreshData()" />&nbsp;{{'Handled'|l}}
+          </span>
+
+          <!-- <span ng-if="ctrl.show_checkbox_reject" style="margin-right: 15px; display: inline-flex; align-items: center;" class="overdue">
+            <input type="checkbox" ng-model="ctrl.checkbox_reject"
+              ng-change="ctrl.refreshData()" />&nbsp;{{'Reject'|l}}
+          </span> -->
+
+          <span ng-if="ctrl.show_checkbox_my_notify" style="margin-right: 15px; display: inline-flex; align-items: center;" class="overdue">
+            <input type="checkbox" ng-model="ctrl.checkbox_my_notify"
+              ng-change="ctrl.refreshData()" />&nbsp;{{'MyNotify'|l}}
+          </span>
+
+          <span ng-if="ctrl.show_checkbox_internal" style="margin-right: 15px; display: inline-flex; align-items: center;" class="is_get_all">
+            <input type="checkbox" ng-model="ctrl.checkbox_internal" 
+              ng-change="ctrl.refreshData()" />&nbsp;{{'NotifyInternal'|l}}
+          </span>
+
+          <span ng-if="ctrl.show_checkbox_external" style="margin-right: 15px; display: inline-flex; align-items: center;" class="is_get_all">
+            <input type="checkbox" ng-model="ctrl.checkbox_external" 
+              ng-change="ctrl.refreshData()" />&nbsp;{{'External'|l}}
+          </span>
+
+          
+          <!-- <span ng-if="trl.show_checkbox_bookmark" style="margin-right: 15px;; display: inline-flex; align-items: center;" class="gonnalate">
+            <input type="checkbox" ng-model="ctrl.checkbox_bookmark"
+              ng-change="ctrl.refreshData()" />&nbsp;{{'Bookmark'|l}}&nbsp;
+          </span>
+          <span ng-if="ctrl.show_checkbox_notseen" style="margin-right: 15px; display: inline-flex; align-items: center;" class="gonnalate">
+            <input type="checkbox" ng-model="ctrl.checkbox_notseen"
+              ng-change="ctrl.refreshData()" />&nbsp;{{'NotSeen'|l}}&nbsp;
+          </span> -->
+          <hr />
+          <div class="tab-content">
+            <div class="tab-pane fade active show" ng-class="{'reload': isActive}">
+              <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="Notify" async-actionname="load">
+                <async-success>
+                  <div class="table-responsive main-data">
+                    <table class="table table-sm notify-table">
+                      <tbody>
+                        <tr>
+                          <th ng-show="ctrl.columns.index.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 30px;text-align: center;">#</th>
+                          <th ng-show="ctrl.columns.dateCreted.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 120px;">{{'Created date' | l}}  
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="event"
+                            ></order>
+                          </th>
+                          <th ng-show="ctrl.columns.title.show" style="min-width: 300px; vertical-align: middle;text-align: center;">{{'Title' | l}}
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="title"
+                            ></order>
+                          </th>
+                          <th ng-show="ctrl.columns.scope.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 100px; text-wrap: wrap;">{{'Scope' | l}} 
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="scope"
+                            ></order>
+                          </th>
+                          <th ng-show="ctrl.columns.type.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 100px; text-wrap: wrap;">{{'Type' | l}}
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="group"
+                            ></order>
+                          </th>
+                          <th ng-show="ctrl.columns.createdBy.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 100px; text-wrap: wrap;">{{'Creator' | l}}
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="username"
+                            ></order>
+                          </th>
+                          <th ng-show="ctrl.columns.status.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 200px; text-wrap: wrap;">{{'Status' | l}}
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="status"
+                            ></order>
+                          </th>
+                          <th ng-show="ctrl.columns.Approver.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 100px; text-wrap: wrap;">{{'Approver' | l}}
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="username"
+                            ></order>
+                          </th>
+                          <th ng-show="ctrl.columns.ApprovedDate.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 100px; text-wrap: wrap;">{{'ApprovedDate' | l}}
+                            <order
+                              order-func="ctrl.refreshData()"
+                              order-model="ctrl.sortNotify"
+                              order-name="changeStatusTime"
+                            ></order>
+                          </th>
+                          <th style="font-weight: 600;vertical-align: middle;text-align: center; width: 180px;"></th>
+                        </tr>
+                        <tr ng-repeat="item in ctrl.notifys track by $index">
+                          <td ng-show="ctrl.columns.index.show" style="font-weight: 600;vertical-align: middle; width: 30px;text-align: center;">{{$index+1}}</td>
+                          <td ng-show="ctrl.columns.dateCreted.show" style="font-weight: 600;vertical-align: middle;  width: 120px;">
+                            <small>
+                              <span class="grey-text float-left">
+                                <i class="fa fa-clock" aria-hidden="true"></i>
+                                <time-show2 time-show-data="item.event[0].time" time-show-type="long"></time-show2>
+                              </span>
+                            </small>
+                          </td>
+                          <td ng-show="ctrl.columns.title.show" class="auto-width">
+                            <a class="text-dark" link-details link-details-display="{{item.title}}"
+                              link-details-url="/notify-details?code={{item.code}}"
+                              link-details-route="notify-details">{{item.title}}</a>
+                            <div class="showfile-bar" ng-if="item.attachments.length>0">
+                              <attachment-show ng-repeat="at in item.attachments" attachment-show-item="at"
+                                attachment-show-func="ctrl.loadfile(params)"
+                                attachment-show-params="{id:item._id, code:item.code, name:at.name}"
+                                attachment-show-service-name="'notify'"></attachment-show>
+                            </div>
+                          </td>
+                          <td ng-show="ctrl.columns.scope.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 90px;">
+                              {{item.scope|l}}
+                          </td>
+                          <td ng-show="ctrl.columns.type.show" style="font-weight: 600;vertical-align: middle;text-align: center; width: 90px; text-wrap: wrap;">
+                              {{item.group|l}}
+                          </td>
+                          <td ng-show="ctrl.columns.createdBy.show" style="vertical-align: middle; width: 100px; text-align: center; text-wrap: wrap;">
+                            <show-username-onlyname hide-image="true" username="item.entity.his[0].createdby"></show-username-onlyname>
+                          </td>
+                          <td ng-show="ctrl.columns.status.show" style="vertical-align: middle;text-align: center; width: 200px;">
+                            <!-- <show-status id-value="item.status_to_show"></show-status> -->
+                            <show-status2 id-value="item.status_to_show === 'Pending' ? 'CreatedNotify' : (item.status_to_show === 'PendingRecalled' ? 'RegisteredRecall' : item.status_to_show)">
+                            </show-status2>
+                            <br>
+                            <span style="font-size: 0.7rem; color: grey;text-wrap: wrap;">
+                              {{'by' |l}}          
+                              <show-username-onlyname hide-image="true" username="item.userNameAccess"></show-username-onlyname>
+                            </span>
+                            <br>
+                            <!-- <div ng-show="item.status == 'Rejected'" style="text-wrap: wrap;">
+                              {{'Reason'|l}}:
+                              {{item.event[item.event.length - 1].reason}}
+                            </div> -->
+                            <!-- <span style="font-size: 0.7rem; color: grey;text-wrap: wrap;">
+                              <time-show2 ng-if="!['Pending', 'PendingRecalled'].includes(item.status)"
+                                time-show-data="item.event[item.event.length - 1].time" time-show-type="long"></time-show2>
+                            </span> -->
+                          </td>
+                          <td ng-show="ctrl.columns.Approver.show" style="vertical-align: middle; width: 120px;text-align: center; text-wrap: wrap;">
+                            <show-username-onlyname ng-if="!['Pending', 'PendingRecalled'].includes(item.status)"
+                            hide-image="true" username="item.userNameAccess"></show-username-onlyname>
+                          </td>
+                          <td ng-show="ctrl.columns.ApprovedDate.show" style="vertical-align: middle;text-align: center; width: 110px; text-wrap: wrap;">
+                            <time-show2 ng-if="!['Pending', 'PendingRecalled'].includes(item.status)"
+                              time-show-data="item.TimeAccess" time-show-type="long"></time-show2>
+                          </td>
+                          <td style="font-weight: 600;vertical-align: middle; text-overflow: unset; text-wrap: wrap; width: 200px;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                              <button-approval-item
+                                button-approval-item-modal="#notify_edit_modal"
+                                button-approval-item-func="ctrl.prepareEdit(params,'approve')"
+                                button-approval-item-params="item"
+                                button-label="{{'Approval'}}"
+                                ng-if="item.allowApproveDepartment"
+                              />
+  
+                              <button-approval-item
+                                ng-if="item.allowApprove"
+                                button-approval-item-modal="#notify_approve_modal"
+                                button-approval-item-func="ctrl.prepareApprove(params)" button-approval-item-params="item"
+                                button-label="{{'Approval'}}"></button-approval-item>
+                              <button-approval-item
+                                ng-if="item.allowApprove_recall"
+                                button-approval-item-modal="#notify_approve_modal"
+                                button-approval-item-func="ctrl.prepareApprove(params)" button-approval-item-params="item"
+                                button-label="{{'ApproveRecall'}}"></button-approval-item>
+                              
+                              <button-reject-item
+                                ng-if="item.allowApprove || item.allowApproveDepartment"
+                                button-reject-item-modal="#notify_approve_modal"
+                                button-reject-item-func="ctrl.prepareRecalla(params)" button-reject-item-params="item"
+                                button-label="{{'Reject'}}" />
+                              <button-reject-item
+                                ng-if="item.allowApprove_recall"
+                                button-reject-item-modal="#notify_approve_modal"
+                                button-reject-item-func="ctrl.prepareRecalla(params)" button-reject-item-params="item"
+                                button-label="{{'RejectRecall'}}" />
+                              
+                              <button-recall-item
+                                ng-if="item.allowRequestRecall"
+                                button-recall-item-modal="#modal_Notify_Recall"
+                                button-recall-item-func="ctrl.prepareRecall(params)" button-recall-item-params="item"
+                                button-label="{{'Recall'}}"></button-recall-item>
+                              <button-edit-item button-edit-item-modal="#notify_edit_modal"
+                                button-edit-item-func="ctrl.prepareEdit(params)" button-edit-item-params="item"
+                                button-label="{{'Edit'}}"
+                                ng-if="item.allowEdit"></button-edit-item>
+                              <button-delete-item button-delete-item-modal="#modal_Notify_Delete"
+                                button-delete-item-func="ctrl.prepareDelete(params)" button-delete-item-params="item"
+                                button-label="{{'Delete'}}"
+                                ng-if="item.allowDelete"></button-delete-item>
+                            </div>
+                          </td> 
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div ng-if="ctrl.notifys.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </div>
+                  <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="Notify"
+                    pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                    pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                    pagination-func="ctrl.load(params)"></pagination>
+                </async-success>
+              </my-Async>
+            </div>
+          </div>
+          <div ng-include="ctrl._urlApproveModal"></div>
+          <div ng-include="ctrl._urlRejectModal"></div>
+          <div ng-include="ctrl._urlDeleteModal"></div>
+          <div ng-include="ctrl._urlRecallModal"></div>
+          <div ng-include="ctrl._urlEditModal"></div>
+          <div ng-include="ctrl._urlThrow_to_recyclebinModal"></div>
+          <div ng-include="ctrl._urlRestore_from_recyclebinModal"></div>
+
+        </div>
+      </div>
+    </div>
+  </content-content>
+</my-content>

@@ -1,0 +1,129 @@
+<my-content>
+  <content-content>
+    <div ng-controller="dispatch_outgoing_controller as ctrl" class="office-da-feature">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group row">
+            <button-new
+              button-new-func="ctrl.prepareInsert()"
+              button-new-label="{{'New'|l}}"
+              button-new-modal="#modal_OD_Insert"
+            >
+            </button-new>
+          </div>
+          <more-option-bar>
+            <bar-content class="row">
+              <div class="col-md-6 form-group">
+                <button-select button-select-label="{{'Display'|l}}" button-select-data="[15,30,50,100]"
+                  button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'OD','load','doing')"
+                  button-select-func="ctrl.chooseNumberItem(params)" button-select-model="ctrl.numOfItemPerPage">
+                </button-select>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.KindOfDispatchTo_Config" pick-func="ctrl.pickODT(params)"
+                  id-value="ctrl._filterODT" label="{{'DispatchArrivedType'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'OD','load','doing')"></pick-modal-directory>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.IncommingDispatchBook_Config" pick-func="ctrl.pickODB(params)"
+                  id-value="ctrl._filterODB" label="{{'DispatchArrivedBook'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'OD','load','doing')"></pick-modal-directory>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.IncommingDispatchPririoty_Config"
+                  pick-func="ctrl.choosePriority(params)" id-value="ctrl._filterPriority" label="{{'EmergencyLevel'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'OD','load','doing')"></pick-modal-directory>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.MethodOfSendingDispatchTo_Config"
+                  pick-func="ctrl.chooseReceiveMethod(params)" id-value="ctrl._filterReceiveMethod"
+                  label="{{'ReceiveMethod'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'OD','load','doing')"></pick-modal-directory>
+              </div>
+            </bar-content>
+          </more-option-bar>
+
+          <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData">
+          </button-search>
+          <ul class="nav nav-tabs" role="tablist">
+            <!-- <li class="nav-item" ng-click="ctrl.switchTab('all')">
+              <a class="nav-link" ng-class="{'active':ctrl.tab =='all'}">{{'All'|l}}</a>
+            </li> -->
+            <li class="nav-item" ng-click="ctrl.switchTab('dispatchAway')">
+              <a class="nav-link" ng-class="{'active':ctrl.tab =='dispatchAway'}">{{'DispatchAway'|l}}</a>
+            </li>
+            <li class="nav-item" ng-click="ctrl.switchTab('separateDispatch')">
+              <a class="nav-link" ng-class="{'active':ctrl.tab =='separateDispatch'}">{{'SeparateDispatch'|l}}</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade active show">
+              <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="OD" async-actionname="load">
+                <async-success>
+                  <div class="table-responsive" style="border: 1px solid #a4b7c1; border-top:none; margin-bottom: 20px">
+                    <table class="table table-hover" style="margin-bottom: 0;">
+                      <thead>
+                        <tr style="text-align: center; font-weight: bolder; border-top: 2px solid #a4b7c1; border-bottom: 2px solid #a4b7c1; background-color: #f0f2f3; color: #838d9c">
+                          <td style="width: 198px;height: 40px;border-right: 1px solid #a4b7c1">#</td>
+                          <td style="width: 198px;height: 40px;border-right: 1px solid #a4b7c1">{{'NumberCodeDocument'|l}}</td>
+                          <td style="width: 198px;height: 40px;border-right: 1px solid #a4b7c1">{{'TypeDocumentAndExcerpt'|l}}</td>
+                          <td style="width: 198px;height: 40px;border-right: 1px solid #a4b7c1">{{'TheSigner'|l}}</td>
+                          <td style="width: 198px;height: 40px;border-right: 1px solid #a4b7c1">{{'Created date'|l}}</td>
+                          <td style="width: 198px;height: 40px;border-right: 1px solid #a4b7c1">{{'DispatchArrivedBook'|l}}</td>
+                          <td style="width: 198px;height: 40px">{{'Status'|l}}</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="item in ctrl.outgoings_dispatch" style="text-align: center">
+
+                          <td style="font-weight: 600;width: 198px;border-right: 1px solid #a4b7c1">
+                            {{$index + 1}}
+                          </td>
+                          <td style="font-weight: 600;width: 198px;border-right: 1px solid #a4b7c1">
+                              {{item.code}}
+                          </td>
+                          <td style="font-weight: 600;width: 198px;border-right: 1px solid #a4b7c1">
+                            <a class="text-dark" href="/odb-details?code={{item.code}}">
+                              <small class="grey-text"><i>
+                                  <get-field-directory id-value="item.type" extend="ctrl.KindOfDispatchTo_Config"
+                                    localization="true"></get-field-directory></i></small>
+                              <div>{{item.document_type_title[$root.Language.current]}} - {{item.excerpt}}</div>
+                            </a>
+                          </td>
+                          <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 198px;border-right: 1px solid #a4b7c1">
+                            <div ng-repeat="signer in item.signers">
+                              <show-username username="signer" just-name="true" hide-image="true" style="margin-bottom: 0;"></show-username>
+                            </div>
+                          </td>
+                          <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 198px;border-right: 1px solid #a4b7c1">
+                            <time-show2 time-show-data="item.entity.his[0].created" time-show-type="just_date">
+                            </time-show2>
+                          </td>
+                          <td style="width: 198px;border-right: 1px solid #a4b7c1">
+                            <p class="mb-0">{{item.odb_book_title[$root.Language.current]}}</p>
+                          <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 198px;">
+                            <show-status id-value="item.status"></show-status>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div ng-if="ctrl.outgoings_dispatch.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </div>
+                  <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="OD"
+                    pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                    pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                    pagination-func="ctrl.load(params)"></pagination>
+                </async-success>
+              </my-Async>
+            </div>
+          </div>
+          <div ng-include="ctrl._urlInsertModal"></div>
+        </div>
+      </div>
+    </div>
+  </content-content>
+</my-content>

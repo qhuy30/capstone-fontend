@@ -1,0 +1,44 @@
+<ul ng-if="item.canExpand" ng-show="item.open" class="department-container child">
+    <li ng-repeat="child_item in item.childs">
+        <div class="department-item" ng-class="{'can-expand':child_item.canExpand}">
+            <div class="title">
+                <span ng-click="ctrl.expandDepartment(child_item)">
+                    <span ng-repeat="space in child_item.parent" class="space">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span ng-show="child_item.canExpand">
+                        <i class="fas fa-angle-right" ng-show="!child_item.open"></i>
+                        <i class="fas fa-angle-down" ng-show="child_item.open"></i>
+                    </span>
+                    &nbsp;&nbsp;{{child_item.title[$root.Language.current]}}
+                </span>
+            </div>
+            <div class="tool">
+              
+            </div>
+        </div>
+        <div class="user-item" ng-repeat="u in child_item.users" ng-show="child_item.open">
+            <div class="title">
+                <div class="show-user__img" >
+                  <img ng-if="u.avatar.url" ng-src="{{u.avatar.url}}" />
+                </div>
+                <div class="show-user__title" style="cursor: default">
+                  &nbsp;<span >{{u.title}}</span>
+                </div>
+      
+              <div  class="show-user__status" ng-if="u.online " >
+              </div>
+              </div>
+            <div class="tool">
+                <button type="button" ng-click="ctrl.pick(u.username)" class="btn btn-primary">{{'Pick'|l}}</button>
+            </div>
+        </div>
+        <div class="pagination-item" ng-if="ctrl.pagination[child_item.id].totalItems > ctrl.numOfItemPerPage">
+            <pagination pagination-ctrlname="{{ctrl._ctrlName}}"
+                pagination-objname="Load" pagination-actionname="load"
+                pagination-currentpage="ctrl.pagination[child_item.id].currentPage"
+                pagination-noi="ctrl.numOfItemPerPage"
+                pagination-total="ctrl.pagination[child_item.id].totalItems"
+                pagination-func="ctrl.load_user(params,child_item)"></pagination>
+        </div>
+        <pick-user-child item="child_item" ctrl="ctrl"></pick-user-child>
+    </li>
+</ul>

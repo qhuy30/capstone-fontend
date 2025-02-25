@@ -1,0 +1,30 @@
+<div class="modal fade" id="modal_Notify_Recall" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantRecall'|l:{title:ctrl._recall_value.title} }}
+
+                <div class="input-group-edit">
+                    <div class="input-group-prepend-new">
+                        <span class="input-group-text-new" style="margin: 12px 4px 4px 0px;">
+                            {{'RecallReason'|l}}</span>
+                        <span class="require-sympton">*</span>
+                    </div>
+                    <textarea style="border: 1px solid black;" ng-model="ctrl._recall_value.reason" name="recall_title"
+                        placeholder="{{'InputReason'|l}}" ng-class="{ 'is-invalid': recallForm.recall_title.$invalid }"
+                        required class="form-control" type="text"></textarea>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-recall modal-button-recall-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-recall-invalid="!ctrl._recall_value.reason" modal-button-recall-objname="Notify"
+                    modal-button-recall-actionname="recall" modal-button-recall-func="ctrl.recall()">
+                </modal-button-recall>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

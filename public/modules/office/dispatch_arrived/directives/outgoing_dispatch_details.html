@@ -1,0 +1,150 @@
+<div>
+    <!-- <a href="/dispatch?tab=DispatchOutGoing">
+        <button class="btn"><i class="fas fa-times"></i></button>
+    </a> -->
+    <section class="dispatch_outgoing_details" ng-show="ctrl.Item._id">
+        <div class="card">
+            <div class="card-body row pt-2 pb-3" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-12">
+                    <div style="width: 100%">   
+                        <p class="grey-text">
+                            {{'WrittenBy'|l}}
+                            <a><strong>
+                                <show-department
+                                department="ctrl.Item.departmemt_write">
+                                </show-department> </strong></a>,
+                            <time-show time-show-data="ctrl.Item.events[0].time" time-show-type="long">
+                            </time-show>
+                        </p>
+                    </div>
+                    <div>
+                        <show-status id-value="ctrl.Item.status"></show-status>
+                    </div>
+                </div>
+                <div class="table-detail">
+                    <table class="info-table">
+                        <tr ng-if="ctrl.Item.code && ctrl.Item.code.length > 0">
+                            <th>{{'Document number'|l}}</th>
+                            <td>
+                                <get-field-directory
+                                    id-value="ctrl.Item.code"
+                                    extend="ctrl.OutgoingDispatchBook_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                            <th>{{'NumberReference'|l}}</th>
+                            <td>{{ctrl.Item.symbol_number}}</td>
+                        </tr>
+                        <tr ng-if="ctrl.Item.type">
+                            <th>{{'DocumentType'|l}}</th>
+                            <td colspan="3">
+                                <get-field-directory
+                                    id-value="ctrl.Item.type"
+                                    extend="ctrl.DocumentType_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                        </tr>
+                        <tr ng-if="ctrl.Item.text_tags">
+                            <th>{{'DocumentTag'|l}}</th>
+                            <td colspan="3">{{ctrl.Item.text_tags}}</td>
+                        </tr>
+                        <tr ng-if="ctrl.Item.content">
+                            <th>{{'Excerpt'|l}}</th>
+                            <td colspan="3">{{ctrl.Item.content}}</td>
+                        </tr>
+                        <tr ng-if="ctrl.Item.person_sign || ctrl.Item.date_sign">
+                            <th>{{'PersonSign'|l}}</th>
+                            <td>{{ctrl.Item.person_sign}}</td>
+                            <th>{{'Signing date'|l}}</th>
+                            <td>
+                                <time-show time-show-data="ctrl.Item.date_sign" time-show-type="justdate"></time-show>
+                            </td>
+                        </tr>
+                        <tr ng-if="ctrl.Item.urgency_level || ctrl.Item.security_level">
+                            <th>{{'urgency'|l}}</th>
+                            <td>
+                                <get-field-directory
+                                    id-value="ctrl.Item.urgency_level"
+                                    extend="ctrl.IncommingDispatchPririoty_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                            <th>{{'ConfidentialityLevel'|l}}</th>
+                            <!-- <td>{{ctrl.Item.security_level|l}}</td> -->
+                            <td>
+                                <get-field-directory
+                                    id-value="ctrl.Item.security_level"
+                                    extend="ctrl.securityLevel_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                        </tr>
+                        <tr ng-if="ctrl.Item.outgoing_file && ctrl.Item.outgoing_file.length > 0">
+                            <th>{{'OutgoingDocuments'|l}}</th>
+                            <td colspan="3">
+                                <attachment-show ng-repeat="at in ctrl.Item.outgoing_file" 
+                                    attachment-show-item="at"
+                                    attachment-show-func="ctrl.loadfile(params)"
+                                    attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                                    attachment-show-service-name="'dispatch_arrived'">
+                                </attachment-show>
+                            </td>
+                        </tr>
+                        <tr ng-if="ctrl.Item.attachments && ctrl.Item.attachments.length > 0">
+                            <th>{{'Attachment'|l}}</th>
+                            <td colspan="3">
+                                <attachment-show ng-repeat="at in ctrl.Item.attachments" 
+                                    attachment-show-item="at"
+                                    attachment-show-func="ctrl.loadfile(params)"
+                                    attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                                    attachment-show-service-name="'dispatch_arrived'">
+                                </attachment-show>
+                            </td>
+                        </tr>
+                    </table>                    
+                </div>
+                <!-- <div class="col-md-12" ng-if="ctrl.Item.is_handler && ['Created', 'Rejected', 'WaitingForApproval', 'WaitingForReview'].includes(ctrl.Item.status)">
+                    <div style="border-top: 1px solid #eee; margin-top: 10px;"></div>
+                    <div class="pt-3 w-100 text-right">
+                        <button-update
+                            button-update-label="{{'Edit'|l}}"
+                            button-update-modal="#modal_DA_Dir_Update"
+                        ></button-update>
+                    </div>
+                </div> -->
+                <div class="col-md-12" ng-if="ctrl.Item.status === 'Created'">
+                    <div style="border-top: 1px solid #eee; margin-top: 10px;"></div>
+                    <div class="pt-3 w-100 text-right">
+                        <button-update
+                            button-update-label="{{'Edit'|l}}"
+                            button-update-modal="#modal_DO_Update"
+                            button-update-func="ctrl.prepareUpdate(params)"
+                            button-update-params="ctrl.Item"
+                        ></button-update>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body row pt-2 pb-3" style="border-left: 2px solid #20a8d8">
+            <div class="col-md-12" ng-controller="switch_tab_details_controller as ctrlContent">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li ng-if="ctrlContent.show_tab_process" class="nav-item" ng-click="ctrlContent.switchTab('Process')">
+                        <span class="nav-link" ng-class="{'active': ctrlContent.tab == 'Process'}">{{'Process' | l}}</span>
+                    </li>
+                    <li ng-if="ctrlContent.show_tab_process"  class="nav-item" ng-click="ctrlContent.switchTab('HistoryProcess')">
+                        <span class="nav-link" ng-class="{'active': ctrlContent.tab == 'HistoryProcess'}">{{'HistoryProcessing' | l}}</span>
+                    </li>
+                    <li ng-if="ctrlContent.show_tab_process"  class="nav-item" ng-click="ctrlContent.switchTab('RelatedDocument')">
+                        <span class="nav-link" ng-class="{'active': ctrlContent.tab == 'RelatedDocument'}">{{'RelatedDocuments' | l}}</span>
+                    </li>
+      
+                </ul>
+                <div ng-include="ctrlContent._urlContent" style="padding: 20px;"></div>
+                <div ng-include="ctrl._urlUpdateModal"></div>
+            </div>
+        </div>
+    </section>
+    <dispatch-arrived-update item="ctrl.Item" handle-success-func="ctrl.handleUpdateSuccess()"></dispatch-arrived-update>
+</div>
+

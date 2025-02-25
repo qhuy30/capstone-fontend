@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="label" ng-if="label">
+    {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+  </div>
+  <div class="value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="show-value">
+      {{selectedItem.showValue || (('Select'|l) + '...')}}&nbsp;
+      <span class="dropdown-toggle">&nbsp;</span>
+    </div>
+    <div class="btn-clear" ng-show="selectedItem[idField]" ng-click="clear($event)">
+      <i class="fas fa-times"></i>
+    </div>
+  </div>
+  <input type="text" ng-required="require" ng-model="selectedItem.showValue" ng-show="false" />
+  <div class="dropdown-menu">
+    <div class="tool" ng-show="enableSearch">
+      <div class="search">
+        <input type="text" ng-model="search" placeholder="{{searchPlaceholder || ('FindByName'|l)}}">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+    <div class="table-responsive" ng-style="enableSearch && { 'margin-top': '35px' }">
+      <table class="table-hover" style="width: 100%;">
+        <tbody>
+          <tr ng-repeat="item in _data track by $index" ng-click="pick(item)">
+            <td><i class="fas fa-angle-double-right"></i>&nbsp;&nbsp;{{item.showValue}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div ng-if="_data.length == 0" ng-class="{ 'pt-0': !enableSearch }" class="no-data">{{'NoData'|l}}</div>
+  </div>
+</div>

@@ -1,0 +1,218 @@
+<my-content>
+    <content-content>
+        <div ng-controller="leaveform_details_controller as ctrl">
+
+
+            <section class="pb-3">
+                <div class="card">
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <div class="col-md-12" ng-if="ctrl.status == 'pending'">
+                            <text-area-with-suggestions ng-model="ctrl.comment" style="width: 100%;"
+                                placeholder="{{'InputNote'|l}}"></text-area-with-suggestions>
+                        </div>
+                        <div class="col-md-12" style="display: flex;"
+                            ng-if="ctrl.status == 'pending' ">
+                            <modal-button-approval modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+                                 modal-button-approval-objname="LeaveForm"
+                                modal-button-approval-actionname="approval"
+                                modal-button-approval-func="ctrl.approval()">
+                            </modal-button-approval>
+                            <modal-button-reject modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+                                 modal-button-reject-objname="LeaveForm"
+                                modal-button-reject-actionname="reject" modal-button-reject-func="ctrl.reject()">
+                            </modal-button-reject>
+                        </div>
+                        <div class="col-md-12" style="display: flex;"
+                            ng-if="ctrl.status == 'jtf' && (['OfficeLeaveForm.Manager']|checkRule)">
+                            <button-new button-new-func="ctrl.prepareInsert()"
+                                button-new-label="{{'AddJourneyTimeForm'|l}}" button-new-modal="#modal_JTF_Insert">
+                            </button-new>
+                            &nbsp;&nbsp;
+                            <button type="button" class="btn btn-outline-danger" modal-toggle="#modal_JTF_Cancel" >
+                                <i class="fas fa-times"></i> {{'CancelJourneyTimeForm'|l}}
+                            </button>
+                        </div>
+                        <div class="col-md-12" style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"
+                            ng-if="ctrl.status == 'pending' ||  ctrl.status == 'approved' || ctrl.status == 'rejected'">
+                        </div>
+                        <div class="col-md-12" style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"
+                            ng-if="ctrl.status == 'jtf' && (['OfficeLeaveForm.Manager']|checkRule) ">
+                        </div>
+                        <div class="col-md-12">
+                            <div style="width: 100%;">
+                                <h5><a><strong>
+                                    <get-field-directory
+                                id-value="ctrl.Item.document_type"
+                                extend="ctrl.DocumentType_Config"
+                                localization="true"
+                              ></get-field-directory>
+                                        </strong></a></h5>
+                                <p class="grey-text">{{'WrittenBy'|l}}
+                                    <a>
+                                        <show-username username="ctrl.Item.username" employee="ctrl.Item.employee">
+                                        </show-username>
+                                    </a>, <time-show time-show-data="ctrl.Item.event[0].time" time-show-type="long">
+                                    </time-show>
+                                </p>
+
+                            </div>
+                            <div>
+                                <span class="badge pink">
+                                    <get-field-directory
+                                id-value="ctrl.Item.type"
+                                extend="ctrl.LeaveFormType_Config"
+                                localization="true"
+                              ></get-field-directory>
+                                </span>
+                                <show-status id-value="ctrl.Item.status"></show-status>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"
+                            ng-if="ctrl.status == 'pending' ||  ctrl.status == 'approved' || ctrl.status == 'rejected' ">
+                        </div>
+                        <div class="col-md-4" style="margin-top: 10px;">
+                            {{'NumberOfDays'|l}}:&nbsp;<i>{{ctrl.Item.number_day}}</i>
+                        </div>
+                        <div class="col-md-4" style="margin-top: 10px;">
+                            {{'FromDate'|l}}:&nbsp;<i>
+                                <time-show time-show-data="ctrl.Item.from_date" time-show-type="justdate">
+                                </time-show>
+                            </i>
+                        </div>
+                        <div class="col-md-4" style="margin-top: 10px;">
+                            {{'ToDate'|l}}:&nbsp;<i>
+                                <time-show time-show-data="ctrl.Item.to_date" time-show-type="justdate">
+                                </time-show>
+                            </i>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            {{'ExceptTimeOnRoad'|l}}:<i>{{ctrl.Item.use_jtf?('Yes'|l):('No'|l)}}</i>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            {{'Reason'|l}}:
+                            <br />
+                            <div ng-bind-html="ctrl.Item.content"></div>
+                        </div>
+                    </div>
+                    <div style="border-top:1px solid #c2cfd6;border-left:2px solid #20a8d8"></div>
+                    <div class="card-body" style="border-left:2px solid #20a8d8" ng-if="ctrl.Item.attachment.length>0">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            {{'Attachment'|l}}
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <attachment-show ng-repeat="at in ctrl.Item.attachment"
+                                                attachment-show-item="at" attachment-show-func="ctrl.loadfile(params)"
+                                                attachment-show-params="{id:ctrl.Item._id,name:at.name}">
+                                            </attachment-show>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="border-top:1px solid #c2cfd6;border-left:2px solid #20a8d8"></div>
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <div class="col-md-12">
+                            {{'Workflow'|l}}
+                        </div>
+                        <div class="col-md-12" style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                        </div>
+                        <div class="col-md-12">
+                            <div style="display: flex;overflow-x: auto;height: auto;overflow-y: hidden;">
+                                <div style="height: 160px; display: flex;" ng-repeat="item in ctrl.Item.flow">
+                                    <div style="text-align: center;width: 80px; height: 160px;">
+                                        <i class="fas fa-arrow-alt-circle-right fa-3x"
+                                            style="line-height: 160px; color: #20a8d8;"></i>
+                                    </div>
+                                    <div style="
+                                height: 160px;
+                                 max-width: 250px;
+                                 padding: 10px;
+                                 border-left:2px solid #20a8d8;
+                                 border-bottom:2px solid #20a8d8;
+                                 overflow-y: auto;
+                                 " class="generic-shadow">
+                                        <div style="text-align: center;border-bottom:1px solid #20a8d8;width: 100%;">
+                                            <i class="fas fa-signature text-primary"></i>
+                                            {{item.type|getFieldL:'key':'title':ctrl.Type}}
+                                        </div>
+                                        <div ng-repeat="itemNode in item.items" style="line-height: 26px;">
+                                            <i class="fas fa-genderless text-success"></i>
+                                            <span ng-show="itemNode.competence">
+                                                {{'Competence'|l}}:&nbsp;
+                                                <get-field-directory
+                                                    id-value="itemNode.competence"
+                                                    extend="ctrl.Competence_Config"
+                                                    localization="true"
+                                                ></get-field-directory>-
+                                            </span>
+                                            <span ng-show="itemNode.role">
+                                                {{'Role'|l}}:&nbsp;
+                                                <get-field field="title"
+                                                    load-details-func="ctrl.loadRole_details(params)"
+                                                    id-value="itemNode.role" localization="true"></get-field>-
+                                            </span>
+
+                                            <get-field field="title"
+                                                load-details-func="ctrl.loadDepartment_details(params)"
+                                                id-value="itemNode.department" localization="true"></get-field>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="border-top:1px solid #c2cfd6;border-left:2px solid #20a8d8"></div>
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <div class="col-md-12">
+                            {{'Events'|l}}
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl.Item.event">
+                                            <td class="hour"><small><span class="grey-text float-left"><i
+                                                            class="fa fa-clock" aria-hidden="true"></i>
+                                                        <time-show time-show-type="short" time-show-data="item.time">
+                                                        </time-show>
+                                                    </span></small>
+                                            </td>
+                                            <td>
+                                                <show-username username="item.username" employee="item.employee">
+                                                </show-username>
+                                            </td>
+                                            <td>
+                                                {{item.action|l}}
+                                            </td>
+                                            <td>
+                                                {{item.comment}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <div ng-include="ctrl._urlInsertModal"></div>
+            <div ng-include="ctrl._urlCancelModal"></div>
+        </div>
+    </content-content>
+</my-content>

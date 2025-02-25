@@ -1,0 +1,111 @@
+<div ng-controller="meeting_room_controller as ctrl" class="room_meeting_calendar">
+    <div class="form-group row align-items-center mt-4 mb-4">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" ng-click="ctrl.switchSubTab_manageRoom('all')">
+                <a class="nav-link" ng-class="{'active': ctrl.areAllRoomTypesInactive()}">
+                    {{'All'|l}}
+                </a>
+            </li>
+            <li class="nav-item" ng-repeat="type in ctrl._roomTypes" ng-click="ctrl.switchSubTab_manageRoom(type.val)">
+                <a class="nav-link" ng-class="{'active': ctrl.calendar_tab_room_type[type.val]}">
+                    {{type.label[ctrl.$languageValue.current]}}
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="form-group row align-items-center">
+        <div class="date-filter" style="padding-bottom:0.5rem; max-width: none">
+            <div class="date-filter-item col-md-2">
+                <div class="title-filter">{{'FromDate'|l}}:</div>
+                <div class="value mt-2">
+                    <div>
+                        <input type="date" ng-model="ctrl.weekDays[0].date"
+                            ng-change="ctrl.load_calendar_check_date()" />
+                    </div>
+                    <div>
+                        <time-show2 time-show-data="ctrl.weekDays[0].date" time-show-type="just_date"
+                            bind-object="true"></time-show2>
+                    </div>
+                </div>
+            </div>
+            <div class="date-filter-item col-md-2">
+                <div class="title-filter">{{'ToDate'|l}}:</div>
+                <div class="value mt-2">
+                    <div>
+                        <input type="date" ng-model="ctrl.weekDays[ctrl.weekDays.length - 1].date"
+                            ng-change="ctrl.load_calendar_check_date()" />
+                    </div>
+                    <div>
+                        <time-show2 time-show-data="ctrl.weekDays[ctrl.weekDays.length - 1].date"
+                            time-show-type="just_date" bind-object="true">
+                        </time-show2>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-6 ">
+                <span class="gonnalate ml-5 row" ng-if="ctrl.show_calendar_checkbox_my">
+                    <input type="checkbox" ng-model="ctrl.calendar_checkbox_my"
+                        ng-change="ctrl.load_calendar()" />&nbsp;{{'My calendar'|l}}
+                </span>
+
+                <span class="is_get_all ml-5 row" ng-if="ctrl.show_calendar_checkbox_responsibility">
+                    <input type="checkbox" ng-model="ctrl.calendar_checkbox_responsibility"
+                        ng-change="ctrl.load_calendar()" />&nbsp;{{'Responsible Department'|l}}
+                </span>
+                <span class="gonnalate ml-5 row" ng-if="ctrl.show_calendar_checkbox_created">
+                    <input type="checkbox" ng-model="ctrl.calendar_checkbox_created"
+                        ng-change="ctrl.load_calendar()" />&nbsp;{{'Created'|l}}
+                </span>
+
+                <span class="gonnalate ml-5 row" ng-if="ctrl.show_calendar_checkbox_all">
+                    <input type="checkbox" ng-model="ctrl.calendar_checkbox_all"
+                        ng-change="ctrl.load_calendar()" />&nbsp;{{'WholeSchool'|l}}
+                </span>
+            </div>
+            <button ng-if="ctrl.show_export" class="btn btn-success ml-auto align-self-center" ng-click="ctrl.export_excel()">
+                <i class="fas fa-file-excel"></i>
+                {{'ExportToExcel' | l}}
+            </button>
+        </div>
+    </div>
+
+    <div class="table" style="overflow-x: auto;">
+        <table class="table table-bordered table-striped">
+            <thead style="height: 110px;">
+                <!-- Merged header row -->
+                <tr style="background-color: #007bff; color: white;">
+                    <th colspan="{{ 3 + ctrl.weekDays.length }}" class="text-center">
+                        {{'MeetingRoomScheduleConferenceRoom' | l}}
+                    </th>
+                </tr>
+                <!-- Original header row -->
+                <tr style="background-color: #f2f2f2;">
+                    <th>#</th>
+                    <th class="text-center" style="width: 2%;">{{'RoomCode' | l}}</th>
+                    <th class="text-center" style="width: 5%;">{{'MeetingRoom' | l}}</th>
+                    <th class="text-center" ng-repeat="day in ctrl.weekDays" style="min-width: 220px">
+                        {{ day.dayKey | l }}<br>{{ day.date | date:'dd/MM' }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(index, room) in ctrl.meetingRooms track by $index">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ room.code }}</td>
+                    <td style="text-wrap: nowrap;">{{ room.title[$root.Language.current] }}</td>
+                    <td ng-repeat="day in room.events" style="vertical-align: top; min-width: 200px;">
+                        <div class="mb-1" ng-repeat="e in day"
+                            style="border-radius: 4px;background-color: rgba(88, 88, 32, 0.3);">
+
+                            <room-item-calendar e="e" item-background="{{'#297fd3'}}"
+                                item-background-hover="{{'#d8ebff'}}" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

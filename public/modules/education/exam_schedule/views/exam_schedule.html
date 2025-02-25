@@ -1,0 +1,200 @@
+<my-content class="exam-schedule-feature">
+    <content-content>
+        <div class="card exam-schedule"
+            ng-controller="exam_schedule_controller as ctrl">
+            <div ng-include="ctrl._urlUpdateModal"></div>
+            <div ng-include="ctrl._urlDeleteModal"></div>
+            <div class="card-body">
+                <div class="content-container">
+                    <div class="created container">
+                        <div class="label">
+                            <i class="fas fa-chevron-left"
+                                ng-style="{'color':'blue'}">&nbsp;&nbsp;&nbsp;&nbsp;{{'Import ExamSchedule'|l}}</i>
+                            <i class="fas fa-tasks "></i>
+                        </div>
+                        <div class="content">
+                            <div class="exam-schedule-container">
+                                <div
+                                    style="border-top:1px solid #eee;margin-top:10px;">
+                                </div>
+                                <div class="exam-schedule-content">
+                                    <form class="form-horizontal "
+                                        name="insertForm">
+
+                                        <div class="row part"
+                                            style="width: 100%;">
+                                            <div class="col-md-6 form-group">
+                                                <div ng-if="!ctrl._import_exam_schedule_value.files"
+                                                    class="no-data">
+                                                    {{'NoAttachment'|l}}
+                                                </div>
+                                                <div class="table-responsive"
+                                                    ng-if="ctrl._import_exam_schedule_value.files">
+                                                    <table
+                                                        class="table table-sm">
+
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <attachment-just-show
+                                                                        my-item="ctrl._import_exam_schedule_value.files">
+                                                                    </attachment-just-show>
+                                                                </td>
+                                                                <td>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                                <table
+                                                    class="diskuf-selector-table wd-fa-add-file-light-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                                colspan=" 0">
+                                                                <div
+                                                                    class="diskuf-uploader">
+                                                                    <span
+                                                                        class="wd-fa-add-file-light">
+                                                                        <span
+                                                                            class="wd-fa-add-file-light-text">
+                                                                            <span
+                                                                                class="wd-fa-add-file-light-title">
+                                                                                <span
+                                                                                    class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                                            </span>
+                                                                            <span
+                                                                                class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <input
+                                                                        id="fileInput"
+                                                                        class="diskuf-fileUploader wd-test-file-light-inp "
+                                                                        type="file"
+                                                                        size="1"
+                                                                        style="width:100%;"
+                                                                        attachment-single
+                                                                        attachment-single-func="ctrl.getFile(params)">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="errorMsg" ng-show="ctrl.file_ErrorMsg">{{
+                                        ctrl.file_ErrorMsg }}</div>
+                                    <div>
+                                        <button-search button-search-func="ctrl.refreshData()"
+                                            button-search-start="ctrl._notyetInit"
+                                            button-search-model="ctrl._searchByKeyToFilterData"
+                                            button-search-placeholder="{{'InputNameFileOrNameCreator'|l}}">
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-sm table-hover"
+                                            ng-class="{'no-data':ctrl.list_files.length ===0}">
+                                            <thead>
+                                                <tr>
+                                                    <td
+                                                        style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                                        <div class="title">
+                                                            {{'File Name'|l}}:
+                                                        </div>
+                                                    </td>
+                                                    <td
+                                                        style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                                        {{'Creator'|l}}:
+                                                    </td>
+                                                    <td
+                                                        style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                                        {{'DateUpload'|l}}
+                                                        <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                            order-name="upload_date"></order>
+                                                    </td>
+                                                    <td style="width: 150px;">
+
+                                                    </td>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody id="taskList">
+                                                <tr
+                                                    ng-repeat="item in ctrl.list_files">
+                                                    <td>
+                                                        <!-- <attachment-show
+                                                            attachment-show-item="item.value"
+                                                            attachment-show-params="{id:item._id,name:item.value.name}">
+                                                        </attachment-show> -->
+                                                        <attachment-show attachment-show-item="item.value"
+                                                            attachment-show-func="ctrl.loadFile_examSchedule(params)"
+                                                            attachment-show-params="item.value" attachment-show-review="false"
+                                                            attachment-show-service-name="'education/exam_schedule'">
+                                                        </attachment-show>
+                                                    </td>
+                                                    <td
+                                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                        <span>
+                                                            {{item.username}}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                        <span>
+                                                            <time-show2
+                                                                time-show-data="item.upload_date"
+                                                                time-show-type="just_date">
+                                                            </time-show2>
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                        <div
+                                                            class="group-button">
+                                                            <button-edit-item
+                                                                class="item-button"
+                                                                button-edit-item-modal="#modal_Exam_Update"
+                                                                button-edit-item-func="ctrl.prepareEdit(params)"
+                                                                button-edit-item-params="item">
+                                                            </button-edit-item>
+                                                            <button-delete-item
+                                                                class="item-button"
+                                                                button-delete-item-modal="#modal_Exam_Delete"
+                                                                button-delete-item-func="ctrl.prepareDelete(params)"
+                                                                button-delete-item-params="item">
+                                                            </button-delete-item>
+                                                            <!-- <i class="fas fa-download custom-download-button"
+                                                                ng-if="item.type === 'file'"
+                                                                ng-click="ctrl.downloadFile(item)"></i> -->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    <div ng-if="ctrl.list_files.length ==0"
+                                        class="no-data">
+                                        {{'NoData'|l}}
+                                    </div>
+                                    <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="ExamSchedule"
+                                        pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                                        pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                                        pagination-func="ctrl.loadAllFiles(params)">
+                                    </pagination>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </content-content>
+</my-content>

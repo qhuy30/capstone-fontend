@@ -1,0 +1,34 @@
+<ul ng-if="item.canExpand" ng-show="item.open" class="department-container child">
+    <li ng-repeat="child_item in item.childs">
+        <div class="department-item" ng-class="{'can-expand':child_item.canExpand}">
+            <div class="title-child">
+                <span ng-click="ctrl.expandDepartment(child_item)">
+                    <span ng-repeat="space in child_item.parent" class="space">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span ng-show="child_item.canExpand">
+                        <i class="fas fa-angle-right" ng-show="!child_item.open"></i>
+                        <i class="fas fa-angle-down" ng-show="child_item.open"></i>
+                    </span>
+                    &nbsp;&nbsp;{{child_item.title[$root.Language.current]}}
+                </span>
+            </div>
+            <div class="status">
+                <isactive isactive-value="child_item.isactive"></isactive>
+            </div>
+            <div class="tool">
+                <button-new button-new-func="ctrl.prepareInsert(child_item)"
+                    button-new-label="{{'NewChildDepartment'|l}}" button-new-modal="#modal_Organization_Insert">
+                </button-new>
+                <!-- <button-new-item button-new-item-modal="#modal_Organization_Insert"
+                  button-new-item-func="ctrl.prepareInsert(params)" button-new-item-params="item">
+              </button-new-item> -->
+                <button-edit-item button-edit-item-modal="#modal_Organization_Update"
+                    button-edit-item-func="ctrl.prepareUpdate(params)" button-edit-item-params="child_item">
+                </button-edit-item>
+                <button-delete-item ng-hide="child_item.isactive" button-delete-item-modal="#modal_Organization_Delete"
+                    button-delete-item-func="ctrl.prepareDelete(item,child_item)" >
+                </button-delete-item>
+            </div>
+        </div>
+        <department-feature-child item="child_item" ctrl="ctrl"></department-feature-child>
+    </li>
+</ul>

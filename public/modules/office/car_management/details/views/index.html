@@ -1,0 +1,628 @@
+<my-content>
+  <content-content >
+    <div
+      ng-controller="car_registration_details_controller as ctrlChild"
+    >
+    <div ng-include="ctrlChild._urlUpdateModal"></div>
+    <div ng-include="ctrlChild._urlAssessModal"></div>
+    <div ng-include="ctrlChild._urlDepartmentApprove"></div>
+      <div class="detail-registration-car">
+
+        <div class="col-md-12 mt-2 row d-flex justify-content-start">
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_card_management"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item, action:'approve_card_management'}"
+              button-label="{{'Accept'}}"
+          />
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_lead"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'approve_lead'}"
+              button-label="{{'Accept'}}"
+          />
+
+          <button-approval-item 
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_car_management"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'approve_car_management'}"
+              button-label="{{'Accept'}}"
+          />
+
+          <button-approval-item 
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_department"
+              button-approval-item-modal="#modal_CarRegistration_LeadDepartment_Approval_detail"
+              button-approval-item-func="ctrlChild.prepareLeadDepartmentApprove(params)"
+              button-approval-item-params="{item: ctrlChild.Item}"
+              button-label="{{'Accept'}}"
+          />
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_creator_receive_card"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'creator_receive_card'}"
+              button-label="{{'ConfirmReceiveCard'}}"/>
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_creator_return_card"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'creator_return_card'}"
+              button-label="{{'ReturnCard'}}"/>
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_manager_receive_card"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'manager_receive_card'}"
+              button-label="{{'card_receive_tooltip'}}"/>
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_lead_external"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'approve_lead_external'}"
+              button-label="{{'Approval'}}"
+          />
+
+          <button-reject-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_lead_external"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'reject_lead_external'}"
+              button-label="{{'Reject'}}"
+          />
+
+          <button-reject-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_cancel"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'creator_cancel'}"
+              button-label="{{'Cancel'}}"
+          />
+
+          <button-reject-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_card_management"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'reject_card_management'}"
+              button-label="{{'Reject'}}"
+          />
+
+          <button-reject-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_lead"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'reject_lead'}"
+              button-label="{{'Reject'}}"
+          />
+
+          <button-reject-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_car_management"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'reject_car_management'}"
+              button-label="{{'Reject'}}"
+          />
+
+          <button-reject-item 
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_department"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'reject_department'}"
+              button-label="{{'Reject'}}"
+          />
+
+          <button-edit-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_edit"
+              button-edit-item-modal="#modal_CarRegistration_Update_detail"
+              button-edit-item-func="ctrlChild.prepareUpdate(params)"
+              button-edit-item-params="ctrlChild.Item"
+              button-label="{{'Edit'}}"
+          />
+
+          <button-edit-item
+              class="mr-2" 
+              ng-if="ctrlChild.Item.allow_edit_card" 
+              button-edit-item-modal="#modal_CarRegistration_Assess_detail"
+              button-edit-item-func="ctrlChild.prepareAssess(params)" 
+              button-edit-item-params="{item: ctrlChild.Item,action:'edit_card_management'}"
+              button-label="{{'ChangeCardCredit'}}"
+          />
+          <button-delete-item
+              ng-if="ctrlChild.Item.allow_delete"
+              button-label="{{'Delete'}}"
+              button-delete-item-modal="#modal_CarRegistration_Assess_detail"
+              button-delete-item-func="ctrlChild.prepareAssess(params)"
+              button-delete-item-params="{item: ctrlChild.Item,action:'delete'}"
+          />
+
+          <!-- recall -->
+          <button-reject-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_request_cancel"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'request_cancel'}"
+              button-label="{{'RequestCancel'}}"
+          />
+
+          <button-reject-item 
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_reject_recall"
+              button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+              button-reject-item-func="ctrlChild.prepareAssess(params)"
+              button-reject-item-params="{item: ctrlChild.Item,action:'reject_recall'}"
+              button-label="{{'RejectRecall'}}"
+          />
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_recall_department"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'approve_recall_department'}"
+              button-label="{{'ApproveRecall'}}"
+          />
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_recall_car_management"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'approve_recall_car_management'}"
+              button-label="{{'ApproveRecall'}}"
+          />
+
+          <button-approval-item
+              class="mr-2"
+              ng-if="ctrlChild.Item.allow_assess_recall_lead"
+              button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+              button-approval-item-func="ctrlChild.prepareAssess(params)"
+              button-approval-item-params="{item: ctrlChild.Item,action:'approve_recall_lead'}"
+              button-label="{{'ApproveRecall'}}"
+          />
+        </div>
+
+        <section class="pb-3">
+          <div class="text-center post-data">
+            <h2>
+              <a><strong>{{ctrlChild.Item.title}}</strong></a>
+            </h2>
+            <p class="grey-text">
+              <span> {{'WrittenBy'|l}} </span>
+              <span>
+                <a><show-username username="ctrlChild.Item.username"></show-username></a>&nbsp;
+              </span>
+              <span>
+                <time-show time-show-data="(ctrlChild.Item.entity.his[0].created)"></time-show>
+              </span>
+            </p>
+          </div>
+        </section>
+
+        <section class="pb-3">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+              <table class="col-md-12">
+                <!-- <tr>
+                  <td class="font-weight-bolder">
+                    {{'Title'|l}}
+                  </td>
+                  <td colspan="3">
+                    {{ctrlChild.Item.title}}
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="font-weight-bolder">
+                    {{'WrittenBy'|l}}
+                  </td>
+                  <td>
+                    <show-username hide-image="true" username="ctrlChild.Item.username" />
+                  </td>
+                  <td class="font-weight-bolder">{{'Created date'|l}}</td>
+                  <td>
+                    <time-show time-show-data="(ctrlChild.Item.entity.his[0].created)"/>
+                  </td>
+                </tr> -->
+                <tr>
+                  <td class="font-weight-bolder"> {{'RegistrationCode'|l}} </td>
+                  <td colspan="3"> {{ctrlChild.Item.code}} </td>
+                </tr>
+                <tr>
+                  <td style="width: 10%;" class="font-weight-bolder">
+                    {{'Starting place'|l}}
+                  </td>
+                  <td style="width: 40%;">
+                    <get-field-directory id-value="ctrlChild.Item.starting_place" extend="ctrlChild.location_config"
+                      localization="true"></get-field-directory>
+                  </td>
+                  <td style="width: 10%;" class="font-weight-bolder">{{'Destination'|l}}</td>
+                  <td style="width: 40%;">{{ctrlChild.Item.destination}}</td>
+                </tr>
+  
+                <tr>
+                  <td class="font-weight-bolder">{{'Department'|l}}</td>
+                  <td>
+                    <div class="d-flex flex-wrap">
+                      <span ng-repeat="department in ctrlChild.Item.to_department">
+                        <show-department department="department"></show-department><span ng-show="!$last">,&nbsp;</span>
+                      </span>
+                    </div>
+                  </td>
+                  <td class="font-weight-bolder">{{'Number of people'|l}}</td>
+                  <td>{{ctrlChild.Item.number_of_people}}</td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bolder">{{'Passenger'|l}}</td>
+                  <td colspan="3">
+                    <div class="d-flex flex-wrap">
+                      <span ng-repeat="item in ctrlChild.Item.passenger">
+                        <show-username-onlyname hide-image="true" username="item"></show-username-onlyname><span ng-show="!$last">,&nbsp;</span>
+                      </span>
+                    </div>
+                  </td>
+                  <!-- <td class="font-weight-bolder">{{'ContactPhoneNumber'|l}}</td>
+                  <td>
+                    <span ng-repeat="item in ctrlChild.Item.passengers_details">
+                      {{item.phonenumber}}<br>
+                    </span>
+                  </td> -->
+                </tr>
+
+                <tr>
+                  <td class="font-weight-bolder">{{'contactperson'|l}}</td>
+                  <td colspan="3">
+                    <span ng-repeat="item in ctrlChild.Item.passengers_details">
+                      {{item.fullname}} <span ng-if="item.phonenumber">({{item.phonenumber}})</span>
+                      <br>
+                    </span>
+                  </td>
+                  <!-- <td class="font-weight-bolder">{{'ContactPhoneNumber'|l}}</td>
+                  <td>
+                    <span ng-repeat="item in ctrlChild.Item.passengers_details">
+                      {{item.phonenumber}}<br>
+                    </span>
+                  </td> -->
+                </tr>
+                <tr>
+  
+                  <td class="font-weight-bolder">{{'Time to go'|l}}</td>
+                  <td><time-show time-show-data="ctrlChild.Item.time_to_go" time-show-type="long-no-second">
+                    </time-show></td>
+                  <td class="font-weight-bolder">{{'Pick up time'|l}}</td>
+                  <td><time-show time-show-data="ctrlChild.Item.pick_up_time" time-show-type="long-no-second">
+                    </time-show></td>
+                </tr>
+                <tr>
+                  <td class="font-weight-bolder">{{'Content'|l}}</td>
+                  <td colspan="3">{{ctrlChild.Item.content}}</td>
+                </tr>
+                <tr ng-if="ctrlChild.Item.showProtocal">
+                  <td class="font-weight-bolder">
+                    {{'Transportation allowance'|l}}
+                  </td>
+                  <td colspan="3">
+                    <div ng-if="ctrlChild.Item.assign_card">{{'Assign a credit card'|l}}</div>
+                    <div ng-if="!ctrlChild.Item.assign_card">{{'Assign a car'|l}}</div>
+                  </td>
+                </tr>
+                <tr ng-if="ctrlChild.Item.car" >
+                  <td class="font-weight-bolder">{{'Car'|l}}</td>
+                  <td colspan="3"><get-field-directory id-value="ctrlChild.Item.car" extend="ctrlChild.vehicle_list_config"
+                      localization="true"></get-field-directory></td>
+                </tr>
+                <tr ng-if="ctrlChild.Item.driver">
+                  <td class="font-weight-bolder">{{'Driver'|l}}</td>
+                  <td>
+                    <span>{{ctrlChild.Item.driver_detail.fullname}}</span>
+                  </td>
+                  <td class="font-weight-bolder">{{'PhoneNumber'|l}}
+                  <td>
+                    <span>{{ctrlChild.Item.driver_detail.phonenumber}}</span>
+                  </td>
+                </tr>
+                <tr ng-if="ctrlChild.Item.card" >
+                  <td class="font-weight-bolder">{{'CreditCard'|l}}</td>
+                  <td colspan="3"><get-field-directory id-value="ctrlChild.Item.card" extend="ctrlChild.card_list_config"
+                      localization="true"></get-field-directory></td>
+                </tr>
+  
+                <tr ng-if="ctrlChild.Item.money">
+                  <td class="font-weight-bolder">{{'AmountSpent'|l}}</td>
+                  <td class="font-weight-bolder">{{ ctrlChild.Item.money|currencyFormat:'VND' }}</td>
+                  <td class="font-weight-bolder">{{'Km'|l}}</td>
+                  <td>{{ ctrlChild.Item.number_km }}</td>
+                </tr>
+                <tr ng-if="ctrlChild.Item.invoices">
+                  <td class="font-weight-bolder">{{'Invoices'|l}}</td>
+                  <td colspan="3">
+                    <attachment-show ng-repeat="at in ctrlChild.Item.invoices" attachment-show-item="at"
+                      attachment-show-func="ctrlChild.loadfileInvoice(params)"
+                      attachment-show-params="{id:ctrlChild.Item._id, code:ctrlChild.Item.code, name:at.name}"
+                      attachment-show-service-name="'car_management'"></attachment-show>
+                  </td>
+                </tr>
+              </table>
+  
+  
+              
+                <!-- <div class="col-md-12 mt-2 row d-flex justify-content-end">
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_card_management"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item, action:'approve_card_management'}"
+                      button-label="{{'Accept'}}"
+                  />
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_lead"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'approve_lead'}"
+                      button-label="{{'Accept'}}"
+                  />
+      
+                  <button-approval-item 
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_car_management"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'approve_car_management'}"
+                      button-label="{{'Accept'}}"
+                  />
+      
+                  <button-approval-item 
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_department"
+                      button-approval-item-modal="#modal_CarRegistration_LeadDepartment_Approval_detail"
+                      button-approval-item-func="ctrlChild.prepareLeadDepartmentApprove(params)"
+                      button-approval-item-params="{item: ctrlChild.Item}"
+                      button-label="{{'Accept'}}"
+                  />
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_creator_receive_card"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'creator_receive_card'}"
+                      button-label="{{'ConfirmReceiveCard'}}"/>
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_creator_return_card"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'creator_return_card'}"
+                      button-label="{{'ReturnCard'}}"/>
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_manager_receive_card"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'manager_receive_card'}"
+                      button-label="{{'card_receive_tooltip'}}"/>
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_lead_external"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'approve_lead_external'}"
+                      button-label="{{'Approval'}}"
+                  />
+      
+                  <button-reject-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_lead_external"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'reject_lead_external'}"
+                      button-label="{{'Reject'}}"
+                  />
+      
+                  <button-reject-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_cancel"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'creator_cancel'}"
+                      button-label="{{'Cancel'}}"
+                  />
+      
+                  <button-reject-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_card_management"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'reject_card_management'}"
+                      button-label="{{'Reject'}}"
+                  />
+      
+                  <button-reject-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_lead"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'reject_lead'}"
+                      button-label="{{'Reject'}}"
+                  />
+      
+                  <button-reject-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_car_management"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'reject_car_management'}"
+                      button-label="{{'Reject'}}"
+                  />
+      
+                  <button-reject-item 
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_department"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'reject_department'}"
+                      button-label="{{'Reject'}}"
+                  />
+      
+                  <button-edit-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_edit"
+                      button-edit-item-modal="#modal_CarRegistration_Update_detail"
+                      button-edit-item-func="ctrlChild.prepareUpdate(params)"
+                      button-edit-item-params="ctrlChild.Item"
+                      button-label="{{'Edit'}}"
+                  />
+      
+                  <button-edit-item
+                      class="mr-2" 
+                      ng-if="ctrlChild.Item.allow_edit_card" 
+                      button-edit-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-edit-item-func="ctrlChild.prepareAssess(params)" 
+                      button-edit-item-params="{item: ctrlChild.Item,action:'edit_card_management'}"
+                      button-label="{{'ChangeCardCredit'}}"
+                  />
+                  <button-delete-item
+                      ng-if="ctrlChild.Item.allow_delete"
+                      button-label="{{'Delete'}}"
+                      button-delete-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-delete-item-func="ctrlChild.prepareAssess(params)"
+                      button-delete-item-params="{item: ctrlChild.Item,action:'delete'}"
+                  />
+      
+                  <button-reject-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_request_cancel"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'request_cancel'}"
+                      button-label="{{'RequestCancel'}}"
+                  />
+      
+                  <button-reject-item 
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_reject_recall"
+                      button-reject-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-reject-item-func="ctrlChild.prepareAssess(params)"
+                      button-reject-item-params="{item: ctrlChild.Item,action:'reject_recall'}"
+                      button-label="{{'RejectRecall'}}"
+                  />
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_recall_department"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'approve_recall_department'}"
+                      button-label="{{'ApproveRecall'}}"
+                  />
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_recall_car_management"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'approve_recall_car_management'}"
+                      button-label="{{'ApproveRecall'}}"
+                  />
+      
+                  <button-approval-item
+                      class="mr-2"
+                      ng-if="ctrlChild.Item.allow_assess_recall_lead"
+                      button-approval-item-modal="#modal_CarRegistration_Assess_detail"
+                      button-approval-item-func="ctrlChild.prepareAssess(params)"
+                      button-approval-item-params="{item: ctrlChild.Item,action:'approve_recall_lead'}"
+                      button-label="{{'ApproveRecall'}}"
+                  />
+                </div> -->
+            </div>
+
+
+          </div>
+        </section>
+
+        
+
+        <section class="pb-3" ng-show="ctrlChild.Item.attachments.length>0">
+          <p
+            class="note note-primary attachment"
+          >
+            <strong>{{"Attachment"|l}}:</strong>
+
+            <attachment-show
+              ng-repeat="at in ctrlChild.Item.attachments"
+              attachment-show-item="at"
+              attachment-show-func="ctrlChild.load_file_info(params)"
+              attachment-show-params="{id:ctrlChild.Item.code,name:at.name}"
+              attachment-show-service-name="'meeting_room'"
+            >
+            </attachment-show>
+          </p>
+        </section>
+      </div>
+
+      <div class="detail-registration-car comments-list text-center text-md-left">
+        <h4 class="text-center font-weight-bold mb-5 grey-text">
+          {{'Events'|l}}
+          <span class="badge pink">{{ctrlChild.Item.event.length}}</span>
+        </h4>
+
+        <!-- First row -->
+        <table class="table event-table">
+          <thead>
+            <tr>
+              <th style="text-align: center;">#</th>
+              <th style="text-align: center;">{{'Time'|l}}</th>
+              <th style="text-align: center">{{'PersonAction'|l}}</th>
+              <th style="text-align: center">{{'Action'|l}}</th>
+              <th style="text-align: center; max-width: 200px;">{{'Message'|l}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in ctrlChild.Item.event|orderBy:'time':-1">
+              <td style="text-align: center;"> {{$index +1}} </td>
+              <td class="hour" style="border: none;">
+                <span class="grey-text"
+                  ><i class="fa fa-clock" aria-hidden="true"></i>
+                  <time-show time-show-data="item.time"></time-show>
+                </span>
+              </td>
+              <td>
+                <show-username username="item.username"> </show-username>
+              </td>
+              <td>{{item.action|l}}</td>
+              <td style="max-width: 200px;">{{item.note}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </content-content>
+</my-content>

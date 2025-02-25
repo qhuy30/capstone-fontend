@@ -1,0 +1,42 @@
+
+<table>
+    <tbody>
+        <tr ng-repeat="at in attachmentEditData">
+            <td>
+				<attachment-show attachment-show-item="at" 
+				attachment-show-func="attachmentEditLoadfunc(params)"
+				attachment-show-params ="{params:{id:attachmentEditItemid,name:at.name}}"
+				>
+                </attachment-show>
+            </td>
+            <td>
+                <button class="btn"
+                    ng-disabled="$root.statusValue.get(attachmentEditCtrlname,attachmentEditObjname,attachmentEditActionname,'doing')"
+                    ng-click="attachmentEditRemovefunc({params:{id:attachmentEditItemid,name:at.name}})">
+                    <i class="fas fa-times"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="diskuf-selector-table wd-fa-add-file-light-table">
+    <tbody>
+        <tr>
+            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan="0">
+                <div class="diskuf-uploader">
+                    <span class="wd-fa-add-file-light">
+                        <span class="wd-fa-add-file-light-text">
+                            <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text">Tải lên các tập tin và hình ảnh</span>
+                            </span>
+                            <span class="wd-fa-add-file-light-descript">Kéo tập tin vào đây để upload</span>
+                        </span>
+                    </span>
+                    <input class="diskuf-fileUploader wd-test-file-light-inp " type="file"  size="1"
+					attachment-single attachment-single-func="upload(params)">
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

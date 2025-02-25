@@ -1,0 +1,11 @@
+<button
+  modal-toggle="{{buttonCancelItemModal}}"
+  type="button"
+  title="{{buttonCancelItemTooltip|l}}"
+  class="btn btn-outline-dark btn-sm"
+  ng-click="buttonCancelClick();$event.stopPropagation();"
+  ng-disabled="disabled"
+>
+  {{buttonLabel ? buttonLabel: 'Cancel'|l}}
+  <i class="fas fa-times-circle"></i>
+</button>

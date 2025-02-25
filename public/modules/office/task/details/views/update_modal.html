@@ -1,0 +1,111 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Task_Update_inDetailView">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Update'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="updateForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <div class="prepend-input input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">{{'Title'|l}}
+                                        &nbsp;<span style="color: red;">*</span>
+                                    </span>
+                                    
+                                </div>
+                                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')"
+                                    type="text" ng-model="ctrl._update_value.title" class="form-control"
+                                    name="update_title" placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': updateForm.update_title.$invalid }" 
+                                    required
+                                     />
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <pick-modal-directory
+                                    extend="ctrl.TaskPriority"
+                                    pick-func="ctrl.pickPriorityUpdate(params)"
+                                    id-value="ctrl._update_value.priority"
+                                    label="{{'Priority'|l}}"
+                                    require="true"
+                                    >
+                                </pick-modal-directory>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <pick-modal-advance-multi
+                                    label="{{'Label'|l}}" require="false"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')"
+                                    load-data-func="ctrl.loadLabel(params)"
+                                    id-value="ctrl._update_value.label"
+                                    load-details-func="ctrl.loadLabel_details(params)"
+                                    localized="false"
+                                    pick-func="ctrl.pickLabel_update(params)"
+                                    enable-insert-new-item="true"
+                                    insert-item-func="ctrl.insertLabel(params)">
+                            </pick-modal-advance-multi>
+                        </div>
+                    </div>
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea id="updateTask_content_inDetailView" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div ng-if="ctrl._update_value.attachment.length ==0" class="no-data">
+                                {{'NoAttachment'|l}}
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl._update_value.attachment">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                <attachment-just-show my-item="item"></attachment-just-show>
+                                            </td>
+                                            <td><i class="fas fa-times text-danger" ng-click="ctrl.removeFile_update(item)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                                            <div class="diskuf-uploader">
+                                                <span class="wd-fa-add-file-light">
+                                                    <span class="wd-fa-add-file-light-text">
+                                                        <span class="wd-fa-add-file-light-title">
+                                                            <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                        </span>
+                                                        <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input class="diskuf-fileUploader wd-test-file-light-inp " type="file" file-reading
+                                                    file-func="ctrl.pushFile_update(params)" size="1" style="width:100%;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="Task"
+                    modal-button-save-actionname="update"
+                    modal-button-save-invalid="ctrl._update_value.status === 'Cancelled' || !ctrl._update_value.title"
+                    modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

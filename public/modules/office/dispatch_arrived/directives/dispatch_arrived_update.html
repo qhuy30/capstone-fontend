@@ -1,0 +1,352 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_DA_Dir_Update">
+  <div class="modal-dialog modal-full">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'Update'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="updateForm">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <!--year -->
+              <!-- <div class="col-md-6 form-group mt-2">
+                <year-select
+                    id-value="ctrl._update_value.year"
+                    select-year-func="ctrl.chooseReleaseDate_update(params)"
+                    ng-model="ctrl._update_value.year"
+                    label="{{'YearDocument' | l}}"
+                    ng-class="{ 'is-invalid': updateForm.update_year.$invalid }"
+                    disable="$root.statusValue.get(ctrl._ctrlName, 'DA', 'update', 'doing')"
+                    require="true">
+                </year-select>
+              </div> -->
+              <div class="w-100"></div>
+             <!--code -->
+              <div class="form-group col-md-6">
+                <pick-modal-directory
+                  extend="ctrl.IncommingDispatchBook_Config"
+                  pick-func="ctrl.pickDAB_update(params)"
+                  id-value="ctrl._update_value.code"
+                  label="{{'Document number'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                ></pick-modal-directory>
+              </div>
+              <!--incoming_number -->
+              <div class="form-group col-md-6">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'DispatchArrivedNumber'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                    type="text"
+                    ng-model="ctrl._update_value.incoming_number"
+                    ng-change="ctrl.change_incoming_number_update()"
+                    class="form-control"
+                    name="update_incoming_number"
+                    ng-class="{ 'is-invalid': updateForm.update_incoming_number.$invalid }"
+                    required
+                  />
+                  <p class="text-danger" ng-if="ctrl._update_value.invalid_incoming_number">{{'Number of existing documents'|l}}</p>
+                </div>
+              </div>
+            
+             <!--symbol_number-->
+             <div class="form-group col-md-6">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Number symbol'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                  type="text"
+                  ng-model="ctrl._update_value.symbol_number"
+                  class="form-control"
+                  name="update_symbol_number"
+                  placeholder="{{'Input number symbol'|l}}"
+                  ng-class="{ 'is-invalid': updateForm.update_symbol_number.$invalid }"
+                  required
+                />
+              </div>
+            </div>
+            <!--incomming_date -->
+            <div class="col-md-6 form-group">
+              <date
+                id-value="ctrl._update_value.incomming_date"
+                func="ctrl.chooseTransferDate_update(params)"
+                label="{{'Date of Arrival'|l}}"
+                disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                required="true"
+              ></date>
+            </div>
+            <!-- sending_place -->
+            <div class="form-group col-md-12">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Agency promulgate'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                  type="text"
+                  ng-model="ctrl._update_value.sending_place"
+                  class="form-control"
+                  name="update_sending_place"
+                  placeholder="{{'Input Agency promulgate'|l}}"
+                  ng-class="{ 'is-invalid': updateForm.update_sending_place.$invalid }"
+                  required
+                />
+              </div>
+            </div>
+            <div class="w-100"></div>
+            <!--type-->
+            <div class="form-group col-md-6">
+              <pick-modal-directory extend="ctrl.DocumentType_Config"
+                pick-func="ctrl.pickDAT_update(params)" id-value="ctrl._update_value.type"
+                label="{{'TypeName'|l}}"
+                disable="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                require="true" has-insert-button="true"></pick-modal-directory>
+            </div>
+
+            <!-- Field -->
+            <div class="form-group col-md-6">
+              <pick-modal-directory extend="ctrl.Field_Config"
+                pick-func="ctrl.pickField_update(params)" id-value="ctrl._update_value.field"
+                label="{{'Field'|l}}"
+                disable="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                require="true" has-insert-button="true"></pick-modal-directory>
+            </div>
+            <!--security_level -->
+            <div class="form-group col-md-6">
+              <pick-modal-directory extend="ctrl.securityLevel_Config"
+                pick-func="ctrl.pick_update_security_level(params)" id-value="ctrl._update_value.security_level
+                "
+                label="{{'ConfidentialityLevel'|l}}"
+                disable="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                require="true"></pick-modal-directory>
+            </div>
+            <!-- Nature == Priority -->
+            <div class="form-group col-md-6">
+              <pick-modal-directory
+                extend="ctrl.IncommingDispatchPririoty_Config"
+                pick-func="ctrl.chooseUrgencyLevel_update(params)"
+                id-value="ctrl._update_value.urgency_level"
+                label="{{'urgency'|l}}"
+                disable="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                require="true"
+              ></pick-modal-directory>
+            </div>
+              <!-- signing_date -->
+              <div class="col-md-6 form-group">
+                <date
+                  id-value="ctrl._update_value.date_sign"
+                  func="ctrl.chooseSigningDate_update(params)"
+                  label="{{'Signing date'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                  required="true"
+                ></date>
+              </div>
+              <!-- date_sign -->
+              <div class="col-md-6 form-group">
+                <date
+                  id-value="ctrl._update_value.expried"
+                  func="ctrl.chooseDateSign_update(params)"
+                  label="{{'Duration'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                  required="true"
+                ></date>
+              </div>
+               <!-- content -->
+               <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Abstract'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <div class="form-group">
+                    <textarea style="padding: 10px; width: 100%;" name="textarea" rows="3">{{ctrl._update_value.content}}</textarea>
+                  </div>
+                </div>
+              </div>
+              <!-- is_legal -->
+              <!-- <div class="form-group col-md-6">
+                <input-checkbox
+                  input-checkbox-label="{{'IsLegalDocument'|l}}"
+                  input-checkbox-model="ctrl._update_value.is_legal"
+                  input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                >
+                </input-checkbox>
+              </div> -->
+              <!-- is_assign_task -->
+              <!-- <div class="form-group col-md-6">
+                <input-checkbox
+                  input-checkbox-label="{{'IsTheAssignmentDocument'|l}}"
+                  input-checkbox-model="ctrl._update_value.is_assign_task"
+                  input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                >
+                </input-checkbox>
+              </div>            -->
+            </div>
+          </div>
+           <!-- Dispatch File -->
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="col-md-6" style="border-right: 1px solid #eee">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>{{'FileDispatchArrived'|l}}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in ctrl._update_value.incoming_file">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          <attachment-just-show my-item="item"></attachment-just-show>
+                        </td>
+                        <td class="remove-file">
+                          <i class="fas fa-times text-danger" ng-click="ctrl.removeFile_update(item)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                  <tbody>
+                    <tr>
+                      <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                              </span>
+                              <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                            </span>
+                          </span>
+                          <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                            file-reading="ctrl._update_value.incoming_file" size="1" multiple style="width: 100%" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>      
+          <!-- Attachment File -->
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="col-md-6" style="border-right: 1px solid #eee">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>{{'Attachment'|l}}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in ctrl._update_value.attachments">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          <attachment-just-show my-item="item"></attachment-just-show>
+                        </td>
+                        <td class="remove-file">
+                          <i class="fas fa-times text-danger" ng-click="ctrl.removeFileAttachment_update(item)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                  <tbody>
+                    <tr>
+                      <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                              </span>
+                              <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                            </span>
+                          </span>
+                          <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                            file-reading="ctrl._update_value.attachments" size="1" multiple style="width: 100%" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div> 
+          <!-- Đơn vị nhận biết -->
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="form-group col-md-12 mt-3">
+                <organization-multi
+                  label="{{'Department receives to know'|l}}"
+                  id-value="ctrl._update_value.department_receiver_ar"
+                  select-func="ctrl.pickViewOnlyDepartment_update(params)"
+                  require="true">
+                </organization-multi>
+              </div>
+            </div>
+          </div>
+          <!-- Đơn vị thực thi -->
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="form-group col-md-12 mt-3">
+                <organization-dispatch-arrived
+                  label="{{'processing unit'|l}}"
+                  id-value="ctrl._update_value.department_execute"
+                  select-func="ctrl.chooseSubmissionDepartment_update(params)"
+                  require="true">
+                </organization-dispatch-arrived>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nhãn công việc -->
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="form-group col-md-12">
+                    <pick-modal-advance-multi-2
+                        label="{{'Task label'|l}}" require="false"
+                        disable="$root.statusValue.get(ctrl._ctrlName,'DA','update','doing')"
+                        load-data-func="ctrl.loadLabel(params)"
+                        id-value="ctrl._update_value.task_label"
+                        load-details-func="ctrl.loadLabel_details(params)"
+                        localized="false"
+                        pick-func="ctrl.pickLabelDA_update(params)"
+                    >
+                    
+                </div>
+            </div>
+        </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-save
+          modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-save-objname="DA"
+          modal-button-save-actionname="update"
+          modal-button-save-invalid="updateForm.$invalid || ctrl.update_incoming_number.invalid_incoming_number"
+          modal-button-save-func="ctrl.update()"
+        >
+        </modal-button-save>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

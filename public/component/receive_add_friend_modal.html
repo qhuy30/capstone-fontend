@@ -1,0 +1,53 @@
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="ReceiveRequestFriendModal"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'FriendRequest'|l}} {{ctrl.receive_request.length>0?'('+ctrl.receive_request.length+')':''}}"></modal-header>
+      <div class="modal-body" ng-style="{{ctrl.modalStyle}}">
+        <form class="form-horizontal">
+          <div class="form-group" ng-show="ctrl.receive_request.length>0">
+
+            <div class="row">
+              <div
+                class="col-md-12 user-item"
+                ng-repeat="item in ctrl.receive_request"
+              >
+                <show-username username="item.username"></show-username>
+
+                <i
+                  ng-click="ctrl.decline(item._id)"
+                  class="fa fa-times"
+                  aria-hidden="true"
+                  style="float: right; margin-top: 6px; margin-right: 6px"
+                ></i>
+                <i
+                  ng-click="ctrl.accept(item._id)"
+                  class="fa fa-user-plus"
+                  aria-hidden="true"
+                  style="float: right; margin-top: 6px; margin-right: 6px"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="form-group" ng-hide="ctrl.receive_request.length>0">
+                {{'NoData'|l}}
+            </div> -->
+        </form>
+        <div style="width: 100%; height: 32px">
+          <button
+            type="button"
+            class="close-modal"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            {{'Close'|l}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

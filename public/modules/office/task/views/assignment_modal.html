@@ -1,0 +1,107 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Task_Assignment">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Assign'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="assignForm">
+                    <div class="row part">
+                        <div class="col-md-4 form-group">
+                            <date id-value="ctrlChild._update_value.from_date"
+                                func="ctrlChild.chooseFromDate_insert(params)" label="{{'FromDate'|l}}"
+                                disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                require="true" required="true"></date>
+                            <div class="errorMsg" ng-show="ctrlChild.fromDate_ErrorMsg">
+                                {{ ctrlChild.fromDate_ErrorMsg }}
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <date id-value="ctrlChild._update_value.to_date"
+                                func="ctrlChild.chooseToDate_insert(params)" label="{{'ToDate'|l}}"
+                                disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                require="true" required="true" endday="true"></date>
+                            <div class="errorMsg" ng-show="ctrlChild.toDate_ErrorMsg">{{ ctrlChild.toDate_ErrorMsg }}
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center col-md-4" style="padding-left: 0; padding-right: 15px!important;">
+                            <div class="input-group w-100" style="width: auto; align-items: center">
+                                <label for="estimate" class="input-group-text" style="
+                                        border-top-right-radius: 0;
+                                        border-bottom-right-radius: 0;
+                                        padding-top: 4.7px;
+                                        padding-bottom: 4.7px;">
+                                    {{'RequestCompletedWithin'|l}}
+                                    <span class="require-sympton p-0 m-0" style="margin-left: 5px!important;">*</span>
+                                </label>
+                                <input type="number" id="estimate" ng-model="ctrlChild._update_value.estimate"
+                                    class="form-control" style="height: 32px" min="1" step="1" required
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" />
+                                <span class="input-group-text" style="
+                                        padding-bottom: 4.7px;
+                                        padding-top: 4.7px;
+                                        border-top-left-radius: 0;
+                                        border-bottom-left-radius: 0;">
+                                    {{'hours'|l}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select-users-by-department ng-if="!ctrlChild.currentProject"
+                                    id-department="ctrlChild.currentDepartment.id"
+                                    pick-func="ctrlChild.pickMainperson_update(params)"
+                                    id-value="ctrlChild._update_value.main_person[0]" label="{{'HostPerson'|l}}"
+                                    require="true">
+                                </select-users-by-department>
+                                <pick-user-from-data ng-if="ctrlChild.currentProject" label="{{'HostPerson'|l}}"
+                                    id-value="ctrlChild._update_value.main_person"
+                                    data="ctrlChild.currentProject.participant"
+                                    disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                    pick-func="ctrlChild.pickMainperson_update(params)"></pick-user-from-data>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select-multi-users-by-department ng-if="!ctrlChild.currentProject"
+                                    label="{{'Coordinator'|l}}" pick-func="ctrlChild.pickParticipant_update(params)"
+                                    id-value="ctrlChild._update_value.participant"
+                                    id-department="ctrlChild.currentDepartment.id"
+                                    require="true"></select-multi-users-by-department>
+
+                                <pick-user-from-data-multi ng-if="ctrlChild.currentProject" label="{{'Coordinator'|l}}"
+                                    id-value="ctrlChild._update_value.participant"
+                                    data="ctrlChild.currentProject.participant"
+                                    disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                    pick-func="ctrlChild.pickParticipant_update(params)"></pick-user-from-data-multi>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select-multi-users-by-department ng-if="!ctrlChild.currentProject"
+                                    label="{{'Observer'|l}}" pick-func="ctrlChild.pickObserver_update(params)"
+                                    id-value="ctrlChild._update_value.observer"
+                                    id-department="ctrlChild.currentDepartment.id"
+                                    require="true"></select-multi-users-by-department>
+
+                                <pick-user-from-data-multi ng-if="ctrlChild.currentProject" label="{{'Observer'|l}}"
+                                    id-value="ctrlChild._update_value.observer"
+                                    data="ctrlChild.currentProject.participant"
+                                    disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                    pick-func="ctrlChild.pickObserver_update(params)"></pick-user-from-data-multi>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrlChild._ctrlName}}" modal-button-save-objname="Task"
+                    modal-button-save-actionname="update"
+                    modal-button-save-invalid="ctrlChild._update_value.main_person.length === 0 || ctrlChild._update_value.observer.length === 0 || ctrlChild.toDate_ErrorMsg || ctrlChild.fromDate_ErrorMsg"
+                    modal-button-save-func="ctrlChild.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

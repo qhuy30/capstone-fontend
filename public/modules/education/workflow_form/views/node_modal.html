@@ -1,0 +1,85 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Workflow_Form_Node">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Node'}}"></modal-header>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body" style="border-left:2px solid #20a8d8">
+                        <button-select-nl button-select-label="{{'ApprovalType'|l}}" button-select-data="ctrl.Type"
+                            id-value="ctrl.node.type" button-select-func="ctrl.chooseApprovalType_insert(params)"
+                            load-details-func="ctrl.loadType_details(params)" button-select-key="title"
+                            localization="true" require="true"
+                            disable="$root.statusValue.get(ctrl._ctrlName,'WorkflowForm','insert','doing')">
+                        </button-select-nl>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body" style="border-left:2px solid #20a8d8">
+                        <div class="form-group row">
+                            <button-new button-new-func="ctrl.addItemNode()" button-new-label="{{'New'|l}}">
+                            </button-new>
+                        </div>
+                        <div>
+                            <table class="table table-sm">
+                                <tr ng-repeat="item in ctrl.node.items track by $index">
+                                    <td>
+                                        <organization label="{{'Department'|l}}" id-value="item.department"
+                                            select-func="ctrl.chooseDepartment_addNode(params,item.id)" require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'WorkflowForm','insert','doing')">
+                                        </organization>
+                                    </td>
+                                    <td>
+                                        <pick-modal-directory extend="ctrl.Competence_Config"
+                                            pick-func="ctrl.chooseCompetence_addNode(params,item.id)"
+                                            id-value="item.competence"
+                                            label="{{'Competence'|l}}"></pick-modal-directory>
+                                    </td>
+                                    <td>
+                                        <pick-modal-directory  extend="ctrl.Role_Config"
+                                            pick-func="ctrl.chooseRole_addNode(params,item.id)"
+                                            id-value="item.role"
+                                            label="{{'Role'|l}}"></pick-modal-directory>
+                                    </td>
+                                    <td ng-if="ctrl.node.type !== 'process'">
+                                        <pick-modal-generic
+                                            data="ctrl.signatureOptions"
+                                            invalid-value-func="ctrl.chooseSignature_addNode({},item.id)"
+                                            pick-func="ctrl.chooseSignature_addNode(params,item.id)"
+                                            id-value="item.signature"
+                                            label="{{'Signature'|l}}"></pick-modal-generic>
+                                    </td>
+                                    <td ng-if="ctrl.node.type !== 'process'">
+                                        <pick-modal-generic
+                                            data="ctrl.quotationMarkOptions"
+                                            invalid-value-func="ctrl.chooseQuotationMark_addNode({},item.id)"
+                                            pick-func="ctrl.chooseQuotationMark_addNode(params,item.id)"
+                                            id-value="item.quotationMark"
+                                            label="{{'Quotation mark'|l}}"></pick-modal-generic>
+                                    </td>
+                                    <td>
+                                        <button-delete-item style="line-height: 35px;"
+                                            button-delete-item-func="ctrl.removeItemNode(params)"
+                                            button-delete-item-params="item">
+                                        </button-delete-item>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-danger" ng-if="ctrl.isDuplicateSignatures(ctrl.node) || ctrl.isDuplicateQuotationMarks(ctrl.node)">
+                    {{'Signatures/Quotation marks cannot be duplicated in case All Approval'|l}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="WorkflowForm"
+                    modal-button-new-actionname="insert" modal-button-new-invalid="
+                    ctrl.node.items.length===0 || ctrl.isDuplicateSignatures(ctrl.node) || ctrl.isDuplicateQuotationMarks(ctrl.node)
+                    || !ctrl.node.type" modal-button-new-func="ctrl.insertNode()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

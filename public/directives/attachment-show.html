@@ -1,0 +1,16 @@
+<div style="display: inline-block;">
+    <span 
+    class="showfile attachment-show d-flex align-items-center justify-content-center p-1" title="{{attachmentShowItem.display}}" ng-click="attachmentShowClick(); $event.stopPropagation();">
+        <i style="color: blue;" class="fas fa-file-word" ng-if="attachmentShowFileType == 'docx' || attachmentShowFileType == 'doc'"></i>
+        <i style="color: green;" class="fas fa-file-excel" ng-if="attachmentShowFileType == 'xls' || attachmentShowFileType == 'xlsx'"></i>
+        <i style="color: red;" class="fas fa-file-pdf" ng-if="attachmentShowFileType == 'pdf' "></i>
+        <i style="color: orange;" class="fas fa-file-powerpoint" ng-if="attachmentShowFileType == 'ppt' || attachmentShowFileType == 'pptx'"></i>
+        <i style="color: pink;" class="fas fa-file-image" ng-if="attachmentShowFileType == 'png' || attachmentShowFileType == 'jpg' || attachmentShowFileType == 'ico'"></i>
+        <i style="color: purple;" class="fas fa-photo-video" ng-if="attachmentShowFileType == 'mp3' || attachmentShowFileType == 'mp4' || attachmentShowFileType == 'wav'"></i>
+        <span class="d-inline-block text-truncate" style="max-width: 200px;">&nbsp;{{attachmentShowLabel}}</span>
+    </span>
+    <span ng-if="attachmentShowOwner"> thêm bởi
+        <show-username hide-image="true" username="ownerUsername">
+        </show-username>
+    </span>
+</div>

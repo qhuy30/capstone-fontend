@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal_MinorLabel_Insert" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'AddNewMinorLabel'|l}}"></modal-header>
+            <div class="modal-body">
+                <form name="insertForm">
+                    <div class="form-group col-md-12">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'NewTitleOfLabel'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input
+                                    ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Label','insert','doing')"
+                                    type="text"
+                                    ng-model="ctrlChild._insert_minorLabel_value.title"
+                                    class="form-control"
+                                    name="insert_title"
+                                    placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': insertForm.insert_title.$invalid }"
+                                    required
+                            />
+                        </div>
+
+                        <div class="input-group-new pt-3">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'MajorLabel'|l}}</span>
+                            </div>
+                            <input
+                                    ng-disabled="ctrlChild._insert_minorLabel_value.majorTitle !== ''"
+                                    type="text"
+                                    ng-model="ctrlChild._insert_minorLabel_value.majorTitle"
+                                    class="form-control"
+                                    required
+                            />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrlChild._ctrlName}}"
+                                  modal-button-new-objname="Label"
+                                  modal-button-new-actionname="insert"
+                                  modal-button-new-invalid="insertForm.$invalid"
+                                  modal-button-new-func="ctrlChild.insert_minorLabel()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

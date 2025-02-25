@@ -1,0 +1,29 @@
+<a class="waves-effect ringbell-header-item da_forward_to_departments"
+    href="/da-details?{{item.params.id}}">
+    <i class="fas fa-file-alt"></i>
+    <div class="content">
+        <div>
+            <span>
+                <span >{{'DispatchArrived'|l}}</span>
+                <span class="code">{{item.params.code}}</span>
+            </span>
+        </div>
+        <div class="ringbell-action danger">
+            <span ng-if="item.params.justReview">
+                <i class="far fa-comment-dots"></i> &nbsp;{{'Need you to review'|l}}
+            </span>
+            <span ng-if="!item.params.justReview">
+                <i class="far fa-comment-dots"></i> &nbsp;{{'Need you to review and provide your opinion'|l}}
+            </span>
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

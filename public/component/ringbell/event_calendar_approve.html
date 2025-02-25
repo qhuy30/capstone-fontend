@@ -1,0 +1,21 @@
+<a class="waves-effect ringbell-header-item project_update_info" 
+    href="/event-calendar-details?code={{item.params.id}}"
+>
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span>
+                <span class="ringbell-action success">{{'approved the event calendar registration'|l}}</span>
+                <span class="title" >[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+            </span>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+    </div>
+</a>

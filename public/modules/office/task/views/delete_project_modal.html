@@ -1,0 +1,27 @@
+<div class="modal fade" id="modal_Task_DeleteProject" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                <div class="question">
+                    {{'DoYouWantDeleteProject'|l:{title:ctrlChild.currentProject.title} }}
+                </div>
+                <div class="request">
+                    {{'ReTypeTheFollowingPhrase'|l }}:&nbsp;<b>{{ctrlChild.currentProject.title_search}}</b>
+                </div>
+                <div class="control">
+                    <input type="text" ng-model="ctrlChild.currentProject.retype" placeholder="{{'TypeHere'|l}}"/>
+                </div>
+                
+                
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-delete-objname="Task" modal-button-delete-actionname="deleteProject"
+                    modal-button-delete-func="ctrlChild.deleteProject()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

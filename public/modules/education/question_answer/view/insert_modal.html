@@ -1,0 +1,49 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Question_Insert">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="Thêm câu hỏi và câu trả lời thường gặp"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="updateForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span>
+                                </div>
+                                <input
+                                    type="text" ng-model="ctrlChild._insert_value.question" class="form-control"
+                                    name="update_title" placeholder="Thêm câu hỏi"
+                                    ng-class="{ 'is-invalid': updateForm.update_title.$invalid }" required />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <pick-type-question label="Nhóm câu hỏi"
+                                    pick-func="ctrlChild.pickTypeQuestion(params, 'insert')"
+                                    require="true">
+                                </pick-type-question>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea
+                                name="update_answer"
+                                ng-class="{ 'is-invalid': updateForm.update_answer.$invalid }"
+                                ng-model="ctrlChild._insert_value.answer" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-new-objname="QuestionAnswer" modal-button-new-actionname="insert"
+                    modal-button-new-invalid="insertForm.$invalid"
+                    modal-button-new-func="ctrlChild.insert_common_question()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

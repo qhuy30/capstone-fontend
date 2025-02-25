@@ -1,0 +1,13 @@
+<div class="form-group row" ng-if="buttonRadioDisabled">
+    <div class="btn-group" data-toggle="buttons">
+        <span 
+        ng-repeat="item in buttonRadioParams"
+        class="btn btn-light" 
+        ng-class="{'active':buttonRadioModel == item.val}"
+        ng-click="buttonRadioClick(item.val)">
+            <input type="radio" ng-model="buttonRadioModel" ng-value="item.val"
+                ng-checked="buttonRadioModel == item.val">
+            {{item.label[$root.Language.current]}}
+        </span>
+    </div>
+</div>

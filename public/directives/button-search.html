@@ -1,0 +1,11 @@
+<div class="input-group form-group row flex align-items-center">
+    <input type="text" class="form-control"
+        placeholder="{{buttonSearchPlaceholder?buttonSearchPlaceholder:('SearchByKey'|l)}}" ng-model="buttonSearchModel"
+        my-watch-text-input my-scope="buttonSearchModel" my-func="buttonSearchClick()" my-start="!buttonSearchStart">
+    <span class="input-group-append">
+        <button class="btn btn-secondary" ng-click="buttonSearchClick();$event.stopPropagation();" type="button" style="height: 32px;"><i class="fa fa-search"></i>
+            {{buttonSearchLabel?buttonSearchLabel:('Search'|l)}}
+        </button>
+        <div ng-transclude></div>
+    </span>
+</div>

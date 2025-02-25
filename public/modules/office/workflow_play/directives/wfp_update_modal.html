@@ -1,0 +1,287 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_WFP_Update">
+  <div class="modal-dialog modal-full" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'Resubmit'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="forms.updateForm">
+          <div class="card">
+            <div class="card-body" style="border-left: 2px solid #20a8d8">
+              <div class="form-group">
+                <div class="input-prepend input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{'Title'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'WFP','update','doing')"
+                    type="text"
+                    ng-model="ctrl._update_value.title"
+                    class="form-control"
+                    name="update_title"
+                    placeholder="{{'InputTitle'|l}}"
+                    ng-class="{ 'is-invalid': forms.updateForm.update_title.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <pick-modal-directory
+                  extend="ctrl.DocumentType_Config"
+                  pick-func="ctrl.chooseWFT_update(params)"
+                  id-value="ctrl._update_value.document_type"
+                  label="{{'DocumentType'|l}}"
+                  require="true"
+                  disable="true"
+                ></pick-modal-directory>
+              </div>
+              <div class="form-group">
+                <button-select-nl
+                  button-select-label="{{'WorkflowForMe'|l}}"
+                  button-select-data="ctrl.WF2"
+                  id-value="ctrl._update_value.key"
+                  load-details-func="ctrl.loadWorkflow_details(params)"
+                  button-select-func="ctrl.chooseWF_update(params)"
+                  button-select-key="title"
+                  localization="true"
+                  require="true"
+                  disable="true"
+                >
+                </button-select-nl>
+              </div>
+              <div ng-show="ctrl._update_value.wf.templateFiles.length > 0">
+                <div class="file-template-title">
+                  {{'TemplateFile'|l}}
+                </div>
+                <div ng-repeat="at in ctrl._update_value.wf.templateFiles">
+                  <attachment-show attachment-show-item="at"
+                  attachment-show-func="ctrl.loadFileTemplate(params)"
+                  attachment-show-params="{display:at.display, name:at.name}"
+                  attachment-show-service-name="'workflow'">
+                </attachment-show>
+                </div>
+              </div>
+              <div class="mt-3" ng-if="ctrl._update_value.wf.file_type === 'file_upload' && ctrl._update_value.wf.templateTags.length">
+                <span>{{'Signing file require the following tags'|l}}:</span>
+                <mark class="mr-2" ng-repeat="tag in ctrl._update_value.wf.templateTags">{{ '\{' + tag.name + '\}' }}</mark>
+              </div>
+            </div>
+          </div>
+          <div class="card" ng-if="ctrl._update_value.wf.file_type === 'file_upload'">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="col-md-6" style="border-right: 1px solid #eee">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>
+                          <span>{{'FileSigning'|l}}</span>
+                          <span class="require-sympton ml-0">*</span>
+                        </td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="ctrl._update_value.file">
+                        <td>
+                          <attachment-just-show my-item="ctrl._update_value.file"></attachment-just-show>
+                        </td>
+                        <td>
+                          <i class="fas fa-times text-danger" ng-click="ctrl.removeFile_update()"></i>
+                        </td>
+                      </tr>
+                      <tr ng-if="ctrl._update_value.fileError">
+                        <td colspan="2" class="text-danger">
+                            {{ctrl._update_value.fileError|l}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                  <tbody>
+                    <tr>
+                      <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                              </span>
+                              <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                            </span>
+                          </span>
+                          <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                            file-reading-single="ctrl._update_value.file" file-single-func="ctrl.handleSelectFile(params)" size="1" style="width: 100%" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card" ng-if="ctrl._update_value.wf.file_type === 'custom_template'">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="col-md-12" style="border-right: 1px solid #eee">
+                <div ng-if="ctrl._update_value.templateTags.length">
+                  <div class="border-top pt-2 mb-2 font-weight-bold">{{'Fill in the signing file information'|l}}</div>
+                  <div ng-repeat="tag in ctrl._update_value.templateTags" ng-show="tag.type !== 'signature' && tag.type !== 'quotation_mark'">
+                    <div ng-switch="tag.type">
+                      <div class="form-group" ng-switch-when="text">
+                        <div class="input-group-new">
+                          <div class="input-group-prepend-new">
+                            <span class="input-group-text-new ng-binding">{{tag.label}}</span>
+                            <span class="require-sympton">*</span>
+                          </div>
+                          <input class="form-control" type="text" name="{{ 'templateTags_' + tag.name }}"
+                            ng-model="ctrl._update_value.templateTags[$index].value" placeholder="{{'Input content'|l}}"
+                            required>
+                        </div>
+                      </div>
+                      <div class="form-group" ng-switch-when="number">
+                        <div class="input-group-new">
+                          <div class="input-group-prepend-new">
+                            <span class="input-group-text-new ng-binding">{{tag.label}}</span>
+                            <span class="require-sympton">*</span>
+                          </div>
+                          <input class="form-control" type="number" name="{{ 'templateTags_' + tag.name }}"
+                            ng-model="ctrl._update_value.templateTags[$index].value" placeholder="{{'Input content'|l}}"
+                            required>
+                        </div>
+                      </div>
+                      <div class="form-group" ng-switch-when="date">
+                        <date
+                          id-value="ctrl._update_value.templateTags[$index].rawValue"
+                          func="ctrl.chooseDateTag_update($index, params)"
+                          label="{{tag.label}}"
+                          required="true"
+                        ></date>
+                      </div>
+                      <div class="form-group" ng-switch-when="dropdown">
+                        <pick-modal-directory
+                          extend="{ master_key: ctrl._update_value.templateTags[$index].masterKey, load_details_column: 'value' }"
+                          pick-func="ctrl.chooseDropdownTag_update($index, params)"
+                          id-value="ctrl._update_value.templateTags[$index].rawValue"
+                          label="{{tag.label}}"
+                          require="true"
+                        ></pick-modal-directory>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3 text-center">
+                    <button type="button" class="btn btn-outline-primary" ng-click="ctrl.loadCustomTemplatePreview()"
+                      ng-disabled="!ctrl.isCustomTagsValid()">{{'Preview'|l}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="col-md-6" style="border-right: 1px solid #eee">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>{{'RelatedFile'|l}}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in ctrl._update_value.relatedfile">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          <attachment-just-show
+                            my-item="item"
+                          ></attachment-just-show>
+                        </td>
+                        <td>
+                          <i
+                            class="fas fa-times text-danger"
+                            ng-click="ctrl.removeRelatedFile_update(item)"
+                          ></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                  <tbody>
+                    <tr>
+                      <td
+                        class="
+                          diskuf-selector
+                          wd-fa-add-file-light-cell wd-fa-add-file-from-main
+                        "
+                        colspan=" 0"
+                      >
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text"
+                                  >{{'UploadFile'|l}}</span
+                                >
+                              </span>
+                              <span class="wd-fa-add-file-light-descript"
+                                >{{'DragTheFileHereToUpload'|l}}</span
+                              >
+                            </span>
+                          </span>
+                          <input
+                            class="diskuf-fileUploader wd-test-file-light-inp"
+                            type="file"
+                            file-reading="ctrl._update_value.relatedfile"
+                            size="1"
+                            multiple
+                            style="width: 100%"
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body" style="border-left: 2px solid #20a8d8">
+              <div class="form-group">
+                <label for="update_comment">{{'AccessNote'|l}}</label>
+                <text-area-with-suggestions  id="update_comment" rows="3" ng-model="ctrl._update_value.comment" placeholder="{{'InputNote'|l}}"></text-area-with-suggestions>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-save
+          modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-save-objname="WFP"
+          modal-button-save-actionname="update"
+          modal-button-save-invalid="forms.updateForm.$invalid || (ctrl._update_value.wf.file_type === 'file_upload' && (!ctrl._update_value.file || ctrl._update_value.fileError))"
+          modal-button-save-func="ctrl.handleClickUpdate()"
+        >
+        </modal-button-save>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modal-sign-a-file
+  modal-sign-a-file-show="ctrl.showModalSignAFile"
+  modal-sign-a-file-on-hide="ctrl.handleHideModalSignAFile()"
+  modal-sign-a-file-ctrlname="{{ctrl._ctrlName}}"
+  modal-sign-a-file-name="ctrl._update_value.wf.file_type === 'file_upload' ? ctrl._update_value.file.name : ctrl._update_value.wf.templateFiles[0].display"
+  modal-sign-a-file-sign="ctrl.sign"
+  modal-sign-a-file-quotation-mark="ctrl.quotationMark"
+  modal-sign-a-file-params="{name: ''}"
+  modal-sign-a-file-objname="WFP"
+  modal-sign-a-file-actionname="update"
+  modal-sign-a-file-func="ctrl.handleClickSign_update()">
+</modal-sign-a-file>

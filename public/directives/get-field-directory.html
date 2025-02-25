@@ -1,0 +1,9 @@
+<span>
+    <span ng-if="localization">
+        {{selectedItem[field][$root.Language.current]}}
+        <span ng-if="selectedItem.master_key === 'vehicle_list'">
+            {{selectedItem.licensePlate}}
+        </span>
+    </span>
+    <span ng-if="!localization">{{selectedItem[field]}}</span>
+</span>

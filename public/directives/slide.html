@@ -1,0 +1,34 @@
+﻿<div class="w3-row w3-display-container" style="margin-top:-20px" ng-controller="slide as sl">
+    
+    <div>
+        <a href="{{sl.slider[0].details.url}}" target="_blank">
+            <img class="mySlides" src="{{mien}}{{sl.slider[0].details.image}}" style="width:100% !important" />
+        </a>
+        
+    </div>
+    <div>
+        <a href="{{sl.slider[1].details.url}}" target="_blank">
+            <img class="mySlides" src="{{mien}}{{sl.slider[1].details.image}}" ng-if="sl.sl2" style="width:100% !important" />
+        </a>
+    </div>
+    <div>
+        <a href="{{sl.slider[2].details.url}}" target="_blank">
+            <img class="mySlides" src="{{mien}}{{sl.slider[2].details.image}}" ng-if="sl.sl3" style="width:100% !important" />
+        </a>
+       
+    </div>
+    <div>
+        <a href="{{sl.slider[3].details.url}}" target="_blank"> 
+            <img class="mySlides" src="{{mien}}{{sl.slider[3].details.image}}" ng-if="sl.sl4" style="width:100% !important" />
+        </a>
+    </div>
+    <div>
+        <a href="{{sl.slider[4].details.url}}" target="_blank">
+             <img class="mySlides" src="{{mien}}{{sl.slider[4].details.image}}" ng-if="sl.sl5" style="width:100% !important" />
+        </a>
+    </div>
+       
+        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+  
+</div>

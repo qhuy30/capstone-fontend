@@ -1,0 +1,33 @@
+<my-content>
+    <content-content>
+        <div ng-controller="advanced_search_controller as ctrl" id="advanced_search">
+            <div class="card">
+                <div class="form-group row d-flex align-items-center justify-content-center ">
+                    <!-- Title -->
+                    <div class="title" style="height: 32px; background-color: #4285f4;">
+                        <label class="form-label mb-0 fw-bold d-flex align-items-center px-2">Tra cứu</label>
+                    </div>
+                    <!-- Dropdown -->
+                    <div>
+                        <button-select-advanced-search 
+                            button-select-data="ctrl.dataFilterType"
+                            button-select-key="title"
+                            button-select-model="ctrl._searchType"
+                            button-select-func="ctrl.chooseNumberItem(params)" 
+                            get-first-to-default= "true"
+                            >
+                        </button-select-advanced-search>
+                    </div>
+                    <button-search button-search-func="ctrl.search()"
+                        button-search-model="ctrl._searchText">
+                    </button-search>
+                </div>
+                <div style="padding: 10px;">
+                    <advanced_search_flow
+                        events="ctrl.events">
+                    </advanced_search_flow>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

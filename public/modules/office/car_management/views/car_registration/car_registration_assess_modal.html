@@ -1,0 +1,590 @@
+<div class="modal fade" id="modal_CarRegistration_Assess" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'ProcessRegistration'|l }}"></modal-header>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+            <table class="col-md-12">
+              <tr>
+                <td class="font-weight-bolder">{{'Title'|l}}</td>
+                <td>{{ctrl._assess_value.title}}</td>
+                <td class="font-weight-bolder"> {{'RegistrationCode'|l}} </td>
+                <td> {{ctrl._assess_value.code}} </td>
+              </tr>
+              <tr>
+                <td style="width: 10%;" class="font-weight-bolder">
+                  {{'Starting place'|l}}
+                </td>
+                <td style="width: 40%;">
+                  <get-field-directory id-value="ctrl._assess_value.starting_place" extend="ctrl.location_config"
+                    localization="true"></get-field-directory>
+                </td>
+
+                <td style="width: 10%;" class="font-weight-bolder">{{'Destination'|l}}</td>
+                <td style="width: 40%;" >{{ctrl._assess_value.destination}}</td>
+              </tr>
+
+              <tr>
+                <td class="font-weight-bolder">{{'Department'|l}}</td>
+                <td>
+                  <div class="d-flex flex-wrap">
+                    <span ng-repeat="department in ctrl._assess_value.to_department">
+                      <show-department department="department"></show-department><span ng-show="!$last">,&nbsp;</span>
+                    </span>
+                  </div>
+                </td>
+                </td>
+                <td class="font-weight-bolder">{{'Number of people'|l}}</td>
+                <td>{{ctrl._assess_value.number_of_people}}</td>
+              </tr>
+              <tr>
+
+                <td class="font-weight-bolder">{{'Passenger'|l}}</td>
+                <td colspan="3">
+                  <div class="d-flex flex-wrap">
+                    <span ng-repeat="item in ctrl._assess_value.passenger">
+                      <show-username-onlyname hide-image="true" username="item" /><span ng-show="!$last">,&nbsp;</span>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+
+                <td class="font-weight-bolder">{{'contactperson'|l}}</td>
+                <td colspan="3">
+                  <span ng-repeat="item in ctrl._assess_value.passengers_details">
+                    {{item.fullname}} <span ng-if="item.phonenumber">({{item.phonenumber}})</span>
+                    <br>
+                  </span>
+                  <!--                   
+                  <span ng-repeat="item in ctrl._assess_value.contact_passenger track by $index"
+                    ng-if="ctrl._assess_value.contact_passenger.length>=4">
+                    <show-username username="item" hide-image="true" ng-if="$index<5">
+                    </show-username>&nbsp;&nbsp;
+                    <span ng-if="$index==5">,...</span>
+                  </span>
+                  <span ng-repeat="item in ctrl._assess_value.contact_passenger track by $index"
+                    ng-if="ctrl._assess_value.contact_passenger.length<4">
+                    <show-username username="item" hide-image="true">
+                    </show-username>&nbsp;&nbsp;
+                  </span> -->
+                </td>
+              </tr>
+
+              <tr>
+
+                <td class="font-weight-bolder">{{'Time to go'|l}}</td>
+                <td><time-show time-show-data="ctrl._assess_value.time_to_go" time-show-type="long-no-second">
+                  </time-show></td>
+                <td class="font-weight-bolder">{{'Pick up time'|l}}</td>
+                <td><time-show time-show-data="ctrl._assess_value.pick_up_time" time-show-type="long-no-second">
+                  </time-show></td>
+              </tr>
+              <tr>
+                <td class="font-weight-bolder">{{'Content'|l}}</td>
+                <td colspan="3">{{ctrl._assess_value.content}}</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bolder">{{'Attachment'|l}}</td>
+                <td colspan="3">
+                  <attachment-show ng-repeat="at in ctrl._assess_value.attachments" attachment-show-item="at"
+                    attachment-show-func="ctrl.loadfile(params)"
+                    attachment-show-params="{id:ctrl._assess_value._id, code:ctrl._assess_value.code, name:at.name}"
+                    attachment-show-service-name="'car_management'"></attachment-show>
+                  <span ng-if="ctrl._assess_value.attachments.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </span>
+                </td>
+              </tr>
+              <tr ng-if="ctrl._assess_value.showProtocal">
+                <td class="font-weight-bolder">
+                  {{'Transportation allowance'|l}}
+                </td>
+                <td colspan="3">
+                  <div class="font-weight-bolder" ng-if="ctrl._assess_value.assign_card">{{'Assign a credit card'|l}}</div>
+                  <div class="font-weight-bolder" ng-if="!ctrl._assess_value.assign_card">{{'Assign a car'|l}}</div>
+                </td>
+              </tr>
+              
+              <!-- <tr ng-if="!ctrl._assess_value.edit_car_card && ctrl._assess_value.assign_card">
+                <td class="font-weight-bolder">
+                  {{'Type'|l}}
+                </td>
+                <td colspan="3">{{ctrl._assess_value.type|l}}</td>
+              </tr> -->
+              <tr ng-if="!ctrl._assess_value.edit_car_card && ctrl._assess_value.car">
+                <td class="font-weight-bolder">
+                  {{'Car'|l}}
+                </td>
+                <td colspan="3">
+                  <get-field-directory
+                    id-value="ctrl._assess_value.car"
+                    extend="ctrl.vehicle_list_config"
+                    localization="true"
+                  />
+                </td>
+              </tr>
+
+              <tr ng-if="ctrl._assess_value.show_driver && !ctrl._assess_value.edit_car_card && ctrl._assess_value.driver">
+                <td class="font-weight-bolder">{{'Driver'|l}}</td>
+                <td>
+                  {{ctrl._assess_value.driver_detail.fullname}}
+                </td>
+                <td class="font-weight-bolder">{{'PhoneNumber'|l}}</td>
+                <td>
+                  {{ctrl._assess_value.driver_detail.phonenumber}}
+                </td>
+              </tr>
+
+              <tr ng-if="!ctrl._assess_value.edit_car_card && ctrl._assess_value.card">
+                <td class="font-weight-bolder">
+                  {{'CreditCard'|l}}</td>
+                </td>
+                <td colspan="3">
+                  <get-field-directory
+                    id-value="ctrl._assess_value.card"
+                    extend="ctrl.card_list_config"
+                    localization="true"
+                  />
+                </td>
+              </tr>
+
+              <!-- Start edit car and card -->
+              <tr ng-if="ctrl._assess_value.edit_car_card && (ctrl._assess_value.car || ctrl._assess_value.card)">
+                <td class="font-weight-bolder">{{'Type'|l}}</td>
+                <td>
+                  <div>
+                    <label style="user-select: none; cursor: pointer;" for="assess-type-car">
+                      <input type="radio" ng-model="ctrl._assess_value.type" value="car" id="assess-type-car">
+                      {{'Assign a car'|l}}
+                    </label>
+                    &nbsp;&nbsp;
+                    <label style="user-select: none; cursor: pointer;" for="assess-type-card">
+                      <input type="radio" ng-model="ctrl._assess_value.type" value="card" id="assess-type-card">
+                      {{'Assign a credit card'|l}}
+                    </label>
+                  </div>
+                </td>
+              </tr>
+              
+              <tr ng-if="ctrl._assess_value.edit_car_card && ctrl._assess_value.type==='car'">
+                <td class="font-weight-bolder">{{'Car'|l}}</td>
+                <td colspan="3">
+                  <pick-modal-directory-2
+                    extend="ctrl.vehicle_list_config"
+                    id-value="ctrl._assess_value.car"
+                    pick-func="ctrl.pick_vehicle_assess(params)"
+                  />
+                </td>
+              </tr>
+              <tr ng-if="ctrl._assess_value.edit_car_card && ctrl._assess_value.type==='car'">
+                <td class="font-weight-bolder">{{'Driver'|l}}</td>
+                <td>
+                  <button-select
+                    button-select-data="ctrl.driverList"
+                    button-select-func="ctrl.pick_driver_assess(params)"
+                    button-select-model="ctrl._assess_value.driverData"
+                    button-select-key="title"
+                  />
+
+                </td>
+                <td class="font-weight-bolder">{{'PhoneNumber'|l}}
+                <td>
+                  <span>{{ctrl._assess_value.driver_detail.phonenumber}}</span>
+                </td>
+              </tr>
+              <tr ng-if="ctrl._assess_value.edit_car_card && ctrl._assess_value.type==='card'" >
+                <td class="font-weight-bolder">{{'CreditCard'|l}}</td>
+                <td colspan="3">
+                  <pick-modal-directory-2
+                    extend="ctrl.card_list_config"
+                    id-value="ctrl._assess_value.card"
+                    pick-func="ctrl.pick_card_assess(params)"
+                  />
+                  </td>
+              </tr>
+              <!-- end edit car and car -->
+
+              <tr ng-if="ctrl._assess_value.money">
+                <td class="font-weight-bolder">{{'AmountSpent'|l}}</td>
+                <td>{{ ctrl._assess_value.money|currencyFormat:'VND' }}</td>
+                <td class="font-weight-bolder">{{'Km'|l}}</td>
+                <td>{{ ctrl._assess_value.number_km }}</td>
+              </tr>
+              <tr ng-if="ctrl._assess_value.invoices">
+                <td class="font-weight-bolder">{{'Invoices'|l}}</td>
+                <td colspan="3">
+                  <attachment-show ng-repeat="at in ctrl._assess_value.invoices" attachment-show-item="at"
+                    attachment-show-func="ctrl.loadfileInvoice(params)"
+                    attachment-show-params="{id:ctrl._assess_value._id, code:ctrl._assess_value.code, name:at.name}"
+                    attachment-show-service-name="'car_management'"></attachment-show>
+                </td>
+              </tr>
+            </table>
+
+
+          </div>
+        </div>
+        <form class="form-horizontal" name="assessForm">
+
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+
+              <div class="col-6" ng-if="ctrl._assess_value.return_card">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'TheAmountSpent'|l}}</span>
+                    <span class="require-sympton" ng-show="ctrl._assess_value.note_required">*</span>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">đ</span>
+                      </div>
+                      <input ng-model="ctrl._assess_value.return_card_value.money" type="number" class="form-control" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6" ng-if="ctrl._assess_value.return_card">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'NumberKm'|l}}</span>
+                    <span class="require-sympton" ng-show="ctrl._assess_value.note_required">*</span>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Km</span>
+                      </div>
+                      <input ng-model="ctrl._assess_value.return_card_value.km" type="number" class="form-control" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style="border-right: 1px solid #eee" ng-if="ctrl._assess_value.return_card">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table mb-3">
+                  <tbody>
+                    <tr>
+                      <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text">{{'UploadFileInvoice'|l}}</span>
+                              </span>
+                              <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                            </span>
+                          </span>
+                          <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                            file-reading="ctrl._assess_value.return_card_value.invoices" size="1" multiple style="width: 100%" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>{{'Attachment'|l}}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in ctrl._assess_value.return_card_value.invoices">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          <attachment-just-show my-item="item"></attachment-just-show>
+                        </td>
+                        <td>
+                          <i class="fas fa-times text-danger" ng-click="ctrl._assess_value.removeInvoice(item)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-md-12" ng-if="ctrl._assess_value.showChooseProtocal">
+                <div>
+                  <label>
+                    <input type="radio" ng-model="ctrl._assess_value.type" value="car">
+                    {{'Assign a car'|l}}
+                  </label>
+                  &nbsp;&nbsp;
+                  <label>
+                    <input type="radio" ng-model="ctrl._assess_value.type" value="card">
+                    {{'Assign a credit card'|l}}
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6" ng-if="ctrl._assess_value.showChooseProtocal && ctrl._assess_value.type ==='car'">
+                <div class="form-group">
+                  <pick-modal-directory-2
+                    extend="ctrl.vehicle_list_config"
+                    id-value="ctrl._assess_value.car"
+                    pick-func="ctrl.pick_vehicle_assess(params)"
+                    label="{{'Car'|l}}"
+                    require="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6" ng-if="ctrl._assess_value.showChooseProtocal && ctrl._assess_value.type ==='car'">
+                <div class="form-group">
+                  <button-select
+                    button-select-label="{{'Driver'|l}}"
+                    button-select-data="ctrl.driverList"
+                    button-select-func="ctrl.pick_driver_assess(params)"
+                    button-select-model="ctrl._assess_value.driverData"
+                    button-select-key="title" require="true"
+                  />
+                </div>
+              </div>
+              <div class="col-md-12" ng-if="ctrl._assess_value.showChooseProtocal && ctrl._assess_value.type ==='card'">
+                <div class="form-group">
+                  <pick-modal-directory-2
+                    extend="ctrl.card_list_config" 
+                    id-value="ctrl._assess_value.card"
+                    filter="ctrl.filterCardCredit"
+                    pick-func="ctrl.pick_card_assess(params)" 
+                    label="{{'CreditCard'|l}}" 
+                    require="true"
+                  />
+                </div>
+              </div>
+
+
+              <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span>{{'AccessNote'|l}}</span>
+                    <span class="require-sympton" ng-show="ctrl._assess_value.note_required">*</span>
+                  </div>
+                  <div class="form-group mb-0">
+                    <text-area-with-suggestions-2
+                      ng-model="ctrl._assess_value.note"
+                      ng-required="ctrl._assess_value.note_required"
+                      placeholder="{{ctrl._assess_value.note_placeholder}}"
+                      function-apply="ctrl.function_apply_suggestions"
+                    />
+                  </div>
+                  <!-- <div>
+                    <span 
+                      class="badge badge-light m-1" 
+                      style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                      ng-repeat="hint in ctrl._hintNoteSet"
+                      ng-click="ctrl.set_hint_note(hint)"
+                    > 
+                      {{hint|l}}
+                    </span>
+                  </div> -->
+                </div>
+              </div>
+
+              
+              <div class="col-md-12" ng-if="ctrl._assess_value.return_card">
+                <div class="form-check" style="font-size: 1.2rem;">
+                  <input ng-model="ctrl._assess_value.return_card_value.truth"  type="checkbox" class="form-check-input" id="checkTruth" required>
+                  <label class="form-check-label" for="checkTruth">{{'ICertifyThatTheAboveStatementsAreTrue'|l}}</label>
+                </div>
+              </div>
+
+              
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer" ng-switch="ctrl._assess_value.action">
+        <modal-button-reject ng-switch-when="reject_card_management" modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-reject-objname="CarManagement" modal-button-reject-actionname="reject_card_management"
+          modal-button-reject-invalid="assessForm.$invalid" modal-button-reject-func="ctrl.reject_card_management()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}" />
+        <modal-button-reject ng-switch-when="reject_lead" modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-reject-objname="CarManagement" modal-button-reject-actionname="reject_lead"
+          modal-button-reject-invalid="assessForm.$invalid" modal-button-reject-func="ctrl.reject_lead()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}" />
+        <modal-button-reject ng-switch-when="reject_car_management" modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-reject-objname="CarManagement" modal-button-reject-actionname="reject_car_management"
+          modal-button-reject-invalid="assessForm.$invalid" modal-button-reject-func="ctrl.reject_car_management()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}" />
+        <modal-button-reject ng-switch-when="reject_department" modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-reject-objname="CarManagement" modal-button-reject-actionname="reject_department"
+          modal-button-reject-invalid="assessForm.$invalid" modal-button-reject-func="ctrl.reject_department()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}" />
+
+        <modal-button-approval ng-switch-when="edit_card_management"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}" modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="edit_card_management" modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.edit_card_management()"
+          modal-button-confirm-text="{{'AreYouSureEditCardCarThisRegistration'}}"
+          modal-button-approval-label="{{'ChangeCardCredit'|l}}"
+        />
+        <modal-button-approval ng-switch-when="creator_receive_card"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}" modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="creator_receive_card" modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.creator_receive_card()"
+          modal-button-confirm-text="{{'AreYouSureConfirmReceiveCardCreditThisRegistration'}}"
+          modal-button-approval-label="{{'ConfirmReceiveCard'|l}}"
+        />
+
+        <modal-button-approval ng-switch-when="creator_return_card"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="creator_return_card"
+          modal-button-approval-invalid="assessForm.$invalid||!ctrl._assess_value.return_card_value.truth"
+          modal-button-approval-func="ctrl.creator_return_card()"
+          modal-button-confirm-text="{{'AreYouSureConfirmReturnCardCarThisRegistration'}}"
+          modal-button-approval-label="{{'ReturnCard'|l}}"
+        />
+
+        <modal-button-approval ng-switch-when="manager_receive_card"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="manager_receive_card"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.manager_receive_card()"
+          modal-button-confirm-text="{{'AreYouSureConfirmReceiveCardCreditThisRegistration'}}"
+          modal-button-approval-label="{{'card_receive_tooltip'|l}}"
+        />
+
+        <modal-button-reject 
+          ng-switch-when="creator_cancel" 
+          modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-reject-objname="CarManagement" 
+          modal-button-reject-actionname="creator_cancel"
+          modal-button-reject-invalid="assessForm.$invalid" 
+          modal-button-reject-func="ctrl.creator_cancel()"
+          modal-button-confirm-text="{{'AreYouSureCancelThisRegistration'}}"
+          modal-button-reject-label="{{'Cancel'|l}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_lead"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_lead"
+          modal-button-approval-invalid="assessForm.$invalid || (ctrl._assess_value.type==='car' && (!ctrl._assess_value.car || !ctrl._assess_value.driver)) || (ctrl._assess_value.type==='card' && !ctrl._assess_value.card)"
+          modal-button-approval-func="ctrl.approve_lead()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+        <modal-button-approval
+          ng-switch-when="approve_car_management"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_car_management"
+          modal-button-approval-invalid="assessForm.$invalid || (ctrl._assess_value.type === 'car' && !ctrl._assess_value.driver)"
+          modal-button-approval-func="ctrl.approve_car_management()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_department"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_department"
+          modal-button-approval-invalid="false"
+          modal-button-approval-func="ctrl.approve_department()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+          modal-button-approval-invalid="assessForm.$invalid || (ctrl._assess_value.type === 'car' && !ctrl._assess_value.driver)"  
+        />
+        <modal-button-approval
+          ng-switch-when="approve_lead_external"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_lead_external"
+          modal-button-approval-invalid="false"
+          modal-button-approval-func="ctrl.approve_lead_external()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+        <modal-button-reject 
+          ng-switch-when="reject_lead_external" 
+          modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-reject-objname="CarManagement" 
+          modal-button-reject-actionname="reject_lead_external"
+          modal-button-reject-invalid="assessForm.$invalid" 
+          modal-button-reject-func="ctrl.reject_lead_external()"
+          modal-button-confirm-text="{{'AreYouSureCancelThisRegistration'}}"
+          modal-button-reject-label="{{'Cancel'|l}}"
+        />
+
+        <!-- Recall -->
+        <modal-button-approval
+          ng-switch-when="request_cancel"
+          modal-button-approval-label="{{'RequestCancel'|l}}"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="request_cancel"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.request_cancel()"
+          modal-button-confirm-text="{{'ConfirmRequetCancel'}}"
+          modal-header-content="{{'ConfirmRequetCancel'|l}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="reject_recall"
+          modal-button-approval-label="{{'RejectRecall'|l}}"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="reject_recall"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.reject_recall()"
+          modal-button-confirm-text="{{'RejectRecall'}}"
+          modal-header-content="{{'RejectRecall'|l}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_recall_department"
+          modal-button-approval-label="{{'ApproveRecall'|l}}"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_recall_department"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.approve_recall_department()"
+          modal-button-confirm-text="{{'ApproveRecall'}}"
+          modal-header-content="{{'Approve'|l}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_recall_car_management"
+          modal-button-approval-label="{{'ApproveRecall'|l}}"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_recall_car_management"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.approve_recall_car_management()"
+          modal-button-confirm-text="{{'ApproveRecall'}}"
+          modal-header-content="{{'Approve'|l}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_recall_lead"
+          modal-button-approval-label="{{'ApproveRecall'|l}}"
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_recall_lead"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrl.approve_recall_lead()"
+          modal-button-confirm-text="{{'ApproveRecall'}}"
+          modal-header-content="{{'Approve'|l}}"
+        />
+
+        <modal-button-delete
+          ng-switch-when="delete"
+          modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-delete-objname="CarManagement"
+          modal-button-delete-actionname="delete"
+          modal-button-delete-func="ctrl.delete()"
+        >
+        
+
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

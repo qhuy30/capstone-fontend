@@ -1,0 +1,52 @@
+<div class="textarea-container">
+    <textarea ng-model="ngModel" ng-focus="focusFunction()"
+        placeholder="{{placeholder}}"
+        cols="{{cols}}"
+        rows="{{rows}}"
+        id="{{id}}"
+        class="{{class}}"
+        ng-required="ngRequired"
+        ng-disabled="ngDisabled"
+        ng-blur="ngBlurFunction()"
+        style="width: 100%; height: 60px;"></textarea>
+    <div class="">
+        <div class="suggestions">
+            <!-- <span class="suggestions-value"
+                ng-repeat="suggestion in suggestions"
+                ng-click="addSuggestion(suggestion.value)"
+                ng-style="{'border': '1px solid ' + suggestion.color, 'color': suggestion.color}">
+                {{suggestion.value}}
+            </span> -->
+            
+            <!-- <span 
+                class="badge badge-light m-1" 
+                style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                ng-repeat="suggestion in suggestions"
+                ng-click="addSuggestion(suggestion.value)"
+            >
+                {{suggestion.value}}
+            </span> -->
+            <style>
+                .custom-btn {
+                    background-color: transparent;
+                    border: 2px solid;
+                    transition: all 0.3s ease;
+                }
+            </style>
+            
+            <button
+                ng-repeat="suggestion in suggestions"
+                type="button"
+                ng-click="addSuggestion(suggestion.value)"
+                class="btn custom-btn mr-2 p-1"
+                style="font-size: 0.8rem !important; font-weight: 400 !important;"
+                ng-style="{'border-color': suggestion.color, 'color': suggestion.color}"
+                data-color="{{suggestion.color}}"
+                onmouseover="this.style.backgroundColor = this.getAttribute('data-color'); this.style.color = 'white'"
+                onmouseout="this.style.backgroundColor = 'transparent'; this.style.color = this.getAttribute('data-color')">
+                {{suggestion.value}}
+            </button>
+
+        </div>
+    </div>
+</div>

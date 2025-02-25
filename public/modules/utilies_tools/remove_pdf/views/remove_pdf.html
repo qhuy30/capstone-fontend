@@ -1,0 +1,115 @@
+<my-content>
+    <content-content>
+        <div ng-controller="remove_pdf_controller as ctrl"
+            class="remove_pdf">
+            <div>
+                <h1 class="title">{{'ToolRemovePdf'|l}}</h1>
+            </div>
+
+            <div class="row part">
+                <div class="col-md-6 first-column">
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <table
+                                class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                            colspan=" 0">
+                                            <div class="diskuf-uploader">
+                                                <span
+                                                    class="wd-fa-add-file-light">
+                                                    <span
+                                                        class="wd-fa-add-file-light-text">
+                                                        <span
+                                                            class="wd-fa-add-file-light-title">
+                                                            <span
+                                                                class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                        </span>
+                                                        <span
+                                                            class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input id="fileInput"
+                                                    class="diskuf-fileUploader wd-test-file-light-inp "
+                                                    type="file" multiple
+                                                    style="width:100%;"
+                                                    attachment-multiple
+                                                    attachment-multiple-func="ctrl.getFile(params)">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <table
+                                class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                            colspan=" 0">
+                                            <div class="diskuf-uploader">
+                                                <span
+                                                    class="wd-fa-add-file-light">
+                                                    <span
+                                                        class="wd-fa-add-file-light-text">
+                                                        <span
+                                                            class="wd-fa-add-file-light-title">
+                                                            <span
+                                                                class="wd-fa-add-file-light-title-text">{{'UploadFolder'|l}}</span>
+                                                        </span>
+                                                        <span
+                                                            class="wd-fa-add-file-light-descript">{{'DragTheFolderHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input id="fileInput"
+                                                    class="diskuf-fileUploader wd-test-file-light-inp "
+                                                    type="file" multiple
+                                                    style="width:100%;"
+                                                    attachment-multiple
+                                                    attachment-multiple-func="ctrl.getFile(params)"
+                                                    webkitdirectory="">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6 group-input" style="text-align: right;">
+                            <button class="btn btn-primary" type="button" ng-class='{"btn-sm":modalButtonSubmitType==="small"}'
+                                ng-click="ctrl.removePdf()" ng-disabled="isLoading">
+                                <i class="fas fa-file-import"></i>&nbsp;{{('RemovePdf'|l)}}</button>
+                                <p ng-if="isLoading">
+                                    Loading...
+                                </p>
+                        </div>
+
+                        <div class="col-md-6 group-input"  style="text-align: left;"> 
+                            <button class="btn btn-danger" type="button" ng-class='{"btn-sm":modalButtonDeleteType==="small"}'
+                                ng-click="ctrl.reset()">
+                                <i class="fas fa-trash-alt"></i>&nbsp;{{('Reset'|l)}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="file-list col-md-6">
+                    <div class="div-title">
+                        <h2 class="title-box">
+                            <i class="fas fa-file-pdf"></i>
+                            {{'SelectedFiles'|l}}:
+                        </h2>
+                    </div>
+                    <ul class="file-items">
+                        <li class="file-item" ng-repeat="item in ctrl._files">
+                            {{item.name}}
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+    </content-content>
+</my-content>

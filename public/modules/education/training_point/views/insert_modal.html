@@ -1,0 +1,102 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Training_Point_Insert">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'CreatetrainingPointActivity'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="insertForm_Training_Point">
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TrainingPoint','insert','doing')"
+                                type="text" ng-model="ctrl._insert_value.title" class="form-control"
+                                name="insert_title" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': insertForm_Training_Point.insert_title.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="col-md-12 advance-filter">
+                        <div class="title-filter" style="margin-bottom: 10px;">{{'Content'|l}}</div>
+                            <textarea id="Training_Point_Insert" class="form-control"></textarea>
+                        
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Quantity'|l}}</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TrainingPoint','insert','doing')"
+                                type="number" ng-model="ctrl._insert_value.quantity" class="form-control" min="0"
+                                name="insert_quantity"
+                                ng-class="{ 'is-invalid': insertForm_Training_Point.insert_quantity.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Point'|l}}</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TrainingPoint','insert','doing')"
+                                type="number" ng-model="ctrl._insert_value.point" class="form-control" min="0"
+                                name="insert_point"
+                                ng-class="{ 'is-invalid': insertForm_Training_Point.insert_point.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'RegistrationStartDate'|l}}</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TrainingPoint','insert','doing')"
+                                type="datetime-local" ng-model="ctrl._insert_value.start_registered_date" class="form-control" 
+                                name="insert_start_registered_date"
+                                ng-class="{ 'is-invalid': insertForm_Training_Point.insert_start_registered_date.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'RegistrationEndDate'|l}}</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TrainingPoint','insert','doing')"
+                                type="datetime-local" ng-model="ctrl._insert_value.end_registered_date" class="form-control" 
+                                name="insert_end_registered_date"
+                                ng-class="{ 'is-invalid': insertForm_Training_Point.insert_end_registered_date.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'StartDate'|l}}</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TrainingPoint','insert','doing')"
+                                type="datetime-local" ng-model="ctrl._insert_value.start_date" class="form-control" 
+                                name="insert_start_date"
+                                ng-class="{ 'is-invalid': insertForm_Training_Point.insert_start_date.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'EndDate'|l}}</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TrainingPoint','insert','doing')"
+                                type="datetime-local" ng-model="ctrl._insert_value.end_date" class="form-control" 
+                                name="insert_end_date"
+                                ng-class="{ 'is-invalid': insertForm_Training_Point.insert_end_date.$invalid }" required />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-new-objname="TrainingPoint" modal-button-new-actionname="insert"
+                    modal-button-new-invalid="Training_Point_Insert.$invalid" modal-button-new-func="ctrl.insert()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+        
+    </div>
+</div>
+</div>

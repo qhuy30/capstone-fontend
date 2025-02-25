@@ -1,0 +1,235 @@
+<my-content class="event-calendar-details-feature">
+    <content-content ng-class="{'card ':!$root.detailsInfo.url}">
+      <div
+        ng-controller="event_calendar_details_controller as ctrlChild"
+        ng-class="{'card-body':!$root.detailsInfo.url}"
+      >
+        <div class="event-calendar-detail">
+
+          <!-- Button process -->
+          <div class="col-md-12 mt-2 row d-flex justify-content-start">
+            <div ng-controller="event_calendar_management_detail_controller as ctrl">
+              <div ng-include="ctrlChild._urlProcess"></div>
+            </div>
+          </div>
+
+          <section class="pb-3">
+            <!-- Post data -->
+            <div class="text-center post-data">
+              <h2>
+                <a><strong>{{ctrlChild.Item.title}}</strong></a>
+              </h2>
+              <p class="grey-text">
+                {{'WrittenBy'|l}}
+                <a>
+                  <show-username username="ctrlChild.Item.username">
+                  </show-username> </a
+                >,
+                <time-show
+                  time-show-data="(ctrlChild.Item.entity.his[0].created)"
+                ></time-show>
+              </p>
+          </section>
+  
+          <section class="pb-3">
+            <div class="card">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+                <table class="col-md-12">
+                  <tr>
+                    <td class="font-weight-bolder"> {{'RegistrationCode'|l}} </td>
+                    <td colspan="3"> {{ctrlChild.Item.code}} </td>
+                  </tr>
+                  <!-- level -->
+                  <tr>
+                    <td class="font-weight-bolder">{{'LevelEvent'|l}}</td>
+                    <td colspan="3">
+                      {{ ctrlChild.Item.level|l }}
+                    </td>
+                  </tr>
+                  <!-- Host -->
+                  <tr>
+                    <td class="font-weight-bolder">{{'HostPerson'|l}}</td>
+                    <td colspan="3">
+                      <show-username-onlyname
+                        hide-image="true"
+                        username="ctrlChild.Item.main_person"
+                      ></show-username-onlyname>
+                    </td>
+                  </tr>
+                  <!-- start date and end date -->
+                  <tr>
+                    <td class="font-weight-bolder">{{'Start date'|l}}</td>
+                    <td>
+                      <time-show
+                        time-show-type="long-no-second"
+                        time-show-data="ctrlChild.Item.start_date"
+                      >
+                      </time-show>
+                    </td>
+                    
+                    <td class="font-weight-bolder">{{'End date'|l}}</td>
+                    <td>
+                      <time-show
+                        time-show-type="long-no-second"
+                        time-show-data="ctrlChild.Item.end_date"
+                      >
+                      </time-show>
+                    </td>
+                  </tr>
+                  <!-- Type (car, room, meeting, other) -->
+                  <tr>
+                    <td class="font-weight-bolder">{{'Type'|l}}</td>
+                    <td>
+                      {{ctrlChild.Item.type | l}}
+                    </td>
+                    
+                    <td ng-if="ctrlChild.Item.type === 'Online'" class="font-weight-bolder">{{'MeetingLink'|l}}</td>
+                    <td ng-if="ctrlChild.Item.type === 'Online'">
+                      <span ng-bind-html="ctrlChild.Item.meeting_link | regexLink"></span>
+                    </td>
+  
+                    <td ng-if="ctrlChild.Item.room_booking_id" class="font-weight-bolder">{{'Room'|l}}</td>
+                    <td ng-if="ctrlChild.Item.room_booking_id">
+                      <span ng-if="!ctrlChild.Item.showRoom">
+                        {{ "PendingApprovalEVC" | l }}
+                      </span>
+                      <get-field-directory 
+                        ng-if="ctrlChild.Item.showRoom"
+                        id-value="ctrlChild.Item.meeting_room_registration.room"
+                        extend="ctrlChild.room_config" 
+                        localization="true"
+                      />
+                    </td>
+  
+                    <td ng-if="ctrlChild.Item.vehicle_booking_id" class="font-weight-bolder">{{'Car'|l}}</td>
+                    <td ng-if="ctrlChild.Item.vehicle_booking_id">
+                      <span ng-if="!ctrlChild.Item.showCar">
+                        {{ "PendingApprovalEVC" | l }}
+                      </span>
+    
+                      <get-field-directory 
+                        ng-if="ctrlChild.Item.showCar && !ctrlChild.Item.vehicle_registration.assgin_card"
+                        id-value="ctrlChild.Item.vehicle_registration.car"
+                        extend="ctrlChild.vehicle_list_config" 
+                        localization="true"
+                      />
+    
+                      <get-field-directory 
+                        ng-if="ctrlChild.Item.showCar && ctrlChild.Item.vehicle_registration.assgin_card"
+                        id-value="ctrlChild.Item.vehicle_registration.card"
+                        extend="ctrlChild.card_list_config" 
+                        localization="true"
+                      />
+                    </td>
+  
+                    <td ng-if="ctrlChild.Item.type === 'Other'" class="font-weight-bolder">{{'Other'|l}}</td>
+                    <td ng-if="ctrlChild.Item.type === 'Other'">
+                      {{ ctrlChild.Item.other_info }}
+                    </td>
+                  </tr>
+                  <!-- Participant -->
+                  <tr ng-if="ctrlChild.Item.participants.length>0">
+                    <td class="font-weight-bolder">{{'Participant'|l}}</td>
+                    <td colspan="3">
+                      <span ng-repeat="n in ctrlChild.Item.participants">
+                        <show-username-onlyname
+                          hide-image="true"
+                          username="n"
+                        ></show-username-onlyname><span ng-show="!$last">,</span>
+                      </span>
+                    </td>
+                  </tr>
+                  <!-- Participate Departments -->
+                  <tr ng-if="ctrlChild.Item.departments.length>0">
+                    <td class="font-weight-bolder">{{'ParticipateDepartments'|l}}</td>
+                    <td colspan="3">
+                      <span ng-repeat="department in ctrlChild.Item.departments">
+                        <show-department department="department"></show-department><span ng-show="!$last">,</span>
+                      </span>
+                    </td>
+                  </tr>
+                  <!-- Cancellation Reason -->
+                  <tr ng-if="ctrlChild.Item.flow_status === 'Cancel'">
+                    <td class="font-weight-bolder">{{'CancellationReason'|l}}</td>
+                    <td colspan="3">
+                      <span>{{ ctrlChild.Item.reasonCancel }}</span>
+                    </td>
+                  </tr>
+                  <!-- Content -->
+                  <tr>
+                    <td class="font-weight-bolder">{{'Content'|l}}</td>
+                    <td colspan="3">
+                        {{ctrlChild.Item.content}}
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Button process
+                <div class="col-md-12 mt-2 row d-flex justify-content-end">
+                  <div ng-controller="event_calendar_management_detail_controller as ctrl">
+                    <div ng-include="ctrlChild._urlProcess"></div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </section>
+        </div>
+        
+        <!-- Attachment -->
+        <section class="pb-3" ng-show="ctrlChild.Item.attachments.length>0">
+          <p
+            class="note note-primary attachment"
+          >
+            <strong>{{"Attachment"|l}}:</strong>
+
+            <attachment-show
+              ng-repeat="at in ctrlChild.Item.attachments"
+              attachment-show-item="at"
+              attachment-show-func="ctrlChild.load_file_info(params)"
+              attachment-show-params="{id:ctrlChild.Item.code,name:at.name}"
+              attachment-show-service-name="'meeting_room'"
+            >
+            </attachment-show>
+          </p>
+        </section>
+
+        <!-- event -->
+  
+        <div class="comments-list text-center text-md-left">
+          <h4 class="text-center font-weight-bold mb-5 grey-text">
+            {{'Events'|l}}
+            <span class="badge pink">{{ctrlChild.Item.event.length}}</span>
+          </h4>
+  
+          <!-- First row -->
+          <table class="table event-table">
+            <thead>
+              <tr>
+                <th style="text-align: center;">#</th>
+                <th style="text-align: center">{{'Time'|l}}</th>
+                <th style="text-align: center;">{{'PersonAction'|l}}</th>
+                <th style="text-align: center;">{{'Action'|l}}</th>
+                <th style="text-align: center;">{{'Message'|l}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ctrlChild.Item.event|orderBy:'time':-1">
+                <td style="text-align: center;"> {{$index +1}} </td>
+                <td class="hour">
+                  <span class="grey-text"><i class="fa fa-clock" aria-hidden="true"></i>
+                    <time-show time-show-data="item.time"></time-show>
+                  </span>
+                </td>
+                <td>
+                  <show-username username="item.username"> </show-username>
+                </td>
+                <td>{{item.action|l}}</td>
+                <td style="max-width: 200px;">{{item.reason}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </content-content>
+  </my-content>
+  

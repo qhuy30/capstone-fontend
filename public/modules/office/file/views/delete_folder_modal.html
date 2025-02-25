@@ -1,0 +1,23 @@
+<div class="modal fade" id="modal_Folder_Delete" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{ ctrlChild._delete_folder_value.type === 'folder' ?
+                ('DoYouWantDeleteFolder'|l:{name:ctrlChild._delete_folder_value.name})
+                :
+                ('DoYouWantDeleteFile'|l:{name:ctrlChild._delete_folder_value.name})
+                }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete
+                    modal-button-delete-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-delete-objname="File"
+                    modal-button-delete-actionname="delete"
+                    modal-button-delete-func="ctrlChild.delete()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

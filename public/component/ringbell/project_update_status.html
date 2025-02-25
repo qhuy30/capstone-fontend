@@ -1,0 +1,29 @@
+<a class="waves-effect ringbell-header-item project_create"
+    href="/task?tab=project&id={{item.params.projectId}}">
+    <i class="fas fa-project-diagram"></i>
+    <div class="content">
+        <div style="margin-top: -6px;">
+            <show-username-onlyname username="item.params.username_update" without-tooltip="true">
+            </show-username-onlyname>
+            <span ng-switch="item.params.action">
+                <span ng-switch-when="startProject">
+                    {{'started project'|l}}
+                </span>
+                <span ng-switch-when="closeProject">
+                    {{'closed project'|l}}
+                </span>
+            </span>
+            <span class="title">[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

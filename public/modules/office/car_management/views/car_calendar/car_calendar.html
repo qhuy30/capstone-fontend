@@ -1,0 +1,478 @@
+<div ng-controller="car_callendar_controller as ctrlCalendar" class="my_calendar">
+  <div>
+    <div class="form-group row align-items-center" >
+      <div class="mt-4 mb-4">
+          <span class="gonnalate" ng-if="ctrlCalendar.show_checkbox_my_calendar">
+            <!-- <input
+              type="checkbox"
+              ng-model="ctrlCalendar.checkbox_my_calendar"
+              ng-change="ctrlCalendar.refresh_data()"
+            />&nbsp;{{'My calendar'|l}}&nbsp;
+          </span> -->
+        <span class="is_get_all" ng-if="ctrlCalendar.show_checkbox_responsibility">
+          <input
+            type="checkbox"
+            ng-model="ctrlCalendar.checkbox_responsibility"
+            ng-change="ctrlCalendar.refresh_data()"
+          />&nbsp;{{'Responsible Department'|l}}&nbsp;&nbsp;</span>
+        <span class="gonnalate" ng-if="ctrlCalendar.show_checkbox_created">
+          <input
+            type="checkbox"
+            ng-model="ctrlCalendar.checkbox_created"
+            ng-change="ctrlCalendar.refresh_data()"
+          />&nbsp;{{'Created'|l}}&nbsp;
+        </span>
+        <span class="is_get_all" ng-if="ctrlCalendar.show_checkbox_all_department">
+          <input
+            type="checkbox"
+            ng-model="ctrlCalendar.checkbox_all_department"
+            ng-change="ctrlCalendar.refresh_data()"
+          />&nbsp;{{'All Department'|l}}&nbsp;&nbsp;</span>
+  
+        <span class="is_get_all" ng-if="ctrlCalendar.show_checkbox_all_calendar">
+          <input
+            type="checkbox"
+            ng-model="ctrlCalendar.checkbox_all_calendar"
+            ng-change="ctrlCalendar.refresh_data()"
+          />&nbsp;{{'All'|l}}&nbsp;&nbsp;</span>
+        
+      </div>
+
+      <div class="event-filter-item col-md-2">
+        <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px">
+          {{'FromDate' | l}}
+        </div>
+        <div class="value" style="display: flex; align-items: center">
+          <input
+            type="date"
+            ng-model="ctrlCalendar.weekDays[0].date"
+            ng-change="ctrlCalendar.refresh_calendar()"
+            style="
+              border: none;
+              outline: none;
+              background: transparent;
+              font-size: 14px;
+            "
+          />
+        </div>
+      </div>
+      <div class="event-filter-item col-md-2">
+        <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px">
+          {{'ToDate' | l}}
+        </div>
+        <div class="value" style="display: flex; align-items: center">
+          <input
+            type="date"
+            ng-model="ctrlCalendar.weekDays[ctrlCalendar.weekDays.length - 1].date"
+            ng-change="ctrlCalendar.refresh_calendar()"
+            style="
+              border: none;
+              outline: none;
+              background: transparent;
+              font-size: 14px;
+            "
+          />
+        </div>
+      </div>
+      
+      <button class="btn btn-success ml-auto" ng-if="ctrlCalendar.show_export" ng-click="ctrlCalendar.export_excel()">
+        <i class="fas fa-file-excel"></i>
+        <!-- Excel file icon -->
+        {{'ExportToExcel' | l}}
+      </button>
+    </div>
+    
+    <div class="table" style="overflow-x: auto">
+      <table
+        class="table table-bordered"
+        style="width: fit-content; background-color: #fff;"
+      >
+        <thead>
+          <!-- Merged header row -->
+          <tr style="background-color: #007bff; color: white">
+            <th colspan="{{ 3 + ctrlCalendar.weekDays.length }}" class="text-center">
+              {{'CarScheduleUse' | l}}
+            </th>
+          </tr>
+          <!-- Original header row -->
+          <tr style="background-color: #f2f2f2">
+            <th>#</th>
+            <th style="width: 220px; text-align: center;">{{'Card/Car'|l}}</th>
+            <th ng-repeat="day in ctrlCalendar.weekDays" style="width: 220px; text-align: center;">
+              {{ day.dayKey | l }}<br />{{ day.date | date:'dd/MM' }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Car -->
+          <tr ng-repeat="(index, car) in ctrlCalendar.car_list track by $index">
+            <td>{{ $index + 1 }}</td>
+            <td style="text-wrap: nowrap;">{{ car.title[$root.Language.current] }} - {{ car.licensePlate }}</td>
+            <td ng-repeat="events in car.events" style="vertical-align: top">
+              <div  ng-repeat="event in events">
+                <div  ng-repeat="e in event" class="mb-1" style="border-radius: 4px;background-color: #297fd3">
+                  <!-- <p style="cursor: pointer;text-wrap: nowrap;"" class="m-0"  id="{{e._id}}" data-toggle="dropdown">
+                    {{ e.text_event }}
+                  </p> -->
+                  
+
+                  <div class="main-content px-2 py-1">
+                    <div class="content-item" style="color: #fff;">
+                      <div style="font-size: 13px; text-align: left; display: -webkit-box; 
+                        -webkit-line-clamp: 2; 
+                        -webkit-box-orient: vertical; 
+                        overflow: hidden; 
+                        text-overflow: ellipsis; 
+                        white-space: normal;">
+                        <span><i class="fas fa-clock" style="font-size: 12px;"></i></span>  
+                        <span style="margin: 0; padding: 0; font-weight: 600; 
+                            font-size: 12px; text-align: left;">
+                            <time-show time-show-data="e.time_to_go" time-show-type="justtime" /> 
+                            <span ng-if="e.pick_up_time">
+                                - <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                            </span>
+                            <span>-</span>
+                            {{ e.title }}
+                        </span>
+                      </div>
+
+                      <!-- <div ng-if="e.car != null">
+                          <label class="input-group-text-new"><strong> {{'Car'|l}} </strong></label>
+                          <span> {{ e.car }}</span>
+                      </div>
+                      <div ng-if="e.car == null">
+                          <label class="input-group-text-new"><strong> {{'Card'|l}} </strong></label>
+                          <span> {{ e.card }} </span>
+                      </div> -->
+
+                    </div>
+
+                    <!-- <div style="text-wrap: nowrap;">
+                        <label class="input-group-text-new"><strong>{{'Time to go and Time pick up'|l}}:</strong></label>
+                        <span>
+                            <time-show time-show-data="e.time_to_go" time-show-type="justtime" /> - 
+                            <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                        </span>
+                    </div>
+                    <div style="text-wrap: nowrap;" ng-if="!e.pick_up_time">
+                        <label class="input-group-text-new">
+                            <strong>{{'Time to go'|l}}:</strong>
+                        </label>
+                        <span>
+                            <time-show time-show-data="e.time_to_go" time-show-type="justtime" />
+                        </span>
+                    </div>
+                    <div>
+                        <label class="input-group-text-new"><strong>{{'Title'|l}}:</strong></label>
+                        <span>{{ e.title }}</span>
+                    </div>
+                    <div ng-if="e.car != null">
+                        <label class="input-group-text-new"><strong>{{'Car'|l}}:</strong></label>
+                        <span>
+                            {{ e.car }}
+                        </span>
+                    </div>
+                    <div ng-if="e.car == null">
+                        <label class="input-group-text-new"><strong>{{'Card'|l}}:</strong></label>
+                        <span>
+                            {{ e.card }}
+                        </span>
+                    </div> -->
+
+                    <div class="popup-detail" ng-if="e.car != null">
+                      <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding:10px 10px 10px 10px;background-color: #d8ebff;">
+                            <!-- <label class="input-group-text-new"><strong>{{'Title'|l}}:</strong></label> -->
+                            <span style="font-weight: 600;">{{ e.title }}</span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Content'|l}}:</strong></label>
+                            <span>{{ e.content }}</span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px" ng-if="e.passenger.length > 0">
+                            <label class="input-group-text-new m-0"><strong>{{'Passenger'|l}}:</strong></label>
+                            <show-many-user-onlyname usernames="e.passenger" />
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Time to go'|l}}:</strong></label>
+                            <span>
+                                <time-show time-show-data="e.time_to_go" time-show-type="justtime" />
+                            </span>
+                        </div>
+
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new">
+                                <strong>{{'Pick up time'|l}}:</strong>
+                            </label>
+                            <span>
+                                <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Starting place'|l}}:</strong></label>
+                            <span>
+                                {{ e.starting_place }}
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Destination'|l}}:</strong></label>
+                            <span>
+                                {{ e.destination }}
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Driver'|l}}:</strong></label>
+                            <span>
+                                {{e.driver_detail.fullname}}
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 10px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'PhoneNumber'|l}}:</strong></label>
+                            <span>
+                                {{e.driver_detail.phonenumber}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="popup-detail" ng-if="e.card != null">
+                      <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding:10px 10px 10px 10px;background-color: #d8ebff;">
+                          <!-- <label class="input-group-text-new"><strong>{{'Title'|l}}:</strong></label> -->
+                          <span style="font-weight: 600;">{{ e.title }}</span>
+                        </div>
+  
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                          <label class="input-group-text-new"><strong>{{'Content'|l}}:</strong></label>
+                          <span>{{ e.content }}</span>
+                        </div>
+  
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                          <label class="input-group-text-new m-0"><strong>{{'Passenger'|l}}:</strong></label>
+                          <show-many-user-onlyname usernames="e.passenger" />
+                        </div>
+  
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                          <label class="input-group-text-new"><strong>{{'Time to go'|l}}:</strong></label>
+                          <span>
+                              <time-show time-show-data="e.time_to_go" time-show-type="justtime" />
+                          </span>
+                        </div>
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                          <label class="input-group-text-new"><strong>{{'Pick up time'|l}}:</strong></label>
+                          <span>
+                              <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                          </span>
+                        </div>
+  
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                          <label class="input-group-text-new"><strong>{{'Starting place'|l}}:</strong></label>
+                          <span>
+                              {{ e.starting_place }}
+                          </span>
+                        </div>
+  
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                          <label class="input-group-text-new"><strong>{{'Destination'|l}}:</strong></label>
+                          <span>
+                              {{ e.destination }}
+                          </span>
+                        </div>
+                  </div>
+
+                </div>
+
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Card -->
+          <tr ng-repeat="(index, card) in ctrlCalendar.card_list track by $index">
+            <td>{{ $index + 1 }}</td>
+            <td style="text-wrap: nowrap;">{{ card.title[$root.Language.current] }}</td>
+            <td ng-repeat="events in card.events" style="vertical-align: top">
+              <div  ng-repeat="event in events">
+                <div class="mb-1" ng-repeat="e in event" style="border-radius: 4px;background-color: #297fd3">
+                  <div class="main-content px-2 py-1">
+                    <div class="content-item" style="color: #fff;">
+
+                        <div style="font-size: 13px; text-align: left; display: -webkit-box; 
+                        -webkit-line-clamp: 2; 
+                        -webkit-box-orient: vertical; 
+                        overflow: hidden; 
+                        text-overflow: ellipsis; 
+                        white-space: normal;">
+                          <span><i class="fas fa-clock" style="font-size: 12px;"></i></span>  
+                          <span style="margin: 0; padding: 0; font-weight: 600; 
+                              font-size: 12px; text-align: left;">
+                              <time-show time-show-data="e.time_to_go" time-show-type="justtime" /> 
+                              <span ng-if="e.pick_up_time">
+                                  - <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                              </span>
+                              <span>-</span>
+                              {{ e.title }}
+                          </span>
+                        </div>
+                        
+                      <!-- <div ng-if="e.car != null">
+                          <label class="input-group-text-new"><strong> {{'Car'|l}} </strong></label>
+                          <span> {{ e.car }}</span>
+                      </div>
+                      <div ng-if="e.car == null">
+                          <label class="input-group-text-new"><strong> {{'Card'|l}} </strong></label>
+                          <span> {{ e.card }} </span>
+                      </div> -->
+
+                    </div>
+
+                    <!-- <div style="text-wrap: nowrap;">
+                        <label class="input-group-text-new"><strong>{{'Time to go and Time pick up'|l}}:</strong></label>
+                        <span>
+                            <time-show time-show-data="e.time_to_go" time-show-type="justtime" /> - 
+                            <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                        </span>
+                    </div>
+                    <div style="text-wrap: nowrap;" ng-if="!e.pick_up_time">
+                        <label class="input-group-text-new">
+                            <strong>{{'Time to go'|l}}:</strong>
+                        </label>
+                        <span>
+                            <time-show time-show-data="e.time_to_go" time-show-type="justtime" />
+                        </span>
+                    </div>
+                    <div>
+                        <label class="input-group-text-new"><strong>{{'Title'|l}}:</strong></label>
+                        <span>{{ e.title }}</span>
+                    </div>
+                    <div ng-if="e.car != null">
+                        <label class="input-group-text-new"><strong>{{'Car'|l}}:</strong></label>
+                        <span>
+                            {{ e.car }}
+                        </span>
+                    </div>
+                    <div ng-if="e.car == null">
+                        <label class="input-group-text-new"><strong>{{'Card'|l}}:</strong></label>
+                        <span>
+                            {{ e.card }}
+                        </span>
+                    </div> -->
+
+                    <div class="popup-detail" ng-if="e.car != null">
+                      <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding:10px 10px 10px 10px;background-color: #d8ebff;">
+                            <!-- <label class="input-group-text-new"><strong>{{'Title'|l}}:</strong></label> -->
+                            <span style="font-weight: 600;">{{ e.title }}</span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Content'|l}}:</strong></label>
+                            <span>{{ e.content }}</span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px" ng-if="e.passenger.length > 0">
+                            <label class="input-group-text-new m-0"><strong>{{'Passenger'|l}}:</strong></label>
+                            <show-many-user-onlyname usernames="e.passenger" />
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Time to go'|l}}:</strong></label>
+                            <span>
+                                <time-show time-show-data="e.time_to_go" time-show-type="justtime" />
+                            </span>
+                        </div>
+
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new">
+                                <strong>{{'Pick up time'|l}}:</strong>
+                            </label>
+                            <span>
+                                <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Starting place'|l}}:</strong></label>
+                            <span>
+                                {{ e.starting_place }}
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Destination'|l}}:</strong></label>
+                            <span>
+                                {{ e.destination }}
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Driver'|l}}:</strong></label>
+                            <span>
+                                {{e.driver_detail.fullname}}
+                            </span>
+                        </div>
+    
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 10px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'PhoneNumber'|l}}:</strong></label>
+                            <span>
+                                {{e.driver_detail.phonenumber}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="popup-detail" ng-if="e.card != null">
+                        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding:10px 10px 10px 10px;background-color: #d8ebff;">
+                            <!-- <label class="input-group-text-new"><strong>{{'Title'|l}}:</strong></label> -->
+                            <span style="font-weight: 600;">{{ e.title }}</span>
+                          </div>
+    
+                          <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Content'|l}}:</strong></label>
+                            <span>{{ e.content }}</span>
+                          </div>
+    
+                          <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new m-0"><strong>{{'Passenger'|l}}:</strong></label>
+                            <show-many-user-onlyname usernames="e.passenger" />
+                          </div>
+    
+                          <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Time to go'|l}}:</strong></label>
+                            <span>
+                                <time-show time-show-data="e.time_to_go" time-show-type="justtime" />
+                            </span>
+                          </div>
+                          <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Pick up time'|l}}:</strong></label>
+                            <span>
+                                <time-show time-show-data="e.pick_up_time" time-show-type="justtime" />
+                            </span>
+                          </div>
+    
+                          <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Starting place'|l}}:</strong></label>
+                            <span>
+                                {{ e.starting_place }}
+                            </span>
+                          </div>
+    
+                          <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+                            <label class="input-group-text-new"><strong>{{'Destination'|l}}:</strong></label>
+                            <span>
+                                {{ e.destination }}
+                            </span>
+                          </div>
+                    </div>
+                </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

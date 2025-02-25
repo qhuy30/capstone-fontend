@@ -1,0 +1,35 @@
+<div class="card" >
+    <div class="card-header" ng-if="$root.fileInfo.attachmentId">
+        <button ng-click="$root.FileService.hide()" class="btn "><i class="fas fa-times"></i></button>&nbsp;
+        <i style="color: blue;" class="fas fa-file-word"
+            ng-if="$root.fileInfo.filetype == 'docx' || $root.fileInfo.filetype == 'doc'"></i>
+        <i style="color: green;" class="fas fa-file-excel"
+            ng-if="$root.fileInfo.filetype == 'xls' || $root.fileInfo.filetype == 'xlsx'"></i>
+        <i style="color: red;" class="fas fa-file-pdf" ng-if="$root.fileInfo.filetype == 'pdf' "></i>
+        <i style="color: orange;" class="fas fa-file-powerpoint"
+            ng-if="$root.fileInfo.filetype == 'ppt' || $root.fileInfo.filetype == 'pptx'"></i>
+        <b>{{$root.fileInfo.display}}</b>
+        <i class="fas fa-download"                       
+            ng-click="downloadFile($root.fileInfo.fileName, $root.fileInfo.serviceName, $root.fileInfo.attachmentId)"></i>
+    </div>
+    <div class="card-body" >
+        <div class="resp-container" ng-class="$root.fileInfo.filetype">
+            <iframe class="resp-iframe"
+            ng-src="{{$root.fileInfo.embedUrl}}" 
+            gesture="media" 
+            allow="encrypted-media"  width="100%"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+    <!-- <div class="card-footer">
+        <button ng-click="$root.FileService.hide()" class="btn "><i class="fas fa-times"></i></button>&nbsp;
+        <i style="color: blue;" class="fas fa-file-word"
+            ng-if="$root.fileInfo.filetype == 'docx' || $root.fileInfo.filetype == 'doc'"></i>
+        <i style="color: green;" class="fas fa-file-excel"
+            ng-if="$root.fileInfo.filetype == 'xls' || $root.fileInfo.filetype == 'xlsx'"></i>
+        <i style="color: red;" class="fas fa-file-pdf" ng-if="$root.fileInfo.filetype == 'pdf' "></i>
+        <i style="color: orange;" class="fas fa-file-powerpoint"
+            ng-if="$root.fileInfo.filetype == 'ppt' || $root.fileInfo.filetype == 'pptx'"></i>
+        <b>{{$root.fileInfo.display}}</b>
+    </div> -->
+</div>

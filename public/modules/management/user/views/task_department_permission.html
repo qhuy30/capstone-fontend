@@ -1,0 +1,601 @@
+<div class="department generic-animation" ng-class="{'active':ctrl.tabTask==='department'}">
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có hiển thị tab <b>{{'Department'|l}}</b> không ?
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Show_DepartmentTab'].value"
+                        brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Show_DepartmentTab'" />
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Cấp quyền Khai báo - Chỉnh sửa nhãn lớn
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Management_MajorLabels_Department'].value"
+                           brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Management_MajorLabels_Department'" />
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+    </div>
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Cấp quyền Khai báo - Chỉnh sửa nhãn con:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được Khai báo - Chỉnh sửa
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Management_MinorLabels_Department'].value"
+                                   brige-func="ctrl.updateRule(params)"
+                                   brige-value="'Office.Task.Management_MinorLabels_Department'" value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Management_MinorLabels_Department'].value"
+                                   value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Management_MinorLabels_Department'].value"
+                                   value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                                 id-value="ctrl.rule['Office.Task.Management_MinorLabels_Department'].department"
+                                                 select-func="ctrl.update_Department_Permission(params)"
+                                                 my-params="'Office.Task.Management_MinorLabels_Department'"
+                                                 disable="ctrl.rule['Office.Task.Management_MinorLabels_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Management_MinorLabels_Department'].value"
+                                   value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+    </div>
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể theo dõi <b>công việc</b> của phòng ban:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được theo dõi
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Follow_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.Follow_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.Follow_Task_Department'"
+                                disable="ctrl.rule['Office.Task.Follow_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Follow_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể tạo mới <b>công việc</b> của phòng ban:<br />
+                    <i class="small">(Cũng có thể chỉnh sửa, xoá và huỷ bỏ các công việc bạn đã tạo trước khi những dữ
+                        liệu này hoàn thành)</i>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Create_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.Create_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.Create_Task_Department'"
+                                disable="ctrl.rule['Office.Task.Create_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Create_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể cập nhật thông tin <b>công việc</b> mà bạn không tham gia, thuộc về phòng ban:<br />
+                    <i class="small">(Cập nhật thông tin công việc đơn vị như: tiêu đề, nội dung,
+                        trạng thái ( trừ trạng thái completed), tiến độ, checklist,
+                       minh chứng, bình luận, tạo công việc con, tạo phiếu chuyển,
+                       tạo trình ký, tạo thông báo.)</i>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được chỉnh sửa, xoá và huỷ bỏ công việc không phải do bạn tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Edit_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.Edit_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.Edit_Task_Department'"
+                                disable="ctrl.rule['Office.Task.Edit_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Edit_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể chỉnh hủy, xoá <b>công việc</b>  thuộc về phòng ban:<br />
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được chỉnh hủy, xóa công việc thuộc về phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Delete_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Delete_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Delete_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Delete_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.Delete_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.Delete_Task_Department'"
+                                disable="ctrl.rule['Office.Task.Delete_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Delete_Task_Department'].value"
+                                value="Specific" />
+
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Quyền tải xuống danh sách <b>công việc</b> trong đơn vị và import <b>công việc</b> trong dơn vị:<br />
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được thực hiện
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Import_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Import_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Chỉ trong đơn vị
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Import_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Import_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.Import_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.Import_Task_Department'"
+                                disable="ctrl.rule['Office.Task.Import_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Import_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <div class="item">
+                <div class="label">
+                    Quyền đánh dấu hoàn thành <b>công việc</b> loại <b>công việc</b> của dơn vị:<br />
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được thực hiện
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Complete_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Complete_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Chỉ trong đơn vị
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Complete_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Complete_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.Complete_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.Complete_Task_Department'"
+                                disable="ctrl.rule['Office.Task.Complete_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Complete_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <div class="item">
+                <div class="label">
+                    Nhận thông báo <b>công việc</b> thuộc về phòng ban:<br />
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không nhận thông báo đầu việc/công việc không do bạn tạo mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Notify_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả phòng ban
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.Notify_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.Notify_Task_Department'"
+                                disable="ctrl.rule['Office.Task.Notify_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.Notify_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Quyền xem <b>công việc</b> phát sinh từ công văn đến:<br />
+                    <i class="small">(Đây là quyền quyết định trong giao diện thông tin chi tiết của một công văn đến,
+                        chỉ hiển thị trạng thái đầu việc thôi, hay có thể nhấn vào để xem thông tin chi tiết của đầu việc
+                        cũng như chi tiết công việc con của đầu việc)</i>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được xem
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.View_Task_Department'].value"
+                                brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.View_Task_Department'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Chỉ xem được các công văn đến thuộc đơn vị đang làm việc
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.View_Task_Department'].value"
+                                value="Working" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả các công văn đến
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.View_Task_Department'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Các công văn đến thuộc một số phòng ban cụ thể:
+                            <organization-multi  label="{{''}}"
+                                id-value="ctrl.rule['Office.Task.View_Task_Department'].department"
+                                select-func="ctrl.update_Department_Permission(params)"
+                                my-params="'Office.Task.View_Task_Department'"
+                                disable="ctrl.rule['Office.Task.View_Task_Department'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio" ng-model="ctrl.rule['Office.Task.View_Task_Department'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+
+                
+            </ul>
+        </li>
+
+        <li>
+            <div class="item">
+                <div class="label">
+                    Tiếp nhận công việc từ phòng ban khác:
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Receive_task'].value"
+                        brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Receive_task'" />
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,217 @@
+<my-content class="administrative-procedure-details">
+  <content-content>
+    <div ng-controller="administrative_procedure_details_controller as ctrl">
+      <section class="pb-3">
+        <div class="card">
+          <div class="card-body row" style="border-left: 2px solid #20a8d8">
+            <b class="m-3 w-100">{{ctrl.Form.title[$root.Language.current]}}</b>
+            <div class="w-100 mx-3">
+              <span>Trạng thái: <button ng-if="ctrl.Item.status === 'Approval'" class="btn-status"
+                  style="background: #00C851">{{
+                  'Approval'|l }}</button>
+                <button ng-if="ctrl.Item.status === 'WaitingForPayment'" class="btn-status"
+                  style="background: #00C851">{{
+                  'WaitToPayFees'|l }}</button>
+                <button ng-if="ctrl.Item.status === 'PendingProcessing'" class="btn-status"
+                  style="background: #4285F4">{{
+                  'WaitingForProgressing'|l }}</button>
+                <button ng-if="ctrl.Item.status === 'PendingReceive'" class="btn-status" style="background: #4285F4">{{
+                  'WaitingToReceive'|l }}</button>
+                <button ng-if="ctrl.Item.status === 'RequireAdditionalDocuments'" class="btn-status"
+                  style="background: #FFBB33">{{
+                  'NeedAdditionalRecords'|l }}</button>
+                <button ng-if="ctrl.Item.status === 'Received'" class="btn-status" style="background: #5CB85C">{{
+                  'Received'|l }}</button>
+                <button ng-if="ctrl.Item.status === 'Overdue'" class="btn-status" style="background: #FFBB33">{{
+                  'OutOfDate'|l }}</button>
+                <button ng-if="ctrl.Item.status === 'Rejected'" class="btn-status" style="background: #FF3F3F">{{
+                  'Rejected'|l }}</button></span>
+              <span class="ml-3">{{ 'FormType'|l }}: {{ ctrl.Form.title[$root.Language.current] }}</span>
+            </div>
+
+            <div class="w-100 mx-3 mt-2 d-flex align-items-center">
+              <span>Sinh viên: </span> <img class="ml-2 show-user__img" src="/"> <span class="ml-1 font-weight-bold"
+                style="color: #4285f4">&nbsp;{{ ctrl.Item.studentId }}</span>
+            </div>
+            <hr class="w-100" style="border-top:solid 2px #dbdbdb" />
+            <table class="table m-3">
+              <thead>
+                <tr>
+                  <th class="text-center">
+                    {{ 'Student'|l }}
+                  </th>
+                  <th class="text-center">
+                    {{ 'StudentCode'|l }}
+                  </th>
+                  <th class="text-center">
+                    {{ 'ActivityClass'|l }}
+                  </th>
+                  <th class="text-center">
+                    {{ 'Form'|l }}
+                  </th>
+                  <th class="text-center">
+                    {{ 'file'|l }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="color:#536C79">
+                  <td class="text-center">
+                    {{ ctrl.Item.studentName }}
+                  </td>
+                  <td class="text-center">
+                    {{ ctrl.Item.studentId }}
+                  </td>
+                  <td class="text-center">
+                    {{ ctrl.Item.studentClass }}
+                  </td class="text-center">
+                  <td class="text-center">
+                    <i class="font-weight-bold" style="color: #0085FF">{{ ctrl.Item.formName }}</i>
+                  </td>
+                  <td class="text-center">
+                    <span class="showfile" style="cursor: default;" ng-if="ctrl.Form.templateFile">
+                      <i class="fas fa-file-alt text-primary"
+                        ng-if="ctrl.Form.templateFile.name.includes('doc') || ctrl.Form.templateFile.name.includes('docx')"></i>
+                      <span>&nbsp;{{ ctrl.Form.templateFile.name | truncateAttachment:40 }}</span>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <hr class="w-100" style="border-top:solid 2px #dbdbdb" />
+            <div class="form-group col-md-12 mt-3">
+              <div class="input-group-new">
+                <textarea id="update_status_comment" class="form-control" placeholder="{{'InputNote'|l}}"
+                  rows="3"></textarea>
+              </div>
+            </div>
+            <div>
+              <div class="col-12 mb-4" ng-if="ctrl.Item.status !== 'Rejected' && ctrl.Item.status !== 'Approved'">
+                <button class="btn-additional px-2 mr-1" ng-click="ctrl.prepareUpdateStatus('PendingProcessing')"
+                  ng-if="ctrl.Item.status == 'RequireAdditionalDocuments' && ctrl.Item.status != 'PendingProcessing' && ctrl.Item.status != 'PendingProcessing' &&  ctrl.Item.status != 'PendingReceive'">
+                  {{'WaitingForProgressing'|l }}</button>
+                <button class="btn-additional px-2 mr-1"
+                  ng-click="ctrl.prepareUpdateStatus('RequireAdditionalDocuments')"
+                  ng-if="ctrl.Item.status != 'RequireAdditionalDocuments' && ctrl.Item.status != 'PendingReceive'">{{
+                  'NeedAdditionalRecords'|l }}</button>
+                <button class="btn-approval px-2 mr-1" ng-click="ctrl.prepareUpdateStatus('Approved')"
+                  ng-if="ctrl.Item.status != 'Approved' && ctrl.Item.status != 'RequireAdditionalDocuments' && ctrl.Item.status != 'PendingReceive'"><i
+                    class="fas fa-check"></i>&nbsp;{{ 'Approval'|l }}</button>
+                <button class="btn-reject px-2" ng-click="ctrl.prepareUpdateStatus('Rejected')"
+                  ng-if="ctrl.Item.status != 'Rejected'"><i class="fas fa-times"></i>&nbsp;{{ 'Reject'|l }}</button>
+              </div>
+            </div>
+            <hr class="w-100" style="border-top:solid 2px #dbdbdb" />
+            <b class="w-100 m-3">{{ 'Workflow'|l }}</b>
+            <div class="w-100 mx-3 d-flex">
+              <div class="generic-shadow p-2"
+                style="border-left: 1px solid #20a8d8; border-bottom: 1px solid #20a8d8; min-width:170px">
+                <div style="text-align: center;border-bottom:1px solid #20a8d8;width: 100%;" class="ng-binding">
+                  <i class="fas fa-signature text-primary"></i>
+                  {{ 'Register'|l }}
+                </div>
+                <div style="line-height: 26px;" class="d-flex align-items-center">
+                  <i class="fas fa-genderless text-success"></i>
+                  <span class="d-flex align-items-center font-weight-bold" style="color: #4285f4"><img
+                      class="ml-2 show-user__img" src="/">&nbsp;{{ 'Student'|l }}</span>
+                </div>
+              </div>
+              <div style="text-align: center;width: 80px; height: 160px;">
+                <i class="fas fa-long-arrow-alt-right fa-3x" style="line-height: 160px; color: #20a8d8;"></i>
+              </div>
+              <div style="height: 160px; display: flex;" ng-repeat="item in ctrl.Item.flow">
+                <div class="generic-shadow p-2"
+                  style="border-left: 1px solid #20a8d8; border-bottom: 1px solid #20a8d8">
+                  <div style="text-align: center;border-bottom:1px solid #20a8d8;width: 100%;">
+                    <i class="fas fa-signature text-primary"></i>
+                    {{ item.type|getFieldL:'key':'title':ctrl.Type }}
+                  </div>
+                  <div ng-repeat="itemNode in item.items" style="line-height: 26px;">
+                    <i class="fas fa-genderless text-success"></i>
+                    <span ng-show="itemNode.competence">
+                      {{'Competence'|l}}:&nbsp;
+                      <get-field field="title" load-details-func="ctrl.loadCompetence_details(params)"
+                        id-value="itemNode.competence" localization="true"></get-field>-
+                    </span>
+                    <span ng-show="itemNode.role">
+                      {{'Role'|l}}:&nbsp;
+                      <get-field-directory id-value="itemNode.role" extend="ctrl.Role_Config" localization="true">
+                      </get-field-directory>-
+                    </span>
+
+                    <get-field field="title" load-details-func="ctrl.loadDepartment_details(params)"
+                      id-value="itemNode.department" localization="true"></get-field>
+                  </div>
+                </div>
+                <div style="text-align: center;width: 80px; height: 160px;" ng-if="$index+1 < ctrl.Item.flow.length">
+                  <i class="fas fa-long-arrow-alt-right fa-3x" style="line-height: 160px; color: #20a8d8;"></i>
+                </div>
+              </div>
+            </div>
+            <hr class="w-100" style="border-top:solid 2px #dbdbdb" />
+            <b class="w-100 m-3">{{ 'Events'|l }}</b>
+            <div class="w-100 mx-3 d-flex align-items-center" style="gap:7vw" ng-repeat="event in ctrl.Item.event">
+              <span><i class="fa fa-clock" aria-hidden="true" style="color:#B5B5B5"></i>&nbsp;{{ event.time |
+                timestampToDateTime:'date' }}</span>
+              <span class="d-flex align-items-center font-weight-bold" style="color: #4285f4; width:10%"><img
+                  class="ml-2 show-user__img" src="/">&nbsp;{{ event.username }}</span>
+              <span style="color:black">{{ event.action|l }}</span>
+            </div>
+            <br>
+          </div>
+          <hr class="w-100 m-0" style="border-top:solid 2px #dbdbdb" />
+          <div class="card-body">
+            <p style="color:#4285F4; border-bottom:solid 1px">
+              <i class="far fa-comments ml-2"></i>&nbsp;<b>{{'SUPPORT'|l}}</b>&nbsp;
+            </p>
+            <div class="d-flex align-items-center">
+              <div class="send-feedback">
+                <i class="fas fa-paperclip"></i>
+                <input type="text" ng-model="ctrl.comment" placeholder="{{ 'TypeCommentHere'|l }}">
+                <button type="button" ng-click="ctrl.sendFeedback()"><i class="fas fa-paper-plane"></i></button>
+              </div>
+              <span class="ml-2 text-danger font-weight-bold">{{ ctrl.feedbackNotify[$root.Language.current] }}</span>
+            </div>
+            <div class="feedbacks">
+              <div class="d-flex justify-content-between w-100 my-3"
+                ng-style="{ 'background': feedback.username ? '#FFD9DF' : '#F0F2F3' }"
+                ng-repeat="feedback in ctrl.Item.feedback">
+                <div class="w-75">
+                  <img class="mx-2 show-user__img" src="/">
+                  <div class="ml-2">
+                    <b style="color:#4285F4;">{{ feedback.username }}</b>
+                    <p class="mb-0">{{ feedback.content }}
+                      <span class="showfile ml-2" style="cursor: default;" ng-if="feedback.attachment.length > 0"
+                        ng-repeat="attachment in feedback.attachment">
+                        <attachment-show-by-type my-item="attachment"></attachment-show-by-type>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div class="w-25 text-right pr-4" style="color: #9E9E9E">{{ feedback.time | timestampToDateTime }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="modal fade" id="modal_administrative_procedures_update_status" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <modal-header modal-header-title="{{ctrl._update_status.label|l }}"></modal-header>
+            <div class="modal-body">
+              {{ ctrl._update_status.text[$root.Language.current] }}
+            </div>
+            <div class="modal-footer">
+              <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                modal-button-save-objname="administrativeProcedures" modal-button-save-actionname="updateStatus"
+                modal-button-save-func="ctrl.updateStatus()">
+              </modal-button-save>
+              <modal-button-close></modal-button-close>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </content-content>
+</my-content>

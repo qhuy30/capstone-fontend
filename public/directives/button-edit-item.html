@@ -1,0 +1,5 @@
+<button type="button" class="btn btn-outline-dark btn-sm {{buttonEditItemClass}}"
+    ng-click="buttonEditClick();$event.stopPropagation();" ng-disabled="disabled">
+    <i class="{{buttonEditItemIcon ? buttonEditItemIcon : 'fas fa-pencil-alt'}}"></i>
+    <span ng-if="buttonLabel">{{buttonLabel | l}}</span>
+</button>

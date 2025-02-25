@@ -1,0 +1,252 @@
+<my-content class="task-details-container">
+    <content-content>
+        <div ng-controller="training_details_controller as ctrl">
+            <div class="first">
+                <div class="part">
+                    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                    </div>
+                    <div>
+                        <div style="width: 100%;">
+                            <p class="grey-text">{{'WrittenBy'|l}}
+                                <a>
+                                    <show-username username="ctrl.Item.entity.his[0].createdby" />
+                                </a>, <time-show time-show-data="ctrl.Item.history[0].time" time-show-type="long">/>
+                            </p>
+
+                        </div>
+                        <div class="grey-text">
+                            <i>{{'FromDate'|l}}:&nbsp;<time-show time-show-data="ctrl.Item.start_date"
+                                    time-show-type="long" />&nbsp; {{'ToDate'|l}}:&nbsp;<time-show
+                                    time-show-data="ctrl.Item.end_date" time-show-type="long" />.</i>
+                        </div>
+                    </div>
+                    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"></div>
+                    <div>
+                        <div ng-bind-html="ctrl.Item.content">
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col-md-6">
+                                <div>
+                                    - {{'RegisterDate'|l}}:&nbsp;<i>
+                                        <time-show time-show-data="ctrl.Item.start_registered_date"
+                                            time-show-type="long">
+                                        </time-show>
+                                    </i>
+                                </div>
+                                <div style="margin-top: 10px">
+                                    - {{'TrainingPoint'|l}}:&nbsp;<i>
+                                        {{ctrl.Item.point}}
+                                    </i>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    - {{'ExpirationDate'|l}}:&nbsp;<i>
+                                        <time-show time-show-data="ctrl.Item.end_registered_date"
+                                            time-show-type="long">
+                                        </time-show>
+                                    </i>
+                                </div>
+                                <div style="margin-top: 10px">
+                                    - {{'Quantity'|l}}:&nbsp;<i>
+                                        {{ctrl.Item.quantity}}
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col-md-6">
+                                <div class="card" style="width: fit-content;">
+                                    <div class="card-header">
+                                        <i style="color: blue;" class="fas fa-file-image"></i>
+                                        <b>{{'QRCode'|l}}</b>
+                                        <i class="fas fa-download"
+                                            ng-click="ctrl.downloadQRCode(ctrl.QRCodeCheckIn, 'check-in')">{{'Download'|l}}</i>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="qrcode-container">
+                                            <img ng-src="{{ctrl.QRCodeCheckIn}}" />
+                                            <p style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                                Check-In</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card" style="width: fit-content;">
+                                    <div class="card-header">
+                                        <i style="color: blue;" class="fas fa-file-image"></i>
+                                        <b>{{'QRCode'|l}}</b>
+                                        <i class="fas fa-download"
+                                            ng-click="ctrl.downloadQRCode(ctrl.QRCodeCheckOut, 'check-out')">{{'Download'|l}}</i>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="qrcode-container">
+                                            <img ng-src="{{ctrl.QRCodeCheckOut}}" />
+                                            <p style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                                Check-Out</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"></div>
+                </div>
+
+                <div class="part">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <span class="nav-link ng-binding active"><i
+                                    class="fas fa-history"></i>&nbsp;&nbsp;{{'Events'|l}}</span>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl.Item.history|orderBy:'-time'">
+                                            <td class=" hour"><small><span class="grey-text float-left"><i
+                                                        class="fa fa-clock" aria-hidden="true"></i>
+                                                    <time-show time-show-type="long" time-show-data="item.time">
+                                                    </time-show>
+                                                </span></small>
+                                            </td>
+                                            <td>
+                                                <show-username username="item.username" />
+                                            </td>
+                                            <td>
+                                                <span ng-if="!(item.action==='checkin'||item.action==='checkout')">{{item.action|l}}</span>
+                                                <span ng-if="item.action==='checkin'||item.action==='checkout'">
+                                                    {{'AckTrainingEventAction'|l:({action:item.action,studentId: item.studentId})}}</span>
+                                            </td>
+                                            <td>
+                                                {{item.comment}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="second">
+                <div
+                    style=" background-color: #fff;border: 1px solid rgb(209, 208, 208);margin: 5px;padding: 10px;margin-bottom: 0px;">
+                    <div class="card-body py-2" style="border-left: 2px solid #20a8d8;">
+                        <h5>
+                            <a><strong class="ng-binding">{{'ParticipantList'|l}}</strong></a>
+                        </h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover text-center"
+                                ng-class="{'no-data':ctrl.Item.members.length === 0}">
+                                <thead>
+                                    <tr>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'OrderNumber'|l}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'StudentId'|l}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'FullName'|l}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'ClassId'|l}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'StudyProgramId'|l}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'CourseTime'|l}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'RegisterDate'|l}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            {{'Check-In'}}
+                                        </td>
+                                        <td style=" font-weight: 600;vertical-align: middle;width: 160px;">
+                                            <div class="row">
+                                                <span style="align-content: center;">{{'Check-Out'}}</span>
+                                                <div class="col-md-3">
+                                                    <button type="button"
+                                                        style="padding: 0 7px; margin-left: 5px;box-shadow: none;display: flex;
+                                                        justify-content: space-around;align-items: center;border-radius: 5px;height: 30px;font-weight: 400;"
+                                                        class="btn btn-square btn-outline-primary ng-binding ng-isolate-scope"
+                                                        ng-click="ctrl.export_checkout_list()">
+                                                        <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;"
+                                                            class="fas fa-file-excel"></i>
+                                                        {{'Download'|l}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody id="taskList">
+                                    <tr ng-repeat="(index, student) in ctrl.Item.members">
+                                        <td>
+                                            {{index + 1}}
+                                        </td>
+                                        <td>
+                                            {{student.studentId}}
+                                        </td>
+                                        <td>
+                                            {{student.studentName}}
+                                        </td>
+                                        <td>
+                                            {{student.classStudentId}}
+                                        </td>
+                                        <td>
+                                            {{student.studyProgramId}}
+                                        </td>
+                                        <td>
+                                            {{student.courseTime}}
+
+                                        </td>
+                                        <td>
+                                            <time-show time-show-data="student.registeredDate"
+                                                time-show-type="long" />
+                                        </td>
+                                        <td>
+                                            <time-show time-show-data="student.checkedInDate" time-show-type="long"/>
+                                            <modal-button-ack-training-event
+                                                modal-button-ack-training-event-type="checkin"
+                                                modal-button-ack-training-event-id="ctrl.thisId"
+                                                modal-button-ack-training-event-student-id="student.studentId"
+                                                modal-button-ack-training-event-func="ctrl.ackTrainingEvent(studentId,type,modalName)"
+                                                modal-button-ack-training-event-show-button="!student.checkedInDate"
+                                                modal-button-ack-training-event-label="Check-In"
+                                                modal-button-ack-training-event-ctrl-name="{{ctrl._ctrlName}}"
+                                                modal-button-ack-training-event-action-name="checkin"
+                                                modal-button-ack-training-event-obj-name="TrainingPoint" />
+
+                                        </td>
+                                        <td>
+                                            <time-show time-show-data="student.checkedOutDate" time-show-type="long"/>
+                                            <modal-button-ack-training-event
+                                                modal-button-ack-training-event-type="checkout"
+                                                modal-button-ack-training-event-id="ctrl.thisId"
+                                                modal-button-ack-training-event-student-id="student.studentId"
+                                                modal-button-ack-training-event-func="ctrl.ackTrainingEvent(studentId,type,modalName)"
+                                                modal-button-ack-training-event-show-button="student.checkedInDate&&!student.checkedOutDate"
+                                                modal-button-ack-training-event-label="Check-Out"
+                                                modal-button-ack-training-event-ctrl-name="{{ctrl._ctrlName}}"
+                                                modal-button-ack-training-event-action-name="checkout"
+                                                modal-button-ack-training-event-obj-name="TrainingPoint" />
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

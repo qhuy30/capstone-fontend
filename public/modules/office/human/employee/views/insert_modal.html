@@ -1,0 +1,166 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Employee_Insert">
+  <div class="modal-dialog modal-full" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertForm">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="form-group col-md-4">
+                <div class="input-prepend input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{'LastName'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                    type="text"
+                    ng-model="ctrl._insert_value.lastname"
+                    class="form-control"
+                    name="insert_lastname"
+                    placeholder="Input lastname"
+                    ng-class="{ 'is-invalid': insertForm_general.insert_lastname.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-prepend input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{'MidName'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                    type="text"
+                    ng-model="ctrl._insert_value.midname"
+                    class="form-control"
+                    name="insert_midname"
+                    placeholder="Input midname"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-prepend input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{'FirstName'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                    type="text"
+                    ng-model="ctrl._insert_value.firstname"
+                    class="form-control"
+                    name="insert_firstname"
+                    placeholder="Input firstname"
+                    ng-class="{ 'is-invalid': insertForm_general.insert_firstname.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <date
+                  id-value="ctrl._insert_value.birth_date"
+                  func="ctrl.chooseBirthDate_insert(params)"
+                  label="{{'DateOfBirth'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                  required="true"
+                ></date>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="form-group col-md-4">
+                <div class="input-prepend input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{'PhoneNumber'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                    type="text"
+                    ng-model="ctrl._insert_value.phonenumber"
+                    class="form-control"
+                    name="insert_phonenumber"
+                    placeholder="Input phonenumber"
+                    ng-class="{ 'is-invalid': insertForm_general.insert_phonenumber.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-prepend input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{'Email'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                    type="email"
+                    ng-model="ctrl._insert_value.email"
+                    class="form-control"
+                    name="insert_email"
+                    placeholder="Input email"
+                    ng-class="{ 'is-invalid': insertForm_general.insert_email.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-prepend input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">{{'IdCard'|l}}</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                    type="text"
+                    ng-model="ctrl._insert_value.idcard"
+                    class="form-control"
+                    name="insert_idcard"
+                    placeholder="Input idcard"
+                    ng-class="{ 'is-invalid': insertForm_general.insert_idcard.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <div class="form-group col-md-6">
+                <organization
+                  label="{{'Department'|l}}"
+                  id-value="ctrl._insert_value.department"
+                  select-func="ctrl.chooseDepartment_insert(params)"
+                  require="true"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                >
+                </organization>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory
+                  extend="ctrl.Competence_Config"
+                  pick-func="ctrl.chooseCompetence_insert(params)"
+                  id-value="ctrl._insert_value.competence"
+                  label="{{'Competence'|l}}"
+                  require="true"
+                ></pick-modal-directory>
+                
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new
+          modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-new-objname="Employee"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid="
+                    ctrl._insert_value.files.length===0
+                    || insertForm.$invalid"
+          modal-button-new-func="ctrl.insert()"
+        >
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

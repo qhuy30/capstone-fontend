@@ -1,0 +1,187 @@
+<div id="dispatch_arrived_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Grant permission to use the incoming dispatch feature'|l}}
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.DispatchArrived.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.DispatchArrived.Use'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Grant permission to create the incoming dispatch'|l}}
+                        <i class="small">({{'This is the right for the organization s secretary'|l}})</i>
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.DispatchArrived.Manager'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.DispatchArrived.Manager'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Grant permission to lead the incoming dispatch'|l}}
+                        <i class="small">({{'This is the right reserved for the organization s clerical leader'|l}})</i>
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.DispatchArrived.Lead'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.DispatchArrived.Lead'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Right to approve in external level'|l}}
+                        <i class="small">({{'This is the right reserved for board of directors'|l}})</i>
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.DispatchArrived.ApproveLevel1'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.DispatchArrived.ApproveLevel1'"/>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Right to view official dispatches other than work-related official dispatches'|l}}
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.DispatchArrived.FollowDA'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.DispatchArrived.FollowDA'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #FFFFFF">
+            <!-- <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Right to view official dispatches other than work-related official dispatches'|l}}
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Only incoming dispatches related to assigned work can be viewed'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.FollowDA'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.DispatchArrived.FollowDA'" value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'View official dispatches at the unit you are working at'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.FollowDA'].value"
+                                       value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Dispatch belongs to all departments'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.FollowDA'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Dispatches at some specific departments'|l}}
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.DispatchArrived.FollowDA'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.DispatchArrived.FollowDA'"
+                                                     disable="ctrl.rule['Office.DispatchArrived.FollowDA'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.FollowDA'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li> -->
+            <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Right to accept task'|l}}
+                        <i class="small">({{'This is the right reserved for department leaders'|l}})</i>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Not allow'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.Confirm'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.DispatchArrived.Confirm'" value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For department is working'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.Confirm'].value"
+                                       value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'All departments'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.Confirm'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For specific departments'|l}}
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.DispatchArrived.Confirm'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.DispatchArrived.Confirm'"
+                                                     disable="ctrl.rule['Office.DispatchArrived.Confirm'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.DispatchArrived.Confirm'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</div>

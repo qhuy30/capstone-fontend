@@ -1,0 +1,17 @@
+<a class="waves-effect ringbell-header-item task_overdue_notify" href="/task-details?code={{item.params.taskCode}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            {{'Task is due tomorrow'|l:({title: '[' + item.params.code + '] ' + item.params.title})}}
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+
+    </div>
+
+</a>

@@ -1,0 +1,14 @@
+<div class="statistic generic-animation" ng-class="{'active':ctrl.tabTask==='statistic'}">
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có hiển thị tab <b>{{'Statistic'|l}}</b> không ?
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Show_StatisticTab'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Show_StatisticTab'"/>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

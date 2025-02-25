@@ -1,0 +1,90 @@
+<my-content>
+    <content-content>
+        <div ng-controller="journey_time_form_details_controller as ctrl">
+            <section class="pb-3">
+                <div class="card">
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <div class="col-md-12">
+                            <div style="width: 100%;">
+                                <h5><a><strong>
+                                    <get-field-directory
+                                    id-value="ctrl.Item.document_type"
+                                    extend="ctrl.DocumentType_Config"
+                                    localization="true"
+                                ></get-field-directory>
+                                        </strong></a></h5>
+                                <p class="grey-text">{{'WrittenBy'|l}}
+                                    <a>
+                                        <show-username username="ctrl.Item.username" employee="ctrl.Item.employee">
+                                        </show-username>
+                                    </a>, <time-show time-show-data="ctrl.Item.event[0].time" time-show-type="long">
+                                    </time-show>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6" >
+                            {{'NumberOfDays'|l}}:&nbsp;<i>{{ctrl.Item.number_day}}</i>
+                        </div>
+                        <div class="col-md-6" >
+                            {{'Type'|l}}:&nbsp;<i><get-field-directory
+                                id-value="ctrl.Item.type"
+                                extend="ctrl.LeaveFormType_Config"
+                                localization="true"
+                              ></get-field-directory></i>
+                        </div>
+
+                        <div class="col-md-12" >
+                            {{'Note'|l}}:&nbsp{{ctrl.Item.note}}
+                        </div>
+                        <div class="col-md-12" >
+                            <a class="text-dark " link-details link-details-display="{{ctrl.Item.username +'-'+ctrl.Item.type }}"
+                                link-details-url="/leaveform-details?{{ctrl.Item.leave_form}}"
+                                link-details-route="leaveform-details">
+                                <span class="badge blue"><i class="fas fa-angle-double-right"></i>&nbsp;&nbsp;{{'LeaveForm'|l}}</span>
+                                 
+                            </a>
+                        </div>
+                    </div>
+
+
+
+
+                    <div style="border-top:1px solid #c2cfd6;border-left:2px solid #20a8d8"></div>
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <div class="col-md-12">
+                            {{'Events'|l}}
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl.Item.event">
+                                            <td class="hour"><small><span class="grey-text float-left"><i
+                                                            class="fa fa-clock" aria-hidden="true"></i>
+                                                        <time-show time-show-type="short" time-show-data="item.time">
+                                                        </time-show>
+                                                    </span></small>
+                                            </td>
+                                            <td>
+                                                <show-username username="item.username" employee="item.employee">
+                                                </show-username>
+                                            </td>
+                                            <td>
+                                                {{item.action|l}}
+                                            </td>
+                                            <td>
+                                                {{item.comment}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+    </content-content>
+</my-content>

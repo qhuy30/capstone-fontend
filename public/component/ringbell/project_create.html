@@ -1,0 +1,28 @@
+<a class="waves-effect ringbell-header-item project_create"
+    href="/task?tab=project&id={{item.params.projectId}}">
+    <i class="fas fa-project-diagram"></i>
+    <div class="content">
+        <div style="margin-top: -6px;">
+            <span>
+                <span >{{'Project'|l}}</span>&nbsp;
+                <span class="title">[{{item.params.code}}]&nbsp;{{item.params.title}}</span>&nbsp;
+                <span class="text-lowercase">{{'CreatedBy'|l}}</span>&nbsp;
+                <show-username-onlyname username="item.params.username_create"
+                without-tooltip="true" >
+              </show-username-onlyname>
+            </span>
+        </div>
+        <div class="action">
+            <i class="fas fa-tasks"></i>&nbsp;{{'Need your coordination'|l}}
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

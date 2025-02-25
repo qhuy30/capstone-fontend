@@ -1,0 +1,50 @@
+<my-content class="notify-feature">
+  <content-content>
+    <div ng-controller="car_main_controller as ctrlMain">
+      <div class="card">
+        <div class="card-body">
+          <ul class="nav nav-tabs" role="tablist">
+            <li ng-show="ctrlMain.tabPermission['car_registration']" class="nav-item"
+              ng-click="ctrlMain.switchTab('car_registration')">
+              <a class="nav-link" ng-class="{'active':ctrlMain.tab =='car_registration'}">
+                {{'CarRegistrationList'|l}}
+              </a>
+            </li>
+            <li ng-show="ctrlMain.tabPermission['car_calendar']" class="nav-item"
+              ng-click="ctrlMain.switchTab('car_calendar')">
+              <a class="nav-link" ng-class="{'active':ctrlMain.tab =='car_calendar'}">
+                {{'CarCalendarManagement'|l}}
+              </a>
+            </li>
+            <li ng-show="ctrlMain.tabPermission['my_calendar']" class="nav-item"
+              ng-click="ctrlMain.switchTab('my_calendar')">
+              <a class="nav-link" ng-class="{'active':ctrlMain.tab =='my_calendar'}">
+                {{'CarCalendar'|l}}
+              </a>
+            </li>
+            <li ng-show="ctrlMain.tabPermission['car_list']" class="nav-item"
+              ng-click="ctrlMain.switchTab('car_list')">
+              <a class="nav-link" ng-class="{'active':ctrlMain.tab =='car_list'}">{{'CarList'|l}}
+              </a>
+            </li>
+            <li ng-show="ctrlMain.tabPermission['location_list']" class="nav-item"
+              ng-click="ctrlMain.switchTab('location_list')">
+              <a class="nav-link" ng-class="{'active':ctrlMain.tab =='location_list'}">{{'Location List'|l}}
+              </a>
+            </li>
+            <li ng-show="ctrlMain.tabPermission['card_list']" class="nav-item"
+              ng-click="ctrlMain.switchTab('card_list')">
+              <a class="nav-link" ng-class="{'active':ctrlMain.tab =='card_list'}">{{'CreditCard'|l}}
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade active show">
+              <div ng-include="ctrlMain._urlMain"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </content-content>
+</my-content>

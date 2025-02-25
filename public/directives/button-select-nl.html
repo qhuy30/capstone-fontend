@@ -1,0 +1,61 @@
+<div class="btn-group" style="width: 100%" ng-class="{ 'disabled': disable }">
+  <div class="input-prepend input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">{{buttonSelectLabel}}</span>
+      <span ng-if="require" class="require-sympton">*</span>
+    </div>
+    <div
+      class="dropdown-menu"
+    >
+      <input
+        type="text"
+        ng-model="thisSearch"
+        style="width: 100%; height: 30px"
+        placeholder="Search"
+      />
+      <a
+        class="dropdown-item"
+        ng-repeat="item in buttonSelectData|filter:thisSearch:false:buttonSelectKey"
+        ng-click="buttonSelectClick(item)"
+      >
+        <span ng-if="localization">
+          {{item[buttonSelectKey][$root.Language.current]}}
+        </span>
+        <span ng-if="!localization"> {{item[buttonSelectKey]}} </span>
+      </a>
+    </div>
+    <input
+      ng-if="localization"
+      ng-disabled="true"
+      type="text"
+      ng-model="selectedItem[buttonSelectKey][$root.Language.current]"
+      class="form-control"
+      name="{{_ctrlName}}"
+      ng-required="require"
+    />
+    <input
+      ng-if="!localization"
+      ng-disabled="true"
+      type="text"
+      ng-model="selectedItem[buttonSelectKey]"
+      class="form-control"
+      name="{{_ctrlName}}"
+      ng-required="require"
+    />
+
+    <button
+      type="button"
+      class="btn btn-primary dropdown-toggle"
+      ng-hide="disableDropdown"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      ng-disabled="disable"
+    >
+      {{'Pick'|l}}
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable" ng-hide="disableDropdown">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

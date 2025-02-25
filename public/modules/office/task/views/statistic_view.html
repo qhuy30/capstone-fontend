@@ -1,0 +1,166 @@
+<div ng-controller="task_statistic_controller as ctrlChild" class="task-statistic-feature">
+    <div class="tool">
+        <div class="item">
+            <div class="title">
+                {{'FromDate'|l}}:
+            </div>
+            <div class="value">
+                <time-show2 time-show-data="ctrlChild._filterFromDate" time-show-type="just_date" bind-object="true">
+                </time-show2>
+                <input type="date" ng-model="ctrlChild._filterFromDate" ng-change="ctrlChild.refreshData()" />
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="title">
+                {{'ToDate'|l}}:
+            </div>
+            <div class="value">
+                <time-show2 time-show-data="ctrlChild._filterToDate" time-show-type="just_date" bind-object="true">
+                </time-show2>
+                <input type="date" ng-model="ctrlChild._filterToDate" ng-change="ctrlChild.refreshData()" />
+            </div>
+        </div>
+    </div>
+    <div class="project-content">
+        <div class="title">
+            <div class="label">
+                <i class="fas fa-angle-right"></i>&nbsp;{{'ProjectImplementationInformation'|l}}
+            </div>
+            <div class="line"></div>
+        </div>
+        <div class="content">
+            <div class="item with-chart">
+                <div class="title">
+                    {{'ProjectSummary'|l}}
+                </div>
+                <div class="chart-container with-value">
+                    <div class="chart-value">
+                        <div class="main-value">
+                            <div class="label">
+                                {{'Completed'|l}}:
+                            </div>
+                            <div class="value">
+                                {{ctrlChild.statistic_project_project_count.percent}}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-item">
+                        <canvas class="chart chart-doughnut" chart-data="ctrlChild.statistic_project_project_count.data"
+                            chart-labels="ctrlChild.statistic_project_project_count.label"
+                            chart-options="ctrlChild.statistic_project_project_count.options"
+                            chart-colors="ctrlChild.statistic_project_project_count.colors">
+                        </canvas>
+                    </div>
+
+                </div>
+            </div>
+            <div class="item with-chart">
+                <div class="title">
+                    {{'ProjectGrowthChart'|l}}
+                </div>
+                <div class="chart-container">
+                    <div class="chart-item">
+                        <canvas class="chart chart-line" chart-data="ctrlChild.statistic_project_project_growth.data"
+                            chart-labels="ctrlChild.statistic_project_project_growth.label"
+                            chart-series="ctrlChild.statistic_project_project_growth.series"
+                            chart-options="ctrlChild.statistic_project_project_growth.options"
+                            chart-colors="ctrlChild.statistic_project_project_growth.colors">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="item with-chart">
+                <div class="title">
+                    {{'SummaryOfWorkStatus'|l}}
+                </div>
+                <div class="chart-container with-value">
+                    <div class="chart-value">
+                        <div class="main-value">
+                            <div class="label">
+                                {{'Completed'|l}}:
+                            </div>
+                            <div class="value">
+                                {{ctrlChild.statistic_project_count.percent}}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-item">
+                        <canvas class="chart chart-doughnut" chart-data="ctrlChild.statistic_project_count.data"
+                            chart-labels="ctrlChild.statistic_project_count.label"
+                            chart-options="ctrlChild.statistic_project_count.options"
+                            chart-colors="ctrlChild.statistic_project_count.colors">
+                        </canvas>
+                    </div>
+
+                </div>
+            </div>
+            <div class="item with-chart">
+                <div class="title">
+                    {{'TaskGrowthChart'|l}}
+                </div>
+                <div class="chart-container">
+                    <div class="chart-item">
+                        <canvas class="chart chart-line" chart-data="ctrlChild.statistic_project_growth.data"
+                            chart-labels="ctrlChild.statistic_project_growth.label"
+                            chart-series="ctrlChild.statistic_project_growth.series"
+                            chart-options="ctrlChild.statistic_project_growth.options"
+                            chart-colors="ctrlChild.statistic_project_growth.colors">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="department-content">
+        <div class="title">
+            <div class="label">
+                <i class="fas fa-angle-right"></i>&nbsp;{{'InformationOnDepartmentActivities'|l}}
+            </div>
+            <div class="line"></div>
+        </div>
+        <div class="content">
+            <div class="item with-chart">
+                <div class="title">
+                    {{'SummaryOfWorkStatus'|l}}
+                </div>
+                <div class="chart-container with-value">
+                    <div class="chart-value">
+                        <div class="main-value">
+                            <div class="label">
+                                {{'Completed'|l}}:
+                            </div>
+                            <div class="value">
+                                {{ctrlChild.statistic_department_count.percent}}%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-item">
+                        <canvas class="chart chart-doughnut" chart-data="ctrlChild.statistic_department_count.data"
+                            chart-labels="ctrlChild.statistic_department_count.label"
+                            chart-options="ctrlChild.statistic_department_count.options"
+                            chart-colors="ctrlChild.statistic_department_count.colors">
+                        </canvas>
+                    </div>
+
+                </div>
+            </div>
+            <div class="item with-chart">
+                <div class="title">
+                    {{'TaskGrowthChart'|l}}
+                </div>
+                <div class="chart-container">
+                    <div class="chart-item">
+                        <canvas class="chart chart-line" chart-data="ctrlChild.statistic_department_growth.data"
+                            chart-labels="ctrlChild.statistic_department_growth.label"
+                            chart-series="ctrlChild.statistic_department_growth.series"
+                            chart-options="ctrlChild.statistic_department_growth.options"
+                            chart-colors="ctrlChild.statistic_department_growth.colors">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

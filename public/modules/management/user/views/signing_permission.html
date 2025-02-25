@@ -1,0 +1,147 @@
+<div id="signing_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng trình ký
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.Signing.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.Signing.Use'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #fff">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền quản trị trình ký cấp <b>lãnh đạo</b>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Không được phép quản trị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Leader_Manage'].value"
+                                       value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị đang công tác
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Leader_Manage'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Signing.Leader_Manage'" value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Toàn bộ đơn vị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Leader_Manage'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị cụ thể
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Signing.Leader_Manage'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Signing.Leader_Manage'"
+                                                     disable="ctrl.rule['Office.Signing.Leader_Manage'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Leader_Manage'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #e8f0fe">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền quản trị trình ký cấp <b>trưởng đơn vị</b>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Không được phép quản trị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Department_Leader_Manage'].value"
+                                       value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị đang công tác
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Department_Leader_Manage'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Signing.Department_Leader_Manage'" value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Toàn bộ đơn vị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Department_Leader_Manage'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị cụ thể
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Signing.Department_Leader_Manage'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Signing.Department_Leader_Manage'"
+                                                     disable="ctrl.rule['Office.Signing.Department_Leader_Manage'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Signing.Department_Leader_Manage'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

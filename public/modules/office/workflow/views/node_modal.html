@@ -1,0 +1,186 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Workflow_Node">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Node'}}"></modal-header>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body" style="border-left:2px solid #20a8d8">
+                        <button-select-nl button-select-label="{{'ApprovalType'|l}}" button-select-data="ctrl.Type"
+                            id-value="ctrl.node.type" button-select-func="ctrl.chooseApprovalType_insert(params)"
+                            load-details-func="ctrl.loadType_details(params)" button-select-key="title"
+                            localization="true" require="true"
+                            disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','insert','doing')">
+                        </button-select-nl>
+                        <div class="d-flex align-content-start flex-wrap mt-3">
+                            <div class="input-prepend input-group" >
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">{{'Title'|l}}</span>
+                                </div>
+                                <input disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','insert','doing')" type="text"
+                                    ng-model="ctrl.node.title" class="form-control" min="1" name="insert_title"
+                                    ng-class="{ 'is-invalid': insert_title.$invalid }"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="d-flex align-content-start flex-wrap mt-3">
+                            <div class="input-prepend input-group" style="width: 133px">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">{{'Duration'|l}}</span>
+                                </div>
+                                <input disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','insert','doing')" type="number"
+                                    ng-model="ctrl.node.duration" class="form-control" min="1" name="insert_duration"
+                                    ng-class="{ 'is-invalid': insert_duration.$invalid }"
+                                    required />
+                            </div>
+                            <div class="input-prepend input-group" style="width: 105px; margin-left: 10px;">
+                                <select class="form-control" style="height: 32px;" name="insert_cycle" disabled>
+                                    <option value="day">{{'Day'|l}}</option>
+                                </select>
+                            </div>
+                            <div style="margin-left: 25px; padding: 8px;">
+                                <span class="input-group-text-new">{{'Automaticallycompletethetask' | l}} : </span>
+                            </div>
+                            <div class="form-check form-check-inline" style="padding-left: 25px;">
+                                <input class="form-check-input" type="radio" ng-model="ctrl.node.auto_completed_task" name="insert_auto_completed_task"
+                                    id="insert_radio_completed_task_true" value="true">
+                                <label class="form-check-label font-weight-normal text-reset" for="insert_radio_completed_task_true">{{'Yes' | l}}</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="padding-left: 24px;">
+                                <input class="form-check-input" type="radio" ng-model="ctrl.node.auto_completed_task" name="insert_auto_completed_task"
+                                    id="insert_radio_completed_task_false" value="false">
+                                <label class="form-check-label font-weight-normal text-reset" for="insert_radio_completed_task_false">{{'No' | l}}</label>
+                            </div>
+                        </div>
+                        <!-- <div class="input-group-new flex-wrap mt-3">
+                            <div>
+                                <span class="input-group-text-new">Cho phép tải lên Phụ lục/Hồ sơ đính kèm</span>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" ng-model="ctrl._insert_value.allow_appendix" name="insert_allow_appendix"
+                                    id="insert_radio_allow_appendix_true" value="true">
+                                <label class="form-check-label font-weight-normal text-reset" for="insert_radio_allow_appendix_true">{{'Yes' | l}}</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="padding-left: 24px;">
+                                <input class="form-check-input" type="radio" ng-model="ctrl._insert_value.allow_appendix" name="insert_allow_appendix"
+                                    id="insert_radio_allow_appendix_false" value="false">
+                                <label class="form-check-label font-weight-normal text-reset" for="insert_radio_allow_appendix_false">{{'No' | l}}</label>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body" style="border-left:2px solid #20a8d8">
+                        <div class="form-group row">
+                            <button-new button-new-func="ctrl.addItemNode()" button-new-label="{{'New'|l}}">
+                            </button-new>
+                        </div>
+                        <div>
+                            <table class="table table-sm">
+                                <tr ng-repeat="item in ctrl.node.items track by $index">
+                                    <td style="width: 150px;">
+                                        <div class="input-group-new row">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Handling methods' | l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" ng-model="item.methods" 
+                                                    name="insert_methods_{{$index}}" ng-change="ctrl.handleSelectMethodsType_insert()" 
+                                                    id="insert_methods_fixed_{{$index}}" value="fixed">
+                                                <label class="form-check-label font-weight-normal text-reset" 
+                                                    for="insert_methods_fixed_{{$index}}">{{'Fixed' | l}}</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" ng-model="item.methods" 
+                                                    name="insert_methods_{{$index}}" ng-change="ctrl.handleSelectMethodsType_insert()" 
+                                                    id="insert_methods_flexible_{{$index}}" value="flexible">
+                                                <label class="form-check-label font-weight-normal text-reset" 
+                                                    for="insert_methods_flexible_{{$index}}">{{'Flexible' | l}}</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.methods === 'fixed'">
+                                        <organization label="{{'Department'|l}}" id-value="item.department"
+                                            select-func="ctrl.chooseDepartment_addNode(params,item.id)" require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','insert','doing')">
+                                        </organization>
+                                    </td>
+                                    <td ng-if="item.methods === 'fixed'">
+                                        <pick-modal-directory-workflow extend="ctrl.Competence_Config"
+                                            pick-func="ctrl.chooseCompetence_addNode(params,item.id)" id-value="item.competence"
+                                            label="{{'Competence'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','insert','doing')">
+                                        </pick-modal-directory-workflow>
+                                    </td>
+                                    <td ng-if="item.methods === 'fixed'">
+                                        <pick-modal-directory-workflow extend="ctrl.Role_Config"
+                                            pick-func="ctrl.chooseRole_addNode(params,item.id)" id-value="item.role"
+                                            label="{{'Role'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','insert','doing')">
+                                        </pick-modal-directory-workflow>
+                                    </td>
+                                    <td ng-if="item.methods === 'fixed' && ctrl.node.type !== 'process' && ctrl.node.type !== 'receiver'">
+                                        <pick-modal-generic data="ctrl.signatureOptions"
+                                            invalid-value-func="ctrl.chooseSignature_addNode({},item.id)"
+                                            pick-func="ctrl.chooseSignature_addNode(params,item.id)" id-value="item.signature"
+                                            label="{{'Signature'|l}}"></pick-modal-generic>
+                                    </td>
+                                    <td ng-if="item.methods === 'fixed' && ctrl.node.type !== 'process' && ctrl.node.type !== 'receiver'">
+                                        <pick-modal-generic data="ctrl.quotationMarkOptions"
+                                            invalid-value-func="ctrl.chooseQuotationMark_addNode({},item.id)"
+                                            pick-func="ctrl.chooseQuotationMark_addNode(params,item.id)" id-value="item.quotationMark"
+                                            label="{{'Quotation mark'|l}}"></pick-modal-generic>
+                                    </td>
+                                    <!-- <td ng-if="item.methods === 'fixed'">
+                                        <button-delete-item style="line-height: 35px;"
+                                            button-delete-item-func="ctrl.removeItemNode(params)" button-delete-item-params="item">
+                                        </button-delete-item>
+                                    </td> -->
+                                    <!-- Flexible Option -->
+
+                                    <td ng-if="item.methods === 'flexible'">
+                                        <pick-modal-generic-default pick-func="ctrl.chooseLeaderProcess_addNode(params,item.id)"
+                                            label="{{ 'Select an Option' | l }}"
+                                            id-value="item.leaderProcess"
+                                            require="true" disable="false">
+                                        </pick-modal-generic-default>
+                                    </td>
+                                    <td ng-if="item.methods === 'flexible' && ctrl.node.type !== 'process' && ctrl.node.type !== 'receiver'">
+                                        <pick-modal-generic data="ctrl.signatureOptions"
+                                            invalid-value-func="ctrl.chooseSignature_addNode({},item.id)"
+                                            pick-func="ctrl.chooseSignature_addNode(params,item.id)" id-value="item.signature"
+                                            label="{{'Signature'|l}}"></pick-modal-generic>
+                                    </td>
+                                    <td ng-if="item.methods === 'flexible' && ctrl.node.type !== 'process' && ctrl.node.type !== 'receiver'">
+                                        <pick-modal-generic data="ctrl.quotationMarkOptions"
+                                            invalid-value-func="ctrl.chooseQuotationMark_addNode({},item.id)"
+                                            pick-func="ctrl.chooseQuotationMark_addNode(params,item.id)" id-value="item.quotationMark"
+                                            label="{{'Quotation mark'|l}}"></pick-modal-generic>
+                                    </td>
+                                    <td>
+                                        <button-delete-item style="line-height: 35px;"
+                                            button-delete-item-func="ctrl.removeItemNode(params)" button-delete-item-params="item">
+                                        </button-delete-item>
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-danger" ng-if="ctrl.isDuplicateSignatures(ctrl.node) || ctrl.isDuplicateQuotationMarks(ctrl.node)">
+                    {{'Signatures/Quotation marks cannot be duplicated in case All Approval'|l}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="Workflow"
+                    modal-button-new-actionname="insert" modal-button-new-invalid="
+                    ctrl.node.items.length===0 || ctrl.isDuplicateSignatures(ctrl.node) || ctrl.isDuplicateQuotationMarks(ctrl.node)
+                    || !ctrl.node.type || !ctrl.node.duration" modal-button-new-func="ctrl.insertNode()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

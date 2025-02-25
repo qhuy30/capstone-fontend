@@ -1,0 +1,40 @@
+<a class="waves-effect ringbell-header-item project_update_info"
+    href="/meeting-room-details?code={{item.params.code}}"
+>
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span>
+                <span>{{'Meetting room registration'|l}}</span>
+                <span class="title" >[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+                <span class="text-lowercase" >{{'WrittenBy'|l}}</span>
+                <show-username-onlyname username="item.params.username_create_ticket" 
+                without-tooltip="true"></show-username-onlyname>
+            </span>
+        </div>
+        <div class="ringbell-action danger" ng-switch="item.params.status">
+            <span ng-switch-when="Registered">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to review and approve recall registration room'|l}}
+            </span>
+            <span ng-switch-when="DepartmentApproved">
+                <i class="fas fa-book"></i>&nbsp;{{'Department leader approved recall. Need you to review and approve recall registration'|l}}
+            </span>
+            <span ng-switch-when="Confirmed">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to review and approve recall registration'|l}}
+            </span>
+            <span ng-switch-when="Cancelled">
+                <i class="fas fa-book"></i>&nbsp;{{'Registration room approved recall'|l}}
+            </span>
+        </div>
+   
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

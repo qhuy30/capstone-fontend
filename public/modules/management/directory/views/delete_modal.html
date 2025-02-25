@@ -1,0 +1,19 @@
+<div class="modal fade" id="modal_Directory_Delete" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantDelete'|l:{title:(ctrl._delete_value.title[$root.Language.current])} }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="Directory" modal-button-delete-actionname="delete"
+                    modal-button-delete-func="ctrl.delete()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

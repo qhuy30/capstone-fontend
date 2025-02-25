@@ -1,0 +1,26 @@
+<div class="modal fade" id="modal_Head_Task_Cancel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="Huỷ bỏ công việc"></modal-header>
+            <div class="modal-body">
+                {{'Are you sure you want to cancel this task?'|l}} <br>
+                <!-- <textarea id="cancelTask_content" class="custom-input pt-2" type="text"></textarea> -->
+                <text-area-with-suggestions-2
+                    ng-model="ctrl._cancel_value.reason"
+                    ng-required="true"
+                    placeholder="{{'CancellationReason'|l}}"
+                    function-apply="ctrl.function_apply_suggestions"
+                />
+            </div>
+            <div class="modal-footer">
+                <modal-button-cancel
+                    modal-button-cancel-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-cancel-objname="Task"
+                    modal-button-cancel-actionname="cancel"
+                    modal-button-cancel-func="ctrl.cancelTask()"
+                />
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

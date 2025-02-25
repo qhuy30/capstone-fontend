@@ -1,0 +1,87 @@
+<div class="flow">
+    <div class="timeline" >
+        <div ng-repeat="event in events track by $index">
+
+            
+
+            <div
+                class="item-flow"
+                ng-class="{'right': event.isLeft, 'left': !event.isLeft}"
+            >
+                <div class="content">
+                    
+                    <a ng-if="event.type == 'dispatch_arrived'" class="text-dark" link-details link-details-url="/da-details?{{event.id}}"
+                        link-details-route="da-details"><h2 ng-if="event.isLeft">{{event.type|l}} {{event.title}}</h2></a>
+                    <a ng-if="event.type == 'task'" class="text-dark" link-details link-details-url="/task-details?code={{event.code}}"
+                        link-details-route="task-details"><h2 ng-if="event.isLeft">[{{event.code}}] {{event.type|l}} {{event.title}}</h2></a>
+                    <a ng-if="event.type == 'workflow_play'" class="text-dark" link-details link-details-url="/signing-details?code={{event.code}}"
+                        link-details-route="signing-details"><h2 ng-if="event.isLeft">{{event.type|l}} {{event.title}}</h2></a>
+                    <a ng-if="event.type == 'outgoing_dispatch'" class="text-dark" link-details link-details-url="/odb-details?{{event.id}}"
+                        link-details-route="odb-details"><h2 ng-if="event.isLeft">{{event.type|l}} {{event.title}}</h2></a>
+                    <a href="storage/{{event.code}}" ng-if="event.type == 'briefcase'"><h2 ng-if="event.isLeft">{{event.type|l}} {{event.title}}</h2></a>
+                    <div class="date" ng-if="event.username">
+                        <span> 
+                            <i class="fa fa-clock" aria-hidden="true" 
+                            style="font-size: 12px; color: rgb(15 118 178 / 55%)">
+                            </i>
+                        </span>
+                        <time-show time-show-data="event.time" time-show-type="long"/>
+                    </div>
+                    <p ng-if="event.username">
+                        {{event.action|l}} 
+                        <span style="text-wrap: nowrap;">
+                            {{'by'|l}}  <show-username-onlyname-custom-css hide-image="true" username="event.username"/> 
+                        </span> 
+                    </p>
+                    <div ng-if="!event.username  && event.action !== 'pending processing'" 
+                        class="none-username d-flex justify-content-start align-items-center">
+                        <span>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true" 
+                            style="font-size: 18px; color: rgb(255 137 0)""></i>
+                        </span>
+                        <p class="d-inline-block">
+                            <show-action action="event.action"></show-action>
+                        </p>
+                    </div>
+                    <div ng-if="!event.username && event.type == 'workflow_play' && event.action == 'pending processing'"
+                        class="none-username d-flex justify-content-start align-items-center">
+                        Chờ
+                        <get-field-directory 
+                            id-value="event.competence"
+                            field="title"
+                            style="margin: 0 4px;"
+                            extend="ctrl.Competence_Config"
+                            localization="true">
+                        </get-field-directory> của
+                        <show-department-fix style="margin: 0 4px;" department="event.department"></show-department-fix> 
+                        duyệt  
+                    </div>
+                </div>
+            </div>
+
+            <div
+                ng-if="event.isFirst"
+                class="item-flow is-first"
+                ng-class="{'right': event.isLeft, 'left': !event.isLeft, 'mb-3': $index !== 0}"
+            >
+                <div class="content">
+                    <a ng-if="event.type == 'dispatch_arrived'" class="text-dark" link-details link-details-url="/da-details?{{event.id}}"
+                        link-details-route="da-details"><h2>{{event.type|l}} {{event.title}}</h2></a>
+                    <a ng-if="event.type == 'task'" class="text-dark" link-details link-details-url="/task-details?code={{event.code}}"
+                        link-details-route="task-details"><h2>[{{event.code}}] {{event.type|l}} {{event.title}}</h2></a>
+                    <a ng-if="event.type == 'workflow_play'" class="text-dark" link-details link-details-url="/signing-details?code={{event.code}}"
+                        link-details-route="signing-details"><h2>{{event.type|l}} {{event.title}}</h2></a>
+                    <a ng-if="event.type == 'outgoing_dispatch'" class="text-dark" link-details link-details-url="/odb-details?{{event.id}}"
+                        link-details-route="odb-details"><h2>{{event.type|l}} {{event.title}}</h2></a>
+                    <a href="storage/{{event.code}}" ng-if="event.type == 'briefcase'"><h2>{{event.type|l}} {{event.title}}</h2></a>
+
+                    <!-- <a ng-if="event.type == 'briefcase'" class="text-dark" link-details link-details-url="/storage/{{event.code}}"
+                        link-details-route="storage"><h2>{{event.type|l}} {{event.title}}</h2></a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="events.length == 0" class="NoData">
+        {{'NoData'|l}}
+    </div>
+</div>

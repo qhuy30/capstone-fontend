@@ -1,0 +1,99 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="{{selectSinglePersonModal}}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'ChoosePerson'|l}}" modal-header-id={{selectSinglePersonModal}}></modal-header>
+            <div class="modal-body">
+                <div class="card-body">
+                    <table class="table-hover">
+                        <tbody>
+                            <tr ng-repeat="item in selectSinglePerson_Data track by $index">
+                                <td>
+                                    <treeview-header treeview-header-label="{{item.title|l}}"
+                                        treeview-header-item="item" treeview-header-func="setTreeviewData()">
+                                    </treeview-header>
+                                    <table>
+                                        <tbody style="color: #20a8d8;">
+                                            <tr ng-repeat="person in (item.key|selectSinglePerson_filterPerson:$root.Persons)|selectSinglePerson_filterChief"
+                                                ng-click="selectSinglePerson_choose(person)">
+                                                <td>
+                                                    &nbsp;<span ng-repeat="space in item.parent">&nbsp;</span>
+                                                    <i class="fas fa-user-tie"></i>&nbsp;{{person.fullname}}
+                                                </td>
+                                                <td>
+                                                    <i class="far fa-circle"
+                                                        ng-if="selectSinglePersonModel._id !== person._id"
+                                                        ng-click="selectSinglePerson_choose(person)"></i>
+                                                    <i class="far fa-check-circle"
+                                                        ng-if="selectSinglePersonModel._id === person._id"
+                                                        ng-click="selectSinglePerson_unchoose()"></i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="person in (item.key|selectSinglePerson_filterPerson:$root.Persons)|selectSinglePerson_filterDeputy"
+                                                ng-click="selectSinglePerson_choose(person)">
+                                                <td>
+                                                    &nbsp;<span ng-repeat="space in item.parent">&nbsp;</span>
+                                                    <i class="fas fa-user"></i>&nbsp;{{person.fullname}}
+                                                </td>
+                                                <td>
+                                                    <i class="far fa-circle"
+                                                        ng-if="selectSinglePersonModel._id !== person._id"
+                                                        ng-click="selectSinglePerson_choose(person)"></i>
+                                                    <i class="far fa-check-circle"
+                                                        ng-if="selectSinglePersonModel._id === person._id"
+                                                        ng-click="selectSinglePerson_unchoose()"></i>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="person in (item.key|selectSinglePerson_filterPerson:$root.Persons)|selectSinglePerson_filterPersonnel"
+                                                ng-click="selectSinglePerson_choose(person)">
+                                                <td>
+                                                    &nbsp;<span ng-repeat="space in item.parent">&nbsp;</span>
+                                                    <i class="far fa-user"></i>&nbsp;{{person.fullname}}
+                                                </td>
+                                                <td>
+                                                    <i class="far fa-circle"
+                                                        ng-if="selectSinglePersonModel._id !== person._id"
+                                                        ng-click="selectSinglePerson_choose(person)"></i>
+                                                    <i class="far fa-check-circle"
+                                                        ng-if="selectSinglePersonModel._id === person._id"
+                                                        ng-click="selectSinglePerson_unchoose()"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <modal-button-close></modal-button-close>
+        </div>
+    </div>
+</div>
+</div>
+<div class="btn-group">
+    <div class="input-prepend input-group">
+        <div class="input-prepend input-group">
+            <div class="input-group-prepend"><span class="input-group-text">{{selectSinglePersonLabel}}</span>
+            </div>
+            <div class="form-control bg-light">
+                <span ng-if="!selectSinglePersonModel.fullname">
+                    {{'NotSelect'|l}}
+                </span>
+                <span ng-if="selectSinglePersonModel.fullname">
+                    {{selectSinglePersonModel.fullname}}
+                </span>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-secondary" modal-toggle="{{'#'+selectSinglePersonModal}}"
+                    ng-click="buttonSelectModalClick()" type="button">
+                    <i class="fas fa-mouse-pointer"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,182 @@
+<div class="comment">
+  <div class="comment-list pb-3">
+      <div ng-repeat="item in ctrl.combinedCommentsAndEvents"
+          style="border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 10px;"
+      >
+          <div class="comment-item" ng-if="item.typeData === 'comment'">
+              <div class="comment-content">
+                  <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                          <show-username 
+                              without-tooltip="true"
+                              username="item.username"
+                              hide-image="true"
+                          ></show-username>
+                          <span>&nbsp;-&nbsp;{{'Exchange'|l}}</span>
+                      </div>
+                      <time-show
+                          time-show-type="long"
+                          time-show-data="item.time"
+                      ></time-show>
+                  </div>
+                  <div
+                      class="content"
+                      ng-bind-html="item.content|l"
+                      ng-if="item.type === 'Remind'"
+                  ></div>
+                  <div
+                      class="content"
+                      ng-bind-html="item.content"
+                      ng-if="item.type !== 'Remind'"
+                      ng-hide="item.isEditing"
+                  ></div>
+                  <div
+                      class="attachment"
+                      style="margin-top: 5px; display: block"
+                      ng-if="item.attachment.length > 0"
+                  >
+                      <attachment-show
+                          ng-repeat="at in item.attachment"
+                          attachment-show-item="at"
+                          attachment-show-func="ctrl.loadfile(params)"
+                          attachment-show-params="{id:ctrl.Item._id, name:at.name}"
+                          attachment-show-service-name="'comment'"
+                      ></attachment-show>
+                  </div>
+              </div>
+          </div>
+
+          <div class="comment-item" ng-if="item.typeData === 'event'">
+              <div class="comment-content">
+                  <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                          <show-username without-tooltip="true"
+                              username="item.username"
+                              hide-image="true"
+                          ></show-username>
+                          <span ng-if="item.action === 'Assignment' || item.action === 'CreateAndAssignment'">-&nbsp;{{'Assignment'|l}}</span>
+                          <span ng-if="item.action === 'Done'">
+                              -&nbsp;<span class="badge badge-success">{{'Completed'|l}}</span>
+                          </span>
+                          <span ng-if="item.action === 'Completed'">
+                              -&nbsp;<span class="badge badge-primary">{{'Approved'|l}}</span>
+                          </span>
+                          <span ng-if="item.action === 'Refuned'">
+                              -&nbsp;<span class="badge badge-danger">{{'Rejected'|l}}</span>
+                          </span>
+                          <span ng-if="item.action === 'Cancelled'">
+                              -&nbsp;<span class="badge badge-danger">{{'Cancelled'|l}}</span>
+                          </span>
+                      </div>
+                      <time-show
+                          time-show-type="long"
+                          time-show-data="item.time"
+                      ></time-show>
+                  </div>
+                  <div style="margin-left: 5px; margin-top: 5px;">
+                      <div ng-if="item.action === 'Assignment' || item.action === 'CreateAndAssignment'">
+                          <div style="margin-top: -6px;" ng-if="item.main_person.length > 0">
+                              <span>{{'HostPerson'|l}}:</span>
+                              <span ng-repeat="person in item.main_person">
+                                  <show-username without-tooltip="true" hide-image="true" username="person"></show-username>
+                                  <span ng-show="$last"></span>
+                                  <span ng-show="!$last">,&nbsp;</span>
+                              </span>
+                          </div>
+                          <div ng-show="item.estimate">
+                              {{'RequestCompletedWithin'|l}}:&nbsp;{{item.estimate}}&nbsp;{{'hours'|l}}
+                          </div>
+                          <div ng-show="ctrl.Item.to_date">
+                              {{'Deadline'|l}}:
+                              <time-show
+                                  time-show-data="ctrl.Item.to_date"
+                                  time-show-type="long-no-second"
+                              ></time-show>
+                          </div>
+                      </div>
+                      <div ng-if="item.action === 'Done'">
+                          <div class="mb-2">
+                              {{'CompletionTime'|l}}:&nbsp;{{item.worktimes}}&nbsp;{{'hours'|l}}
+                          </div>
+                          <div ng-bind-html="item.message"></div>
+                      </div>
+                      <div ng-if="item.action === 'Completed'" ng-bind-html="item.message">
+                      </div>
+                      <div ng-if="item.action === 'Refuned'">
+                          <div ng-bind-html="item.message"></div>
+                          <div>{{'EvaluateCurrentProgress'|l}}: {{item.progress}}%</div>
+                      </div>
+                      <div ng-if="item.action === 'Cancelled'" ng-bind-html="item.message"></div>
+                  </div>
+                  <div
+                      class="attachment"
+                      style="margin-top: 5px; display: block"
+                      ng-if="item.files.length > 0"
+                  >
+                      <attachment-show
+                          ng-repeat="at in item.files"
+                          attachment-show-item="at"
+                          attachment-show-func="ctrl.loadfile(params)"
+                          attachment-show-params="{id:ctrl.Item._id, name:at.name}"
+                          attachment-show-service-name="'comment'"
+                      ></attachment-show>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Form thêm bình luận -->
+  <div class="add-comment my-2">
+      <div class="show-avatar">
+          <show-username without-tooltip="true"
+              style="margin-top: 10px"
+              username="$root.logininfo.username"
+              just-image="true"
+          ></show-username>
+      </div>
+      <div class="input-comment">
+          <div
+              class="placeholder"
+              ng-hide="ctrl.showPushComment"
+              ng-click="ctrl.focusComment()"
+              style="border-radius: 10px"
+          >
+              {{'ContentOfTheExchange'|l}}...
+          </div>
+          <div ng-show="ctrl.showPushComment">
+              <textarea
+                  id="{{ctrl.task_comment_editor}}"
+                  class="form-control"
+                  name="comment"
+              ></textarea>
+              <div class="file-upload-container">
+                  <label for="file_upload" class="custom-file-upload">
+                      <i class="fas fa-paperclip"></i> {{'AddFile'|l}}
+                  </label>
+                  <input
+                      class="d-none"
+                      id="file_upload"
+                      name="file_upload"
+                      type="file"
+                      file-reading="ctrl.commentFiles"
+                      max-file-size="5"
+                      multiple
+                  />
+              </div>
+              <div style="margin-top: 10px; float: right">
+                  <button class="btn btn-primary" ng-click="ctrl.comment()" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','comment','doing')">
+                      {{'Save'|l}}
+                  </button>
+                  <button class="btn btn-gray-300" ng-click="ctrl.blurPushComment()">
+                      {{'Cancel'|l}}
+                  </button>
+              </div>
+              <div ng-repeat="file in ctrl.commentFiles" class="file-list-item">
+                  <span class="file-name">{{file.name}}</span>
+                  <i class="fas fa-trash-alt" ng-click="ctrl.removeFiles(file.name)"></i>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

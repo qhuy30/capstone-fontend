@@ -1,0 +1,120 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Recurring_Task_Dir_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'AddTask'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="updateForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span><span style="color: red;">*</span>
+                                </div>
+                                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')"
+                                       type="text" ng-model="ctrl._update_value.title" class="form-control"
+                                       name="update_title" placeholder="{{'InputTitle'|l}}"
+                                       ng-class="{ 'is-invalid': updateForm.update_title.$invalid }" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <date id-value="ctrl._update_value.from_date"
+                                  func="ctrl.chooseFromDate_update(params)" label="{{'FromDate'|l}}"
+                                  disabled="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')"
+                                  required="true" require="true"></date>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <div class="d-flex align-content-start flex-wrap">
+                                <date id-value="ctrl._update_value.to_date"
+                                      func="ctrl.chooseToDate_update(params)" label="{{'ToDate'|l}}"
+                                      disabled="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')"
+                                      required="true" require="true" endday="true"
+                                ></date>
+                                <show-duration from-date="ctrl._update_value.from_date" to-date="ctrl._update_value.to_date"></show-duration>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <organization-group-multi label="{{'Department'|l}}"
+                                                          id-value="ctrl._update_value.departments"
+                                                          select-func="ctrl.chooseDepartment_update(params)" required="true"
+                                                          disable="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <pick-modal-directory
+                                        extend="ctrl.TaskPriority"
+                                        pick-func="ctrl.choosePriority(params)"
+                                        id-value="ctrl._update_value.priority"
+                                        label="{{'Priority'|l}}"
+                                        >
+                                </pick-modal-directory>
+                            </div>
+                            <div class="form-group">
+                                <pick-modal-directory
+                                        extend="ctrl.TaskType"
+                                        pick-func="ctrl.chooseTaskType(params)"
+                                        id-value="ctrl._update_value.task_type"
+                                        label="{{'TaskType'|l}}"
+                                        require="false">
+                                </pick-modal-directory>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="form-check-label">
+                                {{'WorkIsRepeatedCyclically'|l}}
+                            </label>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="d-flex align-content-start flex-wrap">
+                                <div class="input-prepend input-group" style="width: 133px">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">{{'RepeatEach'|l:({amount:''})}}</span>
+                                    </div>
+                                    <input
+                                            ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')"
+                                            type="number" ng-model="ctrl._update_value.repetitive.per" class="form-control"
+                                            name="update_per" min="0" step="any"/>
+                                </div>
+                                <div class="input-prepend input-group" style="width: 105px; margin-left: 10px;">
+                                    <select class="form-control" style="height: 32px;" name="update_cycle" ng-model="ctrl._update_value.repetitive.cycle">
+                                        <option value="day">{{'Day'|l}}</option>
+                                        <option value="week">{{'Week'|l}}</option>
+                                        <option value="month">{{'Month'|l}}</option>
+                                        <option value="year">{{'Year'|l}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="container" style="margin-top:10px;margin-left:-5px;line-height:23px;">
+                                <div class="label" style="color: #000000;font-weight: 700;font-size: 100%;">
+                                    {{'End'|l}}
+                                </div>
+                                <button-radio-basic
+                                        button-radio-name="has_endDate_update"
+                                        button-radio-params="[{ label: 'Never', val: false },{ label: 'OnDay', val: true }]"
+                                        button-radio-model="ctrl._update_value.repetitive.has_expired"
+                                        is-localization="true"
+                                        button-radio-func="ctrl.chooseHasEndDateRepetitive_update(params)">
+                                </button-radio-basic>
+                                <date id-value="ctrl._update_value.repetitive.expired_date"
+                                      func="ctrl.chooseEndDate_update(params)" label=""
+                                      disable="$root.statusValue.get(ctrl._ctrlName,'Task','update','doing')||!ctrl._update_value.repetitive.has_expired"
+                                ></date>
+                                <div class="errorMsg" ng-show="ctrl.endDate_ErrorMsg">{{ ctrl.endDate_ErrorMsg }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                                  modal-button-save-objname="Task"
+                                  modal-button-save-actionname="update"
+                                  modal-button-save-invalid="updateForm.$invalid || ctrl.fromDate_ErrorMsg || ctrl.toDate_ErrorMsg"
+                                  modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

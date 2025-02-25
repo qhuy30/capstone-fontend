@@ -1,0 +1,6 @@
+<span ng-repeat="part in actionAr">
+    <!-- Render text -->
+    <span ng-if="part.type === 'text'">{{ part.value }}</span>
+     
+    <show-department-fix ng-if="part.type === 'department'" department="part.value"></show-department-fix>
+</span>

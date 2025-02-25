@@ -1,0 +1,8 @@
+<div 
+  class="d-flex align-items-center"
+  style="cursor: pointer;"
+  ng-click="pick()"
+>
+  <span class="color-box" ng-style="{'background-color': color}"></span>
+  <span style="font-size: 0.9rem;" ng-class="{'check':legend.check, 'no-check': !legend.check}">{{label}}</span>
+</div>

@@ -1,0 +1,254 @@
+<div class="modal fade notify_edit_modal_details" tabindex="-1" role="dialog" id="notify_edit_modal_details">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{ctrl._edit_value.action === 'approve' ? ('Approval'|l) : ('Edit'|l)}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="editForm">
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-12">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{'Title' | l}}</span>
+                                        <span class="require-sympton">*</span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        ng-model="ctrl._edit_value.title"
+                                        class="form-control"
+                                        name="edit_title"
+                                        placeholder="{{'InputTitle'|l}}"
+                                        ng-class="{ 'is-invalid': editForm.edit_title.$invalid }"
+                                        required
+                                        ng-disabled="ctrl._edit_value._access_edit"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <pick-modal-directory
+                                        extend="ctrl.notify_group_config"
+                                        pick-func="ctrl.pickNG_edit(params)"
+                                        id-value="ctrl._edit_value.group"
+                                        label="{{'Group'|l}}"
+                                        require="true"
+                                        disable="ctrl._edit_value._access_edit"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div >
+                                    <span class="input-group-text-new">{{'SendTo' | l}}</span>&nbsp;&nbsp;
+                                    <span class="require-sympton">*</span>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="radio" ng-model="ctrl._edit_value.type" value="WholeSchool" ng-disabled="ctrl._edit_value._access_edit">
+                                            {{'WholeSchool'|l}}
+                                        </label>
+                                        <!-- &nbsp;&nbsp;
+                                        <label>
+                                            <input type="radio" ng-model="ctrl._edit_value.type" value="Employee">
+                                            {{'Employee'|l}}
+                                        </label> -->
+                                        &nbsp;&nbsp;
+                                        <label>
+                                        <input type="radio" ng-model="ctrl._edit_value.type" value="Department" ng-disabled="ctrl._edit_value._access_edit">
+                                            {{'Department'|l}}
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="row col-md-12" ng-if="ctrl._edit_value.type==='Employee'">
+                                    
+                                        <div class="form-group">
+                                            <pick-user-multi
+                                                label="{{'Employee'|l}}"
+                                                id-value="ctrl._edit_value.to_employee"
+                                                pick-func="ctrl.pickEmployee_edit(params)"
+                                                disable="ctrl._edit_value._access_edit"
+                                            />
+                                        </div>
+                                    
+                                </div>
+
+                                <div class="col-md-12" ng-if="ctrl._edit_value.type==='Department'">
+                                   
+                                        <div class="form-group">
+                                            <organization-multi
+                                                label="{{'Department'|l}}"
+                                                id-value="ctrl._edit_value.to_department"
+                                                select-func="ctrl.chooseDepartment_edit(params)"
+                                                disable="ctrl._edit_value._access_edit"
+                                            />
+                                        </div>
+                                   
+                                </div>
+                                <div class="col-md-12" ng-if="ctrl._edit_value.type==='Department'">
+                                    <div class="form-group">
+                                        <select-multi-users-by-rule
+                                            label="{{'SentToBoardOfDirector'|l}}"
+                                            require="true"
+                                            pick-func="ctrl.pickdirector_edit(params)"
+                                            id-value="ctrl._edit_value.to_director"
+                                            rule="Office.Notify.BoardOfDirectors"
+                                            disable="ctrl._edit_value._access_edit"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body" style="border-left:2px solid #20a8d8">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{'Content' | l}}
+                                </div>
+                                <div
+                                    class="col-md-12"
+                                    style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"
+                                >
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea ng-model="ctrl._edit_value.content" id="edit_notify_content_detail" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6" style="border-right: 1px solid #eee;">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                            <tr>
+                                                <td>&num;</td>
+                                                <td colspan="2">
+                                                    {{'Attachment' | l}}
+                                                </td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="item in ctrl._edit_value.files">
+                                                <td>{{$index + 1}}</td>
+                                                <td>
+                                                    <attachment-just-show my-item="item"/>
+                                                </td>
+                                                <td>
+                                                    <i
+                                                        class="fas fa-times text-danger"
+                                                        ng-click="ctrl.on_remove_attachment_file_edit(item)"
+                                                        ng-show="!ctrl._edit_value._access_edit"
+                                                    >
+                                                    </i>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                        <tbody>
+                                        <tr>
+                                            <td
+                                                class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                colspan=" 0"
+                                            >
+                                                <div class="diskuf-uploader">
+                                                    <span class="wd-fa-add-file-light">
+                                                        <span class="wd-fa-add-file-light-text">
+                                                            <span class="wd-fa-add-file-light-title">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title-text"
+                                                                >{{'UploadFile' | l}}</span>
+                                                            </span>
+                                                            <span
+                                                                class="wd-fa-add-file-light-descript"
+                                                            >
+                                                                {{'DragTheFileHereToUpload' | l}}
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                    <input
+                                                        class="diskuf-fileUploader wd-test-file-light-inp "
+                                                        type="file"
+                                                        file-reading="ctrl._edit_value.files"
+                                                        size="1"
+                                                        multiple style="width:100%;"
+                                                        file-func="ctrl.pushfile_update(params)"
+                                                        ng-disabled="ctrl._edit_value._access_edit"
+                                                    >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" ng-if="ctrl._edit_value.action === 'approve'">
+                        <div class="card-body-row py-2" style="border-left:2px solid #20a8d8">
+                            <div class="col-md-12">
+                                <div class="input-group-new">
+                                  <div class="input-group-prepend-new">
+                                    <label style="color: black;"><strong>{{'AccessNote'|l}}</strong>:</label>
+                                  </div>
+                                  <div class="form-group mb-0">
+                                    <text-area-with-suggestions-2
+                                        ng-model="ctrl._edit_value.note"
+                                        ng-required="true"
+                                        placeholder="{{'You can note for approval'|l}}"
+                                        function-apply="ctrl.function_apply_suggestions"
+                                    />
+                                    <!-- <text-area-with-suggestions
+                                        ng-model="ctrl._edit_value.note"
+                                        placeholder="{{'You can note for approval'|l}}"
+                                        required="true"
+                                    /> -->
+                                  </div>
+                                  <!-- <div>
+                                    <span 
+                                      class="badge badge-light m-1" 
+                                      style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                                      ng-repeat="hint in ctrl._hintNoteSet"
+                                      ng-click="ctrl.set_hint_note_approve(hint)"
+                                    > 
+                                      {{hint|l}}
+                                    </span>
+                                  </div> -->
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save
+                    ng-if="ctrl._edit_value.action === 'edit'"
+                    modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="Notify"
+                    modal-button-save-actionname="edit"
+                    modal-button-save-invalid="editForm.$invalid"
+                    modal-button-save-func="ctrl.edit()"
+                />
+
+                <modal-button-approval
+                    ng-if="ctrl._edit_value.action === 'approve'"
+                    modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-approval-objname="Notify"
+                    modal-button-approval-actionname="approve"
+                    modal-button-approval-invalid="editForm.$invalid"
+                    modal-button-approval-func="ctrl.approve_department()"
+                    modal-button-confirm-text="{{ctrl._approve_value.recall_reason ? 'ApproveRecallRequestForThisNotify' : 'AreYouSureYouApproveThisNotify'}}"
+                    modal-button-approval-label="{{ctrl._approve_value.recall_reason ? ('ApproveRecall'|l) : null}}"
+                />
+                <modal-button-close/>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<my-content>
+    <content-content>
+        <div ng-controller="organization_controller as ctrl" class="office-department-feature">
+            <div ng-include="ctrl._urlInsertModal"></div>
+            <div ng-include="ctrl._urlUpdateModal"></div>
+            <div ng-include="ctrl._urlDeleteModal"></div>
+            <div ng-include="ctrl._urlLoadUserByDepartment"></div>
+
+            <div class="card">
+                <div class="card-body">
+                    <ul class="department-container">
+                        <li>
+                            <div class="department-item">
+                                <div class="ordernumber">
+                                    {{'Department Code'|l}}
+                                </div>
+                                <div class="title">
+                                    <button-new button-new-func="ctrl.prepareInsert({})"
+                                        button-new-label="{{'NewDepartment'|l}}"
+                                        button-new-modal="#modal_Organization_Insert">
+                                    </button-new>
+                                </div>
+                                <div class="leader">
+                                    {{'PersonInChargeOfLeadershipLevel'|l}}
+                                </div>
+                                <div class="departmentLeader">
+                                    {{'PersonInChargeOfDepartmentLeadershipLevel'|l}}
+                                </div>
+                                <div class="type">
+                                    {{'Type'|l}}
+                                </div>
+                                <div class="status">
+                                    {{'Status'|l}}
+                                </div>
+                                
+                                <div class="tool">
+
+                                </div>
+                            </div>
+                        </li>
+                        <li ng-repeat="item in ctrl.organizations">
+                            <div class="department-item" ng-class="{'can-expand':item.canExpand}">
+                                <div class="ordernumber">
+                                    {{item.ordernumber}}
+                                </div>
+                                <div class="title">
+                                    <a href="#" data-toggle="modal" data-target="#modal_List_User_By_Department" ng-click="ctrl.loadUserByDepartment(item)">
+                                        <span ng-click="ctrl.expandDepartment(item)">
+                                            <span ng-show="item.canExpand">
+                                                <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                                <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                            </span>
+                                            &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                        </span>
+                                    </a>
+                                </div>                                                                
+                                <div class="leader-item">
+                                    <show-username ng-if="item.leader" username="item.leader" just-name="false">
+                                    </show-username>
+                                    <span ng-if="!item.leader" class="no-data">{{'NotConfiguredYet'|l}}</span>
+                                </div>
+                                <div class="departmentLeader-item">
+                                    <show-username ng-if="item.departmentLeader" username="item.departmentLeader" just-name="false">
+                                    </show-username>
+                                    <span ng-if="!item.departmentLeader" class="no-data">{{'NotConfiguredYet'|l}}</span>
+                                </div>
+                                <div class="type" ng-switch="item.type" >
+                                    <span ng-switch-when="department">{{'Department'|l}}</span>
+                                    <span ng-switch-when="temporary_department">{{'Temporary Department'|l}}</span>
+                                    <span ng-switch-when="board">{{'Board'|l}}</span>
+                                </div>
+                                <div class="status">
+                                    <isactive isactive-value="item.isactive"></isactive>
+                                </div>
+                                <div class="tool">
+                                    <button-new button-new-func="ctrl.prepareInsert(item)"
+                                        button-new-label="{{'NewChildDepartment'|l}}"
+                                        button-new-modal="#modal_Organization_Insert">
+                                    </button-new>
+                                    <!-- <button-new-item button-new-item-modal="#modal_Organization_Insert"
+                                        button-new-item-func="ctrl.prepareInsert(params)" button-new-item-params="item">
+                                    </button-new-item> -->
+                                    <button-edit-item button-edit-item-modal="#modal_Organization_Update"
+                                        button-edit-item-func="ctrl.prepareUpdate(params)"
+                                        button-edit-item-params="item">
+                                    </button-edit-item>
+                                    <button-delete-item ng-hide="item.isactive"
+                                        button-delete-item-modal="#modal_Organization_Delete"
+                                        button-delete-item-func="ctrl.prepareDelete({},item)">
+                                    </button-delete-item>
+                                </div>
+                            </div>
+                            <department-feature-child item="item" ctrl="ctrl"></department-feature-child>
+                        </li>
+                    </ul>
+                    <div ng-if="ctrl.data.length ==0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </content-content>
+</my-content>

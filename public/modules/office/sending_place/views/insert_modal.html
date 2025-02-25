@@ -1,0 +1,89 @@
+<div class="modal fade" id="modal_SP_Insert" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'New'|l }}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertForm">
+          <div class="form-group col-md-12">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Name'|l}}</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'sending_place','insert','doing')"
+                type="text"
+                ng-model="ctrl._insert_value.name"
+                class="form-control"
+                name="insert_sp_name"
+                ng-class="{ 'is-invalid': insertForm.insert_sp_name.$invalid }"
+                required
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Email'|l}}</span>
+                </div>
+                <input
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'sending_place','insert','doing')"
+                  type="text"
+                  ng-model="ctrl._insert_value.email"
+                  class="form-control"
+                  name="insert_sp_email"
+                  ng-class="{ 'is-invalid': insertForm.insert_sp_email.$invalid }"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'PhoneNumber'|l}}</span>
+                </div>
+                <input
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'sending_place','insert','doing')"
+                  type="text"
+                  ng-model="ctrl._insert_value.phoneNumber"
+                  class="form-control"
+                  name="insert_sp_phoneNumber"
+                  ng-class="{ 'is-invalid': insertForm.insert_sp_phoneNumber.$invalid }"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-12">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Address'|l}}</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'sending_place','insert','doing')"
+                type="text"
+                ng-model="ctrl._insert_value.address"
+                class="form-control"
+                name="insert_sp_address"
+                ng-class="{ 'is-invalid': insertForm.insert_sp_insert_sp_address.$invalid }"
+                required
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new
+          modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-new-objname="sending_place"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid="insertForm.$invalid"
+          modal-button-new-func="ctrl.insert()"
+        >
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

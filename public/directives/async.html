@@ -1,0 +1,18 @@
+<div>
+    <div ng-show="$root.statusValue.get(asyncCtrlname,asyncObjname,asyncActionname,'doing')" ng-transclude="doing">
+        <loading loading-value="true" loading-label="{{asyncStatusLabel}}"></loading>
+    </div>
+    <div ng-hide="$root.statusValue.get(asyncCtrlname,asyncObjname,asyncActionname,'doing')">
+        <div ng-hide="$root.statusValue.get(asyncCtrlname,asyncObjname,asyncActionname,'start')" ng-transclude="default">
+
+        </div>
+        <div ng-show="$root.statusValue.get(asyncCtrlname,asyncObjname,asyncActionname,'status') && $root.statusValue.get(asyncCtrlname,asyncObjname,asyncActionname,'start')" ng-transclude="success">
+            SuccessAction
+        </div>
+        <div ng-hide="$root.statusValue.get(asyncCtrlname,asyncObjname,asyncActionname,'status')" ng-transclude="fail">
+            <invalid invalid-status="true">
+                {{$root.statusValue.get(asyncCtrlname,asyncObjname,asyncActionname,'message')|l}}
+            </invalid>
+        </div>
+    </div>
+</div>

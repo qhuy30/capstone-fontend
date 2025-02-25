@@ -1,0 +1,65 @@
+<span ng-if="modalButtonAckTrainingEventShowButton">
+    <button type="button" modal-toggle="#{{ctrl._ctrlName}}" class="btn btn-square"
+        ng-class="{'btn-outline-success': modalButtonAckTrainingEventType==='checkin', ' btn-outline-danger': modalButtonAckTrainingEventType==='checkout'}">
+        <i class="fa "
+            ng-class="{'fa-sign-in-alt': modalButtonAckTrainingEventType==='checkin', 'fa-sign-out-alt': modalButtonAckTrainingEventType==='checkout'}"></i>
+        {{modalButtonAckTrainingEventLabel}}
+    </button>
+
+    <div class="modal fade" id="{{ctrl._ctrlName}}" role="dialog" tabindex="-1">
+        <div class="modal-dialog" style="width: 100%; max-width: 420px;">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{modalButtonAckTrainingEventLabel}}"></modal-header>
+                <div class="modal-body">
+                    {{'Are you sure you ack this event for'|l:({type:modalButtonAckTrainingEventType,
+                    studentId:modalButtonAckTrainingEventStudentId}) }}
+                </div>
+                <div class="modal-footer">
+                    <my-async async-status-label="'Executing...'"
+                        async-ctrlname="{{modalButtonAckTrainingEventCtrlName}}"
+                        async-objname="{{modalButtonAckTrainingEventObjName}}"
+                        async-actionname="{{modalButtonAckTrainingEventActionName}}">
+                        <async-default>
+                            <button type="button" modal-toggle="#{{ctrl._ctrlName}}" class="btn btn-primary"
+                                ng-click="modalButtonAckTrainingEventClick()">
+                                <i class="fa "
+                                    ng-disabled="$root.statusValue.get(modalButtonAckTrainingEventCtrlName,modalButtonAckTrainingEventObjName,modalButtonAckTrainingEventActionName,'doing')"
+                                    ng-class="{'fa-sign-in-alt': modalButtonAckTrainingEventType==='checkin', 'fa-sign-out-alt': modalButtonAckTrainingEventType==='checkout'}"></i>
+                                {{modalButtonAckTrainingEventType}}
+                            </button>
+                        </async-default>
+                        <async-doing>
+                            <div class="sk-wave">
+                                <div class="sk-rect sk-rect1"></div>
+                                <div class="sk-rect sk-rect2"></div>
+                                <div class="sk-rect sk-rect3"></div>
+                                <div class="sk-rect sk-rect4"></div>
+                                <div class="sk-rect sk-rect5"></div>
+                            </div> {{loadingLabel ||'Executing...'}}
+                        </async-doing>
+                        <async-success>
+                            <button type="button" modal-toggle="#{{ctrl._ctrlName}}" class="btn btn-primary"
+                                ng-click="modalButtonAckTrainingEventClick()">
+                                <i class="fa "
+                                    ng-disabled="$root.statusValue.get(modalButtonAckTrainingEventCtrlName,modalButtonAckTrainingEventObjName,modalButtonAckTrainingEventActionName,'doing')"
+                                    ng-class="{'fa-sign-in-alt': modalButtonAckTrainingEventType==='checkin', 'fa-sign-out-alt': modalButtonAckTrainingEventType==='checkout'}"></i>
+                                {{modalButtonAckTrainingEventType}}
+                            </button>
+                        </async-success>
+                        <async-fail>
+                            <span class="btn" style="color: #f86c6b;">
+                                {{$root.statusValue.get(modalButtonAckTrainingEventCtrlName,modalButtonAckTrainingEventObjName,modalButtonAckTrainingEventActionName,'message')|l}}
+                            </span>
+                            <button class="btn btn-outline-warning" type="button"
+                                ng-disabled="$root.statusValue.get(modalButtonAckTrainingEventCtrlName,modalButtonAckTrainingEventObjName,modalButtonAckTrainingEventActionName,'doing')"
+                                ng-click="modalButtonAckTrainingEventClick()">
+                                <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+                            </button>
+                        </async-fail>
+                    </my-async>
+                    <modal-button-close></modal-button-close>
+                </div>
+            </div>
+        </div>
+    </div>
+</span>

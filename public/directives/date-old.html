@@ -1,0 +1,12 @@
+<div class="btn-group" style="width: 100%;">
+    <div class="input-group-new" style="width: 100%;">
+        <div ng-if="label !== ''" class="input-group-prepend-new">
+            <span class="input-group-text-new">
+                {{label}}<span>&nbsp;</span>
+                <span ng-if="require" class="require-sympton">*</span>
+            </span>
+        </div>
+        <input ng-init="inputType = inputType || 'date'" type="{{inputType}}" name="{{_ctrlName}}" ng-model="value" ng-disabled="disable" ng-required="require"
+        class="form-control" ng-change="pick()" min="{{minValue}}" max="{{maxValue}}" />
+    </div>
+</div>

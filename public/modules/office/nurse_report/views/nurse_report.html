@@ -1,0 +1,178 @@
+<my-content>
+    <content-content>
+        <div ng-controller="nurse_report_controller as ctrl">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" ng-click="ctrl.switchTab('report')">
+                            <a class="nav-link " ng-class="{'active':ctrl.tab =='report'}">{{'Report'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('statistic')"
+                            ng-show="['OfficeNurseReport.Manager']|checkRule">
+                            <a class="nav-link " ng-class="{'active':ctrl.tab =='statistic'}">{{'Statistic'|l}}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <div ng-if="ctrl.tab =='report'">
+                                <div class="form-group row">
+                                    <b><i>{{'Notice'|l}}:{{'Reportscanonlybesentfromto'|l:({from: ctrl.startTime,to: ctrl.endTime})}}.</i></b>
+                                </div>
+                                <div class="form-group row" ng-if="ctrl.checkTimeBlock() && ctrl.check">
+                                    <button-new button-new-func="ctrl.prepareInsert()" button-new-label="{{'New'|l}}"
+                                        button-new-modal="#modal_NurseReport_Insert">
+                                    </button-new>
+                                </div>
+                                <more-option-bar>
+                                    <bar-content class="row">
+                                        <div class="col-md-6 form-group ">
+                                            <button-select button-select-label="{{'Display'|l}}"
+                                                button-select-data="[15,30,50,100]"
+                                                button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','load','doing')"
+                                                button-select-func="ctrl.chooseNumberItem(params)"
+                                                button-select-model="ctrl.numOfItemPerPage">
+                                            </button-select>
+                                        </div>
+                                        <div class="form-group col-md-6"
+                                            ng-show="['OfficeNurseReport.Manager']|checkRule">
+                                            <organization label="{{'Department'|l}}"
+                                                id-value="ctrl._filterDepartment"
+                                                select-func="ctrl.chooseDepartment(params)" require="true"
+                                                disable="$root.statusValue.get(ctrl._ctrlName,'NurseReport','load','doing')">
+                                            </organization>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <date model="ctrl._filterFromDate" func="ctrl.chooseFromDate(params)"
+                                                label="{{'FromDate'|l}}" max="ctrl.now"
+                                                disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','load','doing')">
+                                            </date>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <date model="ctrl._filterToDate" func="ctrl.chooseToDate(params)"
+                                                label="{{'ToDate'|l}}" max="ctrl.now"
+                                                disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','load','doing')">
+                                            </date>
+                                        </div>
+                                    </bar-content>
+                                </more-option-bar>
+
+                                <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="NurseReport"
+                                    async-actionname="load">
+                                    <async-success>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-group row">
+                                                                <button-checkbox
+                                                                    ng-hide="ctrl.checkIdAr.length > 0 && ctrl.checkIdAr.length !== ctrl.nurse_reports.length"
+                                                                    button-checkbox-model="ctrl.checkAll"
+                                                                    button-checkbox-func="ctrl.checkAllItem(params)">
+                                                                </button-checkbox>
+                                                                <span
+                                                                    ng-show="ctrl.checkIdAr.length > 0 && ctrl.checkIdAr.length !== ctrl.nurse_reports.length"
+                                                                    class="btn btn-square btn-secondary"
+                                                                    ng-click="ctrl.uncheckAllItem()">
+                                                                    <i class="fa fa-minus-square"
+                                                                        aria-hidden="true"></i>
+                                                                </span>
+                                                                &nbsp;
+                                                                <button-delete-item ng-show="ctrl.checkIdAr.length > 0"
+                                                                    button-delete-item-modal="#modal_NurseReport_Delete_Multi">
+                                                                </button-delete-item>
+                                                            </div>
+                                                        </td>
+                                                        <td style="font-weight: 600;vertical-align: middle;">
+                                                            {{'Name'|l}}
+                                                        </td>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        ng-repeat="item in ctrl.nurse_reports|orderBy:ctrl.sort.name:ctrl.sort.value track by $index">
+                                                        <td>
+                                                            <button-checkbox
+                                                                ng-if="['OfficeNurseReport.Manager']|checkRule"
+                                                                button-checkbox-model="item.check"
+                                                                button-checkbox-func="ctrl.checkItem(params)"
+                                                                button-checkbox-params="item._id">
+                                                            </button-checkbox>
+                                                            <button-edit-item ng-hide="item.root"
+                                                                button-edit-item-modal="#modal_NurseReport_Update"
+                                                                button-edit-item-func="ctrl.prepareUpdate(params)"
+                                                                button-edit-item-params="item">
+                                                            </button-edit-item>
+                                                            <button-delete-item ng-if="ctrl.checkModify(item)"
+                                                                ng-hide="item.root"
+                                                                button-delete-item-modal="#modal_NurseReport_Delete"
+                                                                button-delete-item-func="ctrl.prepareDelete(params)"
+                                                                button-delete-item-params="item">
+                                                            </button-delete-item>
+                                                        </td>
+                                                        <td>
+                                                            <span ng-show="['OfficeNurseReport.Manager']|checkRule">
+                                                                <show-department department="item.department">
+                                                                </show-department>
+                                                                &nbsp;-&nbsp;<show-username username="item.username"
+                                                                    employee="item.employee"></show-username>&nbsp;
+                                                                <time-show time-show-data="item.event[0].time"
+                                                                    time-show-type="justdate">
+                                                                </time-show>
+                                                            </span>
+                                                            <span ng-hide="['OfficeNurseReport.Manager']|checkRule">
+                                                                <show-username username="item.username"
+                                                                    employee="item.employee">
+                                                                </show-username>&nbsp;<time-show
+                                                                    time-show-data="item.event[0].time"
+                                                                    time-show-type="justdate">
+                                                                </time-show>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div ng-if="ctrl.nurse_reports.length ==0" class="no-data">
+                                            {{'NoData'|l}}
+                                        </div>
+                                        <pagination pagination-ctrlname="{{ctrl._ctrlName}}"
+                                            pagination-objname="NurseReport" pagination-actionname="count"
+                                            pagination-currentpage="ctrl.currentPage"
+                                            pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                                            pagination-func="ctrl.load(params)"></pagination>
+                                    </async-success>
+                                </my-Async>
+                            </div>
+                            <div ng-if="ctrl.tab =='statistic'">
+                                <div class="card">
+                                    <div class="card-body" style="border-left:2px solid #20a8d8">
+                                        <date model="ctrl._filterDate_statistic"
+                                            func="ctrl.chooseDate_statistic(params)" label="{{'Date'|l}}"
+                                            max="ctrl.now">
+                                        </date>
+
+                                    </div>
+                                </div>
+
+
+                                <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                </div>
+                                <div dx-data-grid="ctrl.gridOptions"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-include="ctrl._urlInsertModal"></div>
+                    <div ng-include="ctrl._urlUpdateModal"></div>
+                    <div ng-include="ctrl._urlDeleteModal"></div>
+                    <div ng-include="ctrl._urlDelete_MultiModal"></div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

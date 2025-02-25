@@ -1,0 +1,151 @@
+<div ng-controller="event_calendar_controller as ctrlCalendar" class="event_calendar">
+  <div style="overflow: hidden; box-sizing: border-box">
+    <div class="form-group row align-items-center mt-4 mb-4">
+      <!-- <span class="overdue" ng-if="ctrlCalendar.show_checkbox_personally_involved">
+        <input
+          type="checkbox"
+          ng-model="ctrlCalendar.checkbox_personally_involved"
+          ng-change="ctrlCalendar.load_calendar()"
+        />&nbsp;{{'My calendar'|l}}&nbsp;
+      </span> -->
+
+      <!-- <span class="checkbox_created" ng-if="ctrlCalendar.show_checkbox_created">
+        <input
+          type="checkbox"
+          ng-model="ctrlCalendar.checkbox_created"
+          ng-change="ctrlCalendar.load_calendar()"
+        />&nbsp;{{'EventCreated'|l}}&nbsp;&nbsp;</span> -->
+      <!-- <span class="overdue" ng-if="ctrlCalendar.show_checkbox_level_1">
+        <input type="checkbox" 
+              ng-model="ctrlCalendar.checkbox_level_1"
+              ng-change="ctrlCalendar.load_calendar()" />&nbsp;{{'Level_1'|l}}&nbsp;&nbsp;
+      </span>
+      <span class="overdue" ng-if="ctrlCalendar.show_checkbox_level_2">
+          <input type="checkbox" 
+                ng-model="ctrlCalendar.checkbox_level_2"
+                ng-change="ctrlCalendar.load_calendar()" />&nbsp;{{'Level_2'|l}}&nbsp;&nbsp;
+      </span>
+
+      <span class="overdue" ng-if="ctrlCalendar.show_checkbox_responsibility">
+        <input 
+          type="checkbox"
+          ng-model="ctrlCalendar.checkbox_responsibility"
+          ng-change="ctrlCalendar.load_calendar()"
+        />&nbsp;{{'MyDepartmentEventCalendar'|l}}&nbsp;&nbsp;
+      </span>
+
+      <span class="overdue" ng-if="ctrlCalendar.show_checkbox_manage">
+        <input
+          type="checkbox"
+          ng-model="ctrlCalendar.checkbox_manage"
+          ng-change="ctrlCalendar.load_calendar()"
+        />&nbsp;{{'MyDirectorEventCalendar'|l}}&nbsp;&nbsp;
+      </span>
+      
+      <i
+        class="far fa-question-circle"
+        custom-tooltip
+        tooltip-content="{{'Default is only display task of departments youre leading'|l}}"
+      ></i> -->
+
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" ng-show="ctrlCalendar.show_my_calendars" ng-click="ctrlCalendar.switchTabChild('my_calendars')">
+          <a class="nav-link" ng-class="{'active':ctrlCalendar.tabChild =='my_calendars'}">{{'My calendar'|l}}</a>
+        </li>
+        <li class="nav-item" ng-show="ctrlCalendar.show_my_department_calendar" ng-click="ctrlCalendar.switchTabChild('my_department_calendar')">
+          <a class="nav-link" ng-class="{'active':ctrlCalendar.tabChild =='my_department_calendar'}">{{'MyDepartmentEventCalendar'|l}}</a>
+        </li>
+        <li class="nav-item" ng-show="ctrlCalendar.show_my_director_calendar" ng-click="ctrlCalendar.switchTabChild('my_director_calendar')">
+          <a class="nav-link" ng-class="{'active':ctrlCalendar.tabChild =='my_director_calendar'}">{{'MyDirectorEventCalendar'|l}}</a>
+        </li>
+        <li class="nav-item" ng-show="ctrlCalendar.show_my_employee" ng-click="ctrlCalendar.switchTabChild('my_employee')">
+          <a class="nav-link" ng-class="{'active':ctrlCalendar.tabChild =='my_employee'}">{{'MyEmployeeEventCalendar'|l}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="form-group row align-items-start">
+      <div class="event-filter-item col-md-2">
+        <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px;">{{'FromDate' | l}}</div>
+        <div class="value" style="display: flex; align-items: center;">
+            <input type="date" 
+                   ng-model="ctrlCalendar.weekDays[0].date"
+                   ng-change="ctrlCalendar.load_calendar()" 
+                   style="border: none; outline: none; background: transparent; font-size: 14px;" />
+        </div>
+      </div>
+      <div class="event-filter-item col-md-2">
+        <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px;">{{'ToDate' | l}}</div>
+        <div class="value" style="display: flex; align-items: center;">
+          <input type="date" 
+                  ng-model="ctrlCalendar.weekDays[ctrlCalendar.weekDays.length - 1].date"
+                  ng-change="ctrlCalendar.load_calendar()" 
+                  style="border: none; outline: none; background: transparent; font-size: 14px;" />
+        </div>
+      </div>
+      <div class="event-filter-item col-md-3" ng-if="ctrlCalendar.tabChild =='my_employee'">
+        <div class="title-filter pl-3">{{'Employee'|l}}:</div>
+        <filter-advance
+          disable=""
+          load-data-func="ctrlCalendar.load_employee_filter(params)"
+          id-value="ctrlCalendar._filter_value_employee"
+          localized="false"
+          pick-func="ctrlCalendar.pickEmployees(params)"
+          search-event="true"
+        >
+        </filter-advance>
+      </div>
+      <div class="ml-auto">
+
+        <button
+          class="btn btn-success "
+          ng-if="ctrlCalendar.show_export_lv2 && ctrlCalendar.tabChild === 'my_department_calendar'"
+          ng-click="ctrlCalendar.export_excel()"
+        >
+          <i class="fas fa-file-excel"></i>
+          <!-- Excel file icon -->
+          {{'ExportToExcel' | l}}
+        </button>
+        <button
+          class="btn btn-success "
+          ng-if="ctrlCalendar.show_export_lv1 && ctrlCalendar.tabChild === 'my_director_calendar'"
+          ng-click="ctrlCalendar.export_excel_manage()"
+        >
+          <i class="fas fa-file-excel"></i>
+          {{'ExportToExcelManage' | l}}
+        </button>
+      </div>
+      
+    </div>
+
+    <div class="table" style="overflow-x: auto;">
+      <table class="table table-bordered table-striped" style="min-height: calc(100vh - 120px);">
+          <thead style="height: 110px;">
+              <tr style="background-color: #007bff; color: white">
+                  <th colspan="{{ 3 + ctrlCalendar.weekDays.length }}" class="text-center">
+                      {{'EventCalendar' | l}}
+                  </th>
+              </tr>
+              <tr style="background-color: #f2f2f2">
+                  <th ng-repeat="day in ctrlCalendar.weekDays" style="width: 220px; text-align: center;">
+                      {{ day.dayKey | l }}<br />{{ day.date | date:'dd/MM' }}
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+                <tr style="background-color: #fff !important;">
+                  <td ng-repeat="day in ctrlCalendar.my_calendars" style="vertical-align: top;">
+                    <div class="mb-1" ng-repeat="e in day.events">
+                      <event-calendar-item
+                          e="e"
+                          item-background="{{e.isOverlap ? '#dd614a' : '#6ba292'}}"
+                          item-background-hover="{{e.isOverlap ? 'rgb(255 200 200)' : 'rgb(194 216 210)'}}"
+                      />
+                    </div>
+                </td>
+                </tr>
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>

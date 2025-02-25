@@ -1,0 +1,19 @@
+<div id="storage_permision">
+  <div class="main-permission">
+    <ul>
+      <li>
+        <div class="item">
+          <div class="label">{{'grant_permission_for_storage'|l}}</div>
+          <div class="tool">
+            <input
+              type="checkbox"
+              ng-model="ctrl.rule['Office.Storage.Use'].value"
+              brige-func="ctrl.updateRule(params)"
+              brige-value="'Office.Storage.Use'"
+            />
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

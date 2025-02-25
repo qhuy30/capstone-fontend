@@ -1,0 +1,83 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_administrative_procedures_update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Update'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="updateForm">
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-12">
+                                <div class="input-group-new d-flex" style="border-bottom: solid 2px #4285f4">
+                                    <div class="input-group-prepend-new form-label">
+                                        <span class="input-group-text-new">{{'Form'|l}}</span>
+                                    </div>
+                                    <pick-modal-generic data="ctrl.workflows" class="w-100"
+                                        pick-func="ctrl.chooseWorkflow(params)" id-value="item._id" require="true">
+                                    </pick-modal-generic>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <div class="input-group-new">
+                                    <pick-modal-directory extend="ctrl.Students_Config" pick-func="" id-value=""
+                                        label="{{'Student'|l}}"
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'administrativeProcedures','update','doing')"></pick-modal-directory>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{'Quantity'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'administrativeProcedures','update','doing')"
+                                        type="number" ng-model="ctrl._update_value.quantity" class="form-control"
+                                        name="update_quantity" min="1"
+                                        required
+                                        ng-class="{ 'is-invalid': updateForm.update_quantity.$invalid }" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{'TemplateFile'|l}}</span>
+                                    </div>
+                                    <span class="showfile" style="cursor: default;" ng-if="ctrl.attachment">
+                                        <attachment-show-by-type my-item="ctrl.attachment"></attachment-show-by-type>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <p class="col-md-12 my-2">{{'FillInTheInformationInTheForm'|l}}</p>
+                            <div class="col-md-12 my-2" ng-repeat="templateTag in ctrl.templateTags track by $index" ng-if="ctrl.templateTags.length > 0">
+                                <div class="input-group-new">
+                                    <div class="input-group-prepend-new">
+                                        <span class="input-group-text-new">{{ templateTag.label }}</span>
+                                    </div>
+                                    {{templateTag.key}}
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'administrativeProcedures','update','doing')"
+                                        type="{{templateTag.type}}" class="form-control"
+                                        ng-model="ctrl.tagInputUpdate[templateTag.key]"
+                                        name="update_{{templateTag.key}}" placeholder="{{'Input content'|l}}"
+                                        ng-class="{ 'is-invalid': updateForm.update_{{templateTag.key}}.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="administrativeProcedures" modal-button-save-actionname="update"
+                    modal-button-save-invalid="updateForm.$invalid" modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

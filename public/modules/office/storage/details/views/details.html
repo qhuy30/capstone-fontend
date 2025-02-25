@@ -1,0 +1,114 @@
+<div ng-controller="storage_details_controller as ctrl">
+  <my-content>
+    <content-breadcrumb>
+      <breadcrumb items="ctrl.breadcrumb"></breadcrumb>
+    </content-breadcrumb>
+    <content-content>
+      <div class="office-storage-details">
+        <div class="nav-layout">
+          <div class="card nav-left">
+            <div id="menu">
+              <ul class="nav">
+                <li
+                  class="nav-item"
+                  ng-click="ctrl.viewMode = ctrl.viewModes.DETAILS"
+                >
+                  <a
+                    class="nav-link"
+                    ng-class="{'active-menu': ctrl.viewMode === ctrl.viewModes.DETAILS}"
+                  >
+                    <i class="fas fa-archive"></i
+                    >&nbsp;&nbsp;{{'BriefCase'|l}}&nbsp;{{ctrl.Item.code}}
+                  </a>
+                </li>
+                <!-- <li
+                  class="nav-item"
+                  ng-repeat="reference in ctrl.Item.references"
+                  ng-click="ctrl.setView(ctrl.viewModes.REFERENCE, reference)"
+                >
+                  <a
+                    class="nav-link"
+                    ng-class="{'active-menu': reference.id === ctrl.viewItem.id && ctrl.viewMode === ctrl.viewModes.REFERENCE}"
+                  >
+                    <span ng-if="reference.object ==='task'"
+                      ><i class="fas fa-tasks"></i
+                      >&nbsp;&nbsp;{{'Task'|l}}&nbsp;{{reference.code}}</span
+                    >
+                    <span ng-if="reference.object ==='workflow_play'"
+                      ><i class="far fa-file"></i
+                      >&nbsp;&nbsp;&nbsp;{{'Workflow'|l}}&nbsp;{{reference.code}}</span
+                    >
+                    <span ng-if="reference.object ==='outgoing_dispatch'"
+                      ><i class="fas fa-file"></i
+                      >&nbsp;&nbsp;&nbsp;{{'DispatchAway'|l}}&nbsp;{{reference.code}}</span
+                    >
+                    <span ng-if="reference.object ==='dispatch_arrived'"
+                      ><i class="fas fa-file"></i
+                      >&nbsp;&nbsp;&nbsp;{{'DispatchArrived'|l}}&nbsp;{{reference.code}}</span
+                    >
+                  </a>
+                </li> -->
+                <li
+                  class="nav-item"
+                  ng-repeat="reference in ctrl.Item.parents | orderBy:'order'"
+                  ng-click="ctrl.setView(ctrl.viewModes.REFERENCE, reference)"
+                >
+                  <a
+                    class="nav-link"
+                    ng-class="{'active-menu': reference.id === ctrl.viewItem.id && ctrl.viewMode === ctrl.viewModes.REFERENCE}"
+                  >
+                    <span ng-if="reference.object ==='task'"
+                      ><i class="fas fa-tasks"></i
+                      >&nbsp;&nbsp;{{'Task'|l}}&nbsp;{{reference.title_show}}</span
+                    >
+                    <span ng-if="reference.object ==='workflow_play'"
+                      ><i class="far fa-file"></i
+                      >&nbsp;&nbsp;&nbsp;{{'Workflow'|l}}&nbsp;{{reference.title_show}}</span
+                    >
+                    <span ng-if="reference.object ==='outgoing_dispatch'"
+                      ><i class="fas fa-file"></i
+                      >&nbsp;&nbsp;&nbsp;{{'DispatchAway'|l}}&nbsp;
+                      <!-- {{reference.code}} -->
+                      {{reference.title_show}}
+                    </span>
+                    <span ng-if="reference.object ==='dispatch_arrived'"
+                      ><i class="fas fa-file"></i
+                      >&nbsp;&nbsp;&nbsp;{{'DispatchArrived'|l}}&nbsp;{{reference.title_show}}  
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="content-right" style="width: 100%">
+            <ng-container ng-if="ctrl.viewMode === ctrl.viewModes.DETAILS">
+              <briefcase-info item="ctrl.Item"></briefcase-info>
+            </ng-container>
+            <ng-container ng-if="ctrl.viewMode === ctrl.viewModes.REFERENCE">
+              
+              <wfp-view
+                ng-if="ctrl.viewItem.object === 'workflow_play'"
+                item-id="ctrl.viewItem.id"
+              ></wfp-view>
+              <dispatch-arrived-details
+                ng-if="ctrl.viewItem.object === 'dispatch_arrived'"
+                item-id="ctrl.viewItem.id"
+              ></dispatch-arrived-details>
+              <!-- TODO add workplay details -->
+              <outgoing-dispatch-details
+                ng-if="ctrl.viewItem.object === 'outgoing_dispatch'"
+                item-id="ctrl.viewItem.id"
+              ></outgoing-dispatch-details>
+
+              <div class="card" ng-if="ctrl.viewItem.object === 'task'">
+                <div style="border-left: 2px solid #20a8d8; padding: 10px">
+                  <task-view item-id="ctrl.viewItem.id"></task-view>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </content-content>
+  </my-content>
+</div>

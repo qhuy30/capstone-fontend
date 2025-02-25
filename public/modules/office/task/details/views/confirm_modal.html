@@ -1,0 +1,21 @@
+<div class="modal fade" id="modal_Task_Confirm" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantUpdateProgressTask'|l:{title:ctrl.Item.title} }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-confirm 
+                    modal-button-confirm-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-confirm-objname="Task"
+                    modal-button-confirm-actionname="updateProgress"
+                    modal-button-confirm-func="ctrl.confirmAction()"
+                    modal-button-confirm-params="ctrl.Item"
+                    >
+                </modal-button-confirm>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

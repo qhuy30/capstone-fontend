@@ -1,0 +1,587 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_NurseReport_Insert">
+=
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="insertForm">
+                    <div class="card">
+                        <div class="card-body" style="border-left:2px solid #20a8d8">
+                            <div class="dx-fieldset">
+                                <div class="dx-fieldset-header">{{'ABC'|l}}</div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="dx-field">
+                                            <div class="dx-field-label">{{'TotalNurse_Technicians'|l}}</div>
+                                            <div class="dx-field-value">
+                                                <div dx-number-box="ctrl.insert_total_nurseOps"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="dx-field">
+                                            <div class="dx-field-label">{{'AdministrativeNursing_Technicians'|l}}</div>
+                                            <div class="dx-field-value">
+                                                <div dx-number-box="ctrl.insert_administrative_nursingOps"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="dx-field">
+                                            <div class="dx-field-label">{{'OutShiftNursing_Technicians'|l}}</div>
+                                            <div class="dx-field-value">
+                                                <div dx-number-box="ctrl.insert_out_shift_nursingOps"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="dx-field">
+                                            <div class="dx-field-label">{{'NursingOutHospital'|l}}</div>
+                                            <div class="dx-field-value">
+                                                <div dx-number-box="ctrl.insert_out_hospital_nursingOps"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'TotalNurse_Technicians'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.total_nurse" class="form-control"
+                                        name="insert_total_nurse" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_total_nurse.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_total_nurse.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'AdministrativeNursing_Technicians'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.administrative_nursing"
+                                        class="form-control" name="insert_administrative_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_administrative_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_administrative_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'OutShiftNursing_Technicians'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.out_shift_nursing"
+                                        class="form-control" name="insert_out_shift_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_out_shift_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_out_shift_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NursingOutHospital'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.out_hospital_nursing"
+                                        class="form-control" name="insert_out_hospital_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_out_hospital_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_out_hospital_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'MorningShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.morning_shift" class="form-control"
+                                        name="insert_morning_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_morning_shift.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_morning_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'AfternoonShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.afternoon_shift" class="form-control"
+                                        name="insert_afternoon_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_afternoon_shift.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_afternoon_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NightShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.night_shift" class="form-control"
+                                        name="insert_night_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_night_shift.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_night_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'OverShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.over_shift" class="form-control"
+                                        name="insert_over_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_over_shift.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_over_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'LeaveShiftNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.leave_shift" class="form-control"
+                                        name="insert_leave_shift" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_leave_shift.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_leave_shift.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NursingAtClinic'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.at_clinic" class="form-control"
+                                        name="insert_at_clinic" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_at_clinic.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_at_clinic.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'LeaveNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.leave" class="form-control"
+                                        name="insert_leave" vld-sync vld-sync-func="$root.validate.min(model,params)"
+                                        vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_leave.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_leave.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'MaternityLeaveNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.maternity_leave" class="form-control"
+                                        name="insert_maternity_leave" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_maternity_leave.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_maternity_leave.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'SickLeaveNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.sick_leave" class="form-control"
+                                        name="insert_sick_leave" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_sick_leave.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_sick_leave.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'NursingGoSchool'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.go_school" class="form-control"
+                                        name="insert_go_school" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_go_school.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_go_school.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ApprenticeNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.apprentice_nursing"
+                                        class="form-control" name="insert_apprentice_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_apprentice_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_apprentice_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ProbationaryNursing'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.probationary_nursing"
+                                        class="form-control" name="insert_probationary_nursing" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_probationary_nursing.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_probationary_nursing.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'OtherCase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.other_case" class="form-control"
+                                        name="insert_other_case" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_other_case.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_other_case.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'RealBed'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.real_bed" class="form-control"
+                                        name="insert_real_bed" vld-sync vld-sync-func="$root.validate.min(model,params)"
+                                        vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_real_bed.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_real_bed.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'PatientNumber'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.patient_number" class="form-control"
+                                        name="insert_patient_number" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_patient_number.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_patient_number.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'Level1Care'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.level_1_care" class="form-control"
+                                        name="insert_level_1_care" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_level_1_care.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_level_1_care.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'FinalPhasePatient'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.final_phase_patient"
+                                        class="form-control" name="insert_final_phase_patient" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_final_phase_patient.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_final_phase_patient.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'VentilatorBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.ventilator_base" class="form-control"
+                                        name="insert_ventilator_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_ventilator_base.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_ventilator_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveVentilator'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.active_ventilator"
+                                        class="form-control" name="insert_active_ventilator" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_active_ventilator.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_active_ventilator.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'MonitorBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.monitor_base" class="form-control"
+                                        name="insert_monitor_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_monitor_base.$invalid }" required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_monitor_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveMonitor'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.active_monitor" class="form-control"
+                                        name="insert_active_monitor" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_active_monitor.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_active_monitor.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ElectricSyringeBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.electric_syringe_base"
+                                        class="form-control" name="insert_electric_syringe_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_electric_syringe_base.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_electric_syringe_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveElectricSyringe'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.active_electric_syringe"
+                                        class="form-control" name="insert_active_electric_syringe" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_active_electric_syringe.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_active_electric_syringe.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'DropsCounterBase'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.drops_counter_base"
+                                        class="form-control" name="insert_drops_counter_base" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_drops_counter_base.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_drops_counter_base.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'ActiveDropsCounter'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'NurseReport','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.active_drops_counter"
+                                        class="form-control" name="insert_active_drops_counter" vld-sync
+                                        vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:0}"
+                                        ng-class="{ 'is-invalid': insertForm.insert_active_drops_counter.$invalid }"
+                                        required />
+                                </div>
+                                <invalid invalid-status="insertForm.insert_active_drops_counter.$error.vldsync">
+                                    {{'AtLeast'|l:({title:0})}}.
+                                </invalid>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="col-md-12">
+                                {{'Note'|l}}
+                            </div>
+                            <div class="col-md-12"
+                                style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea id="insertNurseReport_content" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="NurseReport"
+                    modal-button-new-actionname="insert" modal-button-new-invalid="insertForm.$invalid"
+                    modal-button-new-func="ctrl.insert()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

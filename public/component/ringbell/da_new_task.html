@@ -1,0 +1,25 @@
+<a class="waves-effect ringbell-header-item da_new_task"
+    href="/task-details?code={{item.params.taskCode}}">
+    <i class="fas fa-tasks"></i>
+    <div class="content">
+        <div>
+            <span  >
+                <span class="department">{{item.params.department_title[$root.Language.current]}}</span>
+                <span >{{'is assigned a task'|l}}</span>
+                <span class="title">[{{item.params.taskCode}}]&nbsp;{{item.params.task_title}}</span>
+            </span>
+        </div>
+        <div class="ringbell-action danger">
+            <i class="fas fa-tasks"></i>&nbsp;{{'Need you to process'|l}}
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

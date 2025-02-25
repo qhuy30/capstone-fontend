@@ -1,0 +1,20 @@
+<div class="modal fade" id="modal_BriefCase_Cancel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="Huỷ bỏ hồ sơ"></modal-header>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn huỷ bỏ hồ sơ này? <br>
+                <span>Lý do huỷ bỏ hồ sơ:</span>
+                <textarea id="cancelBriefcase_content" class="pt-2" style="width: 100%" type="text"></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <modal-button-cancel modal-button-cancel-ctrlname="{{ctrl._ctrlName}}"
+                                     modal-button-cancel-objname="storage" modal-button-cancel-actionname="cancel"
+                                     modal-button-cancel-func="ctrl.cancel()">
+                </modal-button-cancel>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

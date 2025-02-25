@@ -1,0 +1,123 @@
+<div ng-controller="common_question_controller as ctrlChild" class="task-personal-feature">
+    <div ng-include="ctrlChild._urlUpdateModal"></div>
+    <div ng-include="ctrlChild._urlInsertModal"></div>
+    <div ng-include="ctrlChild._urlDeleteModal"></div>
+    <div class="created container">
+        <div class="content">
+            <div class="task-container">
+                <div class="task-filter">
+                    <div class="task-filter-item">
+                        <div class="title">{{'FromDate'|l}}:</div>
+                        <div class="value">
+                            <div>
+                                <input type="date" ng-model="ctrlChild._filterFromDate"
+                                    ng-change="ctrlChild.refreshData()" />
+                            </div>
+                            <div>
+                                <time-show2 time-show-data="ctrlChild._filterFromDate" time-show-type="just_date"
+                                    bind-object="true"></time-show2>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="task-filter-item">
+                        <div class="title">{{'ToDate'|l}}:</div>
+                        <div class="value">
+                            <div>
+                                <input type="date" ng-model="ctrlChild._filterToDate"
+                                    ng-change="ctrlChild.refreshData()" />
+                            </div>
+                            <div>
+                                <time-show2 time-show-data="ctrlChild._filterToDate" time-show-type="just_date"
+                                    bind-object="true">
+                                </time-show2>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #eee;margin-top:10px;">
+                </div>
+                <div class="task-content">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover"
+                            ng-class="{'no-data':ctrlChild.commonQuestions.length === 0}">
+                            <thead>
+                                <tr>
+                                    <td class="tool" style="font-weight: 600;vertical-align: middle;width: 630px;">
+                                        <div class="new">
+                                            <button-new button-new-func="ctrlChild.prepareInsert()"
+                                                button-new-label="Thêm câu hỏi và trả lời"
+                                                button-new-modal="#modal_Question_Insert">
+                                            </button-new>
+                                        </div>
+                                        <div class="search" style="max-width: none;">
+                                            <input type="text" ng-model="ctrlChild._searchByKeyToFilterData"
+                                                my-watch-text-input my-scope="ctrlChild._searchByKeyToFilterData"
+                                                my-func="ctrlChild.refreshData()" my-start="!ctrlChild._notyetInit"
+                                                placeholder="Tìm câu hỏi theo tên">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 160px;">
+                                        {{'Creator'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                        Ngày tạo
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                        Nhóm câu hỏi
+                                    </td>
+                                </tr>
+
+                            </thead>
+                            <tbody id="taskList">
+                                <tr ng-repeat="item in ctrlChild.commonQuestions">
+                                    <td style="font-weight: 600;vertical-align: middle;width: 630px;">
+                                        <a class="text-dark" link-details link-details-display="{{item.question}}"
+                                            link-details-url="/question-details?{{item._id}}"
+                                            link-details-route="question-details">{{item.question}}</a>
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                        <show-username username="item.entity.his[0].createdby" just-name="true">
+                                        </show-username>
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <time-show2 time-show-data="item.create_date" time-show-type="just_date">
+                                        </time-show2>
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{ item.type_question }}
+                                    </td>
+                                    <td style="width: 150px;">
+                                        <button-edit-item button-edit-item-modal="#modal_Question_Update"
+                                            button-edit-item-func="ctrlChild.prepareUpdate(params)"
+                                            button-edit-item-params="item">
+                                        </button-edit-item>
+                                        <button-delete-item button-delete-item-modal="#modal_Question_Delete"
+                                            button-delete-item-func="ctrlChild.prepareDelete(params)"
+                                            button-delete-item-params="item">
+                                        </button-delete-item>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div ng-if="ctrlChild.commonQuestions.length ==0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                    <pagination pagination-ctrlname="{{ctrlChild._ctrlName}}" 
+                        pagination-objname="QuestionAnswer"
+                        pagination-actionname="count_common_question" pagination-currentpage="ctrlChild.currentPage"
+                        pagination-noi="ctrlChild.numOfItemPerPage" pagination-total="ctrlChild.totalItems"
+                        pagination-func="ctrlChild.load_common_question(params)"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

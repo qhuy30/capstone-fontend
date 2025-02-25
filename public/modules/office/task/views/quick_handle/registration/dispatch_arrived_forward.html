@@ -1,0 +1,428 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_DA_Forward_quick" data-backdrop="static">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Forward'|l}}"></modal-header>
+            <div class="modal-body">
+            <form class="form-horizontal" name="forwardForm">
+                <div class="card">
+                <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                    <!--year -->
+                    <!-- <div class="col-md-6 form-group mt-2">
+                    <year-select
+                        id-value="ctrlChild._forward_value.year"
+                        select-year-func="ctrlChild.chooseReleaseDate_forward(params)"
+                        ng-model="ctrlChild._forward_value.year"
+                        label="{{'YearDocument' | l}}"
+                        ng-class="{ 'is-invalid': forwardForm.forward_year.$invalid }"
+                        disable="$root.statusValue.get(ctrlChild._ctrlName, 'DispatchArrived', 'forward', 'doing')"
+                        require="true">
+                    </year-select>
+                    </div> -->
+                    <div class="w-100"></div>
+                <!--code -->
+                    <div class="form-group col-md-6">
+                    <pick-modal-directory
+                        extend="ctrlChild.IncommingDispatchBook_Config"
+                        pick-func="ctrlChild.pickDAB_forward(params)"
+                        id-value="ctrlChild._forward_value.code"
+                        label="{{'Document number'|l}}"
+                        disable="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    ></pick-modal-directory>
+                    </div>
+                    <!--incoming_number -->
+                    <div class="form-group col-md-6">
+                    <div class="input-group-new">
+                        <div class="input-group-prepend-new">
+                        <span class="input-group-text-new">{{'DispatchArrivedNumber'|l}}</span>
+                        </div>
+                        <input
+                            ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                            type="text"
+                            ng-model="ctrlChild._forward_value.incoming_number"
+                            ng-change="ctrlChild.change_incoming_number_forward()"
+                            class="form-control"
+                            name="forward_incoming_number"
+                            ng-class="{ 'is-invalid': forwardForm.forward_incoming_number.$invalid }"
+                            required
+                        />
+                         <p class="text-danger" ng-if="ctrlChild._forward_value.invalid_incoming_number">{{'Number of existing documents'|l}}</p>
+                    </div>
+                    </div>
+                
+                <!--symbol_number-->
+                <div class="form-group col-md-6">
+                    <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                        <span class="input-group-text-new">{{'Number symbol'|l}}</span>
+                        <span class="require-sympton">*</span>
+                    </div>
+                    <input
+                        ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                        type="text"
+                        ng-model="ctrlChild._forward_value.symbol_number"
+                        class="form-control"
+                        name="forward_symbol_number"
+                        placeholder="{{'Input number symbol'|l}}"
+                        ng-class="{ 'is-invalid': forwardForm.forward_symbol_number.$invalid }"
+                        required
+                    />
+                    </div>
+                </div>
+                <!--incomming_date -->
+                <div class="col-md-6 form-group">
+                    <date-old
+                    id-value="ctrlChild._forward_value.incomming_date"
+                    func="ctrlChild.chooseIncommingDate_forward(params)"
+                    label="{{'Date of Arrival'|l}}"
+                    disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    required="true"
+                    ></date-old>
+                </div>
+                <!-- sending_place -->
+                <div class="form-group col-md-12">
+                    <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                        <span class="input-group-text-new">{{'Agency promulgate'|l}}</span>
+                        <span class="require-sympton">*</span>
+                    </div>
+                    <input
+                        ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                        type="text"
+                        ng-model="ctrlChild._forward_value.sending_place"
+                        class="form-control"
+                        name="forward_sending_place"
+                        placeholder="{{'Input Agency promulgate'|l}}"
+                        ng-class="{ 'is-invalid': forwardForm.forward_sending_place.$invalid }"
+                        required
+                    />
+                    </div>
+                </div>
+                <div class="w-100"></div>
+                <!--type-->
+                <div class="form-group col-md-6">
+                    <pick-modal-directory extend="ctrlChild.KindOfDispatchTo_Config"
+                    pick-func="ctrlChild.pickDAT_forward(params)" id-value="ctrlChild._forward_value.type"
+                    label="{{'TypeName'|l}}"
+                    disable="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    require="true" has-insert-button="true"></pick-modal-directory>
+                </div>
+    
+                <!-- Field -->
+                <div class="form-group col-md-6">
+                    <pick-modal-directory extend="ctrlChild.Field_Config"
+                    pick-func="ctrlChild.pickField_forward(params)" id-value="ctrlChild._forward_value.field"
+                    label="{{'Field'|l}}"
+                    disable="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    require="true" has-insert-button="true"></pick-modal-directory>
+                </div>
+                <!--security_level -->
+                <div class="form-group col-md-6">
+                    <pick-modal-directory extend="ctrlChild.securityLevel_Config"
+                    pick-func="ctrlChild.pick_forward_security_level(params)" id-value="ctrlChild._forward_value.security_level
+                    "
+                    label="{{'ConfidentialityLevel'|l}}"
+                    disable="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    require="true"></pick-modal-directory>
+                </div>
+                <!-- Nature == Priority -->
+                <div class="form-group col-md-6">
+                    <pick-modal-directory
+                    extend="ctrlChild.IncommingDispatchPririoty_Config"
+                    pick-func="ctrlChild.pickUrgencyLevel_forward(params)"
+                    id-value="ctrlChild._forward_value.urgency_level"
+                    label="{{'urgency'|l}}"
+                    disable="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    require="true"
+                    ></pick-modal-directory>
+                </div>
+                    <!-- date_sign (Ngày ký) -->
+                    <div class="col-md-6 form-group">
+                    <date-old
+                        id-value="ctrlChild._forward_value.date_sign"
+                        func="ctrlChild.chooseDateSign_forward(params)"
+                        label="{{'Signing date'|l}}"
+                        disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                        required="true"
+                    ></date-old>
+                    </div>
+                    <!-- expried (Thời hạn) -->
+                    <div class="col-md-6 form-group">
+                    <date-old
+                        id-value="ctrlChild._forward_value.expried"
+                        func="ctrlChild.chooseExpried_forward(params)"
+                        label="{{'Duration'|l}}"
+                        disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                        required="true"
+                    ></date-old>
+                    </div>
+                    <!-- content -->
+                    <div class="col-md-12">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                            <span class="input-group-text-new">{{'Abstract'|l}}</span>
+                            <span class="require-sympton">*</span>
+                            </div>
+                            <div class="form-group">
+                            <text-area-with-suggestions
+                                placeholder="{{'TextareaTypeHere'|l}}"
+                                ng-model="ctrlChild._forward_value.content"
+                                required="true"
+                            ></text-area-with-suggestions>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- is_legal -->
+                    <!-- <div class="form-group col-md-6">
+                    <input-checkbox
+                        input-checkbox-label="{{'IsLegalDocument'|l}}"
+                        input-checkbox-model="ctrlChild._forward_value.is_legal"
+                        input-checkbox-disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    >
+                    </input-checkbox>
+                    </div> -->
+                    <!-- is_assign_task -->
+                    <!-- <div class="form-group col-md-6">
+                    <input-checkbox
+                        input-checkbox-label="{{'IsTheAssignmentDocument'|l}}"
+                        input-checkbox-model="ctrlChild._forward_value.is_assign_task"
+                        input-checkbox-disabled="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                    >
+                    </input-checkbox>
+                    </div>            -->
+                </div>
+                </div>
+                <!-- Dispatch File -->
+                <div class="card">
+                <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                    <div class="col-md-6" style="border-right: 1px solid #eee">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                        <thead>
+                            <tr>
+                            <td>#</td>
+                            <td>{{'FileDispatchArrived'|l}}</td>
+                            <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ctrlChild._forward_value.incoming_file">
+                            <td>{{$index+1}}</td>
+                            <td>
+                                <attachment-just-show my-item="item"></attachment-just-show>
+                            </td>
+                            <td class="remove-file">
+                                <i class="fas fa-times text-danger" ng-click="ctrlChild.removeFile_forward(item)"></i>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                    <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                        <tbody>
+                        <tr>
+                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                            <div class="diskuf-uploader">
+                                <span class="wd-fa-add-file-light">
+                                <span class="wd-fa-add-file-light-text">
+                                    <span class="wd-fa-add-file-light-title">
+                                    <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                    </span>
+                                    <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                </span>
+                                </span>
+                                <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                                file-reading="ctrlChild._forward_value.incoming_file" size="1" multiple style="width: 100%" />
+                            </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>      
+                <!-- Attachment File -->
+                <div class="card">
+                <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                    <div class="col-md-6" style="border-right: 1px solid #eee">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>{{'Attachment'|l}}</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in ctrlChild._forward_value.attachments">
+                                        <td>{{$index+1}}</td>
+                                        <td>
+                                            <attachment-just-show my-item="item"></attachment-just-show>
+                                        </td>
+                                        <td class="remove-file">
+                                            <i class="fas fa-times text-danger" ng-click="ctrlChild.removeFileAttachment_forward(item)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                    <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                        <tbody>
+                        <tr>
+                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                            <div class="diskuf-uploader">
+                                <span class="wd-fa-add-file-light">
+                                <span class="wd-fa-add-file-light-text">
+                                    <span class="wd-fa-add-file-light-title">
+                                    <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                    </span>
+                                    <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                </span>
+                                </span>
+                                <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                                file-reading="ctrlChild._forward_value.attachments" size="1" multiple style="width: 100%" />
+                            </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div> 
+                <!-- Đơn vị nhận biết -->
+                <div class="card">
+                    <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                        <div class="form-group col-md-12 mt-3">
+                        <organization-multi
+                            label="{{'Department receives to know'|l}}"
+                            id-value="ctrlChild._forward_value.department_receiver_ar"
+                            select-func="ctrlChild.pickViewOnlyDepartment_forward(params)"
+                            require="true">
+                        </organization-multi>
+                        </div>
+                    </div>
+                </div>
+                <!-- Đơn vị thực thi -->
+                <div class="card">
+                    <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                        <div class="form-group col-md-12 mt-3">
+                        <organization-dispatch-arrived
+                            label="{{'processing unit'|l}}"
+                            id-value="ctrlChild._forward_value.department_execute"
+                            select-func="ctrlChild.chooseSubmissionDepartment_forward(params)"
+                            require="true">
+                        </organization-dispatch-arrived>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nhãn công việc -->
+                <div class="card">
+                    <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                        <div class="form-group col-md-12">
+                            <pick-modal-advance-multi-2
+                                label="{{'Task label'|l}}" require="false"
+                                disable="$root.statusValue.get(ctrlChild._ctrlName,'DispatchArrived','forward','doing')"
+                                load-data-func="ctrlChild.loadLabel(params)"
+                                id-value="ctrlChild._forward_value.task_label"
+                                load-details-func="ctrlChild.loadLabel_details(params)"
+                                localized="false"
+                                pick-func="ctrlChild.pickLabel(params)"
+                            >
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" ng-if="ctrlChild._forward_value.show_note">
+                    <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                        <div class="form-group col-md-12 mt-3 input-group-new">
+                            <div class="input-group-prepend-new">
+                            <span>{{'AccessNote' | l}}</span>
+                            <span class="require-sympton" ng-show="ctrlChild._forward_value.note_required">*</span>
+                            </div>
+                            <div class="form-group mb-0">
+                                <text-area-with-suggestions-2
+                                    ng-model="ctrlChild._forward_value.note"
+                                    ng-required="true"
+                                    placeholder="{{ctrlChild._forward_value.note_placeholder}}"
+                                    function-apply="ctrlChild.function_apply_suggestions_da"
+                                />
+                            </div>
+                            <div>
+                            <!-- <span 
+                                class="badge badge-light m-1" 
+                                style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                                ng-repeat="note in ctrlChild._hintNoteSet"
+                                ng-click="ctrlChild.set_hint_note(note)">
+                                {{note | l}}
+                            </span> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            
+            <modal-button-approval
+                ng-if="ctrlChild._forward_value.action === 'forward_CVP'"
+                modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+                modal-button-approval-objname="DispatchArrived"
+                modal-button-approval-actionname="forward"
+                modal-button-approval-invalid="forwardForm.$invalid || ctrlChild._forward_value.invalid_incoming_number"
+                modal-button-approval-func="ctrlChild.forward_CVP()"
+                modal-button-approval-label="{{'SentToCVP'|l}}"
+                modal-button-confirm-text="Are You Sure You Want to Send the Document to Lead Department?"
+                modal-header-content="{{'Send the Document to Lead Department'|l}}"
+                modal-text-button="Accept">
+            </modal-button-approval>
+            
+            <modal-button-approval
+                ng-if="ctrlChild._forward_value.action === 'forward_BGHOpinion'"
+                modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+                modal-button-approval-objname="DispatchArrived"
+                modal-button-approval-actionname="forward"
+                modal-button-approval-invalid="forwardForm.$invalid || ctrlChild._forward_value.invalid_incoming_number"
+                modal-button-approval-func="ctrlChild.forward_BGHOpinion()"
+                modal-button-approval-label="{{'RequestBGHOpinion'|l}}"
+                modal-button-confirm-text="Are You Sure You Want to Send the Document to Board of Directors?"
+                modal-header-content="{{'Send the Document to Board of Directors'|l}}"
+                modal-text-button="Accept">
+            </modal-button-approval>
+
+            <modal-button-approval
+                ng-if="ctrlChild._forward_value.action === 'return_CVP'"
+                modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+                modal-button-approval-objname="DispatchArrived"
+                modal-button-approval-actionname="forward"
+                modal-button-approval-invalid="forwardForm.$invalid || ctrlChild._forward_value.invalid_incoming_number"
+                modal-button-approval-func="ctrlChild.return_CVP()"
+                modal-button-approval-label="{{'ReturnCVP'|l}}"
+                modal-button-confirm-text="Are you sure you want to return the official letter to the school office leader?"
+                modal-header-content="{{'Send the Document to Board of Directors'|l}}"
+                modal-text-button="Accept"
+            />
+            
+
+            <modal-button-approval
+                ng-if="ctrlChild._forward_value.action === 'forward_unit'"
+                modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+                modal-button-approval-objname="DispatchArrived"
+                modal-button-approval-actionname="forward"
+                modal-button-approval-invalid="forwardForm.$invalid || (!ctrlChild._forward_value.department_execute && ctrlChild._forward_value.department_receiver_ar.length === 0) || ctrlChild._forward_value.invalid_incoming_number"
+                modal-button-approval-func="ctrlChild.forward_unit()"
+                modal-button-approval-label="{{'ForwardtoUnit'|l}}"
+                modal-button-confirm-text="Are You Sure You Want to Send the Document to Unit?"
+                modal-header-content="{{'Send the Document to Unit'|l}}"
+                modal-text-button="Accept"
+            />
+            
+            <modal-button-close></modal-button-close>
+        </div>
+    </div>
+</div>

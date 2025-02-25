@@ -1,0 +1,212 @@
+<my-content>
+  <content-content>
+    <div ng-controller="employee_controller as ctrl">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group row">
+            <!-- <button-new button-new-func="ctrl.prepareInsert()" button-new-label="{{'New'|l}}"
+                            button-new-modal="#modal_Employee_Insert">
+                        </button-new> -->
+            &nbsp;
+            <!-- <button modal-toggle="#modal_Employee_Import" type="button"
+                                                            class="btn btn-outline-warning btn-sm"
+                                                            ng-click="ctrl.prepareImport();$event.stopPropagation();">
+                                                            <i class="fas fa-file-import"></i>&nbsp;{{'Import Data'}}
+                                                        </button> -->
+          </div>
+          <more-option-bar>
+            <bar-content class="row">
+              <div class="col-md-12 form-group">
+                <button-select
+                  button-select-label="{{'Display'|l}}"
+                  button-select-data="[15,30,50,100]"
+                  button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','load','doing')"
+                  button-select-func="ctrl.chooseNumberItem(params)"
+                  button-select-model="ctrl.numOfItemPerPage"
+                >
+                </button-select>
+              </div>
+              <div class="col-md-6 form-group">
+                <pick-modal-directory
+                  extend="ctrl.LaborContractType_Config"
+                  pick-func="ctrl.chooseloadTypeLaborContract(params)"
+                  id-value="ctrl._filterloadTypeLaborContract"
+                  label="{{'TypeLaborContract'|l}}"
+                ></pick-modal-directory>
+              </div>
+              <div class="col-md-6 form-group">
+                <pick-modal-directory
+                  extend="ctrl.Specialized_Config"
+                  pick-func="ctrl.chooseSpecialized(params)"
+                  id-value="ctrl._filterSpecialized"
+                  label="{{'Specialized'|l}}"
+                ></pick-modal-directory>
+              </div>
+              <div class="col-md-6 form-group">
+                <pick-modal-directory
+                  extend="ctrl.ComputerSkills_Config"
+                  pick-func="ctrl.chooseIT(params)"
+                  id-value="ctrl._filterIT"
+                  label="{{'ComputerSkills'|l}}"
+                ></pick-modal-directory>
+              </div>
+              <div class="col-md-6 form-group">
+                <pick-modal-directory
+                  extend="ctrl.EnglishLevel_Config"
+                  pick-func="ctrl.chooseDegreeEnglish(params)"
+                  id-value="ctrl._filterDegreeEnglish"
+                  label="{{'EnglishLevel'|l}}"
+                ></pick-modal-directory>
+              </div>
+              <div class="col-md-6 form-group">
+                <organization
+                  label="{{'Department'|l}}"
+                  id-value="ctrl._filterDepartment.id"
+                  select-func="ctrl.chooseDepartment(params)"
+                  require="true"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'Employee','insert','doing')"
+                >
+                </organization>
+              </div>
+            </bar-content>
+          </more-option-bar>
+
+          <button-search
+            button-search-func="ctrl.refreshData()"
+            button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData"
+          >
+          </button-search>
+
+          <div class="tab-content">
+            <div class="tab-pane fade active show">
+              <my-Async
+                async-ctrlname="{{ctrl._ctrlName}}"
+                async-objname="Employee"
+                async-actionname="load"
+              >
+                <async-success>
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <td>
+                            <div class="form-group row">
+                              <button-checkbox
+                                ng-hide="ctrl.checkIdAr.length > 0 && ctrl.checkIdAr.length !== ctrl.employees.length"
+                                button-checkbox-model="ctrl.checkAll"
+                                button-checkbox-func="ctrl.checkAllItem(params)"
+                              >
+                              </button-checkbox>
+                              <span
+                                ng-show="ctrl.checkIdAr.length > 0 && ctrl.checkIdAr.length !== ctrl.employees.length"
+                                class="btn btn-square btn-secondary"
+                                ng-click="ctrl.uncheckAllItem()"
+                              >
+                                <i
+                                  class="fa fa-minus-square"
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                              &nbsp;
+                              <button-delete-item
+                                ng-show="ctrl.checkIdAr.length > 0"
+                                button-delete-item-modal="#modal_Employee_Delete_Multi"
+                              >
+                              </button-delete-item>
+                            </div>
+                          </td>
+                          <td style="font-weight: 600; vertical-align: middle">
+                            {{'Name'|l}}
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          ng-repeat="item in ctrl.employees|orderBy:ctrl.sort.name:ctrl.sort.value track by $index"
+                        >
+                          <td>
+                            <button-checkbox
+                              button-checkbox-model="item.check"
+                              button-checkbox-func="ctrl.checkItem(params)"
+                              button-checkbox-params="item._id"
+                            >
+                            </button-checkbox>
+
+                            <button-edit-item
+                              button-edit-item-modal="#modal_Employee_Update"
+                              button-edit-item-func="ctrl.prepareUpdate(params)"
+                              button-edit-item-params="item"
+                            >
+                            </button-edit-item>
+
+                            <button-delete-item
+                              button-delete-item-modal="#modal_Employee_Delete"
+                              button-delete-item-func="ctrl.prepareDelete(params)"
+                              button-delete-item-params="item"
+                            >
+                            </button-delete-item>
+                            <button
+                              modal-toggle="#modal_Employee_Attach"
+                              type="button"
+                              class="btn btn-outline-warning btn-sm"
+                              ng-click="ctrl.prepareAttach(item._id);$event.stopPropagation();"
+                              ng-show="['Office.LaborContract.Use']|checkRule"
+                            >
+                              <i class="fas fa-plus"></i
+                              >&nbsp;{{'LaborContract'|l}}
+                            </button>
+                          </td>
+                          <td>
+                            {{item.fullname}}
+                            <div
+                              class="showfile-bar"
+                              ng-if="item.attachment.length>0"
+                            >
+                              <attachment-show
+                                ng-repeat="at in item.attachment"
+                                attachment-show-item="at"
+                                attachment-show-func="ctrl.loadfile(params)"
+                                attachment-show-params="{id:item._id,name:at.name}"
+                              >
+                              </attachment-show>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div ng-if="ctrl.employees.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </div>
+                  <pagination
+                    pagination-ctrlname="{{ctrl._ctrlName}}"
+                    pagination-objname="Employee"
+                    pagination-actionname="count"
+                    pagination-currentpage="ctrl.currentPage"
+                    pagination-noi="ctrl.numOfItemPerPage"
+                    pagination-total="ctrl.totalItems"
+                    pagination-func="ctrl.load(params)"
+                  >
+                  </pagination>
+                </async-success>
+              </my-Async>
+            </div>
+          </div>
+          <div ng-include="ctrl._urlUpdateModal"></div>
+          <div ng-include="ctrl._urlInsertModal"></div>
+          <div ng-include="ctrl._urlAttachModal"></div>
+          <div ng-include="ctrl._urlImport"></div>
+          <div ng-include="ctrl._urlDeleteModal"></div>
+          <!-- <div ng-include="ctrl._urlInfoModal"></div>
+                
+                    
+                    <div ng-include="ctrl._urlApprovalModal"></div>
+                   
+                    <div ng-include="ctrl._urlDelete_MultiModal"></div> -->
+        </div>
+      </div>
+    </div>
+  </content-content>
+</my-content>

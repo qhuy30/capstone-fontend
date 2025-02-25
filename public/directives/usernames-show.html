@@ -1,0 +1,22 @@
+<span ng-if="usernamesShowData.length ===1">
+    <span ng-if="usernamesShowAvatar">
+        <img class="img-avatar img-sm" src="{{usernamesShowItems[0].avatar}}">&nbsp;
+    </span>{{usernamesShowItems[0].display}}
+</span>
+<span ng-if="usernamesShowData.length ===2">
+    <span ng-if="usernamesShowAvatar">
+        <img class="img-avatar img-sm" src="{{usernamesShowItems[0].avatar}}">&nbsp;
+    </span>{{usernamesShowItems[0].display}},&nbsp;
+    <span ng-if="usernamesShowAvatar">
+        <img class="img-avatar img-sm" src="{{usernamesShowItems[1].avatar}}">&nbsp;
+    </span>{{usernamesShowItems[1].display}}
+</span>
+
+<span ng-if="usernamesShowData.length >2">
+    <span ng-if="usernamesShowAvatar">
+        <img class="img-avatar img-sm" src="{{usernamesShowItems[0].avatar}}">&nbsp;
+    </span>{{usernamesShowItems[0].display}},&nbsp;
+    <span ng-if="usernamesShowAvatar">
+        <img class="img-avatar img-sm" src="{{usernamesShowItems[1].avatar}}">&nbsp;
+    </span>{{usernamesShowItems[1].display}},...
+</span>

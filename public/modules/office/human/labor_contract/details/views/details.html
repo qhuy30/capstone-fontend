@@ -1,0 +1,264 @@
+<my-content>
+    <content-content>
+        <div ng-controller="labor_contract_details_controller as ctrl">
+            <section class="pb-3">
+                <div class="card">
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <div class="col-md-12">
+                            <div style="width: 100%;">
+                                <h5><a><strong>{{ctrl.Item.fullname}}</strong></a></h5>
+                                <p class="grey-text">{{'WrittenBy'|l}}
+                                    <a>
+                                        <show-username username="ctrl.Item.username" employee="ctrl.Item.employee">
+                                        </show-username>
+                                    </a>, <time-show time-show-data="ctrl.Item.event[0].time" time-show-type="long">
+                                    </time-show>
+                                </p>
+
+                            </div>
+                            <div>
+                                <div class="grey-text">
+                                    <i>{{'FromDate'|l}}:&nbsp;<time-show time-show-data="ctrl.Item.from_date"
+                                            time-show-type="justdate">
+                                        </time-show>&nbsp;.{{'ToDate'|l}}:&nbsp;<time-show
+                                            time-show-data="ctrl.Item.to_date" time-show-type="justdate">
+                                        </time-show>.</i>
+                                </div>
+                                <span class="badge pink">
+                                    <get-field id-value="ctrl.Item.type"
+                                        load-details-func="ctrl.loadTypeLaborContract_details(params)" field="title"
+                                        localization="true"></get-field>
+                                </span>
+                                <show-status id-value="ctrl.Item.status"></show-status>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border-top:1px solid #c2cfd6;border-left:2px solid #20a8d8"></div>
+                    <div class="card-body" style="border-left:2px solid #20a8d8">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" ng-click="ctrl.tab ='attachment'">
+                                <a class="nav-link " ng-class="{'active':ctrl.tab =='attachment'}">{{'Attachment'|l}}
+                                </a>
+                            </li>
+                            <li class="nav-item" ng-click="ctrl.tab ='general'">
+                                <a class="nav-link " ng-class="{'active':ctrl.tab =='general'}">{{'GeneralInfo'|l}}
+                                </a>
+                            </li>
+                            <li class="nav-item" ng-click="ctrl.tab ='education'">
+                                <a class="nav-link" ng-class="{'active':ctrl.tab =='education'}">{{'Education'|l}}</a>
+                            </li>
+                            <li class="nav-item" ng-click="ctrl.tab ='mission'">
+                                <a class="nav-link" ng-class="{'active':ctrl.tab =='mission'}">{{'MissionInfo'|l}}</a>
+                            </li>
+                            <li class="nav-item" ng-click="ctrl.tab ='event'">
+                                <a class="nav-link" ng-class="{'active':ctrl.tab =='event'}">{{'Events'|l}}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show">
+                                <div ng-show="ctrl.tab=='attachment'">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        #
+                                                    </td>
+                                                    <td>
+                                                        {{'Attachment'|l}}
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="at in ctrl.Item.attachment">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>
+                                                        <attachment-show attachment-show-item="at"
+                                                            attachment-show-func="ctrl.loadfile(params)"
+                                                            attachment-show-params="{id:ctrl.Item._id,name:at.name}">
+                                                        </attachment-show>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div ng-show="ctrl.tab=='general'">
+
+                                    <div style="margin-bottom:10px;">
+                                        -{{'FullName'|l}}:&nbsp;<i>{{ctrl.Item.fullname}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'DateOfBirth'|l}}:&nbsp;<i>
+                                            <time-show time-show-data="ctrl.Item.birth_date" time-show-type="justdate">
+                                            </time-show>
+                                        </i>
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'BasicSalary'|l}}:&nbsp;<i>{{ctrl.Item.basic_salary}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'TypeLaborContract'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.type"
+                                                load-details-func="ctrl.loadTypeLaborContract_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'FromDate'|l}}:&nbsp;<i>
+                                            <time-show time-show-data="ctrl.Item.from_date" time-show-type="justdate">
+                                            </time-show>
+                                        </i>&nbsp;.{{'ToDate'|l}}:&nbsp;<i>
+                                            <time-show time-show-data="ctrl.Item.to_date" time-show-type="justdate">
+                                            </time-show>.
+                                        </i>
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Living'|l}}:&nbsp;<i>{{ctrl.Item.living.city}},&nbsp;{{ctrl.Item.living.district}},&nbsp;{{ctrl.Item.living.ward}},&nbsp;{{ctrl.Item.living.address}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'PermanentAddress'|l}}:&nbsp;<i>{{ctrl.Item.permanent_address.city}},&nbsp;{{ctrl.Item.permanent_address.district}},&nbsp;{{ctrl.Item.permanent_address.ward}},&nbsp;{{ctrl.Item.permanent_address.address}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'TypeOfResidence'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.type_residence"
+                                                load-details-func="ctrl.loadTypeResidence_details(params)" field="title"
+                                                localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'PhoneNumber'|l}}:&nbsp;<i>{{ctrl.Item.phonenumber}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Email'|l}}:&nbsp;<i>{{ctrl.Item.email}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'IdCard'|l}}:&nbsp;<i>{{ctrl.Item.idcard}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Nationality'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.nationality"
+                                                load-details-func="ctrl.loadNationality_details(params)" field="title"
+                                                localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div>
+                                        -{{'Religion'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.religion"
+                                                load-details-func="ctrl.loadReligion_details(params)" field="title"
+                                                localization="true"></get-field>
+                                        </i>.
+                                    </div>
+
+                                </div>
+                                <div ng-show="ctrl.tab=='education'">
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Education'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.education"
+                                                load-details-func="ctrl.loadEducation_details(params)"
+                                                field="title" ></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Degree'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.degree"
+                                                load-details-func="ctrl.loadDegree_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Specialized'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.specialized"
+                                                load-details-func="ctrl.loadSpecialized_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'TrainingSchool'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.training_school"
+                                                load-details-func="ctrl.loadDetails_TrainingSchool(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'GraduationYear'|l}}:&nbsp;<i>{{ctrl.Item.graduation_year}}</i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'StateManagement'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.state_management"
+                                                load-details-func="ctrl.loadStateManagement_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'PoliticalTheory'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.political_theory"
+                                                load-details-func="ctrl.loadPoliticalTheory_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'IT'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.it"
+                                                load-details-func="ctrl.loadIT_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'EnglishDegree'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.degree_english"
+                                                load-details-func="ctrl.loadDegreeEnglish_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                </div>
+                                <div ng-show="ctrl.tab=='mission'">
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Department'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.department"
+                                                load-details-func="ctrl.loadDepartment_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                    <div style="margin-bottom:10px;">
+                                        -{{'Competence'|l}}:&nbsp;<i>
+                                            <get-field id-value="ctrl.Item.competence"
+                                                load-details-func="ctrl.loadCompetence_details(params)"
+                                                field="title" localization="true"></get-field>
+                                        </i>.
+                                    </div>
+                                </div>
+                                <div ng-show="ctrl.tab=='event'">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <tbody>
+                                                <tr ng-repeat="item in ctrl.Item.event">
+                                                    <td class="hour"><small><span class="grey-text float-left"><i
+                                                                    class="fa fa-clock" aria-hidden="true"></i>
+                                                                <time-show time-show-type="short"
+                                                                    time-show-data="item.time">
+                                                                </time-show>
+                                                            </span></small>
+                                                    </td>
+                                                    <td>
+                                                        <show-username username="item.username" employee="item.employee">
+                                                        </show-username>
+                                                    </td>
+                                                    <td>
+                                                        {{item.action|l}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+    </content-content>
+</my-content>

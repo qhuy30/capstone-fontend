@@ -1,0 +1,42 @@
+<div style="width: 100%">
+  <div class="label" ng-if="buttonSelectLabel">
+    {{buttonSelectLabel}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+  </div>
+  <div class="input-group list-menu button-container">
+
+    <div class="dropdown-menu">
+      <input
+        type="text"
+        ng-model="thisSearch"
+        style="width: 100%; height: 30px"
+        placeholder="Search"
+      />
+      <a
+        class="dropdown-item"
+        ng-repeat="item in buttonSelectData|filter:thisSearch:false:buttonSelectKey"
+        ng-click="buttonSelectClick(item)"
+      ><i class="fas fa-angle-double-right"></i>
+        <span ng-if="buttonSelectLocalization"
+          >{{(buttonSelectKey ?item[buttonSelectKey]:item)|l}}</span
+        >
+        <span ng-if="!buttonSelectLocalization"
+          >{{buttonSelectKey ?item[buttonSelectKey]:item}}</span
+        >
+      </a>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary dropdown-toggle"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+      ng-disabled="buttonSelectDisabled"
+    >
+      {{showValue}}
+    </button>
+    <button ng-if="buttonSelectClear" type="button" class="btn btn-primary clear" ng-disabled="buttonSelectDisabled" ng-click="clear()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<a class="waves-effect ringbell-header-item notify_need_approve"     
+    href="/car-registration-details?code={{item.params.code}}"
+>
+    <i class="fas fa-newspaper"></i>
+    <div class="content">
+        <div>
+            <span>
+                <span>{{'CarRegister'|l}}</span>&nbsp;
+                <span class="title">[{{item.params.code}}]&nbsp;{{item.params.title}}</span>&nbsp;
+                <span class="text-lowercase">{{'CreatedBy'|l}}</span>&nbsp;
+                <show-username-onlyname username="item.params.username_create_ticket" without-tooltip="true">
+                </show-username-onlyname>
+            </span>
+        </div>
+        <div class="ringbell-action danger" ng-switch="item.params.status">
+            <span ng-switch-when="Created">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to review and approve registration car'|l}}
+            </span>
+            <span ng-switch-when="reviewer_approved">
+                <i class="fas fa-book"></i>&nbsp;{{'Department leader approved. Need you to review and confirm registration car'|l}}
+            </span>
+            <span ng-switch-when="manager_approved">
+                <i class="fas fa-book"></i>&nbsp;{{'Manager car confirmed. Need you to review and approve registration car'|l}}
+            </span>
+            <span ng-switch-when="head_approved_car">
+                <i class="fas fa-book"></i>&nbsp;{{'Lead approved. Need you to review and approve registration car'|l}}
+            </span>
+
+            <span ng-switch-when="head_external_approved">
+                <i class="fas fa-book"></i>&nbsp;{{'Lead external approved. Need you to review and receive card credit'|l}}
+            </span>
+
+            <span ng-switch-when="creator_received_card">
+                <i class="fas fa-book"></i>&nbsp;{{'DepartmentReceivedCard'|l}}
+            </span>
+
+            <span ng-switch-when="creator_returned_card">
+                <i class="fas fa-book"></i>&nbsp;{{'Department returned card. Need you to review and confirm received card'|l}}
+            </span>
+
+            <span ng-switch-when="manager_received_card">
+                <i class="fas fa-book"></i>&nbsp;{{'Management card confirm received card credit'|l}}
+            </span>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+    </div> 
+</a>

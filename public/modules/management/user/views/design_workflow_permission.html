@@ -1,0 +1,255 @@
+<div id="design_workflow_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng thiết kế quy trình
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Management.DesignWorkflow.Use'].value"
+                            brige-func="ctrl.updateRule(params)" brige-value="'Management.DesignWorkflow.Use'" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+    </div>
+    <ul>
+                <!-- Folder -->
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Quyền thiết kế quy trình:
+                        </div>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Không được Khai báo - Chỉnh sửa
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value"
+                                        brige-func="ctrl.updateRule(params)"
+                                        brige-value="'Management.DesignWorkflow.Management_MinorLabels_Department'" value="NotAllow" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Đang làm việc
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value"
+                                        value="Working" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Tất cả phòng ban
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value"
+                                        value="All" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Một số phòng ban cụ thể:
+                                    <organization-multi  label="{{''}}"
+                                                         id-value="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].department"
+                                                         select-func="ctrl.update_Department_Permission(params)"
+                                                         my-params="'Management.DesignWorkflow.Management_MinorLabels_Department'"
+                                                         disable="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value!='Specific'">
+                                    </organization-multi>
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value"
+                                           value="Specific" />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                </div>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Quyền có thể chỉnh sửa quy trình:
+                        </div>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Không được Khai báo - Chỉnh sửa
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Edit'].value"
+                                        brige-func="ctrl.updateRule(params)"
+                                        brige-value="'Management.DesignWorkflow.Edit'" value="NotAllow" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Đang làm việc
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Edit'].value"
+                                        value="Working" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Tất cả phòng ban
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Edit'].value"
+                                        value="All" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Một số phòng ban cụ thể:
+                                    <organization-multi  label="{{''}}"
+                                                         id-value="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].department"
+                                                         select-func="ctrl.update_Department_Permission(params)"
+                                                         my-params="'Management.DesignWorkflow.Management_MinorLabels_Department'"
+                                                         disable="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value!='Specific'">
+                                    </organization-multi>
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value"
+                                           value="Specific" />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                </div>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Quyền có thể xóa quy trình:
+                        </div>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Không được Khai báo - Chỉnh sửa
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Delete'].value"
+                                        brige-func="ctrl.updateRule(params)"
+                                        brige-value="'Management.DesignWorkflow.Delete'" value="NotAllow" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+
+                            <div class="item">
+                                <div class="label">
+                                    Đang làm việc
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Delete'].value"
+                                        value="Working" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Tất cả phòng ban
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Delete'].value"
+                                        value="All" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Một số phòng ban cụ thể:
+                                    <organization-multi  label="{{''}}"
+                                                         id-value="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].department"
+                                                         select-func="ctrl.update_Department_Permission(params)"
+                                                         my-params="'Management.DesignWorkflow.Management_MinorLabels_Department'"
+                                                         disable="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value!='Specific'">
+                                    </organization-multi>
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.Management_MinorLabels_Department'].value"
+                                           value="Specific" />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                </div>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Có thể xem <b>quy trình</b> của:
+                        </div>
+                    </div>
+                    <ul>
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Không được xem
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.See'].value"
+                                        brige-func="ctrl.updateRule(params)"
+                                        brige-value="'Management.DesignWorkflow.See'" value="NotAllow" />
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item">
+                                <div class="label">
+                                    Tất cả phòng ban
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.See'].value"
+                                        value="All" />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+
+                            <div class="item">
+                                <div class="label">
+                                    Phòng ban đang làm việc
+                                </div>
+                                <div class="tool">
+                                    <input type="radio" ng-model="ctrl.rule['Management.DesignWorkflow.See'].value"
+                                        value="Working" />
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+</div>

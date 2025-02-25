@@ -1,0 +1,15 @@
+<table>
+    <tbody>
+        <tr ng-repeat="item in treeviewSelectData|treeviewSelect_choosen:treeviewSelectModel:treeviewSelectKey|treeviewFilter track by $index">
+            <td>
+                <treeview-header
+                    treeview-header-label="{{treeviewSelectLocalization? (item[treeviewSelectKey]|l): item[treeviewSelectKey]}}"
+                    treeview-header-item="item"></treeview-header>
+            </td>
+            <td>
+                <i class="far fa-circle" ng-if="treeviewSelectModel[treeviewSelectKey] !== item[treeviewSelectKey]" ng-click="treeviewSelectClick(item)"></i>
+                <i class="far fa-check-circle" ng-if="treeviewSelectModel[treeviewSelectKey] === item[treeviewSelectKey]"></i>
+            </td>
+        </tr>
+    </tbody>
+</table>

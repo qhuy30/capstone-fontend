@@ -1,0 +1,121 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Folder_Insert">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header
+                modal-header-title="{{ctrlChild._insert_folder_value.type === 'folder' ? ('AddFolder' | l) : ('AddFile' | l)}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="insertForm">
+                    <div class="row part">
+
+                        <div class="form-group col-md-12"
+                            ng-if="ctrlChild._insert_folder_value.type === 'folder'">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">{{'Title'|l}}
+                                    </span>
+                                </div>
+                                <input
+                                    ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'File','insert','doing')"
+                                    type="text"
+                                    ng-model="ctrlChild._insert_folder_value.name"
+                                    class="form-control"
+                                    name="insert_folder_name"
+                                    placeholder="Input name"
+                                    ng-class="{ 'is-invalid': insertForm.insert_folder_name.$invalid }"
+                                    required />
+                            </div>
+                        </div>
+
+
+
+                        <div class="row part" style="width: 100%;"
+                            ng-if="ctrlChild._insert_folder_value.type === 'file'">
+                            <div class="col-md-6 form-group">
+                                <div ng-if="ctrlChild._insert_folder_value.files.length ==0"
+                                    class="no-data">
+                                    {{'NoAttachment'|l}}
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+
+                                        <tbody>
+                                            <tr
+                                                ng-repeat="item in ctrlChild._insert_folder_value.files">
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <attachment-just-show
+                                                        my-item="item">
+                                                    </attachment-just-show>
+                                                </td>
+                                                <td><i class="fas fa-times text-danger"
+                                                        ng-click="ctrlChild.removeFile_insert(item)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <table
+                                    class="diskuf-selector-table wd-fa-add-file-light-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                colspan=" 0">
+                                                <div class="diskuf-uploader">
+                                                    <span
+                                                        class="wd-fa-add-file-light">
+                                                        <span
+                                                            class="wd-fa-add-file-light-text">
+                                                            <span
+                                                                class="wd-fa-add-file-light-title">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                            </span>
+                                                            <span
+                                                                class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                        </span>
+                                                    </span>
+                                                    <input id="fileInput"
+                                                        class="diskuf-fileUploader wd-test-file-light-inp "
+                                                        type="file" size="1"
+                                                        multiple
+                                                        style="width:100%;"
+                                                        attachment-multiple
+                                                        attachment-multiple-func="ctrlChild.getFile(params)">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" ng-if="!ctrlChild._insert_folder_value.isGeneral">
+                            <div class="form-group">
+                                <pick-user-multi
+                                    pick-func="ctrlChild.pickShare_insert(params)"
+                                    id-value="ctrlChild._insert_folder_value.share"
+                                    label="{{'ShareFolder'|l}}" require="true">
+                                </pick-user-multi>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new
+                    modal-button-new-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-new-objname="File"
+                    modal-button-new-actionname="insert"
+                    modal-button-new-invalid="insertForm.$invalid"
+                    modal-button-new-func="ctrlChild.insert()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

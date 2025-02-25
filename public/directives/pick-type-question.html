@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="label">
+    {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+  </div>
+  <div class="value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="show-value" ng-click="init()">
+      {{selectedItem.title_vi}}
+      <span class="dropdown-toggle">&nbsp;</span>
+    </div>
+
+  </div>
+  <input type="text" ng-required="require" ng-model="selectedItem[title_vi]" ng-show="false" />
+  <div class="dropdown-menu">
+
+    <div class="tool">
+      <div class="search">
+        <input type="text" ng-model="search" my-watch-text-input my-scope="search" ng-change="refreshData()" my-func="init()"
+          my-start="!_notyetInit" placeholder="{{'FindByName'|l}}">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+    <div class="table-responsive" style="margin-top: 35px">
+      <table class="table-hover" style="width: 100%;">
+        <tbody>
+          <tr ng-repeat="item in data|orderBy:sort.name:sort.value track by $index" ng-click="pick(item)">
+            <td><i class="fas fa-angle-double-right"></i>&nbsp;&nbsp;{{item.title_vi}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div ng-if="ctrl.data.length ==0" class="no-data">{{'NoData'|l}}</div>
+    <pagination pagination-ctrlname="{{_ctrlName}}" pagination-objname="Count" pagination-actionname="count"
+      pagination-currentpage="currentPage" pagination-noi="numOfItemPerPage" pagination-total="totalItems"
+      pagination-func="load(params)"></pagination>
+  </div>
+
+
+
+  <!-- <button ng-click="init()" type="button "  ng-disabled="disable">
+    {{'Pick'|l}}
+  </button> -->
+  <!-- <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+    <i class="fas fa-times"></i>
+  </button> -->
+
+</div>

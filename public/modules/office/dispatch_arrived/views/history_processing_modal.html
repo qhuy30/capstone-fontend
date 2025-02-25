@@ -1,0 +1,44 @@
+<div class="table-responsive">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>{{'Time'|l}}</th>
+        <th>{{'FullName'|l}}</th>
+        <th>{{'Department'|l}}</th>
+        <th>{{'Action'|l}}</th>
+        <th>{{'Note'|l}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="height: 3rem;" ng-repeat="item in ctrl.Item.events|orderBy:'-time'">
+        <td class="hour">
+          <small>
+            <!-- <span class="grey-text float-left">
+              <i class="fa fa-clock" aria-hidden="true"></i>
+              <time-show time-show-type="short" time-show-data="item.time">
+              </time-show> </span
+              {{item.time | date:' HH:mm:ss'}} -->
+            
+            <span class="grey-text">
+              <i class="fa fa-clock" aria-hidden="true"></i>
+              <time-show time-show-data="item.time"></time-show>
+            </span>  
+
+          </small>
+        </td>
+        <td>
+          <show-username username="item.username"> </show-username>
+        </td>
+        <td>
+          <show-department department="item.department"> </show-department>
+        </td>
+        <td>
+          {{item.action|l}}
+          <span ng-show="item.to.length>0">{{'to'|l}}:&nbsp;</span>
+          <show-username ng-repeat="t in item.to" username="t"> </show-username>
+        </td>
+        <td>{{item.note}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

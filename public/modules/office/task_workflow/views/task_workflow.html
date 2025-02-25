@@ -1,0 +1,98 @@
+<my-content>
+  <content-content>
+    <div ng-controller="task_workflow_controller as ctrl" class="task-workflow-feature">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group row">
+            <button-new button-new-func="ctrl.prepareInsert()" button-new-label="{{'New'|l}}"
+              button-new-modal="#modal_Task_Workflow_Insert">
+            </button-new>
+          </div>
+          <more-option-bar>
+            <bar-content class="row">
+              <div class="col-md-6 form-group">
+                <button-select button-select-label="{{'Display'|l}}" button-select-data="[15,30,50,100]"
+                  button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'TaskWorkflow','load','doing')"
+                  button-select-func="ctrl.chooseNumberItem(params)" button-select-model="ctrl.numOfItemPerPage">
+                </button-select>
+              </div>
+
+            </bar-content>
+          </more-option-bar>
+
+          <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData">
+          </button-search>
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" ng-click="ctrl.switchTab('created')">
+              <a class="nav-link" ng-class="{'active':ctrl.tab =='created'}">{{'Created'|l}}
+              </a>
+            </li>
+            <li class="nav-item" ng-click="ctrl.switchTab('all')" ng-show="['Office.TaskWorkflow.Manager']|checkRule">
+              <a class="nav-link" ng-class="{'active':ctrl.tab =='all'}">{{'All'|l}}</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade active show">
+              <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="TaskWorkflow" async-actionname="load">
+                <async-success>
+                  <div class="table-responsive main-data">
+                    <table class="table table-sm">
+                      <tbody>
+                        <tr ng-repeat="item in ctrl.task_workflows">
+                          <!-- <td>
+                            <small><span class="grey-text float-left"><i class="fa fa-clock" aria-hidden="true"></i>
+                                <time-show time-show-type="short" time-show-data="item.events[0].time">
+                                </time-show> </span></small>
+                          </td> -->
+                          <td>
+                            <show-username username="item.username" employee="item.employee">
+                            </show-username>
+                          </td>
+                          <td>
+                            <a class="text-dark" link-details link-details-display="{{item.title}}"
+                              link-details-url="/notify-details?{{item._id}}"
+                              link-details-route="notify-details">{{item.title}}</a>
+
+                          </td>
+                          <td>
+                            <show-status id-value="item.status"></show-status>
+                          </td>
+                          <td>
+                            <button-edit-item
+                              button-edit-item-modal="#modal_Task_Workflow_Update"
+                              button-edit-item-func="ctrl.prepareUpdate(params)"
+                              button-edit-item-params="item"
+                            >
+                            </button-edit-item>
+                            <button-delete-item ng-show=" item.employee == $root.logininfo.data.employee
+                                                                && item.username == $root.logininfo.data.username
+                                                                "
+                              button-delete-item-modal="#modal_Task_Workflow_Delete"
+                              button-delete-item-func="ctrl.prepareDelete(params)" button-delete-item-params="item">
+                            </button-delete-item>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div ng-if="ctrl.notifys.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </div>
+                  <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="TaskWorkflow"
+                    pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                    pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                    pagination-func="ctrl.load(params)"></pagination>
+                </async-success>
+              </my-Async>
+            </div>
+          </div>
+          <div ng-include="ctrl._urlInsertModal"></div>
+          <div ng-include="ctrl._urlDeleteModal"></div>
+          <div ng-include="ctrl._urlUpdateModal"></div>
+        </div>
+      </div>
+    </div>
+  </content-content>
+</my-content>

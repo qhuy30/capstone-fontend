@@ -1,0 +1,70 @@
+<div class="container" ng-class="{ 'disabled': disable }">  
+  <div class="label">
+    {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+  </div>
+
+  <div class="main-container">
+    <div class="main-content">
+      <div  class="value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div ng-style="{ 'background-color': disable ? '#d3d9e2' : '' }" class="show-value" ng-click="init()">
+          {{selectedItem[showField][$root.Language.current]}}
+          <span class="dropdown-toggle">&nbsp;</span>
+        </div>
+
+      </div>
+      <input type="text" ng-required="require" ng-model="selectedItem[showField][$root.Language.current]" ng-show="false" />
+      <div class="dropdown-menu">
+
+        <div class="table-responsive">
+          <table class="table-hover" style="width: 100%;">
+            <tbody>
+              <tr ng-repeat="item in data | orderBy:sort.name:sort.value track by $index" 
+                ng-click="pick(item)"
+                ng-class="{
+                  'current-proposed-item': currentRoom === item.value && item.busyTimes.length === 1,
+                  'current-other-proposed-item': currentRoom === item.value && item.busyTimes.length > 1,
+                  'proposed-item': item.isBusy && item.bookable && currentRoom !== item.value,
+                  'booked-item': !item.bookable
+                }">
+                <td>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-left" style="min-width: 300px;">
+                      <i class="fas fa-angle-double-right"></i>&nbsp;&nbsp;
+                      <span ng-class="{'busy-text': !item.bookable}">
+                        {{item[showField][$root.Language.current]}}
+                      </span>
+                    </div>
+              
+                    <div ng-if="!item.bookable" class="text-center">
+                      <span ng-if="currentRoom !== item.value" class="info-text">{{'This room is already scheduled'|l}}</span>
+                      <span ng-if="currentRoom === item.value && item.busyTimes.length > 1" class="info-text">{{'This room is being proposed but is already scheduled'|l}}</span>
+                    </div>
+
+                    <div ng-if="item.isBusy && item.bookable" class="text-center">
+                      <span ng-if="currentRoom === item.value && item.busyTimes.length === 1" class="info-text">{{'This room is being proposed'|l}}</span>
+                      <span ng-if="currentRoom === item.value && item.busyTimes.length > 1" class="info-text">{{'This room is being proposed and has other proposed bookings'|l}}</span>
+                      <span ng-if="currentRoom !== item.value" class="info-text">{{'This room has other proposed bookings'|l}}</span>
+                    </div>
+
+                    <div ng-if="item.isBusy" class="text-right mr-2">
+                      <div ng-repeat="time in item.busyTimes | orderBy:'date_start' track by $index"
+                        ng-class="{
+                          'time-highlight': currentRegistration === time.registration_id
+                        }">
+                        <time-show time-show-type="long" time-show-data="time.date_start"></time-show>
+                        -
+                        <time-show time-show-type="long" time-show-data="time.date_end"></time-show>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div ng-if="data.length ==0" class="no-data">{{'NoData'|l}}</div>
+      </div>
+    </div>
+  </div>
+</div>

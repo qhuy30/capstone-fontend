@@ -1,0 +1,224 @@
+<div>
+    <!-- <a href="/dispatch?tab=Management">
+        <button
+          class="btn"><i class="fas fa-times"></i>
+        </button>
+    </a> -->
+    <section class="dispatch_arrived_details" ng-show="ctrl.Item._id" >
+        <div class="card">
+            <div class="card-body row pt-2 pb-3" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-12">
+                    <div style="width: 100%">
+                        <p class="grey-text">
+                            {{'WrittenBy'|l}}
+                            <a><strong>
+                                <show-department
+                                department="ctrl.Item.department">
+                                </show-department> </strong></a>,
+                            <time-show time-show-data="ctrl.Item.events[0].time" time-show-type="long">
+                            </time-show>
+                        </p>
+                    </div>
+                    <div>
+                        <show-status id-value="ctrl.Item.status"></show-status>
+                    </div>
+                </div>
+                <div class="table-detail">
+                    <table class="info-table">
+                        <tr>
+                            <th>{{'Document number'|l}}</th>
+                            <td>
+                                <get-field-directory
+                                    id-value="ctrl.Item.code"
+                                    extend="ctrl.IncommingDispatchBook_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                            <th>{{'DispatchArrivedNumber'|l}}</th>
+                            <td>{{ctrl.Item.incoming_number}}</td>
+                        </tr>
+                        <tr>
+                            <th>{{'NumberReference'|l}}</th>
+                            <td>{{ctrl.Item.symbol_number}}</td>
+                            
+                            <th>{{'RelatedDate'|l}}</th>
+                            <td>
+                                <time-show time-show-data="ctrl.Item.date_sign"
+                                time-show-type="justdate"></time-show>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'DocumentType'|l}}</th>
+                            <td>
+                                <get-field-directory
+                                    id-value="ctrl.Item.type"
+                                    extend="ctrl.DocumentType_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                            <th>{{'Duration'|l}}</th>
+                            <td >
+                                <time-show time-show-data="ctrl.Item.expried"
+                                time-show-type="justdate"></time-show>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'Field'|l}}</th>
+                            <td colspan="3">
+                                <get-field-directory
+                                    id-value="ctrl.Item.field"
+                                    extend="ctrl.Field_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> {{'urgency'|l}} </th>
+                            <td>
+                                <get-field-directory
+                                    id-value="ctrl.Item.urgency_level"
+                                    extend="ctrl.IncommingDispatchPririoty_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                            <th> {{'ConfidentialityLevel'|l}} </th>
+                            <td>
+                                <get-field-directory
+                                    id-value="ctrl.Item.security_level"
+                                    extend="ctrl.securityLevel_Config"
+                                    localization="true">
+                                </get-field-directory>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> {{'excerpt'|l}} </th>
+                            <td colspan="3">{{ctrl.Item.content}}</td>
+                        </tr>
+                        <tr>
+                            <th> {{'Issuing Agency'|l}} </th>
+                            <td colspan="3" ng-switch="ctrl.Item.scope">
+                                <span ng-switch-when="internal">
+                                    <show-department department="ctrl.Item.sending_place"></show-department>
+                                  </span>
+                                  <span ng-switch-when="external">
+                                    {{ctrl.Item.sending_place}} 
+                                  </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> {{'processing unit'|l}} </th>
+                            <td colspan="3">
+                                <show-department department="ctrl.Item.department_execute"></show-department>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> {{'Department receives to know'|l}} </th>
+                            <td colspan="3">
+                                <span ng-repeat="dept in ctrl.Item.department_receiver">
+                                    <show-department department="dept.department"></show-department>
+                                    <span ng-if="!$last">,</span>
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th>{{'FileDispatchArrived'|l}}</th>
+                            <td colspan="3">
+                                <attachment-show ng-repeat="at in ctrl.Item.incoming_file" 
+                                    attachment-show-item="at"
+                                    attachment-show-func="ctrl.loadfile(params)"
+                                    attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                                    attachment-show-service-name="'dispatch_arrived'">
+                                </attachment-show>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{'Attachment'|l}}</th>
+                            <td colspan="3">
+                                <attachment-show ng-repeat="at in ctrl.Item.attachments" 
+                                    attachment-show-item="at"
+                                    attachment-show-func="ctrl.loadfile(params)"
+                                    attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                                    attachment-show-service-name="'dispatch_arrived'">
+                                </attachment-show>
+                            </td>
+                        </tr>
+                        <tr ng-if="(ctrl.Item.department_receiver | filter:{seen:true}).length > 0">
+                            <th> {{'UnitHasSeen'|l}} </th>
+                            <td colspan="3">
+                                <div ng-if="dept.seen" ng-repeat="dept in ctrl.Item.department_receiver" class="department-item">
+                                    <show-department department="dept.department"></show-department>
+                                    <span class="tooltip-container" ng-if="dept.seen">
+                                        <i class="fas fa-eye text-success"></i>
+                                        <span class="tooltip-text">
+                                            {{dept.seen_at | date:'HH:mm:ss - dd/MM/yyyy'}}
+                                        </span>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- <tr ng-if="ctrl.Item.events[ctrl.Item.events.length-1].note">
+                            <th> {{'Note'|l}} </th>
+                            <td colspan="3">
+                                {{ctrl.Item.events[ctrl.Item.events.length-1].note}} 
+                                
+                                <span style="font-size: 0.7rem; color: grey;text-wrap: nowrap;">
+                                    {{'by'|l}}
+                                </span>
+                                <strong>
+                                    <show-username show-abbreviationwith="false" with-competence="true" with-department="false" hide-image="true" username="ctrl.Item.events[ctrl.Item.events.length-1].username">
+                                    </show-username>
+
+                                </strong>
+                            </td>
+                        </tr> -->
+                        
+                    </table>
+                </div>
+                <!-- <div class="col-md-12" ng-if="ctrl.Item.is_handler && ['Created', 'Rejected', 'WaitingForApproval', 'WaitingForReview'].includes(ctrl.Item.status)">
+                    <div style="border-top: 1px solid #eee; margin-top: 10px;"></div>
+                    <div class="pt-3 w-100 text-right">
+                        <button-update
+                            button-update-label="{{'Edit'|l}}"
+                            button-update-modal="#modal_DA_Dir_Update"
+                        ></button-update>
+                    </div>
+                </div> -->
+                <div class="col-md-12">
+                    <div style="border-top: 1px solid #eee; margin-top: 10px;"></div>
+                    <div class="pt-3 w-100 text-right">
+                        <button-update
+                            ng-if="ctrl.Item.allow_edit"
+                            button-update-label="{{'Edit'|l}}"
+                            button-update-modal="#modal_DA_Forward"
+                            button-update-func="ctrl.prepareAssess(params)"
+                            button-update-params="{item:ctrl.Item, action:'update'}"
+                        ></button-update>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body row pt-2 pb-3" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-12" ng-controller="switch_tab_details_controller as ctrlContent">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-if="ctrlContent.show_tab_process" class="nav-item" ng-click="ctrlContent.switchTab('Process')">
+                            <span class="nav-link" ng-class="{'active': ctrlContent.tab == 'Process'}">{{'Process' | l}}</span>
+                        </li>
+                        <li ng-if="ctrlContent.show_tab_process"  class="nav-item" ng-click="ctrlContent.switchTab('HistoryProcess')">
+                            <span class="nav-link" ng-class="{'active': ctrlContent.tab == 'HistoryProcess'}">{{'HistoryProcessing' | l}}</span>
+                        </li>
+                        <!-- <li ng-if="ctrlContent.show_tab_process"  class="nav-item" ng-click="ctrlContent.switchTab('RelatedDocument')">
+                            <span class="nav-link" ng-class="{'active': ctrlContent.tab == 'RelatedDocument'}">{{'RelatedDocuments' | l}}</span>
+                        </li> -->
+          
+                    </ul>
+                    <div ng-include="ctrlContent._urlContent" style="padding: 20px;"></div>
+                    <div ng-include="ctrl._urlForwardModal"></div>
+                    <div ng-include="ctrl._urlReceiveModal"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <dispatch-arrived-update item="ctrl.Item" handle-success-func="ctrl.handleUpdateSuccess()"></dispatch-arrived-update>
+</div>

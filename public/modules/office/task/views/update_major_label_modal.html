@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal_majorLabel_Update" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'UpdateMajorLabel'|l}}"></modal-header>
+            <div class="modal-body">
+                <form name="updateForm">
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Label','update','doing')"
+                                   type="text" ng-model="ctrlChild._update_majorLabel_value.title" class="form-control"
+                                   name="update_title" placeholder="{{'InputTitle'|l}}"
+                                   ng-class="{ 'is-invalid': updateForm.update_title.$invalid }" required />
+                        </div>
+                        <div class="pt-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" ng-model="ctrlChild._update_majorLabel_value.labelChosen_type" name="update_labelChosen_type"
+                                       id="update_radio_all" value="all" ng-class="{ 'is-invalid': updateForm.update_labelChosen_type.$invalid }" required>
+                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_all">{{'AllDepartments'|l}}</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" ng-model="ctrlChild._update_majorLabel_value.labelChosen_type" name="update_labelChosen_type"
+                                       id="update_radio_specific" value="specific" ng-class="{ 'is-invalid': updateForm.update_labelChosen_type.$invalid }" required>
+                                <label class="form-check-label font-weight-normal text-reset" for="update_radio_specific">{{'SomeDepartments'|l}}</label>
+                            </div>
+                        </div>
+                        <div class="item pt-3" ng-if="ctrlChild._update_majorLabel_value.labelChosen_type === 'specific'">
+                            <div class="label">
+                                <organization-multi  label={{'Departmemnt'|l}}
+                                                     id-value="ctrlChild._update_majorLabel_value.departments"
+                                                     select-func="ctrlChild.handleUpdateMajorLabel(params)"
+                                >
+                                </organization-multi>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrlChild._ctrlName}}"
+                                   modal-button-save-objname="Label"
+                                   modal-button-save-actionname="update"
+                                   modal-button-save-invalid="insertForm.$invalid || (ctrlChild._update_majorLabel_value.labelChosen_type !== 'all' && !ctrlChild._update_majorLabel_value.departments.length)"
+                                   modal-button-save-func="ctrlChild.update_major_label()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

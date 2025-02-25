@@ -1,0 +1,26 @@
+<a class="waves-effect ringbell-header-item task_overdue_notify" href="/task-details?code={{item.params.taskCode}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span >
+                <span >{{'Task'|l}}</span>&nbsp;
+                <span class="title" >[{{item.params.code}}]&nbsp;{{item.params.title}}</span>&nbsp;
+                <span >{{'Overdue'|l}}</span>&nbsp;
+                <span >{{ctrlHeaders.countDateDiff(item.params.to_date)}}</span>&nbsp;
+                <span>{{'Days'|l}}</span>&nbsp;
+                <span>{{'FromDate'|l}}</span>&nbsp;
+                <time-show time-show-type="justdate" time-show-data="item.params.to_date">
+                </time-show>
+            </span>
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+
+    </div>
+
+</a>

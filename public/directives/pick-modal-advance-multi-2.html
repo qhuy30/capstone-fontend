@@ -1,0 +1,59 @@
+<div class="container" ng-class="{ 'disabled': disable }">
+    <div ng-if="hiddenLabel" class="label">
+        {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+    </div>
+    <div class="value-label" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="show-value-label flex-wrap" style="display:flex;align-items: center" ng-click="init()">
+            <div ng-repeat="item in showItem" class="label-container">
+                <span >&nbsp;&nbsp;{{item.title}}</span>
+                <span ng-show="!doing" ng-click="remove(item)" class="label-remove"><i class="fas fa-times"></i></span>
+            </div>
+            <span class="dropdown-toggle" style="margin-left: auto"> <span class="label-remove" ng-click="removeAll()"><i class="fas fa-times"></i></span>&nbsp;</span>
+        </div>
+    </div>
+    <input type="text" ng-required="require" ng-model="selectedItem.title"
+           ng-show="false" />
+    <div class="dropdown-menu">
+
+        <div class="tool">
+            <div class="search">
+                <input type="text" ng-model="search" my-watch-text-input my-scope="search" my-func="init()"
+                       my-start="true" placeholder="{{'FindByName'|l}}">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="table-responsive" style="margin-top: 35px">
+            <table class="table-hover" style="width: 100%;">
+                <tbody >
+                <tr ng-repeat="item in data">
+                    <td style="border-left: none;" class="cursor-pointer">
+                        <div ng-click="pickMajor(item)" class="no-hover">
+                            <span>
+                                <span ng-show="item.expand" ng-click="expandLabel(item); $event.stopPropagation();" class="no-hover">
+                                    <i class="fas fa-angle-right no-hover pl-2" ng-show="!item.open"></i>
+                                    <i class="fas fa-angle-down no-hover pl-2" ng-show="item.open"></i>
+                                </span>
+                                <span ng-show="!item.expand" style="width: 16px;display: inline-block;" class="no-hover">
+                                    <i class="fas fa-angle-double-right pl-2"></i>
+                                </span>
+                                &nbsp;&nbsp;{{item.title}}
+                            </span>
+                        </div>
+                        <div ng-show="item.child_labels.length" style="border-left: none">
+                            <ul ng-repeat="child in item.child_labels" style="border-left: none; margin: 4px; padding-left: 24px; padding-top: 5px">
+                                <li ng-click="pick(item, child)" style="list-style: none;">
+                                    &nbsp;<i class="fas fa-square-full" style="color: #80808052"></i>&nbsp;&nbsp;{{child.title}}
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="ctrl.data.length ==0" class="no-data">{{'NoData'|l}}</div>
+        <pagination pagination-ctrlname="{{_ctrlName}}" pagination-objname="Count" pagination-actionname="count"
+                    pagination-currentpage="currentPage" pagination-noi="numOfItemPerPage" pagination-total="totalItems"
+                    pagination-func="load(params)"></pagination>
+    </div>
+</div>

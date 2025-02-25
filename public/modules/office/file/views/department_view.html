@@ -1,0 +1,241 @@
+<div ng-controller="file_department_controller as ctrlChild"
+    class="file-department-feature">
+    <div ng-include="ctrlChild._urlInsertFolderModal"></div>
+    <div ng-include="ctrlChild._urlDeleteFolderModal"></div>
+    <div ng-include="ctrlChild._urlUpdateFolderModal"></div>
+    <div class="menu">
+        <ul>
+            <li ng-repeat="d in ctrlChild.Departments"
+                ng-click="ctrlChild.chooseDepartment(d)"
+                ng-class="{'active': ctrlChild.currentDepartment.id === d.id}">
+                <div class="menu-item">
+                    {{d.title[$root.Language.current]}}
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content" ng-if="ctrlChild.currentDepartment.id">
+        <more-option-bar class="more-option">
+            <bar-content class="row">
+                <div class="col-md-12 form-group">
+                    <button-select button-select-label="{{'Display'|l}}"
+                        button-select-data="[15,30,50,100]"
+                        button-select-disabled="$root.statusValue.get(ctrlChild._ctrlName,'File','loadListFile','doing')"
+                        button-select-func="ctrlChild.chooseNumberItem(params)"
+                        button-select-model="ctrlChild.numOfItemPerPage_File">
+                    </button-select>
+                </div>
+
+                <div class="col-md-6 form-group date-filter">
+                    <div class="title">{{'FromDate'|l}}:</div>
+                    <div class="value">
+                        <div>
+                            <input type="date"
+                                ng-model="ctrlChild._filterFromDate_created"
+                                ng-change="ctrlChild.refreshData_created()" />
+                        </div>
+                        <div>
+                            <time-show2
+                                time-show-data="ctrlChild._filterFromDate_created"
+                                time-show-type="just_date"
+                                bind-object="true"></time-show2>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group date-filter">
+                    <div class="title">{{'LastUpdate'|l}}:</div>
+                    <div class="value">
+                        <div>
+                            <input type="date"
+                                ng-model="ctrlChild._filterToDate_created"
+                                ng-change="ctrlChild.refreshData_created()" />
+                        </div>
+                        <div>
+                            <time-show2
+                                time-show-data="ctrlChild._filterToDate_created"
+                                time-show-type="just_date" bind-object="true">
+                            </time-show2>
+                        </div>
+
+                    </div>
+                </div>
+            </bar-content>
+        </more-option-bar>
+
+        <div class="created container">
+            <div class="label">
+                <i class="fas fa-chevron-left"
+                    ng-class="{'clickable': ctrlChild.pathSelected != '', 'unclickable': ctrlChild.pathSelected == ''}"
+                    ng-click="ctrlChild.pathSelected != '' && ctrlChild.backParentFile()"
+                    ng-style="{'color': ctrlChild.pathSelected != '' ? 'blue' : 'gray'}">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+                <i
+                    class="fas fa-tasks ">&nbsp;&nbsp;{{ctrlChild.pathSelected}}</i>
+            </div>
+            <div class="content">
+                <div class="file-container">
+                    <div style="border-top:1px solid #eee;margin-top:10px;">
+                    </div>
+                    <div class="file-content">
+
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover"
+                                ng-class="{'no-data':ctrlChild.Files.length ===0}">
+                                <thead>
+                                    <tr>
+                                        <td class="tool">
+                                            <div class="new">
+                                                <button-new-folder
+                                                    ng-show="'Office.File.Create_Folder_Department'|file_folder_department_checkrule:ctrlChild.currentDepartment.id"
+                                                    button-new-func="
+                                                    ctrlChild.prepareInsertFolder('folder')"
+                                                    button-new-label="{{'AddFolder'|l}}"
+                                                    button-new-modal="#modal_Folder_Insert"
+                                                    is-folder="true">
+
+                                                </button-new-folder>
+                                                <button-new-folder
+                                                    ng-show="'Office.File.Create_File_Department'|file_folder_department_checkrule:ctrlChild.currentDepartment.id"
+                                                    button-new-func="ctrlChild.prepareInsertFolder('file')"
+                                                    button-new-label="{{'AddFile'|l}}"
+                                                    button-new-modal="#modal_Folder_Insert"
+                                                    is-file="true">
+                                                </button-new-folder>
+                                            </div>
+                                            <div class="search">
+                                                <input type="text"
+                                                    ng-model="ctrlChild._searchByKeyToFilterData_create"
+                                                    my-watch-text-input
+                                                    my-scope="ctrlChild._searchByKeyToFilterData_create"
+                                                    my-func="ctrlChild.refreshData_created()"
+                                                    my-start="!ctrlChild._notyetInit"
+                                                    placeholder="{{'FindByName'|l}}">
+                                                <i class="fas fa-search"></i>
+                                            </div>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;width: 160px; text-align: center;">
+                                            {{'Creator'|l}}
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                            <div class="title">{{'FromDate'|l}}:
+                                            </div>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                            {{'LastUpdate'|l}}
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                            {{'FileSize'|l}}
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                            {{'Version'|l}}
+                                        </td>
+                                        <td style="width: 150px;">
+
+                                        </td>
+                                    </tr>
+
+                                </thead>
+                                <tbody id="taskList">
+                                    <tr ng-repeat="item in ctrlChild.Files">
+                                        <td>
+                                            <div ng-click="ctrlChild.chooseFile(item.name)"
+                                                ng-if="item.type==='folder'"
+                                                class="folder-name">
+                                                <i
+                                                    class="fas fa-folder custom-folder"></i>
+                                                <span>
+                                                    {{item.name }}</span>
+                                            </div>
+                                            <attachment-show
+                                                ng-if="item.type==='file'"
+                                                attachment-show-item="item.value"
+                                                attachment-show-params="{id:item._id,name:item.value.name}">
+                                            </attachment-show>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                            <show-username username="item.username"
+                                                just-name="false">
+                                            </show-username>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            <div>
+                                                <time-show2
+                                                    time-show-data="item.from_date"
+                                                    time-show-type="just_date">
+                                                </time-show2>
+                                            </div>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            <div>
+                                                <time-show2
+                                                    time-show-data="item.last_update_date"
+                                                    time-show-type="just_date">
+                                                </time-show2>
+                                            </div>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            <div>
+                                                <span>
+                                                    {{item.size|byteFormat}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            <div>
+                                                <span>
+                                                    {{item.version}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td
+                                            style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            <div class="group-button">
+                                                <button-edit-item
+                                                    class="item-button"
+                                                    ng-show="(item.type === 'file' ? 'Office.File.Update_File_Department' : 'Office.File.Update_Folder_Department') | file_folder_department_checkrule:ctrlChild.currentDepartment.id"
+                                                    button-edit-item-modal="#modal_Folder_Update"
+                                                    button-edit-item-func="ctrlChild.prepareUpdate(params)"
+                                                    button-edit-item-params="item">
+                                                </button-edit-item>
+                                                <button-delete-item
+                                                    class="item-button"
+                                                    ng-show="(item.type === 'file' ? 'Office.File.Delete_File_Department' : 'Office.File.Delete_Folder_Department') | file_folder_department_checkrule:ctrlChild.currentDepartment.id"
+                                                    button-delete-item-modal="#modal_Folder_Delete"
+                                                    button-delete-item-func="ctrlChild.prepareDelete(params)"
+                                                    button-delete-item-params="item">
+                                                </button-delete-item>
+                                                <i class="fas fa-download custom-download-button"
+                                                    ng-if="item.type === 'file'"
+                                                    ng-click="ctrlChild.downloadFile(item)"></i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div ng-if="ctrlChild.Files.length ==0" class="no-data">
+                            {{'NoData'|l}}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

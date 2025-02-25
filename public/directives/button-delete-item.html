@@ -1,0 +1,8 @@
+<button 
+type="button" 
+class="btn btn-outline-dark btn-sm"
+    ng-click="buttonEditClick();$event.stopPropagation();"
+    >
+    <i class="far fa-trash-alt"></i>
+    <span ng-if="buttonLabel">{{buttonLabel | l}}</span>
+</button>

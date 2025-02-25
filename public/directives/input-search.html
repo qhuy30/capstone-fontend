@@ -1,0 +1,16 @@
+<div class="container" ng-class="{ 'disabled': disable }">
+        <div class="tool">
+            <div class="search-input">
+                <input type="text"
+                       ng-model="search"
+                       my-watch-text-input
+                       my-scope="search"
+                       my-func="init()"
+                       my-delay="300"
+                       my-start="!_notyetInit"
+                       placeholder="{{'FindByName'|l}}"
+                />
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+</div>

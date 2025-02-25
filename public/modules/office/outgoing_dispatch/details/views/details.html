@@ -1,0 +1,11 @@
+<div ng-controller="odb_details_controller as ctrl">
+  <my-content>
+    <content-breadcrumb>
+      <breadcrumb items="ctrl.breadcrumb"></breadcrumb>
+    </content-breadcrumb>
+    <content-content>
+      <outgoing-dispatch-details item-id="ctrl.thisId" item-code="ctrl.code"
+        set-breadcrumb="ctrl.setBreadcrumb(params)"></outgoing-dispatch-details>
+    </content-content>
+  </my-content>
+</div>

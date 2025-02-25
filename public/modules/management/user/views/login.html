@@ -1,0 +1,306 @@
+<style>  
+  .case {
+      margin-bottom: 1rem;
+  }
+
+  .case .fw-bold {
+    color: #4285f4;
+  }
+  
+
+  code {
+    color: #f44242;
+    font-size: 99%;
+  }
+
+  .example {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      padding-bottom: 0rem!important;
+  }
+
+  .example ul {
+      list-style-type: none;
+      padding-left: 0;
+  }
+
+  .example ul li {
+      padding: 0.25rem 0;
+  }
+
+  .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+  }
+  
+  .close-button {
+      border: none;
+      background: none;
+      font-size: 1.5rem;
+      color: #666;
+      padding: 0;
+  }
+  
+  .search-box {
+      position: relative;
+      margin-bottom: 1rem;
+  }
+  
+  .search-box .form-control {
+      padding-right: 30px;
+  }
+  
+  .search-box::after {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #28a745;
+  }
+  
+  .department-list {
+      list-style: none;
+      padding: 0;
+  }
+  
+  .department-item {
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+      color: #666;
+  }
+  
+  .department-link {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+  }
+  
+  .bottom-note {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+  }
+  .copy-button-container {
+            position: relative;
+        }
+        
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:focus {
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+</style>
+<div class="app flex-row align-items-center" id="login-page" ng-controller="user_login_controller as ctrl">
+  <img ng-src="{{ctrl.backgroundLogin.urlDisplay}}" style="
+  background-position:center;
+  background-repeat:no-repeat;
+  height: 100%;
+  width:100%;
+   position: absolute;
+   background-size:cover;opacity: 1;" />
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8" style="max-height: 700px;" ng-show="ctrl.accounts.length > 0">
+        <div class="card-group">
+          <div class="card p-4" style="box-shadow: 2px  #c20;">
+            <div class="card-body">
+              <h1 style="font-weight: 600;">{{'RecentlyLogged'|l}}</h1>
+              <p style="color: #929292; font-size: 14px;">{{'Click on your photo'|l}}</p>
+              <div class="account-container">
+                <div class="account-box" ng-repeat="account in ctrl.accounts">
+                  <div ng-mouseenter="showTooltip()" ng-mouseleave="hideTooltip()" ng-click="ctrl.switchAccount(account)">
+                    <div class="account-image">
+                      <img ng-src="{{account.imageUrl}}"/>
+                    </div>
+                    <p>{{account.title}}</p>
+                  </div>
+                  <div title="{{'Remove account from this site'|l}}">
+                    <button ng-click="ctrl.removeAccount(account)" class="close-btn">&times;</button>
+                  </div>
+                </div>
+              </div>        
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-group">
+          <div class="card p-4" style="box-shadow: 2px  #c20;">
+            <div class="card-body">
+              <form class="form-horizontal" name="loginForm" id="loginForm">
+                <div class="logo-login">
+                  <img ng-src="{{ctrl.logo.urlDisplay}}" />
+                </div>
+                <div class="form-group mb-3">
+                  <div class="input-prepend input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                    <input type="text" placeholder="Username" name="username_login" class="form-control" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Login','login','doing')" ng-class="{ 'is-invalid': loginForm.username_login.$invalid }" ng-model="ctrl.username" id="username_login" required />
+                  </div>
+                </div>
+                <div class="form-group mb-4">
+                  <div class="input-prepend input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
+                    <input type="password" placeholder="Password" name="password_login" class="form-control" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Login','login','doing')" ng-class="{ 'is-invalid': loginForm.password_login.$invalid }" ng-model="ctrl.password" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input-checkbox input-checkbox-label="{{'RememberMe'|l}}" input-checkbox-model="ctrl.remember" input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'Login','login','doing')"></input-checkbox>
+                </div>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-primary w-100" ng-enter="ctrl.login()" ng-click="ctrl.login()" ng-disabled="loginForm.$invalid || $root.statusValue.get(ctrl._ctrlName,'Login','login','doing')" type="button">{{'Login'|l}}</button>
+                </div>
+                <div class="red-text" ng-show="!$root.statusValue.get(ctrl._ctrlName,'Login','login','status')">
+                  {{$root.statusValue.get(ctrl._ctrlName,'Login','login','message')|l}}
+                </div>
+
+              </form>
+            </div>
+            <div >
+              <p data-toggle="modal" data-target="#modal_show_dp" class="d-flex justify-content-center align-items-center pt-2" style="color: #929292; font-size: 14px; cursor: pointer;">
+                <i class="far fa-question-circle"></i>&nbsp;
+                {{'LoginInstructions'|l}}
+              </p>
+              <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_show_dp">
+                Launch demo modal
+              </button> -->
+              
+              <!-- Modal -->
+              <div class="modal fade" tabindex="-1" role="dialog" id="modal_show_dp">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                  <div class="modal-content">
+                    <modal-header modal-header-title="{{'LoginInstructions'|l}}"></modal-header>
+                    <div class="modal-body">
+                      <div class="login-container">
+                        <div ng-switch="$root.Language.current">
+                          
+                          <span ng-switch-when="vi-VN" ng-bind-html="ctrl._loginInstructions.value['vi-VN']">
+                            <!-- <div class="case">
+                              <h5 class="fw-bold">Trường hợp 1:</h5>
+                              <p>
+                                Đối với chuyên viên/nhân viên chỉ có <strong>01 vai trò</strong>, nhiệm vụ duy nhất ở 1 đơn vị công tác. 
+                                Đăng nhập bằng <strong>tài khoản email cá nhân</strong>.
+                              </p>
+                              <div class="example p-3 rounded">
+                                <h6 class="fw-bold">Ví dụ:</h6>
+                                <p>
+                                  Chuyên Viên Lê Đoàn Bá Long Phòng CNTT có thể đăng nhập với tên email đầy đủ
+                                  <code>longldb@pnt.edu.vn</code> hoặc tên tài khoản <code>longldb</code>
+                                </p>
+                              </div>
+                            </div>
+                            
+                            <div class="case">
+                              <h5 class="fw-bold">Trường hợp 2:</h5>
+                              <p>
+                                Đối với chuyên viên/nhân viên có <strong>nhiều vai trò</strong>, nhiệm vụ ở nhiều đơn vị công tác khác nhau, 
+                                đăng nhập bằng định dạng sau:
+                              </p>
+                              <div class="example p-3 rounded">
+                                <p class="text-center"><code>{tài khoản email}-{tên viết tắt của đơn vị}</code></p>
+                                <h6 class="fw-bold">Ví dụ:</h6>
+                                <ul class="list-unstyled ms-3">
+                                  <li>TS. BS Võ Thành Liêm đăng nhập với vai trò 
+                                    <strong>trưởng đơn vị Công Nghệ Thông Tin</strong>: <code>liemvt-PCNTT</code>
+                                  </li>
+                                  <li class="mt-2">TS. BS Võ Thành Liêm đăng nhập với vai trò 
+                                    <strong>phó trưởng đơn vị Phòng khám Đa khoa</strong>: <code>liemvt-PKDK</code>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div> -->
+                          </span>
+                          <span ng-switch-when="en-US"  ng-bind-html="ctrl._loginInstructions.value['en-US']">
+                            <!-- <div class="case">
+                                <h5 class="fw-bold">Case 1:</h5>
+                                <p>
+                                    For specialists/staff with only <strong>1 role</strong> and a single task in one working unit, 
+                                    login with <strong>personal email account</strong>.
+                                </p>
+                                <div class="example p-3 rounded">
+                                    <h6 class="fw-bold">Example:</h6>
+                                    <p>
+                                        Specialist Trần Thanh Thắng from the IT Department can log in using the full email name 
+                                        <code>thangtt@pnt.edu.vn</code> or the account name <code>thangtt</code>.
+                                    </p>
+                                </div>
+                            </div>
+                        
+                            <div class="case">
+                                <h5 class="fw-bold">Case 2:</h5>
+                                <p>
+                                    For specialists/staff with <strong>multiple roles</strong> and tasks in different units, 
+                                    login using the following format:
+                                </p>
+                                <div class="example p-3 rounded">
+                                    <p class="text-center"><code>{email account}-{abbreviation of unit}</code></p>
+                                    <h6 class="fw-bold">Example:</h6>
+                                    <ul class="list-unstyled ms-3">
+                                        <li>Dr. BS Võ Thành Liêm logs in with the role of 
+                                            <strong>Head of the Information Technology Department</strong>: <code>liemvt-PCNTT</code>
+                                        </li>
+                                        <li class="mt-2">Dr. BS Võ Thành Liêm logs in with the role of 
+                                            <strong>Deputy Head of the General Clinic Department</strong>: <code>liemvt-PKDK</code>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> -->
+                          </span>
+                        
+                        </div>
+                        
+                        <div class="search-box">
+                            <input ng-change="ctrl.search_dp()" ng-model="ctrl.text_search_dp" type="text" class="form-control" placeholder="{{'Search'|l}}">
+                        </div>
+                
+                        <ul class="department-list">
+                          
+                            <li ng-repeat="dp in ctrl.departments_filter" class="department-item" style="cursor: pointer;">
+                              <div class="d-flex justify-content-between" style="width: 100%;">
+
+                                <span class="department-link">
+                                    {{dp.title[ctrl._language_current]}} - <strong>{{dp.abbreviation}}</strong>
+                                </span>
+                                <button class="btn btn-primary" ng-click="ctrl.copy(dp.id)">
+                                  <i class="fas fa-copy"></i>
+                                </button>
+                      
+                              </div>  
+                            </li>
+                        </ul>
+                    </div>
+                
+        
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Close'|l}}</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

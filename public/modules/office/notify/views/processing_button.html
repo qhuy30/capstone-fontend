@@ -1,0 +1,51 @@
+<button-approval-item
+    button-approval-item-modal="#notify_edit_modal_details"
+    button-approval-item-func="ctrl.prepareEdit(params,'approve')"
+    button-approval-item-params="ctrl.Item"
+    button-label="{{'Approval'}}"
+    ng-if="ctrl.Item.allowApproveDepartment"
+/>
+<button-approval-item
+    ng-if="ctrl.Item.allowApprove"
+    button-approval-item-modal="#notify_approve_modal_details"
+    button-approval-item-func="ctrl.prepareApprove(params)" button-approval-item-params="ctrl.Item"
+    button-label="{{'Approval'}}">
+</button-approval-item>
+
+<button-approval-item
+    ng-if="ctrl.Item.allowApprove_recall"
+    button-approval-item-modal="#notify_approve_modal_details"
+    button-approval-item-func="ctrl.prepareApprove(params)" button-approval-item-params="ctrl.Item"
+    button-label="{{'Approve Recall'}}">
+</button-approval-item>
+
+<button-reject-item
+    ng-if="ctrl.Item.allowApprove || ctrl.Item.allowApproveDepartment"
+    button-reject-item-modal="#notify_approve_modal_details"
+    button-reject-item-func="ctrl.prepareRecalla(params)" button-reject-item-params="ctrl.Item"
+    button-label="{{'Reject'}}" />
+<button-reject-item
+    ng-if="ctrl.Item.allowApprove_recall"
+    button-reject-item-modal="#notify_approve_modal_details"
+    button-reject-item-func="ctrl.prepareRecalla(params)" button-reject-item-params="ctrl.Item"
+    button-label="{{'Reject Recall'}}" />
+
+<button-recall-item
+    ng-if="ctrl.Item.allowRequestRecall"
+    button-recall-item-modal="#modal_Notify_Recall_details"
+    button-recall-item-func="ctrl.prepareRecall(params)" button-recall-item-params="ctrl.Item"
+    button-label="{{'Recall'}}">
+</button-recall-item>
+
+<button-edit-item button-edit-item-modal="#notify_edit_modal_details"
+    button-edit-item-func="ctrl.prepareEdit(params)" button-edit-item-params="ctrl.Item"
+    button-label="{{'Edit'}}"
+    ng-if="ctrl.Item.allowEdit">
+</button-edit-item>
+
+<button-delete-item button-delete-item-modal="#modal_Notify_Delete_details"
+    button-delete-item-func="ctrl.prepareDelete(params)" button-delete-item-params="ctrl.Item"
+    button-label="{{'Delete'}}"
+    ng-if="ctrl.Item.allowDelete">
+</button-delete-item>
+    

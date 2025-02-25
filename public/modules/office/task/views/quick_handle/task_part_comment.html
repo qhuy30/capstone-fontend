@@ -1,0 +1,170 @@
+<div class="comment" style="position: relative;">
+  <div style="position: sticky; top: 0; z-index: 1; background-color: white;">
+    <div class="add-comment" ng-if="ctrlChild.status !== 'completed'">
+      <div class="show-avatar">
+        <show-username
+          style="margin-top: 10px"
+          username="$root.logininfo.username"
+          just-image="true"
+        ></show-username>
+      </div>
+      <div class="input-comment">
+        <div
+          class="placeholder"
+          ng-hide="ctrlChild.showPushComment"
+          ng-click="ctrlChild.focusComment()"
+          style="border-radius: 10px"
+        >
+          {{'TypeCommentHere'|l}}
+        </div>
+        <div ng-show="ctrlChild.showPushComment">
+          <textarea id="Task_comment" class="form-control"></textarea>
+          <div class="file-upload-container">
+            <label for="file-upload" class="custom-file-upload">
+              <i class="fas fa-paperclip"></i> {{'AddFile'|l}}
+            </label>
+            <input
+              class="d-none"
+              id="file-upload"
+              type="file"
+              file-reading="ctrlChild.commentFiles"
+              max-file-size="5"
+              size="1"
+              multiple
+            />
+          </div>
+          <div style="margin-top: 10px; float: right">
+            <button class="btn btn-primary" ng-click="ctrlChild.pushComment()">
+              {{'Save'|l}}
+            </button>
+            <button class="btn btn-gray-300" ng-click="ctrlChild.blurPushComment()">
+              {{'Cancel'|l}}
+            </button>
+          </div>
+          <!-- Display selected files -->
+          <div ng-repeat="file in ctrlChild.commentFiles" class="file-list-item">
+            <span class="file-name">{{file.name}}</span>
+            <i
+              class="fas fa-trash-alt"
+              ng-click="ctrlChild.removeFiles(file.name)"
+            ></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="label" style="margin-top: 15px; margin-bottom: 15px;">
+      <i class="far fa-comments"></i
+      >&nbsp;{{'Comment'|l}}&nbsp;({{ctrlChild.getCommentCountWithoutCancel(ctrlChild.Item.comment)}})
+    </div>
+    <hr />
+  </div>
+  <div class="comment-list">
+    <div ng-repeat="item in ctrlChild.Item.sortedComments | orderBy: '-time'">
+      <div
+        class="comment-item"
+      >
+        <div class="show-avatar">
+          <show-username
+            style="margin-top: 6px"
+            username="item.username"
+            just-image="true"
+          ></show-username>
+        </div>
+        <div class="comment-content">
+          <show-username
+            username="item.username"
+            hide-image="true"
+          ></show-username
+          >,
+          <time-show time-show-type="long" time-show-data="item.time"></time-show>
+          <span ng-if="item.type == 'Remind'" style="color: #FF8080; padding-left: 5px;">
+            <i class="fas fa-stopwatch" style="color: red;"></i>&nbsp;
+            {{'DeadlineReminder'|l}}.
+          </span>
+          <span ng-if="item.type == 'Challenge'" class="text-warning" style="padding-left: 5px;">
+            <i class="fas fa-question"></i>&nbsp;
+            {{'Challenge'|l}}.
+          </span>
+          <span ng-if="item.type == 'ChallengeResolver'" class="text-success" style="padding-left: 5px;">
+            <i class="fas fa-check"></i>&nbsp;
+            {{'ChallengeResolved'|l}}.
+          </span>
+          <span ng-if="item.type == 'GuidToResolveChallenge'" class="text-info" style="padding-left: 5px;">
+            <i class="fab fa-rocketchat"></i>&nbsp;
+            {{'GuidToResolveChallenge'|l}}.
+          </span>
+          <div class="content" ng-bind-html="item.content|l" ng-if="item.type === 'Remind'"></div>
+          <div class="content" ng-bind-html="item.content" ng-if="item.type !== 'Remind'"></div>
+          <div
+            class="attachment"
+            style="margin-top: 5px; display: block"
+            ng-if="item.attachment.length>0"
+          >
+            <attachment-show
+              ng-repeat="at in item.attachment"
+              attachment-show-item="at"
+              attachment-show-func="ctrlChild.loadfile(params)"
+              attachment-show-params="{id:ctrlChild.Item._id,name:at.name}"
+              attachment-show-service-name="'comment'"
+            >
+            </attachment-show>
+          </div>
+        </div>
+      </div>
+      <!-- sub comment -->
+      <div
+        class="comment-item ml-5"
+        ng-repeat="subComment in item.reply| orderBy: '-time'"
+        >
+          <div class="show-avatar">
+            <show-username
+              style="margin-top: 6px"
+              username="subComment.username"
+              just-image="true"
+            ></show-username>
+          </div>
+          <div class="comment-content">
+            <show-username
+              username="subComment.username"
+              hide-image="true"
+            ></show-username
+            >,
+            <time-show time-show-type="long" time-show-data="subComment.time"></time-show>
+            <span ng-if="subComment.type == 'Remind'" style="color: #FF8080; padding-left: 5px;">
+              <i class="fas fa-stopwatch" style="color: red;"></i>&nbsp;
+              {{'DeadlineReminder'|l}}.
+            </span>
+            <span ng-if="subComment.type == 'Challenge'" class="text-warning" style="padding-left: 5px;">
+              <i class="fas fa-question"></i>&nbsp;
+              {{'Challenge'|l}}.
+            </span>
+            <span ng-if="subComment.type == 'ChallengeResolver'" class="text-success" style="padding-left: 5px;">
+              <i class="fas fa-check"></i>&nbsp;
+              {{'ChallengeResolved'|l}}.
+            </span>
+            <span ng-if="subComment.type == 'GuidToResolveChallenge'" class="text-info" style="padding-left: 5px;">
+              <i class="fab fa-rocketchat"></i>&nbsp;
+              {{'GuidToResolveChallenge'|l}}.
+            </span>
+            <div class="content" ng-bind-html="subComment.content|l" ng-if="subComment.type === 'Remind'"></div>
+            <div class="content" ng-bind-html="subComment.content" ng-if="subComment.type !== 'Remind'"></div>
+            <div
+              class="attachment"
+              style="margin-top: 5px; display: block"
+              ng-if="subComment.attachment.length>0"
+            >
+              <attachment-show
+                ng-repeat="at in subComment.attachment"
+                attachment-show-item="at"
+                attachment-show-func="ctrlChild.loadfile(params)"
+                attachment-show-params="{id:ctrlChild.Item._id,name:at.name}"
+                attachment-show-service-name="'comment'"
+              >
+              </attachment-show>
+            </div>
+          </div>
+      </div>
+      <!-- End sub comment -->
+    </div>
+  </div>
+</div>

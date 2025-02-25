@@ -1,0 +1,45 @@
+<div class="modal fade" id="modal_NurseReport_Delete_Multi" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'DoYouWantToDeleteFollowData'|l}}"></modal-header>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>{{'Name'|l}}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in ctrl.nurse_reports|orderBy:ctrl.sort.name:ctrl.sort.value track by $index"
+                                ng-if="item.check">
+                                <td>{{$index +1}}</td>
+                                <td> <span ng-show="['OfficeNurseReport.Manager']|checkRule">
+                                        <show-department department="item.department"></show-department>
+                                        &nbsp;-&nbsp;<show-username username="item.username" employee="item.employee">
+                                        </show-username>&nbsp;<time-show time-show-data="item.event[0].time"
+                                            time-show-type="justdate">
+                                        </time-show>
+                                    </span>
+                                    <span ng-hide="['OfficeNurseReport.Manager']|checkRule">
+                                        <show-username username="item.username" employee="item.employee">
+                                        </show-username>&nbsp;<time-show time-show-data="item.event[0].time"
+                                            time-show-type="justdate">
+                                        </time-show>
+                                    </span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="NurseReport" modal-button-delete-actionname="delete_multi"
+                    modal-button-delete-func="ctrl.delete_multi()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

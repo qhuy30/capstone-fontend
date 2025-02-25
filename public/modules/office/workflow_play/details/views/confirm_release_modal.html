@@ -1,0 +1,24 @@
+<div class="modal fade" id="modal_ODB_Release_Confirm" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                <div class="question">
+                    {{'DoYouWantReleaseODB'|l}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-submit
+                        modal-button-submit-ctrlname="{{ctrl._ctrlName}}"
+                        modal-button-submit-label="{{'Release'|l}}"
+                        modal-button-submit-func="ctrl.releaseODB()"
+                        modal-button-submit-objname="ODB"
+                        modal-button-submit-invalid="(!['Office.DispatchOutgoing.Release']|checkRule) || !ctrl.Item.outgoing_dispatch"
+                        modal-button-submit-actionname="release"
+                >
+                </modal-button-submit>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

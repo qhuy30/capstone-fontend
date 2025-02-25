@@ -1,0 +1,19 @@
+1/Phan hien thi:<br />
++User : <br />
+<span ng-repeat="user in ssChoosen.username">----{{user}}</span> <br />
+
+
+2/Phan chon :<br />
++User:<br />
+<span ng-repeat="user in userar|chooseUserGroup:ssChoosen.username:'username'">
+    <input type="checkbox" ng-model="user.selected" />
+    {{user.username}}
+</span> <br />
+Da chon:<br />
+<span style="cursor: pointer;"
+      ng-repeat="user in ssChoosen.username"
+      ng-click="removeUser(user)">
+    {{user}}
+</span> <br />
+<button type="button" ng-click="chooseUser()">ok</button> <br />
+

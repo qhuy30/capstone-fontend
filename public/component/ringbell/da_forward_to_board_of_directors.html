@@ -1,0 +1,24 @@
+<a class="waves-effect ringbell-header-item da_forward_to_head_of_office"
+    href="/da-details?{{item.params.id}}">
+    <i class="fas fa-file-alt"></i>
+    <div class="content">
+        <div>
+            <span >
+                <span >{{'DispatchArrived'|l}}</span>
+                <span class="code">{{item.params.code}}</span>
+            </span>
+        </div>
+        <div class="ringbell-action danger">
+            <i class="fas fa-tasks"></i> &nbsp;{{'Need you to review and provide guidance'|l}}
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

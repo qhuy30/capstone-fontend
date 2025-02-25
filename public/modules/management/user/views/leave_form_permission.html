@@ -1,0 +1,27 @@
+<div id="leave_form_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng đơn nghỉ phép
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.LeaveForm.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.LeaveForm.Use'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền quản trị tính năng đơn nghỉ phép
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.LeaveForm.Manager'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.LeaveForm.Manager'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

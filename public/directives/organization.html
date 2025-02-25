@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="label" ng-if="label">
+        {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+    </div>
+    <div class="d-flex align-items-center">
+
+        <div class="value flex-grow-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor: pointer;">
+            <div ng-style="{ 'background-color': disable ? '#d3d9e2' : '' }" class="show-value d-flex" ng-click="init()">
+                <span class="flex-grow-1" >
+                    {{selectedItem.title[$root.Language.current]}}
+    
+                </span>
+                <span class="dropdown-toggle mr-2" ng-click="init()">&nbsp;</span>
+            </div>
+        </div>
+        <!-- <span style="cursor: pointer;">
+            <i class="fas fa-times" ng-click="clear()"></i>
+        </span> -->
+
+        <div class="dropdown-menu">
+            <div class="tool">
+                <div class="search">
+                  <input type="text" ng-model="search" my-watch-text-input my-scope="search" my-func="init()"
+                    my-start="!_notyetInit" placeholder="{{'FindByName'|l}}">
+                  <i class="fas fa-search"></i>
+                </div>
+            </div>
+            
+            <ul class="department-container" style="width: 100%; height: 200px; overflow: auto">
+                <li ng-repeat="item in data" >
+                    <div class="department-item" style="cursor: pointer;" ng-class="{'can-expand':item.canExpand}" ng-click="ctrl.pick(item)">
+                        <div class="title item-container">
+                            <span ng-show="item.canExpand" ng-click="ctrl.expandDepartment(item,$event)"
+                                class="expand-item">
+                                <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                <i class="fas fa-angle-down" ng-show="item.open"></i>
+                            </span>
+                            <span>
+                                &nbsp;&nbsp;<i
+                                    class="fas fa-house-user"></i>&nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                            </span>
+                        </div>
+                    </div>
+                    <department-child item="item" ctrl="ctrl"></department-child>
+                </li>
+            </ul>
+            <div ng-if="ctrl.data.length ==0" class="no-data">
+                {{'NoData'|l}}
+            </div>
+        </div>
+    </div>
+    <!-- <button type="button" class="btn btn-primary" modal-toggle="#{{_ctrlName}}" ng-click="init()"
+        ng-disabled="disable">{{'Pick'|l}}&nbsp;<i class="fas fa-external-link-alt"></i></button>
+    <button type="button" class="btn btn-primary" ng-disabled="disable" ng-click="clear()"><i
+            class="fas fa-times"></i></button> -->
+    
+    <!-- <div class="modal fade" tabindex="-1" role="dialog" id="{{_ctrlName}}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{label ? label : ('Department'|l)}}" modal-header-id={{_ctrlName}}>
+                </modal-header>
+                <div class="modal-body">
+
+                    <ul class="department-container">
+                        <li ng-repeat="item in data">
+                            <div class="department-item" ng-class="{'can-expand':item.canExpand}">
+                                <div class="title">
+                                    <span ng-click="ctrl.expandDepartment(item)">
+                                        <span ng-show="item.canExpand">
+                                            <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                            <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                        </span>
+                                        &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                    </span>
+                                </div>
+                                <div class="tool">
+                                    <button type="button" ng-click="ctrl.pick(item)"
+                                        class="btn btn-primary">{{'Pick'|l}}</button>
+                                </div>
+                            </div>
+                            <department-child item="item" ctrl="ctrl"></department-child>
+                        </li>
+                    </ul>
+                    <div ng-if="ctrl.data.length ==0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn " ng-click="close()">{{'Close'|l}}</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</div>

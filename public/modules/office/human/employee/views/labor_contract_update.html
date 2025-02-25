@@ -1,0 +1,81 @@
+<div>
+  <button
+    modal-toggle="#modal_Employee_Attach"
+    type="button"
+    class="btn btn-outline-warning btn-sm"
+    style="margin-bottom: 10px"
+    ng-click="ctrl.prepareAttach(ctrl._update_value._id);$event.stopPropagation();"
+    ng-show="['Office.LaborContract.Use']|checkRule"
+  >
+    <i class="fas fa-plus"></i>&nbsp;{{'LaborContract'|l}}
+  </button>
+
+  <my-Async
+    async-ctrlname="{{ctrl._ctrlName}}"
+    async-objname="Employee"
+    async-actionname="loadListOfEmployee"
+  >
+    <async-success>
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <td style="font-weight: 600; vertical-align: middle">
+                {{'Name'|l}}
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in ctrl._update_value.labor_contract_list">
+              <td>
+                <a
+                  class="text-dark"
+                  ng-click="ctrl.closeUpdate()"
+                  link-details
+                  link-details-display="{{item.fullname}}"
+                  link-details-url="/human-larbor-contract-details?{{item._id}}"
+                  link-details-route="human-larbor-contract-details"
+                  >{{item.fullname}}&nbsp;-&nbsp;
+                  <get-field-directory
+                    id-value="item.type"
+                    extend="ctrl.LaborContractType_Config"
+                    localization="true"
+                  ></get-field-directory>&nbsp;-&nbsp;<i
+                    >{{'FromDate'|l}}:&nbsp;<time-show
+                      time-show-data="item.from_date"
+                      time-show-type="justdate"
+                    >
+                    </time-show
+                    >&nbsp;.{{'ToDate'|l}}:&nbsp;<time-show
+                      time-show-data="item.to_date"
+                      time-show-type="justdate"
+                    >
+                    </time-show
+                    >.</i
+                  ></a
+                >
+                <div class="showfile-bar" ng-if="item.attachment.length>0">
+                  <attachment-show
+                    ng-repeat="at in item.attachment"
+                    attachment-show-item="at"
+                    attachment-show-func="ctrl.loadfile_labor_contract(params)"
+                    attachment-show-params="{id:item._id,name:at.name}"
+                  >
+                  </attachment-show
+                  >&nbsp;
+                </div>
+              </td>
+              <td>
+                <show-status id-value="item.status"></show-status>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div ng-if="ctrl.labor_contracts.length ==0" class="no-data">
+        {{'NoData'|l}}
+      </div>
+    </async-success>
+  </my-Async>
+</div>

@@ -1,0 +1,178 @@
+<div class='notify_insert_modal'>
+    <button-new button-new-func="ctrl._prepareInsert()" button-new-label="{{'Compose a news'|l}}"
+        button-new-modal="#{{ctrl._ctrlName}}">
+    </button-new>
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{ctrl._ctrlName}}">
+        <div class="modal-dialog modal-full" role="document">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{'NewNotify'|l}}"></modal-header>
+                <div class="modal-body">
+                    <form class="form-horizontal " name="insertForm">
+                        <div class="card">
+                            <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                <div class="form-group col-md-12">
+                                    <div class="input-group-new">
+                                        <div class="input-group-prepend-new">
+                                            <span class="input-group-text-new">{{'Title' | l}}</span>
+                                            <span class="require-sympton">*</span>
+                                        </div>
+                                        <input type="text" ng-model="ctrl.form_value.title" class="form-control"
+                                            name="insert_title" placeholder="{{'InputTitle'|l}}"
+                                            ng-class="{ 'is-invalid': insertForm.insert_title.$invalid }" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <pick-modal-directory
+                                            extend="ctrl.notify_group_config"
+                                            pick-func="ctrl.on_pick_notify_group(params)"
+                                            id-value="ctrl.form_value.group"
+                                            label="{{'NewsType'|l}}" require="true"
+                                            get-first-to-default="true"                                        
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div>
+                                        <span>{{'SendTo' | l}}</span>&nbsp;&nbsp;
+                                        <span class="require-sympton">*</span>
+                                    </div>
+                                    <div style="margin-top: 10px;">
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="radio" ng-model="ctrl.form_value.type" value="WholeSchool">
+                                                {{'WholeSchool'|l}}
+                                            </label>
+                                            &nbsp;&nbsp;
+                                            <label>
+                                                <input type="radio" ng-model="ctrl.form_value.type" value="Department">
+                                                {{'Department'|l}}
+                                            </label>
+                                            &nbsp;&nbsp;
+                                            <!-- <label>
+                                                <input type="radio" ng-model="ctrl.form_value.type" value="Employee">
+                                                {{'Employee'|l}}
+                                            </label> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-if="ctrl.form_value.type==='Employee'">
+                                        <div class="form-group">
+                                            <pick-user-multi class="positioned-modal" label="{{'Employee'|l}}" id-value="ctrl.form_value.to_employee"
+                                                get-user-data="true" pick-func="ctrl.on_pick_received_employee(params)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-if="ctrl.form_value.type==='Department'">
+                                        <div class="form-group">
+                                    
+                                            <organization-multi label="{{'Department'|l}}" id-value="ctrl.form_value.to_department"
+                                                select-func="ctrl.on_pick_received_department(params)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-if="ctrl.form_value.type==='Department'">
+                                        <div class="form-group">
+                                    
+                                            <select-multi-users-by-rule
+                                                label="{{'SentToBoardOfDirector'|l}}"
+                                                require="true"
+                                                pick-func="ctrl.pickdirector_insert(params)"
+                                                id-value="ctrl.form_value.to_director"
+                                                rule="Office.Notify.BoardOfDirectors"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body" style="border-left:2px solid #20a8d8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{'Content' | l}}&nbsp;&nbsp;
+                                        <span class="require-sympton">*</span>
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea name="content" required id="{{ctrl._ctrlName}}_txt"
+                                                class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6" style="border-right: 1px solid #eee;">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <td>&num;</td>
+                                                        <td colspan="2">
+                                                            {{'Attachment' | l}}
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ctrl.form_value.files">
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>
+                                                            <attachment-just-show my-item="item" />
+                                                        </td>
+                                                        <td>
+                                                            <i class="fas fa-times text-danger"
+                                                                ng-click="ctrl.on_remove_attachment_file(item)">
+                                                            </i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                        colspan=" 0">
+                                                        <div class="diskuf-uploader">
+                                                            <span class="wd-fa-add-file-light">
+                                                                <span class="wd-fa-add-file-light-text">
+                                                                    <span class="wd-fa-add-file-light-title">
+                                                                        <span
+                                                                            class="wd-fa-add-file-light-title-text">{{'UploadFile'
+                                                                            | l}}</span>
+                                                                    </span>
+                                                                    <span class="wd-fa-add-file-light-descript">
+                                                                        {{'DragTheFileHereToUpload' | l}}
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                            <input class="diskuf-fileUploader wd-test-file-light-inp "
+                                                                type="file" file-reading="ctrl.form_value.files"
+                                                                size="1" multiple style="width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="Notify"
+                        modal-button-new-actionname="insert" 
+                        modal-button-new-invalid="
+                        insertForm.$invalid 
+                        || (ctrl.form_value.type === 'Department' && ctrl.form_value.to_department.length < 1) 
+                        || (ctrl.form_value.type === 'Employee' && ctrl.form_value.to_employee.length < 1)"
+                        modal-button-new-func="ctrl.submit()" />
+                    <modal-button-close />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

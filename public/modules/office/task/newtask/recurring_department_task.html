@@ -1,0 +1,266 @@
+<my-content>
+    <content-content>
+        <div ng-controller="task_management_controller as ctrlChild" class="task-department-feature">
+
+            <recurring-task-insert-modal handle-success-func="ctrlChild.refreshRecurringData()"/>
+            <recurring-task-update-modal item="ctrlChild.seriesInfo"
+                                         handle-success-func="ctrlChild.refreshRecurringData()"/>
+            <div ng-include="ctrlChild._urlPauseModal"></div>
+            <div ng-include="ctrlChild._urlCancelModal"></div>
+            <div ng-include="ctrlChild._urlResumeModal"></div>
+            <task-update-modal item="ctrlChild.seriesInfo" handle-success-func="ctrlChild.refreshRecurringData()"></task-update-modal>
+
+
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <div style="margin-bottom: 24px">
+                            <button-new
+                                    button-new-label="{{'Add recurring task for department'|l}}"
+                                    button-new-modal="#modal_Recurring_Task_Dir_Insert">
+                            </button-new>
+                        </div>
+                    </div>
+                    <more-option-bar>
+                        <bar-content class="row">
+                            <div class="col-md-6 form-group">
+                                <date
+                                        model="ctrlChild._filterFromDate"
+                                        func="ctrlChild.chooseFromDate(params)"
+                                        label="{{'FromDate'|l}}"
+                                        disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','load','doing')"
+                                ></date>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <date
+                                        model="ctrlChild._filterToDate"
+                                        func="ctrlChild.chooseToDate(params)"
+                                        label="{{'ToDate'|l}}"
+                                        disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','load','doing')"
+                                ></date>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrlChild.RecurringTaskCycle "
+                                                      pick-func="ctrlChild.pickCycle(params)"
+                                                      id-value="ctrlChild._filterCycle" label="{{'Cycle'|l}}"
+                                                      disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','load','doing')"></pick-modal-directory>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-advance extend=""
+                                                    pick-func="ctrlChild.pickSeries(params)"
+                                                    id-value="ctrlChild._filterSeries"
+                                                    label="{{'Series'|l}}"
+                                                    disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','load','doing')"
+                                                    load-data-func="ctrlChild.loadRecurringTask_directive(params)"
+                                                    count-func="ctrlChild.countRecurringTask_detail(params)"
+                                                    localized="false"
+                                                    load-details-func="ctrlChild.loadRecurringTask_detail(params)">
+                                </pick-modal-advance>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrlChild.TaskType"
+                                                      pick-func="ctrlChild.pickTaskType(params)"
+                                                      id-value="ctrlChild._filterTaskType"
+                                                      label="{{'TaskType'|l}}"
+                                                      disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','load','doing')"></pick-modal-directory>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrlChild.TaskPriority"
+                                                      pick-func="ctrlChild.pickPriority(params)"
+                                                      id-value="ctrlChild._filterPriority"
+                                                      label="{{'Priority'|l}}"
+                                                      disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','load','doing')"></pick-modal-directory>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrlChild.RecurringTaskState"
+                                                      pick-func="ctrlChild.pickStatus(params)"
+                                                      id-value="ctrlChild._filterStatus"
+                                                      label="{{'Status'|l}}"
+                                                      disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','load','doing')"></pick-modal-directory>
+                            </div>
+                        </bar-content>
+                    </more-option-bar>
+
+                    <div style="text-transform: uppercase;
+                          font-weight: 700;
+                          color: #4285f4;
+                          cursor: pointer;">
+                        &nbsp;&nbsp;{{"TaskManagementByCycle" | l}}
+                    </div>
+
+                    <div class="content">
+                        <div class="task-container">
+                            <div style="border-top:1px solid #eee;margin-top:10px;">
+                            </div>
+                            <div class="task-content">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover"
+                                           ng-class="{'no-data':ctrlChild.briefcase.length ===0}">
+                                        <thead>
+                                        <tr>
+                                            <td class="tool">
+                                                <div class="search" style="max-width: 100%; min-width: 160px">
+                                                    <input type="text" ng-model="ctrlChild._searchByKeyToFilterData"
+                                                           my-watch-text-input
+                                                           my-scope="ctrlChild._searchByKeyToFilterData"
+                                                           my-func="ctrlChild.refreshRecurringData()"
+                                                           my-start="!ctrlChild._notyetInit"
+                                                           placeholder={{'FindTasksByName'|l}}>
+                                                    <i class="fas fa-search"></i>
+                                                </div>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'TaskCode' | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'Department' | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'Cycle' | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'TaskType' | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'FromDate' | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'ToDate' | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'Priority' | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 150px;">
+                                                {{'Status' | l}}
+                                            </td>
+                                            <td style="width: 150px;"></td>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody id="headTaskList" ng-repeat="item in ctrlChild.recurring_tasks"
+                                               ng-click="item.isOpen = !item.isOpen" style="cursor: pointer">
+                                        <tr>
+                                            <td style="color: #4285f4; font-weight: bold">
+                                                <i class="fas"
+                                                   ng-class="{'fa-chevron-down': item.isOpen, 'fa-chevron-right': !item.isOpen}"
+                                                   ng-if="item.child_series && item.child_series.length">
+                                                </i>&nbsp;&nbsp;{{item.title}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            </td>
+                                            <td style="font-weight: bolder;vertical-align: middle;text-align: center;width: 120px;color:#4285f4">
+                                                {{item.repetitive.per}} {{item.repetitive.cycle | l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                <show-task-type id-value="item.task_type"></show-task-type>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                <time-show2 time-show-data="item.from_date" time-show-type="just_date">
+                                                </time-show2>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                <time-show2 time-show-data="item.to_date" time-show-type="just_date">
+                                                </time-show2>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                                <show-priority id-value="item.priority"></show-priority>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                                <show-status id-value="item.status"></show-status>
+                                            </td>
+                                            <td style="width: 200px; height: 40px">
+                                                <div ng-hide="item.status === 'Cancelled'">
+                                                    <button-edit-item
+                                                            button-edit-item-modal="#modal_Recurring_Task_Dir_Update"
+                                                            button-edit-item-func="ctrlChild.editSeries(params)"
+                                                            button-edit-item-params="item"
+                                                            button-edit-item-change-icon="true"
+                                                    >
+                                                    </button-edit-item>
+                                                    <span ng-if="item.status != 'Pause'">
+                                                    <button-pause-item
+                                                            button-pause-item-modal="#modal_Task_Pause"
+                                                            button-pause-item-func="ctrlChild.preparePause(params)"
+                                                            button-pause-item-params="item">
+                                                    </button-pause-item>
+                                                </span>
+                                                    <span ng-if="item.status === 'Pause'">
+                                                    <button-resume-item
+                                                            button-resume-item-modal="#modal_Task_Resume"
+                                                            button-resume-item-func="ctrlChild.prepareResume(params)"
+                                                            button-resume-item-params="item">
+                                                    </button-resume-item>
+                                                </span>
+                                                    <button-reject-item
+                                                            button-reject-item-modal="#modal_Recurring_Task_Cancel"
+                                                            button-reject-item-func="ctrlChild.prepareCancel(params)"
+                                                            button-reject-item-params="item">
+                                                    </button-reject-item>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="child_item in item.child_series" ng-if="item.child_series.length" ng-show="item.isOpen">
+                                            <td style="color: #4285f4; font-style: italic">
+                                                &nbsp;&nbsp;<span class="pl-5">{{child_item.title}}</span>
+                                            </td>
+                                            <td style="color: #4285f4; font-style: italic">
+                                                &nbsp;&nbsp;<span>{{child_item.code}}</span>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;color:#4285f4">
+                                                <show-department department="child_item.department"></show-department>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                <show-task-type id-value="child_item.task_type"></show-task-type>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                <time-show2 time-show-data="child_item.from_date"
+                                                            time-show-type="just_date">
+                                                </time-show2>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                <time-show2 time-show-data="child_item.to_date"
+                                                            time-show-type="just_date">
+                                                </time-show2>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                                <show-priority id-value="child_item.priority"></show-priority>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                                <show-status id-value="child_item.job_status"></show-status>
+                                            </td>
+                                            <td style="width: 150px; height: 40px">
+                                                <div ng-hide="child_item.job_status === 'Cancelled'">
+                                                    <button-edit-item
+                                                            button-edit-item-modal="#modal_Task_Dir_Update"
+                                                            button-edit-item-params="child_item"
+                                                            button-edit-item-func="ctrlChild.editSeries(params)">
+                                                    </button-edit-item>
+                                                    <button-cancel-item
+                                                            ng-hide="child_item.status === 'Completed' || child_item.status === 'Cancelled'"
+                                                            button-cancel-item-modal="#modal_Recurring_Task_Cancel"
+                                                            button-cancel-item-func="ctrlChild.prepareCancel(params, child_item.department)"
+                                                            button-cancel-item-params="item">
+                                                    </button-cancel-item>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div ng-if="ctrlChild.headTasks.length ==0" class="no-data">
+                                    {{'NoData' | l}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

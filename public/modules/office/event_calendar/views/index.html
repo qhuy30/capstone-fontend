@@ -1,0 +1,21 @@
+<my-content class="event-calendar-feature">
+  <content-content>
+      <div class="card" ng-controller="event_calendar_container_controller as mainCtrl">
+         <div class="card-body">
+          <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" ng-click="mainCtrl.switchTab('Management')" ng-if="mainCtrl.show_tab_management">
+                  <a class="nav-link" ng-class="{'active': mainCtrl.tab == 'Management'}">{{ 'EventManagement' |l}}</a>
+              </li>
+              <li class="nav-item" ng-click="mainCtrl.switchTab('Calendar')" ng-if="mainCtrl.show_tab_calendar">
+                  <a class="nav-link" ng-class="{'active': mainCtrl.tab == 'Calendar'}">{{ 'EventCalendar' |l}}</a>
+              </li>
+          </ul>
+          <div class="tab-content">
+              <div class="tab-pane fade active show">
+                <div ng-include="mainCtrl._urlContent"></div>
+              </div>
+            </div>  
+         </div>
+      </div>
+  </content-content>
+</my-content>

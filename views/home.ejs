@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--CSS-->
+    <link rel="stylesheet" href="/datasources/lib/bootstrap_4.3.1.min.css" />
+    <link rel="stylesheet" href="/datasources/lib/loading-bar_0.9.0.min.css" />
+    <link rel="stylesheet" href="/datasources/fontawesome/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.9.0/css/flag-icon.min.css" /> -->
+
+    <link
+      rel="stylesheet"
+      href="/datasources/css/style_part1.min.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/datasources/css/style_part2.min.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/datasources/css/style_part3.min.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/datasources/css/style.min.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/datasources/summernote/summernote-lite.css"
+      type="text/css"
+    />
+    <link href="https://jsganttimproved.github.io/jsgantt-improved/dist/jsgantt.css" rel="stylesheet" type="text/css">
+    <!-- <link rel="stylesheet" href="/datasources/css/dx.common_20.1.4.css" type='text/css' /> -->
+    <!-- <link rel="stylesheet" href="/datasources/css/dx.material.blue.light.compact_20.1.4.css" type='text/css' /> -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css" rel="stylesheet"> -->
+
+    <!--platform -->
+
+    <script src="/datasources/lib/jquery_3.3.1.min.js"></script>
+    <script src="/datasources/lib/angular_1.6.8.min.js"></script>
+    <script src="/datasources/lib/angular-route_1.6.5.js"></script>
+    <script
+      type="text/javascript"
+      src="/datasources/lib/angular-cookies.min.js"
+    ></script>
+    <script type="text/javascript" src="/datasources/lib/lazyload.js"></script>
+
+    <script src="/datasources/lib/popper_1.14.7.min.js"></script>
+    <script src="/datasources/lib/bootstrap_4.3.1.min.js"></script>
+    <script src="/datasources/lib/angular-animate_1.6.8.min.js"></script>
+
+    <script src="/datasources/lib/angular-sanitize_1.6.8.min.js"></script>
+    <!-- <script src="/datasources/lib/angular-breadcrumb_0.5.0.min.js"></script> -->
+
+    <script src="/datasources/lib/loading-bar_0.9.0.min.js"></script>
+    <script src="/datasources/lib/dayjs_1.11.10.min.js"></script>
+    <script src="/datasources/lib/dayjs_customParseFormat.min.js"></script>
+    <script>
+      dayjs.extend(window.dayjs_plugin_customParseFormat);
+    </script>
+    <script src="/datasources/summernote/summernote-lite.min.js"></script>
+    <!-- <script src="/datasources/js/dx.all_20.1.4.js"></script> -->
+    <script src="/datasources/js/polyfill_7.4.0.min.js"></script>
+    <!-- <script src="/datasources/js/exceljs-4.1.1.min.js"></script> -->
+    <script src="/datasources/js/filesaver_1.3.8.min.js"></script>
+    <script src="/datasources/js/jszip_0.8.0.js"></script>
+    <script src="/datasources/js/xlsx_0.20.0.min.js"></script>
+    <!-- <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script> -->
+    <script src="/datasources/js/socket.io_2.3.0.js"></script>
+    <script src="/datasources/js/chart.min.js"></script>
+    <script src="/datasources/js/angular-chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.37.11/docxtemplater.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.4/dist/pizzip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.4/dist/pizzip-utils.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script type="text/javascript" src="/datasources/js/google_chart.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    <script src="https://jsganttimproved.github.io/jsgantt-improved/dist/jsgantt.js" type="text/javascript"></script>
+    <script src="/datasources/js/tiff.min.js"></script>
+    <script src="/datasources/lib/angular-file-saver.bundle.js"></script>
+    <!--system-->
+    <script src="/frame.min.js"></script>
+  </head>
+
+  <body
+    ng-app="tqv"
+    ng-controller="cRoot as root"
+    class="app sidebar-fixed header-fixed"
+    id="myapp"
+  >
+    <style>
+      :root {
+          --main-color: {
+                  {
+                  $root.Config.mainColor
+              }
+          }
+
+          ;
+
+          --second-color: {
+                  {
+                  $root.Config.secondColor
+              }
+          }
+
+          ;
+
+          --text-color: {
+                  {
+                  $root.Config.textColor
+              }
+          }
+
+          ;
+      }
+    </style>
+    
+    <script type="text/javascript">
+      if ($(window).width() > 992) {
+        $("#myapp").addClass("sidebar-show");
+        $("#myapp").addClass("aside-menu-show ");
+      } else {
+        $("#myapp").addClass("sidebar-hidden");
+      }
+    </script>
+    <div
+      ng-if="!$root.security"
+      ng-include="$root.componentLink.header"
+      include-replace
+    ></div>
+    <div class="app-body" ng-class="{ 'app-public': $root.security }">
+      <div
+        ng-if="!$root.security"
+        ng-include="$root.componentLink.menu"
+        include-replace
+      ></div>
+      <main class="main" ng-class="{ 'main-public': $root.security }">
+        <custom-toast name="customToast" id="custom-toast-container"></custom-toast>
+        <ng-view id="mycontent"></ng-view>
+        <detailsbox class="animated fadeIn"></detailsbox>
+        <filebox class="animated fadeIn"></filebox>
+      </main>
+      <div
+        class="notify-component"
+        ng-if="$root.notifyvalue.show === true"
+        ng-class="{
+          'success-notify-component': $root.notifyvalue.type === 'success',
+          'info-notify-component': $root.notifyvalue.type === 'info',
+          'warning-notify-component': $root.notifyvalue.type === 'warning'
+        }"
+      >
+        <p ng-bind-html="$root.notifyvalue.mes"></p>
+      </div>
+      <!-- <aside class="aside-menu" ng-if="!$root.security">
+            <div ng-if="!$root.security" ng-include="$root.componentLink.asidemenu" include-replace></div>
+        </aside> -->
+    </div>
+    <!-- <div  ng-include="$root.componentLink.footer" include-replace></div> -->
+  </body>
+</html>

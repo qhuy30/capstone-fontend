@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal_minorLabel_Update" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'UpdateMinorLabel'|l}}"></modal-header>
+            <div class="modal-body">
+                <form name="insertForm">
+                    <div class="form-group col-md-12">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'NewTitleOfLabel'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input
+                                    ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Label','update','doing')"
+                                    type="text"
+                                    ng-model="ctrlChild._update_minorLabel_value.title"
+                                    class="form-control"
+                                    name="update_title"
+                                    placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': insertForm.update_title.$invalid }"
+                                    required
+                            />
+                        </div>
+
+                        <div class="input-group-new pt-3">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'MajorLabel'|l}}</span>
+                            </div>
+                            <input
+                                    ng-disabled="ctrlChild._update_minorLabel_value.majorTitle !== ''"
+                                    type="text"
+                                    ng-model="ctrlChild._update_minorLabel_value.majorTitle"
+                                    class="form-control"
+                                    required
+                            />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrlChild._ctrlName}}"
+                                   modal-button-save-objname="Label"
+                                   modal-button-save-actionname="update"
+                                   modal-button-save-invalid="insertForm.$invalid"
+                                   modal-button-save-func="ctrlChild.update_minor_label()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,771 @@
+<div ng-controller="task_project_controller as ctrlChild" class="task-project-feature"
+    ng-if="['Office.Task.Show_ProjectTab']|checkRule">
+    <div ng-include="ctrlChild._urlInsertProjectModal"></div>
+    <div ng-include="ctrlChild._urlUpdateProjectModal"></div>
+    <div ng-include="ctrlChild._urlDeleteProjectModal"></div>
+    <div ng-include="ctrlChild._urlStartProjectModal"></div>
+    <div ng-include="ctrlChild._urlCloseProjectModal"></div>
+
+
+    <div ng-include="ctrlChild._urlInsertModal"></div>
+    <div ng-include="ctrlChild._urlInsertHeadTaskModal"></div>
+    <div ng-include="ctrlChild._urlDeleteModal"></div>
+    <div ng-include="ctrlChild._urlUpdateModal"></div>
+    <div ng-include="ctrlChild._urlCancelModal"></div>
+
+    <div ng-include="ctrlChild._urlInsertWikiModal"></div>
+    <div ng-include="ctrlChild._urlUpdateWikiModal"></div>
+    <div ng-include="ctrlChild._urlDeleteWikiModal"></div>
+
+    <wfp-insert-modal insert-success-func="ctrlChild.handleInsertWFPSuccess(params)"></wfp-insert-modal>
+    <!-- <notify-insert-modal task-id="ctrlChild._update_value._id"
+                         on-success="ctrlChild.handle_insert_notify_success(params)" /> -->
+
+    <div class="menu">
+        <button-new button-new-func="ctrlChild.prepareInsertProject()" button-new-label="{{'AddProject'|l}}"
+            button-new-modal="#modal_Task_InsertProject">
+        </button-new>
+        <ul>
+            <li ng-repeat="d in ctrlChild.Projects" ng-click="ctrlChild.chooseProject(d)"
+                ng-class="{'active': ctrlChild.currentProject._id === d._id}">
+                <div class="menu-item">
+                    {{d.title}}
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="content" ng-show="ctrlChild.currentProject._id ">
+        <div class="part">
+            <div class="info">
+                <breadcrumb items="ctrlChild.breadcrumb"></breadcrumb>
+                <div class="alert alert-dark " role="alert" ng-show="ctrlChild.currentProject.status==='NotStartedYet'">
+                    <div>
+                        <i class="far fa-calendar"></i>&nbsp;&nbsp;{{'TheProjectHasntStartedYet'|l}}.
+                    </div>
+                </div>
+                <div class="alert alert-primary " role="alert" ng-show="ctrlChild.currentProject.status==='Processing'">
+                    <div>
+                        <i class="fas fa-play"></i>&nbsp;&nbsp;{{'DeployingPlan'|l}}.
+                    </div>
+                </div>
+                <div class="alert alert-success " role="alert" ng-show="ctrlChild.currentProject.status==='Completed'">
+                    <div>
+                        <i class="fas fa-check"></i>&nbsp;&nbsp;{{'TheProjectHasEnded'|l}}.
+                    </div>
+                </div>
+            </div>
+            <div class="tool" ng-show="ctrlChild.currentProject._id && ctrlChild.currentProject.status!=='Completed'">
+
+                <div class="left">
+                    <button type="button" ng-show=" ctrlChild.currentProject.status==='NotStartedYet'"
+                        modal-toggle="#modal_Task_StartProject" class="btn btn-square btn-outline-primary">
+                        <i class="fas fa-play"></i>
+                        &nbsp;{{'StartProject'|l}}
+                    </button>
+                    <button type="button" ng-show=" ctrlChild.currentProject.status==='Processing'"
+                        modal-toggle="#modal_Task_CloseProject" class="btn btn-square btn-outline-primary">
+                        <i class="fas fa-check"></i>
+                        &nbsp;{{'CloseProject'|l}}
+                    </button>
+                </div>
+                <div class="right">
+                    <button type="button" modal-toggle="#modal_Task_DeleteProject"
+                        ng-show="ctrlChild.currentProject._id && ctrlChild.currentProject.status!=='Completed'"
+                        ng-click="ctrlChild.prepareDeleteProject()" class="btn btn-square btn-outline-danger">
+                        <i class="far fa-trash-alt"></i>
+                        <!-- &nbsp;{{'DeleteThisProject'|l}} -->
+                    </button>
+                    <button type="button" modal-toggle="#modal_Task_UpdateProject"
+                        ng-show="ctrlChild.currentProject._id && ctrlChild.currentProject.status!=='Completed'"
+                        ng-click="ctrlChild.prepareUpdateProject()" class="btn btn-square btn-outline-primary">
+                        <i class="fas fa-pen-square"></i>
+                        <!-- &nbsp;{{'UpdateProjectInformation'|l}} -->
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="part" ng-if="ctrlChild.currentProject._id && ctrlChild.currentProject.status!=='NotStartedYet'">
+            <div id="accordion2">
+                <div class="title" id="headingTwo">
+                    <div class="label" ng-click="ctrlChild.toogleCollapseTask()" class="btn btn-link"
+                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                        aria-controls="collapseTwo">
+                        <i class="fas fa-angle-down" ng-show="ctrlChild.collapseTask"></i><i class="fas fa-angle-right"
+                            ng-show="!ctrlChild.collapseTask"></i>&nbsp;&nbsp;{{'ProjectTaskManagement'|l}}
+                    </div>
+
+                </div>
+
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion2">
+
+                    <div class="task-container" style="padding: 0 1.25rem;">
+                        <div class="task-filter pt-2" style="padding-bottom:0.5rem; border-bottom: 1px solid rgb(202, 202, 202);">
+                            <div class="task-filter-item col-md-3">
+                                <div class="title-filter">{{'FromDate'|l}}:</div>
+                                <div class="value mt-1">
+                                    <div>
+                                        <input type="date" ng-model="ctrlChild._filterFromDate"
+                                            ng-change="ctrlChild.refreshData()" />
+                                    </div>
+                                    <div>
+                                        <time-show2 time-show-data="ctrlChild._filterFromDate"
+                                            time-show-type="just_date" bind-object="true"></time-show2>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="task-filter-item col-md-3">
+                                <div class="title-filter">{{'ToDate'|l}}:</div>
+                                <div class="value mt-1">
+                                    <div>
+                                        <input type="date" ng-model="ctrlChild._filterToDate"
+                                            ng-change="ctrlChild.refreshData()" />
+                                    </div>
+                                    <div>
+                                        <time-show2 time-show-data="ctrlChild._filterToDate" time-show-type="just_date"
+                                            bind-object="true">
+                                        </time-show2>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2 m-2">
+                                <button
+                                        type="button"
+                                        style="padding: 0 7px;
+                                        margin-left: 5px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: 400;"
+                                        class="btn btn-square btn-outline-primary ng-binding ng-isolate-scope" ng-click="ctrlChild.export_tasks()">
+                                    <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;" class="fas fa-file-excel"></i>
+                                    {{'Download'|l}}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <more-option-bar>
+                                <bar-content class="row">
+                                    <div class="col-md-4 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Employee'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_participant_filter(params)"
+                                                    id-value="ctrlChild._filter_value_participant"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickParticipants(params)"
+                                                    search-event="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Priority'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_priority_filter(params)"
+                                                    id-value="ctrlChild._filter_value_priority"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickPriority(params)"
+                                                    translate="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 advance-filter" style="border-right: none">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'StatusProcess'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_status_filter(params)"
+                                                    id-value="ctrlChild._filter_value_status"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickStatus(params)"
+                                                    translate="true"
+                                                    default-value="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'State'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_state_filter(params)"
+                                                    id-value="ctrlChild._filter_value_state"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickState(params)"
+                                                    translate="true">
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'TaskType'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_taskType_filter(params)"
+                                                    id-value="ctrlChild._filter_value_taskType"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickTaskTypeFilter(params)"
+                                                    translate="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 advance-filter" style="border-right: none">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Label'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.loadLabel(params)"
+                                                    id-value="ctrlChild._filter_value_label"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickLabelFilter(params)"
+                                                    search-event="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                </bar-content>>
+                            </more-option-bar>
+                        </div>
+
+                        <div style="border-top:1px solid #eee;margin-top:10px;margin-bottom:10px;">
+                        </div>
+                        <div class="task-content box-shadow:0">
+                            <div class="card shadow-none">
+                                <div class="card-body">
+                                    <div class="direction-container position-sticky">
+                                        <div class="row direction-content">
+                                            <a class="direction-item col-md-2 border-right:1px"
+                                                ng-class="{'active': ctrlChild.isActiveChartTab('overview') === true}" ng-click="ctrlChild.changeChartTab('overview')">
+                                                {{'Overview'|l}}
+                                            </a>
+                                            <a class="direction-item col-md-4 border-right:1px"
+                                                ng-class="{'active': ctrlChild.isActiveChartTab('gantt') === true}" ng-click="ctrlChild.changeChartTab('gantt')">
+                                                {{'GanttChart'|l}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top:2px;"></div>
+                            </div>
+                            <div class="row" ng-show="ctrlChild.isActiveChartTab('overview')">
+                                <div class="col-md-6 chart">
+                                    <div class="chart-container with-value">
+                                        <div class="chart-value">
+                                            <div class="main-value">
+                                                <div class="label">
+                                                    {{'Completed'|l}}:
+                                                </div>
+                                                <div class="value">
+                                                    {{ctrlChild.statistic_count.percent}}%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chart-item">
+                                            <canvas class="chart chart-doughnut"
+                                                chart-data="ctrlChild.statistic_count.data"
+                                                chart-labels="ctrlChild.statistic_count.label"
+                                                chart-options="ctrlChild.statistic_count.options"
+                                                chart-colors="ctrlChild.statistic_count.colors">
+                                            </canvas>
+                                        </div>
+                                        <div ng-if="ctrlChild.tasks.length == 0" class="no-data-text">
+                                            <i class="fas fa-exclamation-triangle"></i> {{'NoData'|l}}
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6 chart">
+                                    <div class="chart-container with-value">
+
+                                        <div class="chart-item">
+                                            <canvas class="chart chart-line"
+                                                chart-data="ctrlChild.statistic_growth.data"
+                                                chart-labels="ctrlChild.statistic_growth.label"
+                                                chart-series="ctrlChild.statistic_growth.series"
+                                                chart-options="ctrlChild.statistic_growth.options"
+                                                chart-colors="ctrlChild.statistic_growth.colors">
+                                            </canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="strategic-container" ng-show="ctrlChild.isActiveChartTab('gantt')">
+                                <div class="chart-strategic-container">
+                                    <div class="chart-strategic-content">
+                                        <div style="position:relative" class="gantt" id="chart_task"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="wfp container" ng-if="ctrlChild.currentProject.workflow_play">
+                                <div class="label">
+                                    <i class="fas fa-pen-nib"></i>&nbsp;Trình ký liên kết
+                                </div>
+                                <div class="content">
+                                    <div class="task-container">
+                                        <div style="border-top:1px solid #eee;margin-top:10px;">
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr style="text-align: center;">
+                                                            <th>{{'Created date'|l}}</th>
+                                                            <th>{{'Created by'|l}}</th>
+                                                            <th>{{'Code'|l}}</th>
+                                                            <th>{{'Title'|l}}</th>
+                                                            <th>{{'Status'|l}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="text-align: center;">
+                                                                <small><span class="grey-text"><i class="fa fa-clock"
+                                                                            aria-hidden="true"></i>
+                                                                        <time-show time-show-type="long" time-show-data="ctrlChild.currentProject.workflow_play.event[0].time">
+                                                                        </time-show>
+                                                                    </span></small>
+                                                            </td>
+                                                            <td>
+                                                                <show-username username="ctrlChild.currentProject.workflow_play.username" employee="ctrlChild.currentProject.workflow_play.employee">
+                                                                </show-username>
+                                                            </td>
+                                                            <td>
+                                                                <div class="text-muted text-nowrap">{{ctrlChild.currentProject.workflow_play.code}}</div>
+                                                            </td>
+                                                            <td>
+                                                                <a class="text-dark" href="/signing-details?code={{ctrlChild.currentProject.workflow_play.code}}">{{ctrlChild.currentProject.workflow_play.title}}</a>
+                                                            </td>
+                                                            <td>
+                                                                <show-status id-value="ctrlChild.currentProject.workflow_play.status"></show-status>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="head-task container">
+                                <div class="label">
+                                    <i class="fas fa-tasks "></i>&nbsp;{{'Task'|l}}
+                                </div>
+                                <div class="content">
+                                    <div class="task-container">
+                                        <div style="border-top:1px solid #eee;margin-top:10px;">
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-hover" ng-class="{'no-data':ctrlChild.tasks.length ===0}">
+                                                    <thead>
+                                                        <tr>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 80px;">
+                                                                #
+                                                            </td>
+                                                            <td class="tool">
+                                                                <div class="new">
+                                                                    <button-new
+                                                                        ng-show="'Office.Task.Create_Task_Project'|task_project_checkRule:ctrlChild.currentProject._id:ctrlChild.currentProject.entity.his[0].createdby:ctrlChild.currentProject.participant"
+                                                                        button-new-func="ctrlChild.prepareInsertHeadTask()" button-new-label="{{'AddTask'|l}}"
+                                                                        button-new-modal="#modal_Head_Task_Insert">
+                                                                    </button-new>
+                                                                </div>
+                                                                <div class="search">
+                                                                    <input type="text" ng-model="ctrlChild._searchHeadTaskByKeyToFilterData" my-watch-text-input
+                                                                        my-scope="ctrlChild._searchHeadTaskByKeyToFilterData" my-func="ctrlChild.refreshHeadTaskData()"
+                                                                        my-start="!ctrlChild._notyetInit" placeholder="{{'FindTasksByName'|l}}">
+                                                                    <i class="fas fa-search"></i>
+                                                                </div>
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 160px;"
+                                                                ng-show="ctrlChild.isTableEnabled('Creator')">
+                                                                {{'Creator'|l}}
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 160px;"
+                                                                ng-show="ctrlChild.isTableEnabled('MainPerson')">
+                                                                <div class="title">{{'HostPerson'|l}}</div>
+                                                                <!-- <div class="value">
+                                                                    <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        {{ctrlChild._filterMainPerson === 'All' ? (ctrlChild._filterMainPerson|l) :
+                                                                        ctrlChild._filterMainPerson}}
+                                                                    </span>
+                                                                    <div class="dropdown-menu dropdown-primary " style="box-shadow:none;">
+                                                                        <div>
+                                                                            <a class="dropdown-item quickicon-header-item"
+                                                                                ng-repeat="item in ctrlChild.listMainPerson"
+                                                                                ng-click="ctrlChild.chooseMainPersonFilter(item)">{{item}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> -->
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 160px;"
+                                                                ng-show="ctrlChild.isTableEnabled('Participant')">
+                                                                <div class="title">{{'Coordinator'|l}}</div>
+                                                                <!-- <div class="value">
+                                                                    <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        {{ctrlChild._filterParticipant === 'All' ? (ctrlChild._filterParticipant|l) :
+                                                                        ctrlChild._filterParticipant}}
+                                                                    </span>
+                                                                    <div class="dropdown-menu dropdown-primary " style="box-shadow:none;">
+                                                                        <div>
+                                                                            <a class="dropdown-item quickicon-header-item"
+                                                                                ng-repeat="item in ctrlChild.listParticipant"
+                                                                                ng-click="ctrlChild.chooseParticipantFilter(item)">{{item}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> -->
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 160px;"
+                                                                ng-show="ctrlChild.isTableEnabled('Observer')">
+                                                                <div class="title">{{'Observer'|l}}</div>
+                                                                <!-- <div class="value">
+                                                                    <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                                                        aria-expanded="false">
+                                                                        {{ctrlChild._filterObserver === 'All' ? (ctrlChild._filterObserver|l) :
+                                                                        ctrlChild._filterObserver}}
+                                                                    </span>
+                                                                    <div class="dropdown-menu dropdown-primary " style="box-shadow:none;">
+                                                                        <div>
+                                                                            <a class="dropdown-item quickicon-header-item"
+                                                                                ng-repeat="item in ctrlChild.listObserver"
+                                                                                ng-click="ctrlChild.chooseObserverFilter(item)">{{item}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> -->
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                                                {{'FromDate'|l}}
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                                                {{'ToDate'|l}}
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                                                {{'PriorityLevel'|l}}
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                                                {{'Progress'|l}}
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                                                <div class="title">{{'StatusProcess'|l}}</div>
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;"
+                                                                ng-show="ctrlChild.isTableEnabled('NumberOfHours')">
+                                                                {{'NumberOfHours'|l}}
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                                                <div class="title">{{'State'|l}}</div>
+                                                            </td>
+                                                            <td style="width: 150px;">
+                                                                <div
+                                                                    ng-show="ctrlChild._configTable.length > 0 && ['Management.Settings.Use']|checkRule">
+                                                                    <div class="value">
+                                                                        <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                                                            aria-expanded="false">
+                                                                            <div class="title">{{'ConfigTable'|l}}:</div>
+                                                                        </span>
+                                                                        <div class="dropdown-menu dropdown-primary " style="box-shadow:none;">
+                                                                            <div class="dropdown-item quickicon-header-item" ng-click="$event.stopPropagation()"
+                                                                                ng-repeat="item in ctrlChild._configTable">
+                                                                                <label>
+                                                                                    <div class="tool">
+                                                                                        <input type="checkbox" ng-model="item.model"
+                                                                                            brige-func="ctrlChild.updateRule(params)" brige-value="item.value" />
+                                                                                            &nbsp;&nbsp;
+                                                                                            {{item.value|l}}
+                                                                                    </div>
+                                                                                </label>
+                                                                            </div>
+                                                                            <button type="button" ng-click="ctrlChild.updateConfigTable()"
+                                                                                class="btn btn-square btn-outline-primary" style="width: 100%;">
+                                                                                {{"UpdateConfigTable"|l}}
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                    </thead>
+                                                    <tbody id="taskList">
+                                                        <tr ng-repeat="item in ctrlChild.headTasks"
+                                                            ng-class="{'late': item.state === 'Overdue',
+                                                                   'gonna_late': item.state === 'GonnaLate',
+                                                                   }">
+                                                            <td style="font-weight: 600;vertical-align: middle;width: 80px;">
+                                                                {{$index + 1}}
+                                                            </td>
+                                                            <td>
+                                                                <a class="text-dark" href="/task-details?code={{item.code}}">&nbsp;{{item.title}}</a>
+                                                                <div class="text-muted text-nowrap mb-1"><small>{{item.code}}</small></div>
+                                                                <span class="text-dark" ng-if="item.childs.length>0"
+                                                                    ng-click="ctrlChild.loadHeadTaskChild(item._id,item.childs)"
+                                                                    style="text-decoration: underline;cursor: pointer;" data-toggle="collapse"
+                                                                    data-target="#collapseChild{{item._id}}"><i>
+                                                                        -
+                                                                        {{item.childs.length}} {{'ChildTask'|l}}</i> </span>
+                                                                <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                                                    <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                                                        attachment-show-func="ctrlChild.loadfile(params)"
+                                                                        attachment-show-params="{id:item._id,name:at.name}"
+                                                                        attachment-show-service-name="'task'">
+                                                                    </attachment-show>
+                                                                </div>
+                                                                <div class="showfile-bar" ng-if="item.transfer_ticket_info.name">
+                                                                    <attachment-show attachment-show-item="item.transfer_ticket_info"
+                                                                        attachment-show-func="ctrlChild.loadfile(params)"
+                                                                        attachment-show-params="{id:item._id,name:item.transfer_ticket_info.name}"
+                                                                        attachment-show-service-name="'task'">
+                                                                    </attachment-show>
+                                                                </div>
+                                                                <div id="collapseChild{{item._id}}"
+                                                                    style="max-height: 300px;overflow-y: auto;padding-top: 10px;" class="collapse "
+                                                                    aria-labelledby="headingOne" data-parent="#taskList">
+                                                                    &nbsp;&nbsp;<a ng-repeat="t in item.childTask" class="text-dark" link-details
+                                                                        link-details-display="{{t.title}}" href="/task-details?code={{t.code}}"><i>-
+                                                                            {{t.title}}</i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td ng-show="ctrlChild.isTableEnabled('Creator')"
+                                                                style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                                                <show-username username="item.username" just-name="true">
+                                                                </show-username>
+                                                            </td>
+                                                            <td ng-show="ctrlChild.isTableEnabled('MainPerson')"
+                                                                style="font-weight: 600; width: 160px; text-align: left;">
+                                                                <div ng-repeat="part in item.main_person" style="margin: 10px">
+                                                                    <show-username username="part" just-name="true">
+                                                                    </show-username>
+                                                                </div>
+                                                                <div class="no-data" ng-show="!item.main_person[0]">
+                                                                    {{'Not yet assigned'|l}}
+                                                                </div>
+                                                            </td>
+                                                            <td ng-show="ctrlChild.isTableEnabled('Participant')"
+                                                                style="font-weight: 600; width: 160px; text-align: left;">
+                                                                <div ng-repeat="part in item.participant" style="margin: 10px">
+                                                                    <show-username username="part" just-name="true">
+                                                                    </show-username>
+                                                                </div>
+                                                                <div class="no-data" ng-show="!item.participant[0]">
+                                                                    {{'Not yet assigned'|l}}
+                                                                </div>
+                                                            </td>
+                                                            <td ng-show="ctrlChild.isTableEnabled('Observer')"
+                                                                style="font-weight: 600; width: 160px; text-align: left;">
+                                                                <div ng-repeat="part in item.observer" style="margin: 10px">
+                                                                    <show-username username="part" just-name="true">
+                                                                    </show-username>
+                                                                </div>
+                                                                <div class="no-data" ng-show="!item.observer[0]">
+                                                                    {{'Not yet assigned'|l}}
+                                                                </div>
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                                <time-show2 time-show-data="item.from_date" time-show-type="just_date">
+                                                                </time-show2>
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                                <time-show2 time-show-data="item.to_date" time-show-type="just_date">
+                                                                </time-show2>
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                                <show-priority id-value="item.priority">{{priority}}</show-priority>
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                                <show-progress id-value="item.progress"></show-progress>
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                                <show-status id-value="item.status"></show-status>
+                                                            </td>
+                                                            <td ng-show="ctrlChild.isTableEnabled('NumberOfHours')"
+                                                                style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                                {{item.hours}}
+                                                            </td>
+                                                            <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                                <show-state id-value="item.state"></show-state>
+                                                            </td>
+                                                            <td style="width: 150px;">
+                                                                <button-edit-item
+                                                                    ng-show="'Office.Task.Edit_Task_Project'|task_project_checkRule:ctrlChild.currentProject._id:ctrlChild.currentProject.entity.his[0].createdby:ctrlChild.currentProject.participant"
+                                                                    ng-hide="item.status === 'Completed' || item.status === 'Cancelled'"
+                                                                    button-edit-item-modal="#modal_Task_Update"
+                                                                    button-edit-item-func="ctrlChild.prepareUpdate(params)"
+                                                                    button-edit-item-params="item">
+                                                                </button-edit-item>
+                                                                <button-cancel-item
+                                                                        ng-show="'Office.Task.Edit_Task_Project'|task_project_checkRule:ctrlChild.currentProject._id:ctrlChild.currentProject.entity.his[0].createdby:ctrlChild.currentProject.participant"
+                                                                        ng-hide="item.status === 'Completed' || item.status === 'Cancelled'"
+                                                                        button-cancel-item-modal="#modal_Task_Cancel"
+                                                                        button-cancel-item-func="ctrlChild.prepareCancel(params)"
+                                                                        button-cancel-item-params="item">
+                                                                </button-cancel-item>
+                                                                <button-delete-item
+                                                                    ng-show="'Office.Task.Edit_Task_Project'|task_project_checkRule:ctrlChild.currentProject._id:ctrlChild.currentProject.entity.his[0].createdby:ctrlChild.currentProject.participant"
+                                                                    ng-hide="item.status === 'Completed'"
+                                                                    button-delete-item-modal="#modal_Task_Delete"
+                                                                    button-delete-item-func="ctrlChild.prepareDelete(params)"
+                                                                    button-delete-item-params="item">
+                                                                </button-delete-item>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div ng-if="ctrlChild.headTasks.length == 0" class="no-data">
+                                                {{'NoData'|l}}
+                                            </div>
+                                            <pagination pagination-ctrlname="{{ctrlChild._ctrlName}}" pagination-objname="Task"
+                                                pagination-actionname="count_head_task" pagination-currentpage="ctrlChild.currentHeadTaskPage"
+                                                pagination-noi="ctrlChild.numOfItemPerPage" pagination-total="ctrlChild.totalHeadTaskItems"
+                                                pagination-func="ctrlChild.load_head_task(params)"></pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="part" ng-if="ctrlChild.currentProject._id && ctrlChild.currentProject.status!=='NotStartedYet'">
+            <div id="accordion3">
+                <div class="title" id="headingTwo">
+                    <div class="label" ng-click="ctrlChild.toogleCollapseWiki()" class="btn btn-link"
+                        data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
+                        aria-controls="collapseThree">
+                        <i class="fas fa-angle-down" ng-show="ctrlChild.collapseWiki"></i><i class="fas fa-angle-right"
+                            ng-show="!ctrlChild.collapseWiki"></i>&nbsp;&nbsp;{{'ProjectDocument'|l}}
+                    </div>
+
+                </div>
+
+                <div id="collapseThree" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion3">
+
+                    <div class="task-container">
+
+                        <div class="task-content">
+
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover"
+                                    ng-class="{'no-data':ctrlChild.wikis.length ===0}">
+                                    <thead>
+                                        <tr>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 80px;">
+                                                #
+                                            </td>
+                                            <td class="tool">
+                                                <div class="new">
+                                                    <button-new button-new-func="ctrlChild.prepareInsertWiki()"
+                                                        button-new-label="{{'AddDocument'|l}}"
+                                                        button-new-modal="#modal_Task_InsertWiki">
+                                                    </button-new>
+                                                </div>
+                                                <div class="search">
+                                                    <input type="text"
+                                                        ng-model="ctrlChild._searchByKeyToFilterData_Wiki"
+                                                        my-watch-text-input
+                                                        my-scope="ctrlChild._searchByKeyToFilterData_Wiki"
+                                                        my-func="ctrlChild.refreshData_Wiki()"
+                                                        my-start="!ctrlChild._notyetInit"
+                                                        placeholder="{{'FindDocumentsByName'|l}}">
+                                                    <i class="fas fa-search"></i>
+                                                </div>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 160px;">
+                                                {{'Creator'|l}}
+                                            </td>
+                                            <td style="width: 150px;"></td>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody id="taskList">
+                                        <tr ng-repeat="item in ctrlChild.wikis">
+                                            <td style="font-weight: 600;vertical-align: middle;width: 80px;">
+                                                {{$index + 1}}
+                                            </td>
+                                            <td>
+
+                                                <a class="text-dark" link-details link-details-display="{{item.title}}"
+                                                    link-details-url="/wiki-details?{{item._id}}"
+                                                    link-details-route="wiki-details">{{item.title}}</a>
+                                                <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                                    <attachment-show ng-repeat="at in item.attachment"
+                                                        attachment-show-item="at"
+                                                        attachment-show-func="ctrlChild.loadfile_wiki(params)"
+                                                        attachment-show-params="{id:item._id,name:at.name}"
+                                                        attachment-show-service-name="'project/wiki'">
+                                                    </attachment-show>
+                                                </div>
+                                            </td>
+                                            <td
+                                                style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                                <show-username username="item.username" just-name="true">
+                                                </show-username>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <button-edit-item
+                                                    ng-show=" item.username == $root.logininfo.data.username"
+                                                    button-edit-item-modal="#modal_Task_UpdateWiki"
+                                                    button-edit-item-func="ctrlChild.prepareUpdateWiki(params)"
+                                                    button-edit-item-params="item">
+                                                </button-edit-item>
+                                                <button-delete-item
+                                                    ng-show=" item.username == $root.logininfo.data.username"
+                                                    button-delete-item-modal="#modal_Task_DeleteWiki"
+                                                    button-delete-item-func="ctrlChild.prepareDeleteWiki(params)"
+                                                    button-delete-item-params="item">
+                                                </button-delete-item>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div ng-if="ctrlChild.wikis.length ==0" class="no-data">
+                                {{'NoData'|l}}
+                            </div>
+                            <pagination pagination-ctrlname="{{ctrlChild._ctrlName}}" pagination-objname="Task"
+                                pagination-actionname="countWiki" pagination-currentpage="ctrlChild.currentPage_Wiki"
+                                pagination-noi="ctrlChild.numOfItemPerPage_Wiki"
+                                pagination-total="ctrlChild.totalItems_Wiki"
+                                pagination-func="ctrlChild.load_wiki(params)"></pagination>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

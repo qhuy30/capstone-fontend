@@ -1,0 +1,17 @@
+<div>
+    <!-- <div ng-transclude="breadcrumb" id="mybreadcrumb" class="animated" ng-if="!$root.detailsInfo.url">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" ng-repeat="breadcrumb in $root.breadcrumb track by $index">
+                {{breadcrumb}}
+            </li>
+            <li class="breadcrumb-menu" ng-include="$root.urlToolbar">
+                
+            </li>
+        </ol>
+    </div> -->
+
+    <div class="animated" ng-transclude="breadcrumb">
+    </div>
+    <div class=" animated fadeIn container-fluid" ng-transclude="content" >
+    </div>
+</div>

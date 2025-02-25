@@ -1,0 +1,417 @@
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="modal_CarRegistration_LeadDepartment_Approval"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'EditAndApprove'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="updateForm">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <!-- title -->
+              <div class="form-group col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Title'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <!-- <input
+                    ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'CarManagement','approve_department','doing')"
+                    type="text"
+                    ng-model="ctrlChild._assess_registration_value.title"
+                    class="form-control"
+                    name="update_title"
+                    placeholder="{{'InputTitle'|l}}"
+                    ng-class="{ 'is-invalid': insertForm.title.$invalid }"
+                    required
+                  /> -->
+
+                  <input
+                    disabled="true"
+                    type="text"
+                    ng-model="ctrlChild._assess_registration_value.title"
+                    class="form-control"
+                    name="update_title"
+                    placeholder="{{'InputTitle'|l}}"
+                    ng-class="{ 'is-invalid': insertForm.title.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <!--starting place-->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <!-- <pick-modal-directory-2
+                    id-value="ctrlChild._assess_registration_value.starting_place"
+                    extend="ctrlChild.location_config"
+                    pick-func="ctrlChild.pick_starting_place_car(params)"
+                    label="{{'Starting place'|l}}"
+                    require="true"
+                    get-first-to-default="true"
+                  /> -->
+
+                  <pick-modal-directory-2
+                    disable="true"
+                    id-value="ctrlChild._assess_registration_value.starting_place"
+                    extend="ctrlChild.location_config"
+                    pick-func="ctrlChild.pick_starting_place_car(params)"
+                    label="{{'Starting place'|l}}"
+                    require="true"
+                    get-first-to-default="true"
+                  />
+                </div>
+              </div>
+              <!-- destination -->
+              <div class="form-group col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new"
+                      >{{'Destination'|l}}</span
+                    >
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <!-- <input
+                    ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'CarManagement','approve_department','doing')"
+                    type="text"
+                    ng-model="ctrlChild._assess_registration_value.destination"
+                    class="form-control"
+                    name="update_destination"
+                    placeholder="{{'Input Destination'|l}}"
+                    ng-class="{ 'is-invalid': updateForm.update_destination.$invalid }"
+                    required
+                  /> -->
+
+                  <input
+                    disabled="true"
+                    type="text"
+                    ng-model="ctrlChild._assess_registration_value.destination"
+                    class="form-control"
+                    name="update_destination"
+                    placeholder="{{'Input Destination'|l}}"
+                    ng-class="{ 'is-invalid': updateForm.update_destination.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+              <!--passenger-->
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="form-group" style="margin-top: 14px">
+                    <!-- <pick-user-multi
+                      label="{{'Passenger'|l}}"
+                      id-value="ctrlChild._assess_registration_value.init_passenger"
+                      pick-func="ctrlChild.pick_passenger_car(params)"
+                      id="pick_passenger_update"
+                      num-of-item-show="6"
+                    /> -->
+
+                    <pick-user-multi
+                      disable="true"
+                      label="{{'Passenger'|l}}"
+                      id-value="ctrlChild._assess_registration_value.init_passenger"
+                      pick-func="ctrlChild.pick_passenger_car(params)"
+                      id="pick_passenger_update"
+                      num-of-item-show="6"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- contact passenger -->
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="form-group" >
+                    <!-- <pick-user-multi
+                      label="{{'contactperson'|l}}"
+                      id-value="ctrlChild._assess_registration_value.contact_passenger"
+                      pick-func="ctrlChild.pick_contact_passenger_car(params)"
+                      id="pick_contact_passenger_insert"
+                      id-value="ctrlChild._assess_registration_value.contact_passenger"
+                      num-of-item-show="6"
+                    /> -->
+
+                    <pick-user-multi
+                      disable="true"
+                      label="{{'contactperson'|l}}"
+                      id-value="ctrlChild._assess_registration_value.contact_passenger"
+                      pick-func="ctrlChild.pick_contact_passenger_car(params)"
+                      id="pick_contact_passenger_insert"
+                      id-value="ctrlChild._assess_registration_value.contact_passenger"
+                      num-of-item-show="6"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!--to department-->
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <!-- <organization-multi
+                      label="{{'Department'|l}}"
+                      id-value="ctrlChild._assess_registration_value.to_department"
+                      select-func="ctrlChild.pick_department_car(params)"
+                    /> -->
+
+                    <organization-multi
+                      disable="true"
+                      label="{{'Department'|l}}"
+                      id-value="ctrlChild._assess_registration_value.to_department"
+                      select-func="ctrlChild.pick_department_car(params)"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- time_to_go -->
+              <div class="col-md-4 form-group">
+                <!-- <datetime-local
+                  id-value="ctrlChild._assess_registration_value.time_to_go"
+                  func="ctrlChild.chooseTimeToGo_car(params)"
+                  label="{{'Time to go'|l}}"
+                  disabled="$root.statusValue.get(ctrlChild._ctrlName,'CarManagement','approve_department','doing')"
+                  required="true"
+                  input-type="datetime-local"
+                  min="ctrlChild.now"
+                  require="true"
+                /> -->
+
+                <datetime-local
+                  id-value="ctrlChild._assess_registration_value.time_to_go"
+                  func="ctrlChild.chooseTimeToGo_car(params)"
+                  label="{{'Time to go'|l}}"
+                  disable="true"
+                  required="true"
+                  input-type="datetime-local"
+                  min="ctrlChild.now"
+                  require="true"
+                />
+              </div>
+              <!-- pick_up_time -->
+              <div class="col-md-4 form-group">
+                <!-- <datetime-local
+                  min="ctrlChild.now"
+                  id-value="ctrlChild._assess_registration_value.pick_up_time"
+                  func="ctrlChild.choosePickUpTime_car(params)"
+                  label="{{'Pick up time'|l}}"
+                  disabled="$root.statusValue.get(ctrlChild._ctrlName,'CarManagement','approve_department','doing')"
+                  input-type="datetime-local"
+                /> -->
+
+                <datetime-local
+                  min="ctrlChild.now"
+                  id-value="ctrlChild._assess_registration_value.pick_up_time"
+                  func="ctrlChild.choosePickUpTime_car(params)"
+                  label="{{'Pick up time'|l}}"
+                  disable="true"
+                  input-type="datetime-local"
+                />
+              </div>
+
+
+              <!-- Number of people -->
+              <div class="form-group col-md-4">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new"
+                      >{{'Number of people'|l}}</span
+                    >
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <!-- <input
+                    ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'CarManagement','approve_department','doing')"
+                    type="number"
+                    ng-model="ctrlChild._assess_registration_value.number_of_people"
+                    class="form-control"
+                    min="{{(ctrlChild._assess_registration_value.passenger.length>0?ctrlChild._assess_registration_value.passenger.length:1)}}"
+                    name="update_number_of_people"
+                    ng-class="{ 'is-invalid': updateForm.update_number_of_people.$invalid }"
+                    required
+                  /> -->
+
+                  <input
+                    disabled="true"
+                    type="number"
+                    ng-model="ctrlChild._assess_registration_value.number_of_people"
+                    class="form-control"
+                    min="{{(ctrlChild._assess_registration_value.passenger.length>0?ctrlChild._assess_registration_value.passenger.length:1)}}"
+                    name="update_number_of_people"
+                    ng-class="{ 'is-invalid': updateForm.update_number_of_people.$invalid }"
+                    required
+                  />
+                  <div
+                    ng-show="updateForm.update_number_of_people.$invalid"
+                    class="errorMsg"
+                  >
+                    {{'Number of the participarnt must greater than or equal to'|l:({number:(ctrlChild._assess_registration_value.passenger.length>0?ctrlChild._assess_registration_value.passenger.length:1)})}}
+                  </div>
+                </div>
+              </div>
+
+              
+              
+              <!-- content -->
+              <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Content'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <div class="form-group">
+                    <!-- <textarea
+                      ng-model="ctrlChild._assess_registration_value.content"
+                      required="true"
+                      placeholder="{{'InputNote'|l}}"
+                    ></textarea> -->
+
+                    <textarea
+                      style="width: 100%;"
+                      disabled="true"
+                      ng-model="ctrlChild._assess_registration_value.content"
+                      required="true"
+                      placeholder="{{'InputNote'|l}}"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <!-- attachment -->
+              <!-- <div class="col-md-6" style="border-right: 1px solid #eee">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>{{'Attachment'|l}}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in ctrlChild._assess_registration_value.attachments">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          <attachment-just-show
+                            my-item="item"
+                          ></attachment-just-show>
+                        </td>
+                        <td>
+                          <i
+                            class="fas fa-times text-danger"
+                            ng-click="ctrlChild.removeAttachment_update(item)"
+                          ></i>
+                        </td>
+                      </tr>
+                      <tr ng-repeat="item in ctrlChild._assess_registration_value.files">
+                        <td>
+                          {{$index+1+(ctrlChild._assess_registration_value.attachments.length||0)}}
+                        </td>
+                        <td>
+                          <attachment-just-show
+                            my-item="item"
+                          ></attachment-just-show>
+                        </td>
+                        <td>
+                          <i
+                            class="fas fa-times text-danger"
+                            ng-click="ctrlChild.removeFile_car(item)"
+                          ></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                  <tbody>
+                    <tr>
+                      <td
+                        class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                        colspan=" 0"
+                      >
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text"
+                                  >{{'UploadFile'|l}}</span
+                                >
+                              </span>
+                              <span class="wd-fa-add-file-light-descript"
+                                >{{'DragTheFileHereToUpload'|l}}</span
+                              >
+                            </span>
+                          </span>
+                          <input
+                            class="diskuf-fileUploader wd-test-file-light-inp"
+                            type="file"
+                            file-reading="ctrlChild._assess_registration_value.files"
+                            size="1"
+                            multiple
+                            style="width: 100%"
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> -->
+
+              <div class="col-md-12">
+                <attachment-show
+                  ng-repeat="at in ctrl._assess_registration_value.attachments"
+                  attachment-show-item="at"
+                  attachment-show-func="ctrl.loadfile_car(params)"
+                  attachment-show-params="{id:ctrl._assess_registration_value._id, code:ctrl._assess_registration_value.code, name:at.name}"
+                  attachment-show-service-name="'car_management'"
+                />
+              </div>
+
+              <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span  >{{'AccessNote'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <div class="form-group mb-0">
+                    <text-area-with-suggestions-2
+                      ng-model="ctrlChild._assess_registration_value.note"
+                      ng-required="true"
+                      placeholder="{{ctrlChild._assess_registration_value.note_placeholder}}"
+                      function-apply="ctrlChild.function_apply_suggestions_car"
+                    />
+                  </div>
+                  <!-- <div>
+                    <span 
+                      class="badge badge-light m-1" 
+                      style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                      ng-repeat="hint in ctrlChild._hintNoteSet"
+                      ng-click="ctrlChild.set_hint_note(hint)"
+                    > 
+                      {{hint|l}}
+                    </span>
+                  </div> -->
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-approval
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="CarManagement"
+          modal-button-approval-actionname="approve_lead"
+          modal-button-approval-invalid="updateForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_department_car()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

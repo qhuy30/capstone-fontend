@@ -1,0 +1,86 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Group_Update">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{'UpdateAccountGroupInformation'|l}}"></modal-header>
+        <div class="modal-body">
+          <div class="part">
+            <form class="form-horizontal" name="updateGroupForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="input-group-new">
+                      <div class="input-group-prepend-new">
+                        <span class="input-group-text-new">{{'Name'|l}}</span>
+                        <span class="require-sympton">*</span>
+                      </div>
+                      <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Group','update','doing')" type="text"
+                        ng-model="ctrl._update_value.title" class="form-control" name="updateGroup_title"
+                        placeholder="input displayname"
+                        ng-class="{ 'is-invalid': updateGroupForm.updateGroup_title.$invalid }" required/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <pick-modal-directory-multi extend="ctrl.Role_Config" pick-func="ctrl.chooseRole_update(params)"
+                      id-value="ctrl._update_value.role" label="{{'Role'|l}}" require="true"></pick-modal-directory-multi>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <pick-user-multi-2  pick-func="ctrl.chooseUser_update(params)"
+                      id-value="ctrl._update_value.user" label="{{'User'|l}}" require="true"></pick-user-multi-2>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <pick-modal-directory-multi extend="ctrl.Competence_Config" pick-func="ctrl.chooseCompetence_update(params)"
+                      id-value="ctrl._update_value.competence" label="{{'Competence'|l}}" require="true"
+                      disable="$root.statusValue.get(ctrl._ctrlName,'Group','update','doing')"></pick-modal-directory-multi>
+                  </div>
+                </div>
+
+                <div class="col-md-12 user-is-active">
+                  <div class="form-group">
+                    <input-checkbox input-checkbox-label="{{'IsActive'|l}}"
+                      input-checkbox-model="ctrl._update_value.isactive"
+                      input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'Group','update','doing')">
+                    </input-checkbox>
+                  </div>
+                </div>
+  
+  
+                <div class="col-md-12">
+                  <modal-button-save style="float: right;" modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="Group" modal-button-save-actionname="update"
+                    modal-button-save-invalid="updateGroupForm.$invalid" modal-button-save-func="ctrl.update_func()">
+                  </modal-button-save>
+                </div>
+              </div>
+  
+  
+            </form>
+          </div>
+          <div class="part" ng-if="['Management.Group.AssignPermission']|checkRule">
+            <div class="row" >
+  
+              <div class="col-md-4">
+                <button-select button-select-label="{{'Module'|l}}" button-select-data="ctrl.Modules"
+                  button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Group','update','doing')"
+                  button-select-func="ctrl.chooseModule(params)" button-select-model="ctrl._selectedModule"
+                  button-select-key="key" require="true" button-select-localization="true">
+                </button-select>
+              </div>
+  
+            </div>
+            <div ng-if="['Management.Group.AssignPermission']|checkRule" ng-include="ctrl._urlPermission"></div>
+          </div>
+  
+        </div>
+        <div class="modal-footer">
+  
+          <modal-button-close></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>

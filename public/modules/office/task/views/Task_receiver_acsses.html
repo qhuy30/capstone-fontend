@@ -1,0 +1,150 @@
+<div class="modal fade" id="modal_Receive_Task_Assess_QH_detail" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{ctrlChild._assess_value.title_modal|l }}"></modal-header>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+              <table class="col-md-12">
+                <tr>
+                  <td style="width: 15%;" class="font-weight-bolder">{{'Title'|l}}</td>
+                  <td colspan="3">{{ctrlChild._assess_value.title}}</td>
+                </tr>
+                <tr>
+                  <td style="width: 15%;" class="font-weight-bolder">{{'Priority'|l}}</td>
+                  <td colspan="3">
+                    
+                    <get-field-directory
+                      id-value="ctrlChild._assess_value.priority"
+                      extend="ctrlChild.TaskPriority"
+                      localization="true"
+                    />
+                  </td>
+                </tr>
+                
+  
+                <tr>
+                  <td class="font-weight-bolder">{{'Department'|l}}</td>
+                  <td class="pl-0">
+                    <div class="d-flex flex-wrap">
+                      <span class="p-1 ml-2 mt-1"
+                        style="font-size: 0.7rem ;color: #3e4042;background-color: #dde2e4; border-radius: 5px; text-align: center; text-wrap: nowrap;">
+                        <show-department department="ctrlChild._assess_value.from_department"></show-department><br>
+                      </span>
+                    </div>
+                  </td>
+                  </td>
+                </tr>
+  
+                <tr>
+                  <td class="font-weight-bolder">{{'Content'|l}}</td>
+                  <td class="p-1">
+                    <div ng-bind-html="ctrlChild._assess_value.content" style="margin-right: 20px;" class="ng-binding"></div>
+                  </td>
+                  </td>
+                </tr>
+                
+                <tr>
+                  <td class="font-weight-bolder">{{'Attachment'|l}}</td>
+                  <td colspan="3">
+                    <attachment-show ng-repeat="at in ctrlChild._assess_value.attachment" attachment-show-item="at"
+                      attachment-show-func="ctrlChild.loadfile(params)"
+                      attachment-show-params="{id:ctrlChild._assess_value._id, name:at.name}"
+                      attachment-show-service-name="'task'"></attachment-show>
+                    <span ng-if="ctrlChild._assess_value.attachment.length ==0" class="no-data">
+                      {{'NoData'|l}}
+                    </span>
+                  </td>
+                </tr>
+                
+              </table>
+  
+  
+            </div>
+  
+            <div class="col-md-12">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span>{{'AccessNote'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <div class="form-group mb-0">
+                  <text-area-with-suggestions-2
+                    ng-model="ctrlChild._assess_value.note"
+                    require="true"
+                    placeholder="{{ctrlChild._assess_value.note_placeholder}}"
+                    function-apply="ctrlChild.function_apply_suggestions"
+                  />
+                </div>
+
+                <!-- <div>
+                  <span 
+                    class="badge badge-light m-1" 
+                    style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                    ng-repeat="hint in ctrlChild._hintNoteSet"
+                    ng-click="ctrlChild.set_hint_note(hint)"
+                  > 
+                    {{hint|l}}
+                  </span>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="modal-footer" ng-switch="ctrlChild._assess_value.action">
+        
+          <modal-button-approval
+            ng-switch-when="recive_task"
+            modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+            modal-button-approval-objname="Task"
+            modal-button-approval-actionname="receive_task"
+            modal-button-approval-invalid="assessForm.$invalid || !ctrlChild._assess_value.note"
+            modal-button-approval-func="ctrlChild.receive_task()"
+            modal-button-confirm-text="{{'AreYouSureReceiveTask'}}"
+            modal-button-approval-label="{{'Approval'|l}}"
+            modal-header-content="{{'Receive task'|l}}"
+          />
+  
+          <modal-button-reject
+            ng-switch-when="recive_task"
+            modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+            modal-button-reject-objname="Task"
+            modal-button-reject-actionname="reject_receive_task"
+            modal-button-reject-invalid="assessForm.$invalid || !ctrlChild._assess_value.note"
+            modal-button-reject-func="ctrlChild.reject_receive_task()"
+            modal-button-confirm-text="{{'AreYouSureRejectReceiveTask'}}"
+            modal-button-reject-label="{{'Reject'|l}}"
+            modal-header-content="{{'Reject receive task'|l}}"
+          />
+  
+          <modal-button-approval
+            ng-switch-when="approve_recive_task"
+            modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+            modal-button-approval-objname="Task"
+            modal-button-approval-actionname="approval_receive_task"
+            modal-button-approval-invalid="assessForm.$invalid || !ctrlChild._assess_value.note"
+            modal-button-approval-func="ctrlChild.approval_receive_task()"
+            modal-button-confirm-text="{{'AreYouSureApprovalReceiveTask'}}"
+            modal-button-approval-label="{{'Approval'|l}}"
+            modal-header-content="{{'Approval'|l}}"
+          />
+  
+          <modal-button-reject
+            ng-switch-when="approve_recive_task"
+            modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+            modal-button-reject-objname="Task"
+            modal-button-reject-actionname="reject_approval_receive_task"
+            modal-button-reject-invalid="assessForm.$invalid || !ctrlChild._assess_value.note"
+            modal-button-reject-func="ctrlChild.reject_approval_receive_task()"
+            modal-button-confirm-text="{{'AreYouSureRejectApprovalReceiveTask'}}"
+            modal-button-reject-label="{{'Reject'|l}}"
+            modal-header-content="{{'Reject'|l}}"
+          />
+  
+          <modal-button-close></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>
+  

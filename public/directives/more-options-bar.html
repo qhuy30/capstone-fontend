@@ -1,0 +1,25 @@
+<div id="accordion">
+    <div class="card" style="box-shadow: none;">
+        <div class="card-body">
+            <!-- <div class="row">
+                <h5 class="mb-0 col-md-12">
+                    <button class="btn btn-link collapsed" 
+                        data-target="{{targetId ? '#' + targetId : '#collapseMoreOptions'}}" aria-expanded="false" aria-controls="{{targetId ? targetId : 'collapseMoreOptions'}}">
+                        {{'AdvancedSearch'|l}}
+                    </button>
+                </h5>
+            </div> -->
+            <div id="{{targetId ? targetId : 'collapseMoreOptions'}}" class="collapse show" aria-labelledby="headingTwo"
+                data-parent="#accordion" >
+                <!-- <div class="row">
+                    <div class="col-md-12" style="border-top:1px solid #eee;margin-bottom:15px;margin-top:15px;">
+
+                    </div>
+                </div> -->
+                <div ng-transclude="content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="modal fade" id="modal_RecycleBin_DeleteAll" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                <div class="form-group">
+                    {{'DoYouWantDeleteThisInformation'|l }}
+                </div>
+                <div class="form-group">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    {{'DBName'|l}}
+                                    <order order-func="ctrl.refreshData()" order-model="ctrl.sort" order-name="dbname"></order>
+                                    </order>
+                                </th>
+                                <th>
+                                    {{'Collection'|l}}
+                                    <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                        order-name="collection"></order>
+                                </th>
+                                <th>
+                                    {{'UserName'|l}}
+                                    <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                        order-name="username"></order>
+                                </th>
+                                <th>
+                                    {{'Time'|l}}
+                                    <order order-func="ctrl.refreshData()" order-model="ctrl.sort" order-name="time">
+                                    </order>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr
+                                ng-repeat="item in ctrl.recyclebins|orderBy:ctrl.sort.name:ctrl.sort.value track by $index">
+                                <td>
+                                    <strong> {{$index +1}}</strong>
+                                </td>
+                                <td>
+                                    {{item.dbname}}
+                                </td>
+                                <td>
+                                    {{item.collection}}
+                                </td>
+                                <td>
+                                    {{item.username}}
+                                </td>
+                                <td>
+                                    {{item.time}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete 
+                modal-button-delete-invalid="ctrl.recyclebins.length==0"
+                modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="RecycleBin" modal-button-delete-actionname="delete"
+                    modal-button-delete-func="ctrl.delete_func('all')">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,330 @@
+<div class="modal fade" id="modal_RoomRegistration_Assess" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'ProcessRegistration'|l }}"></modal-header>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+            <table class="col-md-12">
+              <tr>
+                <td class="font-weight-bold">{{'Title'|l}}</td>
+                <td>{{ctrlChild._assess_registration_value.title}}</td>
+                <td class="font-weight-bolder"> {{'RegistrationCode'|l}} </td>
+                <td colspan="5"> {{ctrlChild._assess_registration_value.code}} </td>
+              </tr>
+              <tr>
+                <td class="font-weight-bolder"> {{'TypeRoom'|l}} </td>
+                <td> {{ctrlChild._assess_registration_value.type|l}} </td>
+
+                <td class="font-weight-bolder"> {{'Room'|l}} </td>
+                <td colspan="5">
+                  <get-field-directory id-value="ctrlChild._assess_registration_value.room" extend="ctrlChild.room_list_config"
+                    localization="true" />
+                </td>
+              </tr>
+
+              <tr>
+                <td style="width: 15%;" class="font-weight-bolder">{{'Start date use'|l}}</td>
+                <td>
+                  <time-show time-show-type="justdate" time-show-data="ctrlChild._assess_registration_value.date_start"></time-show>
+                </td>
+
+                <td style="width: 15%;" class="font-weight-bolder">{{'TimeStart'|l}}</td>
+                <td>
+                  <time-show time-show-type="justtime" time-show-data="ctrlChild._assess_registration_value.date_start"></time-show>
+                </td>
+
+                <td style="width: 15%;" class="font-weight-bolder">{{'TimeEnd'|l}}</td>
+                <td>
+                  <time-show time-show-type="justtime" time-show-data="ctrlChild._assess_registration_value.date_end"></time-show>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="font-weight-bold">{{'HostPerson'|l}}</td>
+                <td colspan="5">
+                  <span ng-switch="ctrlChild._assess_registration_value.host_scope">
+                    <span ng-switch-when="external">{{ctrlChild._assess_registration_value.host_external}} ({{'External school unit'|l}})</span>
+                    <span ng-switch-when="internal">
+                      <show-username-onlyname
+                        hide-image="true"
+                        username="ctrlChild._assess_registration_value.host"
+                      />
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              
+              <tr>
+                  <td class="font-weight-bold">{{'Participant'|l}}</td>
+                  <td colspan="5">
+                    <div class="d-flex flex-wrap">
+                        <span ng-repeat="n in ctrlChild._assess_registration_value.participants">
+                            <show-username-onlyname hide-image="true" username="n"/><span ng-show="!$last">,&nbsp;</span>
+                        </span>
+                    </div>
+                  </td>
+                  <!-- <td colspan="5" class="pl-0">
+                      <div class="d-flex flex-wrap">
+                          <span
+                              ng-repeat="n in ctrlChild._assess_registration_value.participants"
+                              class="p-1 ml-2 mt-1"
+                              style="font-size: 0.7rem ;color: #3e4042;background-color: #dde2e4; border-radius: 5px; text-align: center; text-wrap: nowrap;"
+                          >
+                              <show-username-onlyname
+                                  hide-image="true"
+                                  username="n"
+                              />
+                          </span>
+                      </div>
+                  </td> -->
+              </tr>
+
+              <tr>
+                  <td class="font-weight-bold">{{'OtherParticipants'|l}}</td>
+                  <td colspan="5">
+                    <div class="d-flex flex-wrap">
+                        <span ng-repeat="n in ctrlChild._assess_registration_value.other_participants track by $index">
+                        {{ n }}<span ng-show="!$last">,&nbsp;</span>
+                    </span>
+                    </div>
+                  </td>
+                  <!-- <td colspan="5" class="pl-0">
+                      <div class="d-flex flex-wrap">
+                          <span
+                              ng-repeat="n in ctrlChild._assess_registration_value.other_participants track by $index"
+                              class="p-1 ml-2 mt-1"
+                              style="font-size: 0.7rem ;color: #3e4042;background-color: #dde2e4; border-radius: 5px; text-align: center; text-wrap: nowrap;"
+                      >
+                          <span>{{ n }}</span>
+                      </span>
+                      </div>
+                  </td> -->
+              </tr>
+
+              <tr>
+                  <td class="font-weight-bold">{{'ParticipateDepartments'|l}}</td>
+                  <td colspan="5">
+                    <div class="d-flex flex-wrap">
+                        <span ng-repeat="department in ctrlChild._assess_registration_value.to_department">
+                            <show-department department="department"></show-department><span ng-show="!$last">,&nbsp;</span>
+                        </span>
+                    </div>
+                  </td>
+                  <!-- <td colspan="5" class="pl-0">
+                      <div class="d-flex flex-wrap">
+                          <span
+                              ng-repeat="department in ctrlChild._assess_registration_value.to_department"
+                              class="p-1 ml-2 mt-1"
+                              style="font-size: 0.7rem ;color: #3e4042;background-color: #dde2e4; border-radius: 5px; text-align: center; text-wrap: nowrap;"
+                          >
+                              <show-department
+                              department="department"
+                              ></show-department>
+                          </span>
+                      </div>
+                  </td> -->
+              </tr>
+
+              <tr ng-if="ctrlChild._assess_registration_value.service_proposal">
+                  <td class="font-weight-bold">{{'RecommendedService'|l}}</td>
+                  <td colspan="5">{{ctrlChild._assess_registration_value.service_proposal_text}}</td>
+              </tr>
+              <tr ng-if="ctrlChild._assess_registration_value.helpdesk">
+                  <td class="font-weight-bold">{{'TechnicalSupport'|l}}</td>
+                  <td colspan="5">{{ctrlChild._assess_registration_value.helpdesk_text}}</td>
+              </tr>
+              <tr ng-if="ctrlChild._assess_registration_value.TeaBreak">
+                  <td class="font-weight-bold">{{'TeaBreak'|l}}</td>
+                  <td colspan="5">{{ctrlChild._assess_registration_value.teabreak_text}}</td>
+              </tr>
+
+              <tr>
+                <td class="font-weight-bold">{{'Content'|l}}</td>
+                <td colspan="5">{{ctrlChild._assess_registration_value.content}}</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bold">{{'Attachment'|l}}</td>
+                <td colspan="5">
+                  <attachment-show ng-repeat="at in ctrlChild._assess_registration_value.attachments" attachment-show-item="at"
+                    attachment-show-func="ctrlChild.load_file(params)"
+                    attachment-show-params="{id:ctrlChild._assess_registration_value._id, code:ctrlChild._assess_registration_value.code, name:at.name}"
+                    attachment-show-service-name="'car_management'"></attachment-show>
+                  <span ng-if="ctrlChild._assess_registration_value.attachments.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+
+        <form class="form-horizontal" name="assessForm">
+
+          <div class="card" ng-if="ctrlChild._assess_registration_value.assign_room">
+            <div class="card-body row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <pick-modal-directory-room 
+                      extend="ctrlChild.room_list_config " 
+                      id-value="ctrlChild._assess_registration_value.room"
+                      current-room="ctrlChild._assess_registration_value.original_current_room"
+                      current-registration="ctrlChild._assess_registration_value._id"
+                      filter="ctrlChild._assess_registration_value.filter_room"
+                      date-start="ctrlChild._assess_registration_value.date_start"
+                      date-end="ctrlChild._assess_registration_value.date_end"
+                      pick-func="ctrlChild.pick_room_assess_room(params)" 
+                      label="{{'Room'|l}}" 
+                      require="true"
+                    />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+              <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span  >{{'AccessNote'|l}}</span>
+                    <span class="require-sympton" ng-show="ctrlChild._assess_registration_value.note_required">*</span>
+                  </div>
+                  <div class="form-group mb-0">
+                    <!-- <text-area-with-suggestions ng-model="ctrlChild._assess_registration_value.note"
+                      ng-required="ctrlChild._assess_registration_value.note_required"
+                      placeholder="{{ctrlChild._assess_registration_value.note_placeholder}}"></text-area-with-suggestions> -->
+                  
+                      <text-area-with-suggestions-2
+                        ng-model="ctrlChild._assess_registration_value.note"
+                        ng-required="ctrlChild._assess_registration_value.note_required"
+                        placeholder="{{ctrlChild._assess_registration_value.note_placeholder}}"
+                        function-apply="ctrlChild.function_apply_suggestions_room"
+                      />
+                    </div>
+                  <!-- <div>
+                    <span 
+                      class="badge badge-light m-1" 
+                      style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                      ng-repeat="hint in ctrlChild._hintNoteSet"
+                      ng-click="ctrlChild.set_hint_note(hint)"
+                    > 
+                      {{hint|l}}
+                    </span>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+        </form>
+      </div>
+      <div class="modal-footer" ng-switch="ctrlChild._assess_registration_value.action">
+        <modal-button-reject
+          ng-switch-when="reject_department"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="MeetingRoom"
+          modal-button-reject-actionname="reject_department"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_department_room()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_management"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="MeetingRoom"
+          modal-button-approval-actionname="approve_management"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_management_room()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_lead"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="MeetingRoom"
+          modal-button-approval-actionname="approve_lead"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_lead_room()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_management"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="MeetingRoom"
+          modal-button-reject-actionname="reject_management"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_management_room()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_lead"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="MeetingRoom"
+          modal-button-reject-actionname="reject_lead"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_lead_room()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}"
+        />
+
+        <!-- recall -->
+        <modal-button-approval
+          ng-switch-when="approve_recall_department"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="MeetingRoom"
+          modal-button-approval-actionname="approve_recall_department"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_recall_department_room()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_recall_management"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="MeetingRoom"
+          modal-button-approval-actionname="approve_recall_management"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_recall_management_room()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_recall_lead"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="MeetingRoom"
+          modal-button-approval-actionname="approve_recall_lead"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_recall_lead_room()"
+          modal-button-confirm-text="{{'AreYouSureApproveThisRegistration'}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_recall_management"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="MeetingRoom"
+          modal-button-reject-actionname="reject_recall_management"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_recall_management_room()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_recall_lead"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="MeetingRoom"
+          modal-button-reject-actionname="reject_recall_lead"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_recall_lead_room()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}"
+        />
+        <!-- end recall -->
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

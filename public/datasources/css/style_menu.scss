@@ -1,0 +1,46 @@
+@import "./variables";
+@import "./mixins";
+#menu {
+  ul{
+    background-color: $header--bgc;
+  }
+
+  .nav-item {
+    a {
+      color: $inactive--color;
+      font-size: 11px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-weight: 700;
+      &.active-menu{
+        color: $active-color-primary;
+        i {
+          color: $active-color-primary;
+        }
+      }
+      i {
+        color: $inactive--color;
+      }
+    }
+    &:hover {
+      > a {
+        background-color: $header--bgc;
+        color: $active-color-primary;
+        i {
+          color: $active-color-primary;
+        }
+      }
+    }
+  }
+}
+.sidebar {
+  background-color: $sidebar--bgc !important;
+  box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%),
+    0 0.9375rem 1.40625rem rgb(4 9 20 / 3%),
+    0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+    .nav-dropdown{
+        &.open{
+            background: #e8f0fe;
+        }
+    }
+}

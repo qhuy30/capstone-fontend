@@ -1,0 +1,55 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Folder_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header
+                modal-header-title="{{ctrlChild._update_folder_value.type === 'folder' ? ('UpdateFolder' | l) : ('UpdateFile' | l)}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="updateForm">
+                    <div class="row part">
+
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">{{'Title'|l}}
+                                    </span>
+                                </div>
+                                <input
+                                    ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'File','update','doing')"
+                                    type="text"
+                                    ng-model="ctrlChild._update_folder_value.name"
+                                    class="form-control"
+                                    name="update_folder_name"
+                                    placeholder="Input name"
+                                    ng-class="{ 'is-invalid': updateForm.update_folder_name.$invalid }"
+                                    required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group share">
+                                <pick-user-multi
+                                    pick-func="ctrlChild.pickShare_update(params)"
+                                    id-value="ctrlChild._update_folder_value.share"
+                                    label="{{'ShareFolder'|l}}" require="true">
+                                </pick-user-multi>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save
+                    modal-button-save-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-save-objname="File"
+                    modal-button-save-actionname="update"
+                    modal-button-save-invalid="updateForm.$invalid"
+                    modal-button-save-func="ctrlChild.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

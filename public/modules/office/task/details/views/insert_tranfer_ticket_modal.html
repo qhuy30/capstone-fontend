@@ -1,0 +1,353 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Insert_Tranfer_Ticket" data-backdrop="static">
+    <div class="modal-dialog modal-full" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{ctrl.header|l}}"></modal-header>
+        <div class="modal-body" style="max-height: 600px; overflow-y: auto;">
+          <form class="form-horizontal" name="forms.insertForm">
+            <div class="card">
+              <div class="card-body" style="border-left: 2px solid #20a8d8">
+                <div class="form-group">
+                  <div class="input-prepend input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">{{'Title'|l}}</span><span class="require-sympton">*</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName,'WFP','insert','doing')"
+                      type="text"
+                      ng-model="ctrl._insert_value.title"
+                      class="form-control"
+                      name="insert_title"
+                      placeholder="Input title"
+                      ng-class="{ 'is-invalid': forms.insertForm.insert_title.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+              
+
+                <div class="form-group">
+                  <organization label="{{'Department Receiving'|l}}" id-value="ctrl._insert_value.to_department"
+                    select-func="ctrl.chooseDepartment_insert(params)" excludes="[$rootScope.logininfo.data.department]"
+                    require="true"
+                    disable="$root.statusValue.get(ctrl._ctrlName,'WFP','insert','doing') || ctrl.reponseTask">
+                  </organization>
+                </div>
+
+                <div class="form-group">
+                  <pick-modal-directory extend="ctrl.DocumentType_Config" pick-func="ctrl.chooseWFT_insert(params)"
+                    id-value="ctrl._insert_value.document_type" label="{{'DocumentType'|l}}" require="true"
+                    get-first-to-default="true" type-for-directive="transfer_ticket" disable-dropdown="true"
+                    disable="$root.statusValue.get(ctrl._ctrlName,'WFP','insert','doing')"></pick-modal-directory>
+                </div>
+
+                <div class="form-group">
+                  <button-select-nl button-select-label="{{'WorkflowForMe'|l}}" button-select-data="ctrl.WF"
+                    id-value="ctrl._insert_value.key" load-details-func="ctrl.loadWorkflow_details(params)"
+                    button-select-func="ctrl.chooseWF_insert(params)" button-select-key="title" localization="true"
+                    require="true" type-for-directive="transfer_ticket" disable-dropdown="true"
+                    disable="$root.statusValue.get(ctrl._ctrlName,'WFP','insert','doing')">
+                  </button-select-nl>
+                </div>
+              <div ng-show="ctrl._insert_value.wf.templateFiles.length > 0">
+                <div class="file-template-title">
+                  {{'TemplateFile'|l}}
+                </div>
+                <div ng-repeat="at in ctrl._insert_value.wf.templateFiles">
+                  <attachment-show attachment-show-item="at" attachment-show-func="ctrl.loadFileTemplate(params)"
+                    attachment-show-params="{display:at.display, name:at.name}"
+                    attachment-show-service-name="'workflow'">
+                  </attachment-show>
+                </div>
+              </div>
+              <div class="mt-3"
+                ng-if="ctrl._insert_value.wf.file_type === 'file_upload' && ctrl._insert_value.wf.templateTags.length">
+                <span>{{'Signing file require the following tags'|l}}:</span>
+                <mark class="mr-2" ng-repeat="tag in ctrl._insert_value.wf.templateTags">{{ '\{' + tag.name + '\}'
+                  }}</mark>
+              </div>
+            </div>
+          </div>
+
+
+            <div class="card" ng-if="ctrl._insert_value.wf.file_type === 'file_upload'">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-6" style="border-right: 1px solid #eee">
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <td>
+                            <span>{{'FileSigning'|l}}</span>
+                            <span class="require-sympton ml-0">*</span>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-if="ctrl._insert_value.file">
+                          <td>
+                            <attachment-just-show my-item="ctrl._insert_value.file"></attachment-just-show>
+                          </td>
+                          <td>
+                            <i class="fas fa-times text-danger" ng-click="ctrl.removeFile_insert()"></i>
+                          </td>
+                        </tr>
+                        <tr ng-if="ctrl._insert_value.fileError">
+                          <td colspan="2" class="text-danger">
+                            {{ctrl._insert_value.fileError|l}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                    <tbody>
+                      <tr>
+                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                          <div class="diskuf-uploader">
+                            <span class="wd-fa-add-file-light">
+                              <span class="wd-fa-add-file-light-text">
+                                <span class="wd-fa-add-file-light-title">
+                                  <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                </span>
+                                <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                              </span>
+                            </span>
+                            <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                              file-reading-single="ctrl._insert_value.file"
+                              file-single-func="ctrl.handleSelectFile(params)" size="1" style="width: 100%" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" ng-if="ctrl._insert_value.allow_choose_destination === 'true'">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="form-group col-md-12">
+                  <div class="input-label">
+                    {{'ReceivingDocumentDepartment' | l}}
+                  </div>
+                  <pick-user-department-multi pick-func="ctrl.pickUserAndDepartment_insert(params)"
+                    id-value="ctrl._insert_value.userAndDepartmentDestination">
+                  </pick-user-department-multi>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" ng-if="ctrl._insert_value.wf.file_type === 'custom_template'">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-12" style="border-right: 1px solid #eee">
+                  <div ng-if="ctrl._insert_value.templateTags.length">
+                    <div class="border-top pt-2 mb-2 font-weight-bold">{{'Fill in the signing file information'|l}}</div>
+                    <div ng-repeat="tag in ctrl._insert_value.templateTags"
+                      ng-show="tag.type !== 'signature' && tag.type !== 'quotation_mark'">
+                      <div ng-switch="tag.type">
+                        <div class="form-group" ng-switch-when="text">
+                          <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                              <span class="input-group-text-new ng-binding">{{tag.label}}</span>
+                              <span class="require-sympton">*</span>
+                            </div>
+                            <input class="form-control" type="text" name="{{ 'templateTags_' + tag.name }}"
+                              ng-model="ctrl._insert_value.templateTags[$index].value" placeholder="{{'Input content'|l}}"
+                              required>
+                          </div>
+                        </div>
+                        <div class="form-group" ng-switch-when="number">
+                          <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                              <span class="input-group-text-new ng-binding">{{tag.label}}</span>
+                              <span class="require-sympton">*</span>
+                            </div>
+                            <input class="form-control" type="number" name="{{ 'templateTags_' + tag.name }}"
+                              ng-model="ctrl._insert_value.templateTags[$index].value" placeholder="{{'Input content'|l}}"
+                              required>
+                          </div>
+                        </div>
+                        <div class="form-group" ng-switch-when="date">
+                          <date id-value="ctrl._insert_value.templateTags[$index].rawValue"
+                            func="ctrl.chooseDateTag_insert($index, params)" label="{{tag.label}}" required="true"></date>
+                        </div>
+                        <div class="form-group" ng-switch-when="dropdown">
+                          <pick-modal-directory
+                            extend="{ master_key: ctrl._insert_value.templateTags[$index].masterKey, load_details_column: 'value' }"
+                            pick-func="ctrl.chooseDropdownTag_insert($index, params)"
+                            id-value="ctrl._insert_value.templateTags[$index].rawValue" label="{{tag.label}}"
+                            require="true"></pick-modal-directory>
+                        </div>
+                        <div class="form-group" ng-switch-when="pick" ng-switch="tag.pickKey">
+                          <div ng-switch-when="user" class="input-group-prepend-new">
+                            <span class="input-group-text-new ng-binding" style="margin-right: 5px;">{{tag.label}}:
+                            </span>
+                            <show-username username="ctrl._insert_value.templateTags[$index].rawValue"
+                              without-tooltip="true" hide-image="true"></show-username>
+                          </div>
+                          <div ng-switch-when="department" class="input-group-prepend-new">
+                            <div>
+                              <span class="input-group-text-new ng-binding" style="margin-right: 5px;">{{tag.label}}:
+                              </span>
+                              <span class="require-sympton">*</span>
+                              <show-department
+                                department="ctrl._insert_value.templateTags[$index].rawValue"></show-department>
+                            </div>
+                          </div>
+                          <div ng-switch-when="archived_document" class="input-group-prepend-new">
+                            <div>
+                              <span class="input-group-text-new ng-binding" style="margin-right: 5px;">{{tag.label}}:
+                              </span>
+                            </div>
+
+                            <pick-modal-generic data="[]"
+                              invalid-value-func="ctrl.chooseArchivedDocumentTag_insert($index, {})"
+                              pick-func="ctrl.chooseArchivedDocumentTag_insert($index,params)"
+                              id-value="ctrl._insert_value.templateTags[$index].rawValue" enable-search="true"
+                              search-func-enable="true" localized="false"
+                              search-func="ctrl.searchArchivedDocument(params)" show-field="workflow_play.title"
+                              search-placeholder="{{'FindByCode'|l}}"></pick-modal-generic>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="mb-3 text-center">
+                      <button type="button" class="btn btn-outline-primary" ng-click="ctrl.loadCustomTemplatePreview()"
+                        ng-disabled="!ctrl.isCustomTagsValid()">{{'Preview'|l}}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-6" style="border-right: 1px solid #eee">
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <td>#</td>
+                          <td>{{'RelatedFile'|l}}</td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="item in ctrl._insert_value.relatedfile">
+                          <td>{{$index+1}}</td>
+                          <td>
+                            <attachment-just-show my-item="item"></attachment-just-show>
+                          </td>
+                          <td>
+                            <i class="fas fa-times text-danger" ng-click="ctrl.removeRelatedFile_insert(item)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                    <tbody>
+                      <tr>
+                        <td class="
+                              diskuf-selector
+                              wd-fa-add-file-light-cell wd-fa-add-file-from-main
+                            " colspan=" 0">
+                          <div class="diskuf-uploader">
+                            <span class="wd-fa-add-file-light">
+                              <span class="wd-fa-add-file-light-text">
+                                <span class="wd-fa-add-file-light-title">
+                                  <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                </span>
+                                <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                              </span>
+                            </span>
+                            <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                              file-reading="ctrl._insert_value.relatedfile" size="1" multiple style="width: 100%" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card" ng-if="ctrl._insert_value.wf.allow_appendix">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-6" style="border-right: 1px solid #eee">
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <td>#</td>
+                          <td>Phụ lục</td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="item in ctrl._insert_value.appendixFile">
+                          <td>{{$index+1}}</td>
+                          <td>
+                            <attachment-just-show my-item="item"></attachment-just-show>
+                          </td>
+                          <td>
+                            <i class="fas fa-times text-danger" ng-click="ctrl.removeAppendixFile_insert(item)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                    <tbody>
+                      <tr>
+                        <td class="
+                              diskuf-selector
+                              wd-fa-add-file-light-cell wd-fa-add-file-from-main
+                            " colspan=" 0">
+                          <div class="diskuf-uploader">
+                            <span class="wd-fa-add-file-light">
+                              <span class="wd-fa-add-file-light-text">
+                                <span class="wd-fa-add-file-light-title">
+                                  <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                </span>
+                                <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                              </span>
+                            </span>
+                            <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                              file-reading="ctrl._insert_value.appendixFile" size="1" multiple style="width: 100%" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="WFP"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid="ctrl._insert_value.to_department.length === 0 ||forms.insertForm.$invalid || (ctrl._insert_value.wf.file_type === 'file_upload' && (!ctrl._insert_value.file || ctrl._insert_value.fileError))"
+          modal-button-new-func="ctrl.handleClickInsert()">
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modal-sign-a-file modal-sign-a-file-show="ctrl.showModalSignAFile"
+  modal-sign-a-file-on-hide="ctrl.handleHideModalSignAFile()" modal-sign-a-file-ctrlname="{{ctrl._ctrlName}}"
+  modal-sign-a-file-name="ctrl._insert_value.wf.file_type === 'file_upload' ? ctrl._insert_value.file.name : ctrl._insert_value.wf.templateFiles[0].display"
+  modal-sign-a-file-sign="ctrl.sign" modal-sign-a-file-quotation-mark="ctrl.quotationMark"
+  modal-sign-a-file-params="{name: ''}" modal-sign-a-file-objname="WFP" modal-sign-a-file-actionname="insert"
+  modal-sign-a-file-func="ctrl.handleClickSign_insert()">
+</modal-sign-a-file>

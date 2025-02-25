@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal_Notify_Throw_to_recyclebin" role="dialog" tabindex="-1">
+    <div class="modal-dialog" style="min-width: 60%;">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantThrowToRecyclebin'|l:{title:ctrl._throw_to_recyclebin_value.title} }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="Notify" modal-button-delete-actionname="throw_to_recyclebin"
+                    modal-button-delete-func="ctrl.throw_to_recyclebin()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

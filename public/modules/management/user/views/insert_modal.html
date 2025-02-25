@@ -1,0 +1,94 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_User_Insert">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'RegisterUser'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertUserForm">
+          <div class="form-group">
+            <organization
+              label="{{'Department'|l}}"
+              id-value="ctrl._insert_value.department"
+              select-func="ctrl.chooseDepartment(params)"
+              require="true"
+              disable="$root.statusValue.get(ctrl._ctrlName,'User','insert','doing')"
+            >
+            </organization>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'DisplayName'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'User','insert','doing')"
+                type="text"
+                ng-model="ctrl._insert_value.title"
+                class="form-control"
+                name="insertUser_title"
+                placeholder="Input display name"
+                ng-class="{ 'is-invalid': insertUserForm.insertUser_title.$invalid }"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'UserName'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'User','insert','doing')"
+                type="text"
+                ng-model="ctrl._insert_value.username"
+                class="form-control"
+                name="insertUser_username"
+                placeholder="Input username"
+                required
+                ng-class="{ 'is-invalid': insertUserForm.insertUser_username.$invalid }"
+              />
+            </div>
+            
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'PassWord'|l}}</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'User','insert','doing')"
+                type="password"
+                ng-model="ctrl._insert_value.password"
+                class="form-control"
+                name="insertUser_password"
+                placeholder="Input password"
+                ng-class="{ 'is-invalid': insertUserForm.insertUser_password.$invalid }"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <input-checkbox
+              input-checkbox-label="{{'IsActive'|l}}"
+              input-checkbox-model="ctrl._insert_value.isactive"
+              input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'User','insert','doing')"
+            >
+            </input-checkbox>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new
+          modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-new-objname="User"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid="insertUserForm.$invalid"
+          modal-button-new-func="ctrl.insert_func()"
+        >
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

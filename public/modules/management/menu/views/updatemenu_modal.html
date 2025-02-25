@@ -1,0 +1,111 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_menu_update">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'UpdateMenu'|l}}"></modal-header>
+
+
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <button-radio
+                            button-radio-params="[{label:'Component',val:'component'},{label:'Url',val:'url'}]"
+                            button-radio-model="ctrl._updateMenu_value.type"
+                            button-radio-func="ctrl.changeUpdateMenuType(params)"></button-radio>
+                    </div>
+                </form>
+                <form class="form-horizontal" name="updateMenuForm_Common">
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'OrderNumber'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Menu','updateAsComponent','doing')"
+                                id="msg" type="number" ng-model="ctrl._updateMenu_value.ordernumber"
+                                class="form-control" name="updateMenu_ordernumber" vld-sync
+                                vld-sync-func="$root.validate.min(model,params)" vld-sync-params="{min:1}"
+                                ng-class="{ 'is-invalid': updateMenuForm_Common.updateMenu_ordernumber.$invalid }"
+                                required />
+                        </div>
+                        <invalid invalid-status="updateMenuForm_Common.updateMenu_ordernumber.$error.vldsync">
+                            {{'AtLeast'|l:({title:1})}}.
+                        </invalid>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Title'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Menu','updateAsComponent','doing')"
+                                type="text" ng-model="ctrl._updateMenu_value.title['vi-VN']" class="form-control"
+                                name="insert_title_vi" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': updateMenuForm_Common.insert_title_vi.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new"><span
+                                    class="input-group-text-new">{{'Title'|l}}(en)</span>
+                                    <span class="require-sympton">*</span>
+                            </div>
+                            <input
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Menu','updateAsComponent','doing')"
+                                type="text" ng-model="ctrl._updateMenu_value.title['en-US']" class="form-control"
+                                name="insert_title_en" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': updateMenuForm_Common.insert_title_en.$invalid }" required />
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal" name="updateMenuForm_Component"
+                    ng-show="ctrl._updateMenu_value.type == 'component'">
+                    <div class="form-group">
+                        <button-select button-select-label="{{'Key'|l}}"
+                            button-select-data="ctrl.FrontendMaps"
+                            button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Menu','updateAsComponent','doing')"
+                            button-select-func="ctrl.chooseUpdateMenuKey(params)"
+                            button-select-model="ctrl._updateMenu_value.key" button-select-key="key" button-select-localization="true"></button-select>
+                    </div>
+                </form>
+                <form class="form-horizontal" name="updateMenuForm_Url" ng-show="ctrl._updateMenu_value.type == 'url'">
+                    <div class="form-group">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Url'|l}}</span>
+                            </div>
+                            <input type="text"
+                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Menu','updateAsUrl','doing')"
+                                ng-model="ctrl._updateMenu_value.url" class="form-control" name="updateMenu_url"
+                                required />
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div class="form-group">
+                        <input-checkbox input-checkbox-label="{{'IsActive'|l}}"
+                            input-checkbox-model="ctrl._updateMenu_value.isactive"
+                            input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'Menu','updateAsUrl','doing')">
+                        </input-checkbox>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save ng-if="ctrl._updateMenu_value.type == 'component'"
+                    modal-button-save-ctrlname="{{ctrl._ctrlName}}" modal-button-save-objname="Menu"
+                    modal-button-save-actionname="updateAsComponent"
+                    modal-button-save-invalid="updateMenuForm_Component.$invalid || updateMenuForm_Common.$invalid"
+                    modal-button-save-func="ctrl.updateMenuAsComponent_func()">
+                </modal-button-save>
+
+                <modal-button-save ng-if="ctrl._updateMenu_value.type == 'url'"
+                    modal-button-save-ctrlname="{{ctrl._ctrlName}}" modal-button-save-objname="Menu"
+                    modal-button-save-actionname="updateAsUrl"
+                    modal-button-save-invalid="updateMenuForm_Url.$invalid || updateMenuForm_Common.$invalid"
+                    modal-button-save-func="ctrl.updateMenuAsUrl_func()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

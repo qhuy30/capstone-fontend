@@ -1,0 +1,173 @@
+<div id="meeting_room_permision">
+    <div class="main-permission">
+        <ul>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng lịch công tác
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.EventCalendar.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.EventCalendar.Use'"/>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền cho phép đăng ký lịch công tác
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.EventCalendar.Create'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.EventCalendar.Create'"/>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        {{'Allow to approve event in depatment level'|l}}<i class="small">({{'This is the right reserved for department leaders'|l}}.)</i>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Not allow'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.ApprovalDepartment'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.EventCalendar.ApprovalDepartment'" value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For department is working'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.ApprovalDepartment'].value"
+                                       value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'All departments'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.ApprovalDepartment'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For specific departments'|l}}
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.EventCalendar.ApprovalDepartment'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.EventCalendar.ApprovalDepartment'"
+                                                     disable="ctrl.rule['Office.EventCalendar.ApprovalDepartment'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.ApprovalDepartment'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Nhận thông báo thuộc về phòng ban
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Not allow'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.NotifyDepartment'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.EventCalendar.NotifyDepartment'" value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For department is working'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.NotifyDepartment'].value"
+                                       value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'All departments'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.NotifyDepartment'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For specific departments'|l}}
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.EventCalendar.NotifyDepartment'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.EventCalendar.NotifyDepartment'"
+                                                     disable="ctrl.rule['Office.EventCalendar.NotifyDepartment'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.EventCalendar.NotifyDepartment'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền phê duyệt cấp lãnh đạo trường (đây là quyền giành cho lãnh đạo, người chủ trì sự kiện đơn vị cấp 1)
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.EventCalendar.FinalApproval'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.EventCalendar.FinalApproval'"/>
+                    </div>
+                </div>
+            </li>
+     
+            
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng quản lý lịch công tác
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.EventCalendar.Manage'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.EventCalendar.Manage'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

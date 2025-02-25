@@ -1,0 +1,111 @@
+<my-content>
+    <content-content>
+        <div ng-controller="record_access_controller as ctrl">
+            <div class="card">
+                <div class="card-body">
+                    <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+                        button-search-model="ctrl._searchByKeyToFilterData">
+                    </button-search>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" ng-click="ctrl.switchTab('all')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='all'}"
+                              >{{'All'|l}}
+                            </a>
+                          </li>
+                          <li class="nav-item" ng-click="ctrl.switchTab('approved')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='approved'}"
+                              >{{'Approved'|l}}
+                            </a>
+                          </li>
+                          <li class="nav-item" ng-click="ctrl.switchTab('rejected')">
+                            <a class="nav-link" ng-class="{'active':ctrl.tab =='rejected'}"
+                              >{{'Rejected'|l}}
+                            </a>
+                          </li>
+                          <li class="nav-item" ng-click="ctrl.switchTab('need_to_handle')">
+                            <a
+                              class="nav-link"
+                              ng-class="{'active':ctrl.tab =='need_to_handle', 'text-warning':ctrl.numberPending>0}"
+                              >{{'Pending'|l}}</a
+                            >
+                          </li>
+                      </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show">
+                            <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="record_access" async-actionname="load">
+                                <async-success>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>{{'RequestCode'|l}}</th>
+                                                    <th>{{'DocumentToBeCopied'|l}}</th>
+                                                    <th>{{'Department'|l}}</th>
+                                                    <th>{{'Creator'|l}}</th>
+                                                    <th>{{'Quantity'|l}}</th>
+                                                    <th>{{'SentDate'|l}}</th>
+                                                    <th>{{'UsageTime'|l}}</th>
+                                                    <th>{{'Status'|l}}</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="item in ctrl.record_access">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>
+                                                        <a class="text-dark" href="/signing-details?code={{item.code}}">{{item.title}}</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-muted text-nowrap">{{item.exploitedDocument.workflow_play.title}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <show-department department="item.department"></show-department>
+                                                    </td>
+                                                    <td>
+                                                        <show-username username="item.username"
+                                                            employee="item.employee">
+                                                        </show-username>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-muted text-nowrap">{{item.tags_value.quantity}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <small><span class="grey-text float-left"><i class="fa fa-clock"
+                                                                    aria-hidden="true"></i>
+                                                                <time-show2 time-show-type="just_date"
+                                                                    time-show-data="item.event[0].time">
+                                                                </time-show2> </span></small>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-muted text-nowrap">{{item.tags_value.usage_time}}</div>
+                                                    </td>
+                                                    <td>
+                                                        <show-status id-value="item.status" />
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div ng-if="ctrl.record_access.length ==0" class="no-data">
+                                        {{'NoData'|l}}
+                                    </div>
+                                    <pagination pagination-ctrlname="{{ctrl._ctrlName}}"
+                                        pagination-objname="record_access" pagination-actionname="count"
+                                        pagination-currentpage="ctrl.currentPage" pagination-noi="ctrl.numOfItemPerPage"
+                                        pagination-total="ctrl.totalItems" pagination-func="ctrl.load(params)">
+                                    </pagination>
+                                </async-success>
+                            </my-Async>
+                        </div>
+                    </div>
+                    <wfp-insert-modal insert-success-func="ctrl.handleInsertWFPSuccess(params)"></wfp-insert-modal>
+                    <div ng-include="ctrl._urlDeleteModal"></div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

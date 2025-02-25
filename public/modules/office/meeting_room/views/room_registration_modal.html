@@ -1,0 +1,395 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_MeetingRoomSchedule_Register">
+  <div class="modal-dialog modal-full" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'RoomRegistration'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="RoomRegistrationForm">
+          <div class="col-12">
+            <div class="form-group ">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'TitleRegistrationRoom'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input
+                  type="text" 
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')"
+                  name="content" ng-model="ctrl._register_value.title" class="form-control"
+                  ng-class="{ 'is-invalid': RoomRegistrationForm.content.$invalid }"
+                  required
+                  ></input>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group ">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Type'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <label 
+                    ng-repeat="type in ctrl._roomTypes"
+                    class="form-check d-flex align-items-center justify-content-between p-2" 
+                    style="color: white;cursor: pointer;"
+                    ng-style="{'background-color': (type.val===ctrl._register_value.type)?'rgb(66, 133, 244)':'rgb(146, 159, 186)'}"
+                  >
+                    <input 
+                      style="position: relative;cursor: pointer;" 
+                      class="form-check-input m-0 mr-1" 
+                      type="radio" 
+                      name="exampleRadios" 
+                      id="room-type-register-{{type.val}}" 
+                      value="{{type.val}}"
+                      ng-model="ctrl._register_value.type"
+                      ng-change="ctrl.onRoomTypeChange(ctrl._register_value.type)"
+                      >
+                    <label
+                      class="form-check-label" 
+                      for="room-type-register-{{type.val}}" 
+                      style="background-color: transparent;font-size: 0.9rem;color: white; font-weight: 400;cursor: pointer;"
+                    >
+                      {{type.label[ctrl.$languageValue.current]}}
+                    </label>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+                <date
+                  id-value="ctrl._register_value.date_start"
+                  func="ctrl.chooseDateStart_insert(params)"
+                  label="{{'Start date use'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')"
+                  required="true"
+                ></date>
+                <span ng-if="ctrl._register_value.date_start > ctrl._register_value.date_end" class="text-danger">{{'End time cannot be less than or equal to start time'|l}}</span>
+            </div>
+            <div class="form-group col-md-3">
+              <div class="input-group-new" style="margin-left: 10px;">
+
+                  <!-- Time Start -->
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'TimeStart'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input type="time" ng-model="ctrl._register_value.time_start" ng-change="ctrl.updateDateTime('start')" required class="form-control"/>
+                  <span ng-if="ctrl._register_value.time_start < ctrl.now" class="text-danger"> {{'Start time cannot be less than now'|l}}</span>
+
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+              <div class="input-group-new" style="margin-left: 10px;">
+
+                <!-- Time End -->
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'TimeEnd'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input type="time" ng-model="ctrl._register_value.time_end" ng-change="ctrl.updateDateTime('end')" required class="form-control"/>
+                
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group mb-0">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'ChooseHost'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <label 
+                      ng-repeat="scope in ctrl.hostScopes"
+                      class="form-check d-flex align-items-center justify-content-between p-2" 
+                      style="color: white;cursor: pointer;"
+                      ng-style="{'background-color': (scope.val===ctrl._register_value.host_scope)?'rgb(66, 133, 244)':'rgb(146, 159, 186)'}"
+                    >
+                      <input 
+                        style="position: relative; cursor: pointer;" 
+                        class="form-check-input m-0 mr-1" 
+                        type="radio" 
+                        name="hostRadios" 
+                        id="room-host-register-{{scope.val}}" 
+                        value="{{scope.val}}"
+                        ng-model="ctrl._register_value.host_scope"
+                        >
+                      <label
+                        class="form-check-label" 
+                        for="room-host-register-{{scope.val}}" 
+                        style="background-color: transparent;font-size: 0.9rem;color: white; font-weight: 400;cursor: pointer;"
+                      >
+                        {{scope.label|l}}
+                      </label>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Input Text will be shown when 'external' is selected -->
+            <div class="col-12" ng-if="ctrl._register_value.host_scope === 'external'">
+              <div class="form-group">
+                <div class="input-group-new">
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    ng-model="ctrl._register_value.host_external" 
+                    placeholder="{{'EnterExternalHost' | l}}"
+                    ng-require="true"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 choose-host" ng-if="ctrl._register_value.host_scope === 'internal'">
+              <div class="form-group ">
+                <div class="input-group-new">
+                  <pick-user
+                    pick-func="ctrl._choose_host_register(params)"
+                    id-value="ctrl._register_value.host"
+                    label="{{'ChooseHost'|l}}"
+                    require="true"
+                  ></pick-user>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group ">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Participant'|l}}</span>
+                  </div>
+                  <pick-user-multi
+                      label="{{'Participant'|l}}"
+                      id-value="ctrl._register_value.join_employees"
+                      pick-func="ctrl.pickEmployee_register(params)"
+                      select-all="true"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'ParticipateDepartments'|l}}</span>
+                  </div>
+                  <organization-multi
+                      label="{{'Department'|l}}"
+                      id-value="ctrl._register_value.to_department"
+                      select-func="ctrl.chooseDepartment_register(params)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group ">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'OtherParticipants'|l}}</span>
+                  </div>
+                  <div class="d-flex">
+                    <input 
+                      ng-model="ctrl._register_value.otherHost" 
+                      type="text" 
+                      class="form-control flex-grow-1" 
+                      placeholder="{{'OtherParticipants'|l}}"
+                    >
+                    <button 
+                      type="button" 
+                      class="btn btn-primary" 
+                      ng-click="ctrl.add_other_host_register()"
+                      ng-disabled="!ctrl._register_value.otherHost"
+                    >
+                      {{'Add'|l}}&nbsp;<i class="fas fa-user-plus"></i>
+                    </button> 
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div ng-if="ctrl._register_value.otherHosts.length>0" class="col-12 d-flex align-items-center justify-content-start flex-wrap mb-1">
+              <div 
+                class="py-1 px-2 mr-2 mt-1" 
+                style="color: #3e4042;background-color: #dde2e4; border-radius: 5px; text-align: center;"
+                ng-repeat="host in ctrl._register_value.otherHosts"
+                >
+                <span>{{host.name}}</span>
+                <i 
+                  style="cursor: pointer;" class="fas fa-times hover-close"
+                  ng-click="ctrl.delete_other_host_register(host.id)"
+                >
+                </i>
+              </div>         
+            </div>
+
+            <div class="col-12">
+              <div class="form-group ">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Content'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <textarea ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')"
+                    name="content" ng-model="ctrl._register_value.content" class="form-control"
+                    ng-class="{ 'is-invalid': RoomRegistrationForm.content.$invalid }"
+                    required
+                    style="height: 150px;"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group ">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'NumberOfParticipants'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')"
+                    type="number" min="1" ng-model="ctrl._register_value.person" class="form-control" name="person"
+                    placeholder="{{'InputSizeOfMeetingRoom'|l}}"
+                    ng-class="{ 'is-invalid': RoomRegistrationForm.person.$invalid }" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group ">
+                <div class="input-group-new">
+                  <pick-modal-directory-room
+                      extend="ctrl.room_list_config "
+                      id-value="ctrl._register_value.room"
+                      filter="ctrl._register_value.filter_room"
+                      date-start="ctrl._register_value.date_start"
+                      date-end="ctrl._register_value.date_end"
+                      pick-func="ctrl.pick_room_register(params)"
+                      label="{{'Room'|l}}"
+                      require="false"
+                      disable="!(ctrl._register_value.time_start && ctrl._register_value.time_end)"
+                    />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <input-checkbox input-checkbox-label="{{'RecommendedService'|l}}"
+                  input-checkbox-model="ctrl._register_value.service_proposal"
+                  input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')">
+                </input-checkbox>
+                <textarea 
+                  ng-disabled="!ctrl._register_value.service_proposal || $root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')" 
+                  type="text"
+                  ng-model="ctrl._register_value.service_proposal_text" class="form-control"
+                  name="service_proposal_text" placeholder="{{'RecommendedService'|l}}"
+                  ng-class="{ 'is-invalid': RoomRegistrationForm.service_proposal_text.$invalid }" 
+                  ng-required="ctrl._register_value.service_proposal"
+                  style="height: 100px;"
+                  ></textarea>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <input-checkbox input-checkbox-label="{{'TechnicalSupport'|l}}"
+                  input-checkbox-model="ctrl._register_value.helpdesk"
+                  input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')">
+                </input-checkbox>
+                <textarea 
+                  ng-disabled="!ctrl._register_value.helpdesk || $root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')" 
+                  type="text"
+                  ng-model="ctrl._register_value.helpdesk_text" class="form-control" name="helpdesk_text"
+                  placeholder="{{'TechnicalSupport'|l}}"
+                  ng-class="{ 'is-invalid': RoomRegistrationForm.helpdesk_text.$invalid }"
+                  ng-required="ctrl._register_value.helpdesk"
+                  style="height: 100px;"
+                  ></textarea>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <input-checkbox input-checkbox-label="{{'TeaBreak'|l}}" input-checkbox-model="ctrl._register_value.teabreak"
+                  input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')">
+                </input-checkbox>
+                <textarea 
+                  ng-disabled="!ctrl._register_value.teabreak || $root.statusValue.get(ctrl._ctrlName,'MeetingRoom','register','doing')" 
+                  type="text"
+                  ng-model="ctrl._register_value.teabreak_text" class="form-control" name="teabreak_text"
+                  placeholder="{{'TeaBreak'|l}}"
+                  ng-class="{ 'is-invalid': RoomRegistrationForm.teabreak_text.$invalid }"
+                  ng-required="ctrl._register_value.teabreak"
+                  style="height: 100px;"
+                  ></textarea>
+              </div>
+            </div>
+            <div class="col-md-6" style="border-right: 1px solid #eee">
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <td>#</td>
+                      <td>{{'Attachment'|l}}</td>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in ctrl._register_value.files">
+                      <td>{{$index+1}}</td>
+                      <td>
+                        <attachment-just-show my-item="item"></attachment-just-show>
+                      </td>
+                      <td class="remove-file">
+                        <i class="fas fa-times text-danger" ng-click="ctrl.removeFileRegister(item)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                <tbody>
+                  <tr>
+                    <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                      <div class="diskuf-uploader">
+                        <span class="wd-fa-add-file-light">
+                          <span class="wd-fa-add-file-light-text">
+                            <span class="wd-fa-add-file-light-title">
+                              <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                            </span>
+                            <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                          </span>
+                        </span>
+                        <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                          file-reading="ctrl._register_value.files" size="1" multiple
+                          accept=".jpg,.jpeg,.png,.webp,.pdf" style="width: 100%" />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="MeetingRoom"
+          modal-button-new-actionname="register" modal-button-new-label="{{'Register'|l}}"
+          modal-button-new-invalid="RoomRegistrationForm.$invalid || ctrl._register_value.date_start > ctrl._register_value.date_end || ctrl._register_value.time_start < ctrl.now || ctrl.isInvalidHost(ctrl._register_value.host_scope)"
+          modal-button-new-func="ctrl.register()">
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div id="human_resource_management_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng quản lý nhân sự
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.HumanResourceManagement.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.HumanResourceManagement.Use'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Quản lý thông tin học vấn
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.HumanResourceManagement.Education'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.HumanResourceManagement.Education'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Quản lý thông tin công tác
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.HumanResourceManagement.Mission'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.HumanResourceManagement.Mission'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Quản lý thông tin lương
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.HumanResourceManagement.Salary'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.HumanResourceManagement.Salary'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Quản lý thông tin tài khoản
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.HumanResourceManagement.User'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.HumanResourceManagement.User'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

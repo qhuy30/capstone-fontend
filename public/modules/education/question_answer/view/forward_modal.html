@@ -1,0 +1,31 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Forward_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="Chuyển tiếp câu hỏi đến phòng ban"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="updateForm">
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <organization
+                                    label="{{'Department'|l}}"
+                                    id-value="ctrlChild._update_value.department.id"
+                                    select-func="ctrlChild.chooseDepartment(params)"
+                                    require="true"
+                                    >
+                                </organization>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-save-objname="ForwordQuestionAnswer" modal-button-save-actionname="update"
+                    modal-button-save-func="ctrlChild.forward_common_question()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

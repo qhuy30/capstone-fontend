@@ -1,0 +1,123 @@
+<my-content>
+  <content-content>
+    <div ng-controller="waiting_storage_controller as ctrl" class="office-waiting-storage-feature">
+      <briefcase-Insert-Modal insert-success-func="ctrl.refreshData()" briefcase-insert-item="ctrl.currentItem" briefcase-reference-type="OutgoingDispatch"></briefcase-Insert-Modal>
+      <div class="card">
+        <div class="card-body">
+          <more-option-bar>
+            <bar-content class="row">
+              <div class="col-md-6 form-group">
+                <button-select button-select-label="{{'Display'|l}}" button-select-data="[15,30,50,100]"
+                  button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','load','doing')"
+                  button-select-func="ctrl.chooseNumberItem(params)" button-select-model="ctrl.numOfItemPerPage">
+                </button-select>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.Document_type_Config" pick-func="ctrl.pickODT(params)"
+                  id-value="ctrl._filterODT" label="{{'DocumentType'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','load','doing')"></pick-modal-directory>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.IncommingDispatchPririoty_Config"
+                  pick-func="ctrl.choosePriority(params)" id-value="ctrl._filterPriority" label="{{'EmergencyLevel'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','load','doing')"></pick-modal-directory>
+              </div>
+              <div class="form-group col-md-6">
+                <pick-modal-directory extend="ctrl.MethodOfSendingDispatchTo_Config"
+                  pick-func="ctrl.chooseReceiveMethod(params)" id-value="ctrl._filterReceiveMethod"
+                  label="{{'ReceiveMethod'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','load','doing')"></pick-modal-directory>
+              </div>
+            </bar-content>
+          </more-option-bar>
+
+          <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData">
+          </button-search>
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active">{{'All'|l}}</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade active show">
+              <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="waiting_storage" async-actionname="load">
+                <async-success>
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th>{{'Code'|l}}</th>
+                          <th>{{'Title'|l}}</th>
+                          <th>{{'Created by'|l}}</th>
+                          <th>{{'Created date'|l}}</th>
+                          <th>{{'Status'|l}}</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="item in ctrl.dispatch_waiting_storage">
+                          <td>
+                            <p class="text-muted text-nowrap" style="margin-bottom: 0;">
+                              <!-- <get-field-directory
+                                id-value="item.symbol_number"
+                                extend="ctrl.OutgoingDispatchBook_Config"
+                                localization="true">
+                              </get-field-directory> -->
+                              {{item.symbol_number}}
+                            </p>
+                          </td>
+                          <td>
+                            <p class="text-dark" style="font-weight: bold">
+                              {{item.title}}
+                            </p>
+                            <div class="showfile-bar" ng-if="item.attachment.length>0">
+                              <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                attachment-show-func="ctrl.loadfile(params)"
+                                attachment-show-params="{id:item._id,name:at.name}">
+                              </attachment-show>
+                            </div>
+                          </td>
+                          <td>
+                            <show-username username="item.username" just-name="true" style="margin-bottom: 0;"></show-username>
+                          </td>
+                          <td>
+                            <time-show2 time-show-type="just_date" time-show-data="item.entity.his[0].created">
+                            </time-show2>
+                          </td>
+                          <td>
+                            <show-status id-value="item.status"></show-status>
+                          </td>
+                          <td>
+                            <div class="form-group row">
+                              <button-toggle-modal
+                                button-toggle-modal-label="{{'Processing archive'|l}}"
+                                button-toggle-modal-modal=".office-waiting-storage-feature #modal_insert_briefcase"
+                                button-toggle-modal-func="ctrl.pickCurrentItem(params)"
+                                button-toggle-modal-params="item"
+                              >
+                              </button-toggle-modal>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div ng-if="ctrl.dispatch_waiting_storage.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </div>
+                  <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="waiting_storage"
+                    pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                    pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                    pagination-func="ctrl.load(params)"></pagination>
+                </async-success>
+              </my-Async>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--      <div ng-include="ctrl._urlInsertModal"></div>-->
+    </div>
+  </content-content>
+</my-content>

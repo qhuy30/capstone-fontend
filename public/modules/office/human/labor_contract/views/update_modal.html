@@ -1,0 +1,591 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_LaborContract_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Update'|l}}"></modal-header>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" ng-click="ctrl._update_value.tab ='attachment'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._update_value.tab =='attachment'}">{{'Attachment'|l}}
+                            <span ng-show="ctrl._update_value.attachment.length===0"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="ctrl._update_value.attachment.length===0"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._update_value.tab ='general'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._update_value.tab =='general'}">{{'GeneralInfo'|l}}
+                            <span ng-show="updateForm_general.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="updateForm_general.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._update_value.tab ='education'">
+                        <a class="nav-link" ng-class="{'active':ctrl._update_value.tab =='education'}">{{'Education'|l}}
+                            <span ng-show="updateForm_education.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="updateForm_education.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._update_value.tab ='mission'">
+                        <a class="nav-link" ng-class="{'active':ctrl._update_value.tab =='mission'}">{{'MissionInfo'|l}}
+                            <span ng-show="updateForm_mission.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="updateForm_mission.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show">
+                        <div ng-show="ctrl._update_value.tab=='attachment'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-6" style="border-right: 1px solid #eee;">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <td>
+                                                            #
+                                                        </td>
+                                                        <td>
+                                                            {{'AttachedFile'|l}}
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ctrl._update_value.attachment">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>
+                                                            <!-- <attachment-show
+                                                            attachment-show-item="item"
+                                                            attachment-show-func="ctrl.loadfile(params)"
+                                                            attachment-show-params="{id:ctrl._update_value._id,name:item.name}"
+                                                            >
+                                                        </attachment-show> -->
+                                                            <attachment-just-show my-item="item"></attachment-just-show>
+                                                        </td>
+                                                        <td>
+                                                            <button-delete-item 
+                                                                button-delete-item-func="ctrl.removeFile(params)"
+                                                                button-delete-item-params="item">
+                                                            </button-delete-item>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                        colspan=" 0">
+                                                        <div class="diskuf-uploader">
+                                                            <span class="wd-fa-add-file-light">
+                                                                <span class="wd-fa-add-file-light-text">
+                                                                    <span class="wd-fa-add-file-light-title">
+                                                                        <span
+                                                                            class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                                    </span>
+                                                                    <span
+                                                                        class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                                </span>
+                                                            </span>
+                                                            <input class="diskuf-fileUploader wd-test-file-light-inp "
+                                                                type="file" file-reading
+                                                                file-func="ctrl.pushFile(params)"
+                                                                size="1" style="width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <form class="form-horizontal " name="updateForm_general"
+                            ng-show="ctrl._update_value.tab=='general'">
+
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'BasicSalary'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="number" ng-model="ctrl._update_value.basic_salary" class="form-control" min="0"
+                                                name="update_basic_salary" 
+                                                ng-class="{ 'is-invalid': updateForm_general.update_basic_salary.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.LaborContractType_Config"
+                                            pick-func="ctrl.chooseTypeLaborContract_update(params)"
+                                            id-value="ctrl._update_value.type"
+                                            label="{{'TypeLaborContract'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <date id-value="ctrl._update_value.from_date"
+                                            func="ctrl.chooseFrom_update(params)" label="{{'From'|l}}"
+                                                disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                required="true"></date>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <date id-value="ctrl._update_value.to_date"
+                                            func="ctrl.chooseTo_update(params)" label="{{'From'|l}}"
+                                                disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                required="true"
+                                                endday="true"></date>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'LastName'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.lastname" class="form-control"
+                                                name="update_lastname" placeholder="Input lastname"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_lastname.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'MidName'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.midname" class="form-control"
+                                                name="update_midname" placeholder="Input midname" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'FirstName'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.firstname" class="form-control"
+                                                name="update_firstname" placeholder="Input firstname"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_firstname.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <date id-value="ctrl._update_value.birth_date"
+                                            func="ctrl.chooseBirthDate_update(params)" label="{{'DateOfBirth'|l}}"
+                                            disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            required="true"></date>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'Living'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Country_Config"
+                                            pick-func="ctrl.chooseCountry1_update(params)"
+                                            id-value="ctrl._update_value.living.country"
+                                            label="{{'Country'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.City_Config"
+                                            pick-func="ctrl.chooseCity1_update(params)"
+                                            id-value="ctrl._update_value.living.city"
+                                            label="{{'City'|l}}"
+                                            filter ="ctrl.filterCity_living_update"
+                                        
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.living.country"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.District_Config"
+                                            pick-func="ctrl.chooseDistrict1_update(params)"
+                                            id-value="ctrl._update_value.living.district"
+                                            label="{{'District'|l}}"
+                                            filter ="ctrl.filterDistrict_living_update"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.living.city"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Ward_Config"
+                                            pick-func="ctrl.chooseWard1_update(params)"
+                                            id-value="ctrl._update_value.living.ward"
+                                            label="{{'Ward'|l}}"
+                                            filter ="ctrl.filterWard_living_update"
+                                            
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.living.district"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.Village_Config"
+                                            pick-func="ctrl.chooseVillage1_update(params)"
+                                            id-value="ctrl._update_value.living.village"
+                                            label="{{'Village'|l}}"
+                                            filter ="ctrl.filterVillage_living_update"
+                                            
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.living.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Address'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.living.address"
+                                                class="form-control" name="update_living_address"
+                                                placeholder="Input address"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_living_address.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'PermanentAddress'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Country_Config"
+                                            pick-func="ctrl.chooseCountry2_update(params)"
+                                            id-value="ctrl._update_value.permanent_address.country"
+                                            label="{{'Country'|l}}"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.City_Config"
+                                            pick-func="ctrl.chooseCity2_update(params)"
+                                            id-value="ctrl._update_value.permanent_address.city"
+                                            label="{{'City'|l}}"
+                                            filter ="ctrl.filterCity_permanent_address_update"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.permanent_address.country"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.District_Config"
+                                            pick-func="ctrl.chooseDistrict2_update(params)"
+                                            id-value="ctrl._update_value.permanent_address.district"
+                                            label="{{'District'|l}}"
+                                            filter ="ctrl.filterDistrict_permanent_address_update"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.permanent_address.city"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Ward_Config"
+                                            pick-func="ctrl.chooseWard2_update(params)"
+                                            id-value="ctrl._update_value.permanent_address.ward"
+                                            label="{{'Ward'|l}}"
+                                            filter ="ctrl.filterWard_permanent_address_update"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.permanent_address.district"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.Village_Config"
+                                            pick-func="ctrl.chooseVillage2_update(params)"
+                                            id-value="ctrl._update_value.permanent_address.village"
+                                            label="{{'Village'|l}}"
+                                            filter ="ctrl.filterVillage_permanent_address_update"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')|| !ctrl._update_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Address'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.permanent_address.address"
+                                                class="form-control" name="update_permanent_address_address"
+                                                placeholder="Input address"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_permanent_address_address.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.TypeOfResidence_Config"
+                                            pick-func="ctrl.chooseTypeResidence_update(params)"
+                                            id-value="ctrl._update_value.type_residence"
+                                            label="{{'TypeOfResidence'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'PhoneNumber'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.phonenumber"
+                                                class="form-control" name="update_phonenumber"
+                                                placeholder="Input phonenumber"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_phonenumber.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Email'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="email" ng-model="ctrl._update_value.email" class="form-control"
+                                                name="update_email" placeholder="Input email"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_email.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'IdCard'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.idcard" class="form-control"
+                                                name="update_idcard" placeholder="Input idcard"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_idcard.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Nationality_Config"
+                                            pick-func="ctrl.chooseNationality_update(params)"
+                                            id-value="ctrl._update_value.nationality"
+                                            label="{{'Nationality'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Religion_Config"
+                                            pick-func="ctrl.chooseReligion_update(params)"
+                                            id-value="ctrl._update_value.religion"
+                                            label="{{'Religion'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="updateForm_education"
+                            ng-show="ctrl._update_value.tab=='education'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Education_Config"
+                                            pick-func="ctrl.chooseEducation_update(params)"
+                                            id-value="ctrl._update_value.education"
+                                            label="{{'Education'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Degree_Config"
+                                            pick-func="ctrl.chooseDegree_update(params)"
+                                            id-value="ctrl._update_value.degree"
+                                            label="{{'Degree'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Specialized_Config"
+                                            pick-func="ctrl.chooseSpecialized_update(params)"
+                                            id-value="ctrl._update_value.specialized"
+                                            label="{{'Degree'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.School_Config"
+                                            pick-func="ctrl.pickTrainingSchool_update(params)"
+                                            id-value="ctrl._update_value.school"
+                                            label="{{'TrainingSchool'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'GraduationYear'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.graduation_year"
+                                                class="form-control" name="update_graduation_year"
+                                                placeholder="Input graduation year"
+                                                ng-class="{ 'is-invalid': updateForm_education.update_graduation_year.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.StateManagement_Config"
+                                            pick-func="ctrl.chooseStateManagement_update(params)"
+                                            id-value="ctrl._update_value.state_management"
+                                            label="{{'StateManagement'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.PoliticalTheory_Config"
+                                            pick-func="ctrl.choosePoliticalTheory_update(params)"
+                                            id-value="ctrl._update_value.political_theory"
+                                            label="{{'StateManagement'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.ComputerSkills_Config"
+                                            pick-func="ctrl.chooseIT_update(params)"
+                                            id-value="ctrl._update_value.it"
+                                            label="{{'ComputerSkills'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.EnglishLevel_Config"
+                                            pick-func="ctrl.chooseDegreeEnglish_update(params)"
+                                            id-value="ctrl._update_value.degree_english"
+                                            label="{{'EnglishLevel'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="updateForm_mission"
+                            ng-show="ctrl._update_value.tab=='mission'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <organization label="{{'Department'|l}}"
+                                            id-value="ctrl._update_value.department"
+                                            select-func="ctrl.chooseDepartment_update(params)" require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')">
+                                        </organization>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Competence_Config"
+                                            pick-func="ctrl.chooseCompetence_update(params)"
+                                            id-value="ctrl._update_value.competence"
+                                            label="{{'Competence'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','update','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="LaborContract" modal-button-save-actionname="update"
+                    modal-button-save-invalid="
+                    ctrl._update_value.attachment.length===0
+                    || updateForm_general.$invalid 
+                    || updateForm_education.$invalid
+                    || updateForm_mission.$invalid" modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

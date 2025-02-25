@@ -1,0 +1,594 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Employee_Attach">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" ng-click="ctrl._attach_value.tab ='attachment'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._attach_value.tab =='attachment'}">{{'Attachment'|l}}
+                            <span ng-show="ctrl._attach_value.files.length===0"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="ctrl._attach_value.files.length===0"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._attach_value.tab ='general'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._attach_value.tab =='general'}">{{'GeneralInfo'|l}}
+                            <span ng-show="attachForm_general.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="attachForm_general.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._attach_value.tab ='education'">
+                        <a class="nav-link" ng-class="{'active':ctrl._attach_value.tab =='education'}">{{'Education'|l}}
+                            <span ng-show="attachForm_education.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="attachForm_education.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._attach_value.tab ='mission'">
+                        <a class="nav-link" ng-class="{'active':ctrl._attach_value.tab =='mission'}">{{'MissionInfo'|l}}
+                            <span ng-show="attachForm_mission.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="attachForm_mission.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show">
+                        <div ng-show="ctrl._attach_value.tab=='attachment'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-6" style="border-right: 1px solid #eee;">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <td>
+                                                            #
+                                                        </td>
+                                                        <td>
+                                                            {{'AttachedFile'|l}}
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ctrl._attach_value.files">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>
+                                                            <attachment-just-show my-item="item"></attachment-just-show>
+                                                        </td>
+                                                        <td><i class="fas fa-times text-danger" ng-click="ctrl.removeFile_attach(item)" ></i></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                        colspan=" 0">
+                                                        <div class="diskuf-uploader">
+                                                            <span class="wd-fa-add-file-light">
+                                                                <span class="wd-fa-add-file-light-text">
+                                                                    <span class="wd-fa-add-file-light-title">
+                                                                        <span
+                                                                            class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                                    </span>
+                                                                    <span
+                                                                        class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                                </span>
+                                                            </span>
+                                                            <input class="diskuf-fileUploader wd-test-file-light-inp "
+                                                                type="file" file-reading="ctrl._attach_value.files"
+                                                                size="1" multiple style="width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <form class="form-horizontal " name="attachForm_general"
+                            ng-show="ctrl._attach_value.tab=='general'">
+
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'BasicSalary'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="number" ng-model="ctrl._attach_value.basic_salary" class="form-control"
+                                                name="attach_basic_salary"  min="0"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_basic_salary.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                                extend="ctrl.LaborContractType_Config"
+                                                pick-func="ctrl.chooseTypeLaborContract_attach(params)"
+                                                id-value="ctrl._attach_value.type"
+                                                label="{{'TypeLaborContract'|l}}"
+                                                require="true"
+                                                disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'From'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="date" ng-model="ctrl._attach_value.from_date" class="form-control"
+                                                name="attach_from_date"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_from_date.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'To'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="date" ng-model="ctrl._attach_value.to_date" class="form-control"
+                                                name="attach_to_date"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_to_date.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'LastName'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.lastname" class="form-control"
+                                                name="attach_lastname" placeholder="Input lastname"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_lastname.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'MidName'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.midname" class="form-control"
+                                                name="attach_midname" placeholder="Input midname" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'FirstName'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.firstname" class="form-control"
+                                                name="attach_firstname" placeholder="Input firstname"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_firstname.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <date id-value="ctrl._attach_value.birth_date"
+                                            func="ctrl.chooseBirthDate_attach(params)" label="{{'DateOfBirth'|l}}"
+                                            disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                            required="true"></date>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'Living'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Country_Config"
+                                            pick-func="ctrl.chooseCountry1_attach(params)"
+                                            id-value="ctrl._attach_value.living.country"
+                                            label="{{'Country'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.City_Config"
+                                            pick-func="ctrl.chooseCity1_attach(params)"
+                                            id-value="ctrl._attach_value.living.city"
+                                            label="{{'City'|l}}"
+                                            filter ="ctrl.filterCity_living_attach"
+                                        
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.living.country"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.District_Config"
+                                            pick-func="ctrl.chooseDistrict1_attach(params)"
+                                            id-value="ctrl._attach_value.living.district"
+                                            label="{{'District'|l}}"
+                                            filter ="ctrl.filterDistrict_living_attach"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.living.city"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Ward_Config"
+                                            pick-func="ctrl.chooseWard1_attach(params)"
+                                            id-value="ctrl._attach_value.living.ward"
+                                            label="{{'Ward'|l}}"
+                                            filter ="ctrl.filterWard_living_attach"
+                                            
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.living.district"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.Village_Config"
+                                            pick-func="ctrl.chooseVillage1_attach(params)"
+                                            id-value="ctrl._attach_value.living.village"
+                                            label="{{'Village'|l}}"
+                                            filter ="ctrl.filterVillage_living_attach"
+                                            
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.living.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Address'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.living.address"
+                                                class="form-control" name="update_living_address"
+                                                placeholder="Input address"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_living_address.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'PermanentAddress'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Country_Config"
+                                            pick-func="ctrl.chooseCountry2_attach(params)"
+                                            id-value="ctrl._attach_value.permanent_address.country"
+                                            label="{{'Country'|l}}"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.City_Config"
+                                            pick-func="ctrl.chooseCity2_attach(params)"
+                                            id-value="ctrl._attach_value.permanent_address.city"
+                                            label="{{'City'|l}}"
+                                            filter ="ctrl.filterCity_permanent_address_attach"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.country"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.District_Config"
+                                            pick-func="ctrl.chooseDistrict2_attach(params)"
+                                            id-value="ctrl._attach_value.permanent_address.district"
+                                            label="{{'District'|l}}"
+                                            filter ="ctrl.filterDistrict_permanent_address_attach"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.city"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Ward_Config"
+                                            pick-func="ctrl.chooseWard2_attach(params)"
+                                            id-value="ctrl._attach_value.permanent_address.ward"
+                                            label="{{'Ward'|l}}"
+                                            filter ="ctrl.filterWard_permanent_address_attach"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.district"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.Village_Config"
+                                            pick-func="ctrl.chooseVillage2_attach(params)"
+                                            id-value="ctrl._attach_value.permanent_address.village"
+                                            label="{{'Village'|l}}"
+                                            filter ="ctrl.filterVillage_permanent_address_attach"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Address'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.permanent_address.address"
+                                                class="form-control" name="update_permanent_address_address"
+                                                placeholder="Input address"
+                                                ng-class="{ 'is-invalid': updateForm_general.update_permanent_address_address.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.TypeOfResidence_Config"
+                                            pick-func="ctrl.chooseTypeResidence_attach(params)"
+                                            id-value="ctrl._attach_value.type_residence"
+                                            label="{{'TypeOfResidence'|l}}"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'PhoneNumber'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.phonenumber"
+                                                class="form-control" name="attach_phonenumber"
+                                                placeholder="Input phonenumber"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_phonenumber.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'Email'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="email" ng-model="ctrl._attach_value.email" class="form-control"
+                                                name="attach_email" placeholder="Input email"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_email.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new">
+                                                <span class="input-group-text-new">{{'IdCard'|l}}</span>
+                                                <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.idcard" class="form-control"
+                                                name="attach_idcard" placeholder="Input idcard"
+                                                ng-class="{ 'is-invalid': attachForm_general.attach_idcard.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Nationality_Config"
+                                            pick-func="ctrl.chooseNationality_attach(params)"
+                                            id-value="ctrl._attach_value.nationality"
+                                            label="{{'Nationality'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Religion_Config"
+                                            pick-func="ctrl.chooseReligion_attach(params)"
+                                            id-value="ctrl._attach_value.religion"
+                                            label="{{'Religion'|l}}"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="attachForm_education"
+                            ng-show="ctrl._attach_value.tab=='education'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Education_Config"
+                                            pick-func="ctrl.chooseEducation_attach(params)"
+                                            id-value="ctrl._attach_value.education"
+                                            label="{{'Education'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Degree_Config"
+                                            pick-func="ctrl.chooseDegree_attach(params)"
+                                            id-value="ctrl._attach_value.degree"
+                                            label="{{'Degree'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Specialized_Config"
+                                            pick-func="ctrl.chooseSpecialized_attach(params)"
+                                            id-value="ctrl._attach_value.specialized"
+                                            label="{{'Specialized'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.School_Config"
+                                            pick-func="ctrl.pickTrainingSchool_attach(params)"
+                                            id-value="ctrl._attach_value.training_school"
+                                            label="{{'TrainingSchool'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'GraduationYear'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')"
+                                                type="text" ng-model="ctrl._attach_value.graduation_year"
+                                                class="form-control" name="attach_graduation_year"
+                                                placeholder="Input graduation year"
+                                                ng-class="{ 'is-invalid': attachForm_education.attach_graduation_year.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.StateManagement_Config"
+                                            pick-func="ctrl.chooseStateManagement_attach(params)"
+                                            id-value="ctrl._attach_value.state_management"
+                                            label="{{'StateManagement'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.PoliticalTheory_Config"
+                                            pick-func="ctrl.choosePoliticalTheory_attach(params)"
+                                            id-value="ctrl._attach_value.political_theory"
+                                            label="{{'PoliticalTheory'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.ComputerSkills_Config"
+                                            pick-func="ctrl.chooseIT_attach(params)"
+                                            id-value="ctrl._attach_value.it"
+                                            label="{{'ComputerSkills'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.EnglishLevel_Config"
+                                            pick-func="ctrl.chooseDegreeEnglish_attach(params)"
+                                            id-value="ctrl._attach_value.degree_english"
+                                            label="{{'EnglishLevel'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="attachForm_mission"
+                            ng-show="ctrl._attach_value.tab=='mission'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <organization label="{{'Department'|l}}" load-func="ctrl.loadDepartment(params)"
+                                            id-value="ctrl._attach_value.department"
+                                            load-details-func="ctrl.loadDepartment_details(params)"
+                                            select-func="ctrl.chooseDepartment_attach(params)" require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')">
+                                        </organization>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Competence_Config"
+                                            pick-func="ctrl.chooseCompetence_attach(params)"
+                                            id-value="ctrl._attach_value.competence"
+                                            label="{{'Competence'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','attach_labor','doing')|| !ctrl._attach_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-new-objname="Employee" modal-button-new-actionname="attach_labor"
+                    modal-button-new-invalid="
+                    ctrl._attach_value.files.length===0
+                    || attachForm_general.$invalid 
+                    || attachForm_education.$invalid
+                    || attachForm_mission.$invalid" modal-button-new-func="ctrl.attach()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

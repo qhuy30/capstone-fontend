@@ -1,0 +1,82 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Group_Qna_Insert">
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="Thêm mới nhóm câu hỏi"></modal-header>
+        <div class="modal-body">
+          <form class="form-horizontal" name="insertUserForm">
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">Tiêu đề</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input
+                  type="text"
+                  ng-model="ctrl._insert_value.title_vi"
+                  class="form-control"
+                  name="insertUser_title_vi"
+                  placeholder="Nhập tiêu đề tiếng việt"
+                  required
+                  ng-class="{ 'is-invalid': insertUserForm.insertUser_title_vi.$invalid }"
+                />
+              </div>
+              
+            </div>
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">Tiêu đề(en)</span>
+                </div>
+                <input
+                  type="text"
+                  ng-model="ctrl._insert_value.title_en"
+                  class="form-control"
+                  name="insertUser_title_en"
+                  placeholder="Nhập tiêu đề tiếng anh"
+                  ng-class="{ 'is-invalid': insertUserForm.insertUser_title_en.$invalid }"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">Giá trị</span>
+                  </div>
+                  <input
+                    type="text"
+                    ng-model="ctrl._insert_value.value"
+                    class="form-control"
+                    name="insertUser_value"
+                    placeholder="Nhập giá trị"
+                    ng-class="{ 'is-invalid': insertUserForm.insertUser_value.$invalid }"
+                    required
+                  />
+                </div>
+              </div>
+            <div class="form-group">
+              <input-checkbox
+                input-checkbox-label="{{'IsActive'|l}}"
+                input-checkbox-model="ctrl._insert_value.active"
+              >
+              </input-checkbox>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <modal-button-new
+            modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+            modal-button-new-objname="QuestionAnswer"
+            modal-button-new-actionname="insert"
+            modal-button-new-invalid="insertUserForm.$invalid"
+            modal-button-new-func="ctrl.insert_func()"
+          >
+          </modal-button-new>
+          
+          <modal-button-close></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>
+  

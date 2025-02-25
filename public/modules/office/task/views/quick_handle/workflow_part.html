@@ -1,0 +1,197 @@
+<!-- <div class="workflow-part"> -->
+<div class="workflow-part" ng-show="
+[
+    'Office.Signing.Leader_Manage',
+    'Office.Signing.Department_Leader_Manage'
+]|checkRule
+">
+    <div class="title" id="headingWorkFlow">
+        <div class="label" ng-click="ctrlChild.toogleCollapseWorkFlow()" class="btn btn-link"
+            data-toggle="collapse" data-target="#collapseWorkFlow" aria-expanded="true"
+            aria-controls="collapseWorkFlow" style="font-style: bold;">
+            <i class="fas fa-angle-down" ng-show="ctrlChild.collapseWorkFlow"></i><i class="fas fa-angle-right"
+            ng-show="!ctrlChild.collapseWorkFlow"></i>&nbsp;&nbsp;<label>{{'Document to be approved'|l}}&nbsp;(<span>{{ctrlChild.totalItems_workflow}}</span>)</label>
+        </div>
+        <div style="display: inline-block;" ng-hide="ctrlChild.collapseWorkFlow === false">
+            <span class="overdue">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_needtohandle_work_flow_play"
+                    ng-change="ctrlChild.refreshData_workflow()" />&nbsp;{{'NeedToHandle'|l}}
+            </span>&nbsp;&nbsp;
+            <span class="gonnalate">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_gonnalate_work_flow_play"
+                    ng-change="ctrlChild.refreshData_workflow()" />&nbsp;{{'GonnaLate'|l}}
+            </span>
+        </div>
+    </div>
+    <div id="collapseWorkFlow" class="collapse" ng-class="{'show':ctrlChild.collapseWorkFlow}" aria-labelledby="headingWorkFlow">
+    <div class="the-content">
+        <div class="table-responsive">
+            <table class="table table-sm table-hover" ng-class="{'no-data':ctrlChild.workflows.length ===0}">
+                <thead>
+                    <tr>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 30px;">#</td>
+                        <td
+                            style="font-weight: 600;color: #212529;vertical-align: middle; text-align: center; width: 100px;">
+                            {{'Code'|l}}</td>
+                        <td class="tool" style="width: 200px;">
+                            <div class="search" style="margin-bottom: 5px;">
+                                <input type="text" ng-model="ctrlChild._searchFilter_workflow"
+                                    my-watch-text-input my-scope="ctrlChild._searchFilter_workflow"
+                                    my-func="ctrlChild.refreshData_workflow()" my-start="!ctrlChild._notyetInit_workflow"
+                                    placeholder="{{'Find by title and code'|l}}">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div style="color: #212529; font-weight: 600;">
+                                {{'Document Name/ Workflow Name'|l}}
+                            </div>
+
+                        </td>
+
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 100px;">
+                            {{'DocumentType'|l}}
+                        </td>
+
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 190px;">
+                            {{'Composer/Submitter'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 90px;">
+                            {{'State'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 150px;">{{'Processing time'|l}}</td>
+
+                        <td ng-if="((ctrlChild.workflows | filter: {allow_assess: true}).length > 0 || (ctrlChild.workflows | filter: {allow_sign: true}).length > 0) && !(ctrlChild.workflows | filter: {allow_create_dispatch_out: true}).length"
+                            style="width: 190px;font-weight: 600;vertical-align: middle; text-align: center;">
+                            {{'Approve'|l}}/&nbsp;{{'Sign'|l}}/&nbsp;{{'Resubmit'|l}}
+                        </td>
+                        
+                        <td ng-if="((ctrlChild.workflows | filter: {allow_assess: true}).length > 0 || (ctrlChild.workflows | filter: {allow_sign: true}).length > 0) && !(ctrlChild.workflows | filter: {allow_create_dispatch_out: true}).length"
+                            style="width: 220px;font-weight: 600;vertical-align: middle; text-align: center;">
+                            {{'Reject'|l}}/&nbsp;{{'Return'|l}}
+                        </td>
+                        
+                        <!-- <td ng-if="(ctrlChild.workflows | filter: {allow_create_dispatch_out: true}).length > 0" 
+                            style="width: 190px;font-weight: 600;vertical-align: middle; text-align: center;">
+                            {{'Processing document'|l}}
+                        </td> -->
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrlChild.workflows track by $index">
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center;">
+                            <strong> {{$index +1}}</strong>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 100px;">
+                            <strong>{{item.code}}</strong>
+                        </td>
+                        <td style="width: 200px;">
+                            <a class="text-dark" link-details
+                                link-details-display="{{'['+item.code+'] '+item.title}}"
+                                link-details-url="/signing-details?code={{item.code}}"
+                                link-details-route="signing-details"><span ng-if="item.status ==='Returned'" class="badge badge-gray-200">{{'Returned'|l}}</span>&nbsp;{{item.title}}</a>
+                            <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                    attachment-show-func="ctrlChild.loadfile_workflow(params)"
+                                    attachment-show-params="{id:item._id,name:at.name}"
+                                    attachment-show-service-name="'workflow_play'">
+                                </attachment-show>
+                            </div>
+                            <div class="showfile-bar" ng-if="item.customTemplate">
+                                <attachment-show attachment-show-item="item.customTemplate"
+                                    attachment-show-func="ctrlChild.loadfile_workflow(params)"
+                                    attachment-show-params="{id:item._id,name:item.customTemplate.name}"
+                                    attachment-show-service-name="'workflow_play'">
+                                </attachment-show>
+                            </div>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;max-width: 100px;">
+                            <get-field-directory 
+                                style="max-width: 200px;" 
+                                class="text-muted text-nowrap"
+                                id-value="item.document_type" 
+                                extend="ctrlChild.DocumentType_Config"
+                                localization="true">
+                            </get-field-directory>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 190px;">
+                            <show-username username="item.username">
+                            </show-username>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 90px;">
+                            <show-status id-value="item.status"></show-status>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 150px;">
+                            <time-show  
+                            time-show-data="item.flow[item.node-1].expected_complete_at" 
+                            time-show-type="long"></time-show>
+                        </td>
+                        <td ng-if="(item.allow_assess || item.allow_sign) && !item.allow_create_dispatch_out" style="width: 190px; text-align: center;">
+                            <button 
+                                type="button" 
+                                modal-toggle="#quick_handle_workflow" 
+                                ng-if="(item.allow_assess || item.allow_sign) && !item.allow_create_dispatch_out"
+                                ng-click="ctrlChild.prepareToHandle_workflow(item,'Approve')"
+                                class="btn btn-outline-success">
+                                <i class="fas fa-check"></i>&nbsp;{{'Approve'|l}}
+                            </button>&nbsp;&nbsp;
+                            <button 
+                                type="button" 
+                                modal-toggle="#quick_handle_workflow" 
+                                ng-if="(item.allow_assess || item.allow_sign) && !item.allow_create_dispatch_out"
+                                ng-click="ctrlChild.prepareToHandle_workflow(item,'Sign')"
+                                class="btn btn-outline-success">
+                                <i class="fas fa-signature"></i>&nbsp;{{'Sign'|l}}
+                            </button>
+                            <button 
+                                type="button" 
+                                modal-toggle="#quick_handle_workflow" 
+                                ng-if="item.status === 'Returned'"
+                                ng-click="ctrlChild.prepareToHandle_workflow(item,'Resubmit')"
+                                class="btn btn-outline-success">
+                                <i class="fas fa-signature"></i>&nbsp;{{'Resubmit'|l}}
+                            </button>
+                        </td>
+                        <td ng-if="(item.allow_assess || item.allow_sign) && !item.allow_create_dispatch_out" style="width: 220px;text-align: center;">
+                            <button 
+                                type="button" 
+                                modal-toggle="#quick_handle_workflow" 
+                                ng-if="item.status !== 'Returned'"
+                                ng-click="ctrlChild.prepareToHandle_workflow(item,'Reject')"
+                                class="btn btn-outline-danger">
+                                <i class="fas fa-times"></i>&nbsp;{{'Reject'|l}}
+                            </button>&nbsp;&nbsp;
+                            <button 
+                                type="button" 
+                                modal-toggle="#quick_handle_workflow" 
+                                ng-if="item.status !== 'Returned'"
+                                ng-click="ctrlChild.prepareToHandle_workflow(item,'Return')"
+                                class="btn btn-outline-danger">
+                                <i class="fas fa-undo"></i>&nbsp;{{'Return'|l}}
+                            </button>
+                        </td>
+                        <!-- <td ng-if="item.allow_create_dispatch_out" style="width: 190px;text-align: center;">
+                            <button 
+                                type="button"
+                                class="btn btn-link text-dark p-0" 
+                                link-details
+                                link-details-display="{{'['+item.code+'] '+item.title}}"
+                                link-details-url="/signing-details?code={{item.code}}"
+                                link-details-route="signing-details">
+                                {{'Details'|l}}
+                            </button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div ng-if="ctrlChild.workflows.length ==0" class="no-data">
+            {{'NoData'|l}}
+        </div>
+        <pagination ng-show="ctrlChild.totalItems_workflow>0" pagination-ctrlname="{{ctrlChild._ctrlName}}" pagination-objname="Workflow"
+            pagination-actionname="count" pagination-currentpage="ctrlChild.currentPage_workflow"
+            pagination-noi="ctrlChild.numOfItemPerPage" pagination-total="ctrlChild.totalItems_workflow"
+            pagination-func="ctrlChild.load_workflow(params)"></pagination>
+    </div>
+    </div>
+</div>

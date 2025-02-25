@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal_Notify_Restore_from_recyclebin" role="dialog" tabindex="-1">
+    <div class="modal-dialog" style="min-width: 60%;">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantRestoreFromRecyclebin'|l:{title:ctrl._restore_from_recyclebin_value.title} }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-restore modal-button-restore-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-restore-objname="Notify" modal-button-restore-actionname="restore_from_recyclebin"
+                    modal-button-restore-func="ctrl.restore_from_recyclebin()">
+                </modal-button-restore>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

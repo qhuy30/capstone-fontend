@@ -1,0 +1,424 @@
+<style>
+  .custom-gap > * {
+    margin: 0 0.5rem 0.5rem 0;
+  }
+</style>
+<div class="task-part">
+    <div class="title" id="headingTask">
+        <div style="display: inline-block;" class="label" ng-click="ctrlChild.toogleCollapseTask()" class="btn btn-link"
+            data-toggle="collapse" data-target="#collapseTask" aria-expanded="true"
+            aria-controls="collapseTask" style="font-style: bold;">
+            <i class="fas fa-angle-down" ng-show="ctrlChild.collapseTask"></i><i class="fas fa-angle-right"
+            ng-show="!ctrlChild.collapseTask"></i>&nbsp;&nbsp;<label>{{'Task'|l}}&nbsp;(<span>{{ctrlChild.totalItems_task}}</span>)</label>&nbsp;&nbsp;
+        </div>
+        <div style="display: inline-block;" ng-hide="ctrlChild.collapseTask === false">
+            <span class="overdue">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_overdue_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'Overdue'|l}}
+            </span>&nbsp;&nbsp;
+            <span class="gonnalate">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_gonnalate_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'GonnaLate'|l}}
+            </span>
+            <!-- <span class="overdue">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_dispatch_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'WorkflowNodeDispatchArrived'|l}}
+            </span> -->
+            <span class="overdue" ng-if="['Office.Task.Receive_task']|checkRule">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_receiver_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'TaskTransfer'|l}}
+            </span>
+            <span class="overdue" ng-if="['Office.Task.Receive_task']|checkRule">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_approval_receiver_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'Task recive need approval'|l}}
+            </span>
+            <span class="is_get_all"  ng-if="['Office.Task.Director_Manage']|checkRule">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_is_get_all" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'Display task of all departments'|l}}&nbsp;<i class="far fa-question-circle" 
+                custom-tooltip 
+                tooltip-content="{{'Default is only display task of departments youre leading'|l}}"></i>
+            </span>
+        </div>
+    </div>
+    <div id="collapseTask" class="collapse" ng-class="{'show':ctrlChild.collapseTask}" aria-labelledby="headingTask"> 
+    <div class="the-content">
+        <div class="table-responsive">
+            <table class="table table-sm table-hover" ng-class="{'no-data':ctrlChild.tasks.length ===0}" ng-show="!ctrlChild.checkbox_receiver_task">
+                <thead>
+                    <tr>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 30px;">#</td>
+                        <td
+                            style="font-weight: 600;color: #212529;vertical-align: middle; text-align: center; width: 120px;">
+                            {{'TaskCode'|l}}</td>
+                        <td class="tool">
+                            <div class="search" style="margin-bottom: 5px;">
+                                <input type="text" ng-model="ctrlChild._searchFilter_task"
+                                    my-watch-text-input my-scope="ctrlChild._searchFilter_task"
+                                    my-func="ctrlChild.refreshData_task()" my-start="!ctrlChild._notyetInit_task"
+                                    placeholder="{{'Find task by name and code'|l}}">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div style="color: #212529; font-weight: 600;">
+                                {{'TaskName'|l}}
+                            </div>
+                        </td>
+
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 160px;">
+                            {{'Responsible Department/Project'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 160px;">
+                            {{'HostPerson'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 160px;">
+                            {{'State'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 100px;">{{'Processing time'|l}}</td>
+                        <td style="width: 120px;font-weight: 600;vertical-align: middle; text-align: center;">{{'Challenge'|l}}</td>
+                        <td style="width: 300px;font-weight: 600;vertical-align: middle; text-align: center;">{{'Comment'|l}}</td>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrlChild.tasks track by $index">
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center;">
+                            <strong> {{$index +1}}</strong>
+                        </td>
+                        <td ng-if="!item.parent_code" style="font-weight: 600;vertical-align: middle; text-align: center; width: 120px;">
+                            <strong>{{item.code}}</strong>
+                        </td>
+                        <td ng-if="item.parent_code" style="font-weight: 600;vertical-align: middle; text-align: center; width: 120px;">
+                            <strong>{{item.parent_code}}</strong>
+                        </td>
+                        <td>
+                            <a 
+                                ng-click="ctrlChild.prepareToHandle_task(item)"
+                                class="text-dark" link-details
+                                link-details-display="{{'['+item.code+'] '+item.title}}"
+                                link-details-url="/task-details?code={{item.code}}"
+                                link-details-route="task-details">{{item.title}}</a>
+                            <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                    attachment-show-func="ctrlChild.loadfile_task(params)"
+                                    attachment-show-params="{id:item._id,name:at.name}"
+                                    attachment-show-service-name="'task'">
+                                </attachment-show>
+                            </div>
+                            <div class="showfile-bar" ng-if="item.customTemplate">
+                                <attachment-show attachment-show-item="item.customTemplate"
+                                    attachment-show-func="ctrlChild.loadfile_task(params)"
+                                    attachment-show-params="{id:item._id,name:item.customTemplate.name}"
+                                    attachment-show-service-name="'task'">
+                                </attachment-show>
+                            </div>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                              <span ng-if="item.department_title">
+                                {{item.department_title[$root.Language.current]}}
+                              </span>
+                              <span ng-if="item.project_name">
+                                       {{'Project'|l}}&nbsp;{{item.project_name}}
+                              </span> 
+                             
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                            <show-username username="item.main_person[0]" just-name="true" ng-if="item.main_person[0]">
+                            </show-username>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                            <show-status id-value="item.status"></show-status>&nbsp;-&nbsp;
+                            <show-state id-value="item.state"></show-state>
+                            
+                            <div 
+                            style="flex: 0 0 50%; padding-left: 5px;"
+                            ng-if="item.allowMarkAsComplete"
+                            >
+                                <button 
+                                style="flex-basis: 1; margin-top: 10px;"
+                                class="btn btn-outline-success" 
+                                ng-class='{"btn-sm":modalButtonNewType==="small"}' 
+                                type="button"
+                                ng-click="ctrlChild.complete(item)"
+                                >
+                                <i class="fas fa-check"></i>&nbsp;&nbsp;{{'MarkAsComplete'|l}}
+                                </button>
+                            </div>
+                            <div 
+                            style="flex: 0 0 50%; padding-left: 5px;"
+                            ng-if="item.allowMarkDone"
+                            >
+                                <button 
+                                style="flex-basis: 1; margin-top: 10px;"
+                                class="btn btn-outline-success" 
+                                ng-class='{"btn-sm":modalButtonNewType==="small"}' 
+                                type="button"
+                                ng-click="ctrlChild.done(item)"
+                                >
+                                <i class="fas fa-check"></i>&nbsp;&nbsp;{{'MarkDone'|l}}
+                                </button>
+                            </div>
+                                
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                            <time-show  
+                            time-show-data="item.to_date" 
+                            time-show-type="long"></time-show>
+                        </td>
+                        <td style="width: 120px;">
+                          <div class="d-flex align-items-center justify-content-center">
+                                <button-new
+                                    button-new-label="{{'AddChallenge'|l}}"
+                                    class="btn shadow-none"
+                                    button-new-modal="#modal_Task_InsertChallenge"
+                                    button-new-func="ctrlChild.prepareInsertChallenge(params)"
+                                    button-new-params="{item:item}"
+                                >
+                                <i class="fas fa-plus" ng-hide="buttonNewHideIcon"></i>
+                                </button-new>
+                          </div>
+            
+                          <div class="custom-gap d-flex flex-column align-items-center justify-content-center">
+                            <div
+                              ng-repeat="challenge in item.comment | filterByType:'Challenge' | orderBy: '-time'"
+                              style="cursor: pointer; font-size: 0.8rem; text-align: center;"
+                              custom-tooltip
+                              tooltip-content="{{challenge.content}}"
+                              tooltip-position="bottom-left"
+                              ng-click="ctrlChild.prepareDetailChallenge(challenge,item._id)"
+                              data-toggle="modal"
+                              data-target="#modal_Task_DetailChallenge"
+                              class="name-task-custom m-0"
+                            >
+                                <span style="font-weight: 600;">
+                                    <show-username-onlyname  
+                                        username="challenge.username" 
+                                        just-name="true" 
+                                        ng-if="challenge.username" 
+                                        without-tooltip="true"
+                                        class="mb-0"
+                                    >
+                                    </show-username-onlyname>:
+                                </span>
+                                <span style="font-size: 11px; font-weight: bolder; color: #9e9e9e; width: 100%;">{{'AddChallengeAt'|l}} 
+                                    <br>
+                                    <time-show  
+                                        time-show-data="challenge.time" 
+                                        time-show-type="long">
+                                    </time-show>
+                                </span>
+                            </div>
+                          </div>
+                        </td>
+                        <td style="width: 300px; text-align: center; display: flex;">
+                            <div style="flex: 0 0 50%; display: flex; flex-direction: column;">
+                                <button 
+                                style="flex-basis: 1;"
+                                class="btn btn-outline-success" 
+                                ng-class='{"btn-sm":modalButtonNewType==="small"}' 
+                                type="button"
+                                ng-disabled=""
+                                ng-click="ctrlChild.prepareComment(item);ctrlChild.pushRemindComment();"
+                                >
+                                <i class="fas fa-stopwatch"></i>&nbsp;&nbsp;{{'Remind'|l}}
+                                </button>
+                                <div style="flex-basis: 1; font-size: 11px; padding-top: 5px; font-weight: bolder;">
+                                    {{ctrlChild.countRemindCmtByUser(item)}}.
+                                </div>
+                            </div>
+                            <div style="flex: 0 0 50%; padding-left: 5px;">
+                                <button 
+                                style="width: 100%;"
+                                modal-toggle="#modal_task_comment"
+                                class="btn btn-primary" 
+                                ng-class='{"btn-sm":modalButtonNewType==="small"}' 
+                                type="button"
+                                ng-disabled=""
+                                ng-click="ctrlChild.prepareComment(item)"
+                                >
+                                <i class="fas fa-comment-alt"></i>&nbsp;&nbsp;{{'Comment'|l}}
+                                </button>
+                                <div style="flex-basis: 1; font-size: 11px; padding-top: 5px; font-weight: bolder;">
+                                    {{ctrlChild.checkLatestCommentUser(item)}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-sm table-hover" ng-class="{'no-data':ctrlChild.tasks.length ===0}" ng-show="ctrlChild.checkbox_receiver_task">
+                <thead>
+                    <tr>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 30px;">#</td>
+                        <td
+                            style="font-weight: 600;color: #212529;vertical-align: middle; text-align: center; width: 120px;">
+                            {{'TaskCode'|l}}</td>
+                        <td class="tool">
+                            <div class="search" style="margin-bottom: 5px;">
+                                <input type="text" ng-model="ctrlChild._searchFilter_task"
+                                    my-watch-text-input my-scope="ctrlChild._searchFilter_task"
+                                    my-func="ctrlChild.refreshData_task()" my-start="!ctrlChild._notyetInit_task"
+                                    placeholder="{{'Find task by name and code'|l}}">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div style="color: #212529; font-weight: 600;">
+                                {{'TaskName'|l}}
+                            </div>
+                        </td>
+
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 160px;">
+                            {{'Responsible Department/Project'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 160px;">
+                            {{'HostPerson'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 160px;">
+                            {{'State'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 100px;">{{'Processing time'|l}}</td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 100px;"></td>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrlChild.tasks track by $index">
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center;">
+                            <strong> {{$index +1}}</strong>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 120px;">
+                            <strong>{{item.parent_code}}</strong>
+                        </td>
+                        <td>
+                            <a 
+                                ng-click="ctrlChild.prepareToHandle_task(item)"
+                                class="text-dark" link-details
+                                link-details-display="{{'['+item.code+'] '+item.title}}"
+                                link-details-url="/task-details?code={{item.code}}"
+                                link-details-route="task-details">{{item.title}}</a>
+                            <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                    attachment-show-func="ctrlChild.loadfile_task(params)"
+                                    attachment-show-params="{id:item._id,name:at.name}"
+                                    attachment-show-service-name="'task'">
+                                </attachment-show>
+                            </div>
+                            <div class="showfile-bar" ng-if="item.customTemplate">
+                                <attachment-show attachment-show-item="item.customTemplate"
+                                    attachment-show-func="ctrlChild.loadfile_task(params)"
+                                    attachment-show-params="{id:item._id,name:item.customTemplate.name}"
+                                    attachment-show-service-name="'task'">
+                                </attachment-show>
+                            </div>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                              <span ng-if="item.department_title">
+                                {{item.department_title[$root.Language.current]}}
+                              </span>
+                              <span ng-if="item.project_name">
+                                       {{'Project'|l}}&nbsp;{{item.project_name}}
+                              </span> 
+                             
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                            <show-username username="item.main_person[0]" just-name="true" ng-if="item.main_person[0]">
+                            </show-username>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                            <show-status id-value="item.status"></show-status>&nbsp;-&nbsp;
+                            <show-state id-value="item.state"></show-state>
+                            
+                            <div 
+                            style="flex: 0 0 50%; padding-left: 5px;"
+                            ng-if="item.allowMarkAsComplete"
+                            >
+                                <button 
+                                style="flex-basis: 1; margin-top: 10px;"
+                                class="btn btn-outline-success" 
+                                ng-class='{"btn-sm":modalButtonNewType==="small"}' 
+                                type="button"
+                                ng-click="ctrlChild.complete(item)"
+                                >
+                                <i class="fas fa-check"></i>&nbsp;&nbsp;{{'MarkAsComplete'|l}}
+                                </button>
+                            </div>
+                            <div 
+                            style="flex: 0 0 50%; padding-left: 5px;"
+                            ng-if="item.allowMarkDone"
+                            >
+                                <button 
+                                style="flex-basis: 1; margin-top: 10px;"
+                                class="btn btn-outline-success" 
+                                ng-class='{"btn-sm":modalButtonNewType==="small"}' 
+                                type="button"
+                                ng-click="ctrlChild.done(item)"
+                                >
+                                <i class="fas fa-check"></i>&nbsp;&nbsp;{{'MarkDone'|l}}
+                                </button>
+                            </div>
+                                
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                            <time-show  
+                            time-show-data="item.to_date" 
+                            time-show-type="long"></time-show>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                <!-- <button-approval-item
+                                    ng-if="item.status ==='WaitingReceive'"
+                                    button-approval-item-modal="#modal_Receive_Task_Assess_QH_detail"
+                                    button-approval-item-func="ctrlChild.prepareReceive_Task(params)"
+                                    button-approval-item-params="{item}"
+                                    button-label="{{'Receive task'}}"
+                                />
+
+                                <button-reject-item
+                                    ng-if="item.status ==='WaitingReceive'"
+                                    button-reject-item-modal="#modal_Receive_Task_Assess_QH_detail"
+                                    button-reject-item-func="ctrlChild.prepareReceive_Task(params)"
+                                    button-reject-item-params="{item}"
+                                    button-label="{{'Reject receive task'}}"
+                                /> -->
+                                <button-approval-item
+                                    ng-if="item.allow_recive_task"
+                                    button-approval-item-modal="#modal_Receive_Task_Assess_QH_detail"
+                                    button-approval-item-func="ctrlChild.prepareReceive_Task(params)"
+                                    button-approval-item-params="{ item:item, action: 'recive_task' }"
+                                    button-label="{{'Receive task'}}"
+                                />
+                                <button-reject-item
+                                    ng-if="item.allow_recive_task"
+                                    button-reject-item-modal="#modal_Receive_Task_Assess_QH_detail"
+                                    button-reject-item-func="ctrlChild.prepareReceive_Task(params)"
+                                    button-reject-item-params="{ item:item, action: 'recive_task' }"
+                                    button-label="{{'Reject receive task'}}"
+                                />
+
+                                <button-approval-item
+                                    ng-if="item.allow_approve_recive_task"
+                                    button-approval-item-modal="#modal_Receive_Task_Assess_QH_detail"
+                                    button-approval-item-func="ctrlChild.prepareReceive_Task(params)"
+                                    button-approval-item-params="{ item:item, action: 'approve_recive_task' }"
+                                    button-label="{{'Approval'}}"
+                                />
+
+                                <button-reject-item
+                                    ng-if="item.allow_approve_recive_task"
+                                    button-reject-item-modal="#modal_Receive_Task_Assess_QH_detail"
+                                    button-reject-item-func="ctrlChild.prepareReceive_Task(params)"
+                                    button-reject-item-params="{ item:item, action: 'approve_recive_task' }"
+                                    button-label="{{'Reject'}}"
+                                />
+
+
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div ng-if="ctrlChild.tasks.length ==0" class="no-data">
+            {{'NoData'|l}}
+        </div>
+        <pagination ng-show="ctrlChild.totalItems_task>0" pagination-ctrlname="{{ctrlChild._ctrlName}}" pagination-objname="Task"
+            pagination-actionname="count" pagination-currentpage="ctrlChild.currentPage_task"
+            pagination-noi="ctrlChild.numOfItemPerPage" pagination-total="ctrlChild.totalItems_task"
+            pagination-func="ctrlChild.load_task(params)"></pagination>
+    </div>
+    </div>
+</div>

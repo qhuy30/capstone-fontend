@@ -1,0 +1,18 @@
+<ul ng-if="item.canExpand" ng-show="item.open" class="department-container child">
+    <li ng-repeat="child_item in item.childs">
+        <div class="department-item" ng-class="{'can-expand':child_item.canExpand}">
+            <div class="title item-container">
+                <span ng-repeat="space in child_item.parent" class="space">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span ng-show="child_item.canExpand" ng-click="ctrl.expandDepartment(child_item,$event)"
+                    class="expand-item">
+                    <i class="fas fa-angle-right" ng-show="!child_item.open"></i>
+                    <i class="fas fa-angle-down" ng-show="child_item.open"></i>
+                </span>
+                <span ng-click="ctrl.pick(child_item)">
+                    &nbsp;&nbsp;{{child_item.title[$root.Language.current]}}
+                </span>
+            </div>
+        </div>
+        <department-child item="child_item" ctrl="ctrl"></department-child>
+    </li>
+</ul>

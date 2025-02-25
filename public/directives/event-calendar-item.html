@@ -1,0 +1,121 @@
+<div 
+    class="main-content p-2"
+    ng-style="{'background-color': itemBackground}"
+    style="border-radius: 5px;"
+>
+    
+    <div class="content-item" style="color: #fff;">
+        <div style="font-size: 13px; text-align: left; display: -webkit-box; 
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: normal;">
+            <span><i class="fas fa-clock" style="font-size: 12px;"></i></span>  
+            <span style="margin: 0; padding: 0; font-weight: 600; 
+                font-size: 12px; text-align: left;">
+                <time-show time-show-data="e.start_date" time-show-type="justtime" /> 
+                - <time-show time-show-data="e.end_date" time-show-type="justtime" />
+                <span>-</span>
+                {{ e.title }}
+            </span>
+        </div>
+    </div>
+
+    <div class="popup-detail">
+        
+        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding:10px 10px 10px 10px; border-radius: 6px 6px 0 0;"
+            ng-style="{'background-color': itemBackgroundHover}">
+            <span style="white-space: normal; font-weight: 600;">
+                {{ e.title }}
+            </span>
+        </div>
+        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'Time'|l}}:</strong></label>
+            <span style="white-space: normal;">
+                <time-show time-show-data="e.start_date" time-show-type="justtime" /> 
+                - <time-show time-show-data="e.end_date" time-show-type="justtime" />
+            </span>
+        </div>
+
+        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new m-0"><strong>{{'HostPerson'|l}}:</strong></label>
+            <show-username-onlyname without-tooltip="true" hide-image="true" username="e.main_person"></show-username-onlyname>
+        </div>
+
+        <div style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'Content'|l}}:</strong></label>
+            <span>{{ e.content }}</span>
+        </div>
+
+        <div ng-if="e.meeting_link !== ''" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'LinkMeeting'|l}}:</strong></label>
+            <span ng-bind-html="e.meeting_link | regexLink"></span>
+        </div>
+
+        <div ng-if="e.showRoom && e.meeting_room_registration.room" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'MeetingRoom'|l}}:</strong></label>
+            <get-field-directory
+                id-value="e.meeting_room_registration.room"
+                extend="ctrl.room_list_config"
+                localization="true"
+            />
+        </div>
+        <div ng-if="!e.showRoom && e.meeting_room_registration.room" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'MeetingRoom'|l}}:</strong></label>
+            {{ "PendingApprovalEVC" | l }}
+        </div>
+
+        <div ng-if="e.showCar && e.vehicle_registration.car" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'Car'|l}}:</strong></label>
+            <get-field-directory
+                id-value="e.vehicle_registration.car"
+                extend="ctrl.vehicle_list_config"
+                localization="true"
+            />
+        </div>
+
+        <div ng-if="!e.showCar && e.vehicle_booking_id != ''" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'Car'|l}}:</strong></label>
+            {{ "PendingApprovalEVC" | l }}
+        </div>
+
+        <div ng-if="e.showCar && e.vehicle_registration.card" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'Card'|l}}:</strong></label>
+            <get-field-directory
+                id-value="e.vehicle_registration.card"
+                extend="ctrl.card_list_config"
+                localization="true"
+            />
+        </div>
+
+        <div ng-if="e.type === 'Other'" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new"><strong>{{'Note'|l}}:</strong></label>
+            {{ e.other_info }}
+        </div>
+
+        <div ng-if="e.participants && e.participants.length > 0" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new m-0"><strong>{{'Participant'|l}}:</strong></label>
+            <span ng-repeat="n in e.participants">
+                <show-username-onlyname
+                  hide-image="true"
+                  username="n"
+                  without-tooltip="true" 
+                ></show-username-onlyname>
+                <span ng-show="$last">.</span>
+                <span ng-show="!$last">,&nbsp;</span>
+            </span>
+        </div>
+
+        <div ng-if="e.departments && e.departments.length > 0" style="word-wrap: break-word; overflow-wrap: break-word; margin-bottom: 5px; padding: 0px 10px">
+            <label class="input-group-text-new m-0"><strong>{{'ParticipateDepartments'|l}}:</strong></label>
+            <span ng-repeat="department in e.departments">
+                <show-department
+                  department="department"
+                ></show-department>
+                <span ng-show="$last">.</span>
+                <span ng-show="!$last">,&nbsp;</span>
+            </span>
+        </div>
+    </div>
+</div>

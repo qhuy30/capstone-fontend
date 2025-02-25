@@ -1,0 +1,81 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Task_Workflow_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'UpdateTaskWorkflow'|l}}"></modal-header>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" ng-click="ctrl._update_value.tab ='general'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._update_value.tab =='general'}">{{'GeneralInfo'|l}}
+                            <span>&nbsp;</span>
+                            <span class="require-sympton">*</span>
+                            <span ng-show="ctrl._update_value.files.length===0"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="ctrl._update_value.files.length===0"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._update_value.tab ='design'">
+                        <a class="nav-link " ng-class="{'active':ctrl._update_value.tab =='design'}">{{'FlowDesign'|l}}
+                            <span>&nbsp;</span>
+                            <span class="require-sympton">*</span>
+                            <span ng-show="updateForm_general.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="updateForm_general.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></span>
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show">
+                        <div ng-show="ctrl._update_value.tab=='general'">
+                            <form class="form-horizontal " name="updateForm">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <div class=" input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'Title'|l}}</span><span
+                                                    class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'TaskWorkflow','update','doing')"
+                                                type="text" ng-model="ctrl._update_value.title" class="form-control"
+                                                name="update_title" placeholder="{{'InputTitle'|l}}"
+                                                ng-class="{ 'is-invalid': updateForm.update_title.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class=" input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'Status'|l}}</span><span
+                                                    class="require-sympton">*</span>
+                                            </div>
+                                            {{ctrl._update_value.status}}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div ng-show="ctrl._update_value.tab =='design'">
+                            <draw-task-workflow id="draw_task_workflow_update">
+                            </draw-task-workflow>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}" modal-button-save-objname="TaskWorkflow"
+                    modal-button-save-actionname="update" modal-button-save-invalid="updateForm.$invalid"
+                    modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

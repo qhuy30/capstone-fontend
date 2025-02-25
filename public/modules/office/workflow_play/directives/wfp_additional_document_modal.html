@@ -1,0 +1,119 @@
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="modal_WFP_additional_document"
+  data-backdrop="static"
+>
+  <div class="modal-dialog modal-full" role="document">
+    <div class="modal-content">
+      <modal-header
+        modal-header-title="{{'Additional Document'|l}}"
+      ></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="forms.additionalDocumentForm">
+          
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="col-md-6" style="border-right: 1px solid #eee">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>{{'Attachment'|l}}</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in ctrl._additional_value.file">
+                                    <td>{{$index+1}}</td>
+                                    <td>
+                                        <attachment-just-show my-item="item"></attachment-just-show>
+                                    </td>
+                                    <td class="remove-file">
+                                        <i class="fas fa-times text-danger" ng-click="ctrl.removeFile_additional(item)"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                    <tbody>
+                    <tr>
+                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                        <div class="diskuf-uploader">
+                            <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                                <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                </span>
+                                <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                            </span>
+                            </span>
+                            <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                            file-reading="ctrl._additional_value.file" size="1" multiple style="width: 100%" />
+                        </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+                <div class="form-group col-md-12 mt-3 input-group-new">
+                    <div class="input-group-prepend-new">
+                    <span>{{'AccessNote' | l}}</span>
+                    <span class="require-sympton">*</span>
+                    </div>
+                    <div class="form-group mb-0">
+                    <text-area-with-suggestions-2
+                        ng-model="ctrl._additional_value.note"
+                        ng-required="true"
+                        placeholder="{{ctrl._additional_value.note_placeholder}}"
+                        function-apply="ctrl.function_apply_suggestions"
+                    />
+                    
+                    </div>
+                    <div>
+                    <!-- <span 
+                        class="badge badge-light m-1" 
+                        style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                        ng-repeat="note in ctrl._hintNoteSet"
+                        ng-click="ctrl.set_hint_note(note)">
+                        {{note | l}}
+                    </span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+
+        
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-approval
+          modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-approval-objname="WFP"
+          modal-button-approval-actionname="additional_document"
+          modal-button-approval-invalid="forms.additionalDocumentForm.$invalid"
+          modal-button-approval-func="ctrl.additional_document()"
+          modal-button-approval-label="{{'Additional document'|l}}"
+          modal-button-confirm-text="Are You Sure You Want to additinal Document?"
+          modal-header-content="{{'Confirm additinal Document'|l}}"
+          modal-text-button="Accept"
+        />
+          
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

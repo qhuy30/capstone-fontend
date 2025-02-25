@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="label" style="text-wrap: nowrap;" ng-if="label">
+        {{label}}
+    </div>
+    <div class="value" style="display: flex">
+        <div class="show-value" ng-style="{'background-color': disable ? '#c2cfd6' : ''}">
+            {{displayLabel}}
+        </div>
+        <button type="button" class="btn btn-primary" ng-disabled="disable" modal-toggle="#{{_ctrlName}}"
+                ng-click="init()">{{'Pick' | l}}&nbsp;<i class="fas fa-external-link-alt"></i></button>
+        <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable"><i
+                class="fas fa-times"></i></button>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{_ctrlName}}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{label ? label : ('Department'|l)}}" modal-header-id={{_ctrlName}}>
+                </modal-header>
+                <div class="modal-body ">
+                    <div class="tool">
+                        <div class="search">
+                            <input type="text" ng-model="search" placeholder="{{'FindByName'|l}}">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="part-container">
+                        <div class="part">
+                            <ul class="department-container">
+                                <li ng-repeat="item in data | filter:search">
+                                    <div class="department-item" ng-class="{'can-expand':item.canExpand}">
+                                        <div class="title">
+                                            <span ng-click="ctrl.expandDepartment(item)">
+                                                <span ng-show="item.canExpand">
+                                                    <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                                    <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                                </span>
+                                                &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                            </span>
+                                        </div>
+                                        <div class="tool">
+                                            <button type="button" ng-click="ctrl.pick(item)"
+                                                    class="btn btn-primary">{{'Pick' | l}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <department-multi-child item="item" ctrl="ctrl"></department-multi-child>
+                                </li>
+                            </ul>
+                            <div ng-if="ctrl.data.length ==0" class="no-data">
+                                {{'NoData' | l}}
+                            </div>
+                        </div>
+                        <div class="part selected-part">
+                            <div class="department-container">
+                                <div class="label">
+                                    {{'SelectedPart' | l}}&nbsp({{idValue.length}})
+                                </div>
+                                <div class="department-item" ng-repeat="item in showItem">
+                                    <i class="material-icons" ng-click="remove(item.id)">clear</i>
+                                    {{item.title[$root.Language.current]}}
+                                </div>
+                                <div class="no-data" ng-if="idValue.length==0">
+                                    {{'NoDepartmentSelectedYet' | l}}
+                                </div>
+                            </div>
+
+                            <!-- <div class="table-responsive" style="margin-top: 5px;">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                                #
+                                            </td>
+                                            <td>
+                                                {{label}}
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in showItem">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                {{item.title[$root.Language.current]}}
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-times text-danger" ng-click="remove(item.id)"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn " ng-click="close()">{{'Close' | l}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

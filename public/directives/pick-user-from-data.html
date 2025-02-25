@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="label">
+        {{label}}
+    </div>
+    <div class="value">
+        <div class="show-value">
+            <span ng-repeat="item in idValue track by $index" ng-if="idValue.length>=4">
+                <show-username username="item" just-name="true" ng-if="$index<5">
+                </show-username>&nbsp;&nbsp;
+                <span ng-if="$index==5">,...</span>
+            </span>
+            <span ng-repeat="item in idValue track by $index" ng-if="idValue.length<4">
+                <show-username username="item">
+                </show-username>&nbsp;&nbsp;
+            </span>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary " ng-click="init()" ng-disabled="disable"
+            modal-toggle="#{{_ctrlName}}">
+        {{'Pick'|l}}&nbsp;<i class="fas fa-external-link-alt"></i>
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+        <i class="fas fa-times"></i>
+    </button>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{_ctrlName}}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{label? label: ('Employee'|l)}}" modal-header-id={{_ctrlName}}>
+                </modal-header>
+                <div class="modal-body">
+                    <!-- <button-search button-search-func="init()" button-search-start="_notyetInit"
+                        button-search-model="search">
+                    </button-search> -->
+                    <div class="part-container">
+                        <div class="part data-part" style="flex-basis: 100%;">
+                            <div class="user-container">
+                                <div class="user-item" ng-repeat="item in internalData">
+                                    <div class="title">
+                                        <show-username username="item">
+                                        </show-username>
+                                    </div>
+                                    <div class="tool">
+                                        <button type="button" class="btn btn-primary" ng-click="select(item)">
+                                            {{'Pick'|l}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="no-data" ng-if="internalData.length==0">
+                                {{'NoData'|l}}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" ng-click="close()">{{'Close'|l}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

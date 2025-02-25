@@ -1,0 +1,79 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_MeetingRoom_Insert">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertForm">
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.title['vi-VN']" class="form-control" name="insert_title_vi"
+                placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_vi.$invalid }"
+                required />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.title['en-US']" class="form-control" name="insert_title_en"
+                placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_en.$invalid }"
+                required />
+            </div>
+          </div>
+
+          <div class="form-group" ng-repeat="control in ctrl.master_directory_item.extend" ng-switch="control.control">
+
+            <pick-modal-directory ng-switch-when="pick_modal" extend="control"
+              pick-func="ctrl.pickExtend(params,params2)" id-value="ctrl._insert_value.item[control.name]"
+              label="{{control.label ? (control.label|l) : control.name.toUpperCase()}}"
+              require="control.required"></pick-modal-directory>
+
+            <div class="input-prepend input-group" ng-switch-when="text_box">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{control.label ? (control.label|l) : control.name.toUpperCase()}}</span>
+                <span ng-show="{{control.required}}" class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.item[control.name]" class="form-control"
+                placeholder="{{'Input ' + (control.label ? (control.label|l) : control.name)}}"
+                ng-required="{{control.required}}" />
+            </div>
+
+            <div class="input-prepend input-group" ng-switch-when="number">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{control.label ? (control.label|l) : control.name.toUpperCase()}}</span>
+                <span ng-show="{{control.required}}" class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','insert','doing')" type="number"
+                ng-model="ctrl._insert_value.item[control.name]" class="form-control"
+                ng-required="{{control.required}}" />
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <input-checkbox input-checkbox-label="{{'IsUse'|l}}" input-checkbox-model="ctrl._insert_value.isactive"
+              input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'MeetingRoom','insert','doing')">
+            </input-checkbox>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="MeetingRoom"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid=" insertForm.$invalid || ctrl.fromDate_ErrorMsg || ctrl.toDate_ErrorMsg || ctrl.Number_Error_Msg"
+          modal-button-new-func="ctrl.insert()">
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<div>
+  <my-async async-status-label="'Approving...'" async-ctrlname="{{modalButtonApprovalCtrlname}}"
+      async-objname="{{modalButtonApprovalObjname}}"
+      async-actionname="{{modalButtonApprovalActionname}}">
+      <async-default>
+          <button class="btn btn-outline-success" type="button"
+              ng-class='{"btn-sm":modalButtonApprovalType==="small"}'
+              ng-disabled="modalButtonApprovalInvalid||$root.statusValue.get(modalButtonApprovalCtrlname,modalButtonApprovalObjname,modalButtonApprovalActionname,'doing')"
+              
+              modal-toggle="#{{ctrl._ctrlName}}"
+              >
+              <i class="fas fa-check"></i>&nbsp;{{modalButtonApprovalLabel ?modalButtonApprovalLabel
+              :('Approval'|l)}}</button>
+      </async-default>
+      <async-doing>
+          <div class="sk-wave">
+              <div class="sk-rect sk-rect1"></div>
+              <div class="sk-rect sk-rect2"></div>
+              <div class="sk-rect sk-rect3"></div>
+              <div class="sk-rect sk-rect4"></div>
+              <div class="sk-rect sk-rect5"></div>
+          </div> {{loadingLabel ||'Approving...'}}
+      </async-doing>
+      <async-success>
+          <span class="btn" style="color: #4dbd74;"
+              ng-class='{"btn-sm":modalButtonApprovalType==="small"}'>
+              {{'SuccessApproval'|l}}
+          </span>
+      </async-success>
+      <async-fail>
+          <span class="btn" style="color: #f86c6b;"
+              ng-class='{"btn-sm":modalButtonApprovalType==="small"}'>
+              {{$root.statusValue.get(modalButtonApprovalCtrlname,modalButtonApprovalObjname,modalButtonApprovalActionname,'message')|l}}
+          </span>
+          <button class="btn btn-outline-success" type="button"
+              ng-class='{"btn-sm":modalButtonApprovalType==="small"}'
+              ng-disabled="modalButtonApprovalInvalid||$root.statusValue.get(modalButtonApprovalCtrlname,modalButtonApprovalObjname,modalButtonApprovalActionname,'doing')"
+              ng-click="modalButtonApprovalClick()">
+              <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+          </button>
+      </async-fail>
+  </my-async>
+    
+
+    
+  <div class="modal fade" id="{{ctrl._ctrlName}}" role="dialog" tabindex="-1">
+    <div class="modal-dialog" style="width: 100%; max-width: 420px; top: 2%;">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{modalButtonApprovalLabel ? ('ApproveRecall'|l) : ('Approval'|l)}}"></modal-header>
+        <div class="modal-body">
+            {{modalButtonConfirmText || 'Are you sure you approve this document for signature'|l}}
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" name="assessForm">
+            <div class="card">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8; padding: 10px;">
+                <div class="col-md-12">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span>{{'AccessNote' | l}}</span>
+                      <span class="require-sympton" ng-show="ctrl._assess_value.note_required">*</span>
+                    </div>
+                    <div class="form-group mb-0">
+                      <text-area-with-suggestions-2 
+                        ng-model="ctrl._assess_value.note"
+                        function-apply="modalButtonFunctionApply"
+                        placeholder = "{{'TypeHere'|l}}"
+                      >
+                      </text-area-with-suggestions-2>
+                    </div>
+                    <!-- <div>
+                      <span 
+                        class="badge badge-light m-1" 
+                        style="cursor: pointer; font-size: 0.8rem; font-weight: 400;"
+                        ng-repeat="note in ctrl._hintNoteSet"
+                        ng-click="ctrl.set_hint_note(note)">
+                        {{note | l}}
+                      </span>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="button" ng-class='{"btn-sm":modalButtonApprovalType==="small"}'
+            ng-disabled="modalButtonApprovalInvalid||$root.statusValue.get(modalButtonApprovalCtrlname,modalButtonApprovalObjname,modalButtonApprovalActionname,'doing')"
+            ng-click="modalButtonApprovalClick()"
+            >
+            <i class="fas fa-check"></i>&nbsp;{{modalButtonApprovalLabel ?modalButtonApprovalLabel:('Approval'|l)}}</button>
+            <modal-button-close></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

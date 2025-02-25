@@ -1,0 +1,19 @@
+<div class="btn-group">
+    <div class="input-prepend input-group">
+        <div class="input-prepend input-group">
+            <div class="input-group-prepend"><span class="input-group-text">{{buttonSelectModalLabel}}</span>
+            </div>
+            <div class="form-control bg-light">
+                {{buttonSelectModalShow !== 'nonekey'?buttonSelectModalShow:('NotSelect'|l)}}
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-secondary" 
+                modal-toggle="{{buttonSelectModalName}}"
+                ng-click="buttonSelectModalClick()" type="button">
+                    <i class="fas fa-mouse-pointer"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

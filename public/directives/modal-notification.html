@@ -1,0 +1,22 @@
+<div class="modal modal-notification">
+    <div class="modal-content">
+        <span class="close" ng-click="modalNotificationClick()"><i
+                class="fas fa-times"></i></span>
+        <div class="modal-header">
+            <div class="header-content">
+                <h3>{{modalNotificationHeader}}</h3>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <p>{{modalNotificationContent}}</p>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-danger" type="button"
+                ng-click="modalNotificationClick()">{{modalNotificationFooter}}</button>
+        </div>
+
+    </div>
+</div>

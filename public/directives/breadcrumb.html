@@ -1,0 +1,37 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="min-height: 40px;">
+        <li class="breadcrumb-item" ng-repeat="item in breadcrumbItems|orderBy:'order'">
+            <a href="{{getItemPath(item)}}">
+                <span ng-switch="item.object">
+                    <span ng-switch-when="briefcase">{{'BriefCase'|l}}&nbsp;{{item.title_show ? item.title_show : item.code}}</span>
+                    <span ng-switch-when="dispatch_arrived">{{'DispatchArrived'|l}}&nbsp;{{item.title_show ? item.title_show : item.code}}</span>
+                    <span ng-switch-when="project">{{'Project'|l}}&nbsp;{{item.title_show ? item.title_show : item.code}}</span>
+                    <span ng-switch-when="task">{{'Task'|l}}&nbsp;{{item.title_show ? item.title_show : item.code}}</span>
+                    <span ng-switch-when="workflow_play">{{'Workflow'|l}}&nbsp;{{item.title_show ? item.title_show : item.code}}</span>
+                    <span ng-switch-when="odb">{{'DispatchOutGoing'|l}}&nbsp;{{item.title_show ? item.title_show : item.code}}</span>
+                    <span ng-switch-when="outgoing_dispatch">{{'DispatchOutGoing'|l}}&nbsp;{{item.title_show ? item.title_show : item.code}}</span>
+                </span>
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <span ng-switch="currentItem.object">
+                <span ng-switch-when="briefcase">{{'BriefCase'|l}}&nbsp;{{currentItem.code}}</span>
+                <span ng-switch-when="dispatch_arrived">{{'DispatchArrived'|l}}&nbsp;{{currentItem.code}}</span>
+                <span ng-switch-when="project">{{'Project'|l}}&nbsp;{{currentItem.code}}</span>
+                <span ng-switch-when="task">{{'Task'|l}}&nbsp;{{currentItem.code}}</span>
+                <span ng-switch-when="workflow_play">{{'Workflow'|l}}&nbsp;{{currentItem.code}}</span>
+                <span ng-switch-when="odb">{{'DispatchOutGoing'|l}}&nbsp;{{currentItem.code}}</span>
+                <span ng-switch-when="outgoing_dispatch">{{'DispatchOutGoing'|l}}&nbsp;{{currentItem.code}}</span>
+                <!-- <span ng-switch-when="outgoing_dispatch">{{'DispatchOutGoing'|l}}&nbsp;
+                    {{currentItem.code}}
+                    <get-field-directory
+                        id-value="currentItem.code"
+                        extend="ctrl.OutgoingDispatchBook_Config"
+                        localization="true">
+                    </get-field-directory>
+                </span> -->
+            </span>
+            <!-- {{currentItem.code}} -->
+        </li>
+    </ol>
+</nav>

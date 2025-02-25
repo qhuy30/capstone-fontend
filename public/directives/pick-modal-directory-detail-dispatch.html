@@ -1,0 +1,21 @@
+<div class="container" ng-class="{ 'disabled': disable }" >
+    <div class="value" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="show-value" style="background-color: #fff;" ng-click="init()">
+            {{selectedItem[showField][$root.Language.current]}}
+            <span class="dropdown-toggle"></span>
+        </div>
+    </div>
+    <input type="text" ng-required="require" ng-model="selectedItem[showField][$root.Language.current]" ng-show="false" />
+    <div class="dropdown-menu" style="max-height: 150px; overflow-y: auto;">
+        <div class="table-responsive">
+            <table class="table-hover" style="width: 100%;">
+                <tbody>
+                    <tr ng-repeat="item in data|orderBy:sort.name:sort.value track by $index" ng-click="pick(item)">
+                    <td><i class="fas fa-angle-double-right"></i>&nbsp;&nbsp;{{item[showField][$root.Language.current]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="ctrl.data.length ==0" class="no-data">{{'NoData'|l}}</div>
+    </div>
+</div>

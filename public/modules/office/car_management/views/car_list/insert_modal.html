@@ -1,0 +1,72 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_CarManagement_Insert">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+        <div class="modal-body">
+          <form class="form-horizontal" name="insertForm">
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Car Name'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')" type="text"
+                  ng-model="ctrl._insert_value.title['vi-VN']" class="form-control" name="insert_title_vi"
+                  placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_vi.$invalid }" required />
+              </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Car Name'|l}} (en)</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')" type="text"
+                    ng-model="ctrl._insert_value.title['en-US']" class="form-control" name="insert_title_vi"
+                    placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_vi.$invalid }" required />
+                </div>
+              </div>
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'License Plate'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')" type="text"
+                  ng-model="ctrl._insert_value.licensePlate" class="form-control" name="insert_title_en"
+                  placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_en.$invalid }" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group-new">
+                <div class="input-group-prepend-new">
+                  <span class="input-group-text-new">{{'Seating Capacity'|l}}</span>
+                  <span class="require-sympton">*</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')" type="number"
+                  ng-model="ctrl._insert_value.seatingCapacity" class="form-control" name="insert_value" placeholder="Input value"
+                  ng-class="{ 'is-invalid': insertForm.insert_value.$invalid }" required />
+              </div>
+            </div>
+
+            <div class="col-md-12 user-is-active">
+              <div class="form-group">
+                <input-checkbox input-checkbox-label="{{'IsUse'|l}}"
+                  input-checkbox-model="ctrl._insert_value.isactive"
+                  input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')">
+                </input-checkbox>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="CarManagement"
+            modal-button-new-actionname="insert"
+            modal-button-new-invalid=" insertForm.$invalid || ctrl.fromDate_ErrorMsg || ctrl.toDate_ErrorMsg || ctrl.Number_Error_Msg"
+            modal-button-new-func="ctrl.insert()">
+          </modal-button-new>
+          <modal-button-close></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>

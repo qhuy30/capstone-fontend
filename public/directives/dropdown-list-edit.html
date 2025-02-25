@@ -1,0 +1,18 @@
+<div class="dropdownList">
+    <div class="dropdownText" ng-style="{'opacity': isDropdownOpen ? 1 : 0}"
+        ng-click="toggleDropdown(item.id)">
+      {{ defaultValue || 'Chọn người' }}
+    </div>
+    <div class="inputDropdown" ng-show="activeItemId === item.id">
+      <input class="searchPeople" type="text" ng-model="searchText"
+          ng-focus="openDropdown()"
+          ng-blur="closeDropdown()" />
+      <ul class="dropdownValue">
+        <li ng-repeat="option in options | filter:searchText"
+          ng-click="selectOption({ option: option, itemId: item.id, type: type })">
+          {{ option }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  

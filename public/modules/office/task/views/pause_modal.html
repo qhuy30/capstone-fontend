@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal_Task_Pause" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'PauseTask'|l}}"></modal-header>
+            <div class="modal-body">
+                {{'Are you sure you want to pause this task?'|l}} <br>
+            </div>
+            <div class="modal-footer">
+                <modal-button-cancel modal-button-cancel-ctrlname="{{ctrlChild._ctrlName}}"
+                                     modal-button-cancel-objname="Task" modal-button-cancel-actionname="pause"
+                                     modal-button-cancel-func="ctrlChild.update_status()">
+                </modal-button-cancel>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

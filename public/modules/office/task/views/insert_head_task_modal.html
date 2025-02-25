@@ -1,0 +1,313 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Head_Task_Insert">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'AddTask'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="insertForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <i class="grey-text" ng-if="ctrlChild._parentID">{{'ParentTask'|l}}:
+                                {{ctrlChild._parentTitle}}</i>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span><span class="require-sympton">*</span>
+                                </div>
+                                <input ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','insert','doing')"
+                                    type="text" ng-model="ctrlChild._insert_value.title" class="form-control"
+                                    name="insert_title" placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': insertForm.insert_title.$invalid }" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select-users-by-department
+                                    ng-if="!ctrlChild.currentProject"
+                                    id-department="ctrlChild.currentDepartment.id"
+                                    pick-func="ctrlChild.pickMainperson_insert(params)"
+                                    id-value="ctrlChild._insert_value.main_person[0]"
+                                    label="{{'HostPerson'|l}}"
+                                    require="true">
+                                </select-users-by-department>
+                                <pick-user-from-data ng-if="ctrlChild.currentProject" label="{{'HostPerson'|l}}"
+                                                     id-value="ctrlChild._insert_value.main_person"
+                                                     data="ctrlChild.currentProject.participant"
+                                                     disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','insert','doing')"
+                                                     pick-func="ctrlChild.pickMainperson_insert(params)"
+                                ></pick-user-from-data>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select-multi-users-by-department
+                                ng-if="!ctrlChild.currentProject"
+                                label="{{'Coordinator'|l}}"
+                                pick-func="ctrlChild.pickParticipant_insert(params)"
+                                id-value="ctrlChild._insert_value.participant"
+                                id-department="ctrlChild.currentDepartment.id"
+                                require="true"></select-multi-users-by-department>
+
+                                <pick-user-from-data-multi ng-if="ctrlChild.currentProject" label="{{'Coordinator'|l}}"
+                                    id-value="ctrlChild._insert_value.participant"
+                                    data="ctrlChild.currentProject.participant"
+                                    disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','insert','doing')"
+                                    pick-func="ctrlChild.pickParticipant_insert(params)"></pick-user-from-data-multi>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select-multi-users-by-department
+                                ng-if="!ctrlChild.currentProject"
+                                label="{{'Observer'|l}}"
+                                pick-func="ctrlChild.pickObserver_insert(params)"
+                                id-value="ctrlChild._insert_value.observer"
+                                id-department="ctrlChild.currentDepartment.id"
+                                require="true"></select-multi-users-by-department>
+
+                                <pick-user-from-data-multi ng-if="ctrlChild.currentProject" label="{{'Observer'|l}}"
+                                    id-value="ctrlChild._insert_value.observer"
+                                    data="ctrlChild.currentProject.participant"
+                                    disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','insert','doing')"
+                                    pick-func="ctrlChild.pickObserver_insert(params)"></pick-user-from-data-multi>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <pick-modal-directory
+                                    extend="ctrlChild.TaskPriority"
+                                    pick-func="ctrlChild.choosePriority(params)"
+                                    id-value="ctrlChild._insert_value.priority"
+                                    label="{{'Priority'|l}}"
+                                >
+                                </pick-modal-directory>
+                            </div>
+                            <!-- <div class="form-group">
+                                <pick-modal-directory
+                                    extend="ctrlChild.TaskType"
+                                    pick-func="ctrlChild.chooseTaskType(params)"
+                                    id-value="ctrlChild._filterTaskType"
+                                    label="{{'TaskType'|l}}"
+                                    require="false">
+                                </pick-modal-directory>
+                            </div> -->
+                        </div>
+                        <div class="form-group col-md-6">
+                            <pick-modal-advance-multi
+                                    label="{{'Label'|l}}" require="false"
+                                    disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','insert','doing')"
+                                    load-data-func="ctrlChild.loadLabel(params)"
+                                    id-value="ctrlChild._insert_value.label"
+                                    load-details-func="ctrlChild.loadLabel_details(params)"
+                                    localized="false"
+                                    pick-func="ctrlChild.pickLabel(params)"
+                                    enable-insert-new-item="true"
+                                    insert-item-func="ctrlChild.insertLabel(params)">
+                            </pick-modal-advance-multi>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <date id-value="ctrlChild._insert_value.from_date"
+                                func="ctrlChild.chooseFromDate_insert(params)" label="{{'FromDate'|l}}"
+                                disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','insert','doing')"
+                                require="true" required="true"
+                                ></date>
+                                <div class="errorMsg" ng-show="ctrlChild.fromDate_ErrorMsg">{{ ctrlChild.fromDate_ErrorMsg }}</div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                                <date id-value="ctrlChild._insert_value.to_date"
+                                func="ctrlChild.chooseToDate_insert(params)" label="{{'ToDate'|l}}"
+                                disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','insert','doing')"
+                                require="true" required="true" endday="true"
+                                ></date>
+                                <div class="errorMsg" ng-show="ctrlChild.toDate_ErrorMsg">{{ ctrlChild.toDate_ErrorMsg }}</div>
+                        </div>
+                        <div class="d-flex align-items-center col-md-4" style="padding-left: 0; padding-right: 15px!important;">
+                            <div
+                                class="input-group w-100"
+                                style="width: auto; align-items: center"
+                            >
+                                <label
+                                    class="input-group-text"
+                                    style="
+                                        border-top-right-radius: 0;
+                                        border-bottom-right-radius: 0;
+                                        padding-top: 4.7px;
+                                        padding-bottom: 4.7px;
+                                    "
+                                    for="estimate"
+                                >
+                                    {{'RequestCompletedWithin'|l}}
+                                    <span ng-if="ctrlChild._insert_value.main_person.length > 0" class="require-sympton p-0 m-0" style="margin-left: 5px!important;">*</span>
+                                </label>
+                                <input type="number" id="estimate" ng-model="ctrlChild._insert_value.estimate"
+                                    class="form-control" style="height: 32px" min="1" step="1" ng-required="ctrlChild._insert_value.main_person.length > 0"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" />
+                                <span
+                                    class="input-group-text"
+                                    style="
+                                        padding-bottom: 4.7px;
+                                        padding-top: 4.7px;
+                                        border-top-left-radius: 0;
+                                        border-bottom-left-radius: 0;
+                                    "
+                                >
+                                    {{'hours'|l}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 
+                        <div class="form-group col-md-12 d-flex align-items-center">
+                            <input type="checkbox" id="isRepetitiveTask" ng-model="ctrlChild._insert_value.has_repetitive" />
+                            <label class="ml-1 form-check-label" for="isRepetitiveTask">{{'IsRepetitiveTask'|l}}</label>
+                        </div>
+                        <div class="form-group col-md-12" ng-if="ctrlChild._insert_value.has_repetitive">
+                            <div class="d-flex align-items-start" style="width: 60%; flex-wrap: nowrap;">
+                                <div class="input-prepend input-group" style="flex-basis: 45%; margin-right: 15px;">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">{{'RepeatEach'|l:({amount:''})}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="false"
+                                        type="number" ng-model="ctrlChild._insert_value.per" class="form-control"
+                                        name="insert_per" min="0" step="any"/>
+                                </div>
+                                
+                                <div class="input-prepend input-group" style="flex-basis: 30%;">
+                                    <select class="form-control" style="height: 32px;" ng-change="ctrlChild.test()" name="insert_cycle" ng-model="ctrlChild._insert_value.cycle" enabled="true">
+                                        <option value="day">{{'Day'|l}}</option>
+                                        <option value="week">{{'Week'|l}}</option>
+                                        <option value="month">{{'Month'|l}}</option>
+                                        <option value="year">{{'Year'|l}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        
+                            <div class="container" style="margin-top:10px;margin-left:-5px;line-height:23px;">
+                                <div class="label" style="color: #000000;font-weight: 700;font-size: 100%;">
+                                    {{'End'|l}}
+                                </div>
+                                <button-radio-basic
+                                    button-radio-name="has_endDate_insert"
+                                    button-radio-params="[{ label: 'Never', val: false },{ label: 'OnDay', val: true }]"
+                                    button-radio-model="ctrlChild._insert_value.has_expired"
+                                    is-localization="true"
+                                    button-radio-func="ctrlChild.chooseHasEndDateRepetitive_insert(params)"
+                                    button-radio-disabled="false">
+                                </button-radio-basic>
+                                
+                                <date id-value="ctrlChild._insert_value.expired_date"
+                                    func="ctrlChild.chooseEndDate_insert(params)" label=""
+                                    enable="true">
+                                </date>
+                            </div>
+                        </div> 
+                        -->
+
+                        
+                    </div>
+
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea id="insertHeadTask_content" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div ng-if="ctrlChild._insert_value.files.length ==0" class="no-data">
+                                {{'NoAttachment'|l}}
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrlChild._insert_value.files">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                <attachment-just-show my-item="item"></attachment-just-show>
+                                            </td>
+                                            <td><i class="fas fa-times text-danger"
+                                                    ng-click="ctrlChild.removeFile_insert(item)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                            colspan=" 0">
+                                            <div class="diskuf-uploader">
+                                                <span class="wd-fa-add-file-light">
+                                                    <span class="wd-fa-add-file-light-text">
+                                                        <span class="wd-fa-add-file-light-title">
+                                                            <span
+                                                                class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                        </span>
+                                                        <span
+                                                            class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input class="diskuf-fileUploader wd-test-file-light-inp " type="file"
+                                                    file-reading="ctrlChild._insert_value.files" size="1" multiple
+                                                    style="width:100%;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 
+                        <div class="col-md-12">
+                            <div class="checklist-container" style="margin-top: 20px;">
+                                <div class="title">
+                                    <div>
+                                        {{'CheckListofTask'|l}} ({{ctrlChild._insert_value.task_list.length}})
+                                    </div>
+                                    <button-new button-new-func="ctrlChild.addCheckList_insert()"
+                                        button-new-label="{{'AddCheckList'|l}}">
+                                    </button-new>
+                                </div>
+                                <div class="content">
+                                    <div class="item" ng-repeat="item in ctrlChild._insert_value.task_list">
+                                        <div class="input-checkbox" ng-class="{'checked':item.status}">
+                                            <label class="container-checkbox-1">
+                                                <input type="checkbox" checked="checked" ng-model="item.status">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="input-text">
+                                            <input type="text" ng-model="item.title"
+                                            placeholder="{{'InputCheckListName'|l}}"
+                                            ng-enter="ctrlChild.addCheckList_insert()"
+                                            focus-me="item.id == ctrlChild._insert_value.focusChecklist"
+                                            />
+                                        </div>
+                                        <div class="remove-icon">
+                                            <i class="fas fa-times" ng-click="ctrlChild.removeCheckList_insert(item.id)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        -->
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-new-objname="Task"
+                    modal-button-new-actionname="insert"
+                    modal-button-new-invalid="insertForm.$invalid || ctrlChild.fromDate_ErrorMsg || ctrlChild.toDate_ErrorMsg"
+                    modal-button-new-func="ctrlChild.insert()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

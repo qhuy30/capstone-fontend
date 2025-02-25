@@ -1,0 +1,197 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_CarRegistration_Insert">
+  <div class="modal-dialog modal-full" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'Add new vehicle registration'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertForm">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8">
+              <!-- title -->
+              <div class="form-group col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Title'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')"
+                    type="text" ng-model="ctrl._insert_value.title" class="form-control" name="insert_title"
+                    placeholder="{{'InputTitle'|l}}"
+                    ng-class="{ 'is-invalid': insertForm.title.$invalid }" required />
+                </div>
+              </div>
+              <!--starting place-->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <pick-modal-directory extend="ctrl.location_config"
+                    pick-func="ctrl.pick_starting_place_insert(params)" label="{{'Starting place'|l}}" require="true"
+                    get-first-to-default="true" />
+                </div>
+              </div>
+              <!-- destination -->
+              <div class="form-group col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Destination'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')"
+                    type="text" ng-model="ctrl._insert_value.destination" class="form-control" name="insert_destination"
+                    placeholder="{{'Input Destination'|l}}"
+                    ng-class="{ 'is-invalid': insertForm.insert_destination.$invalid }" required />
+                </div>
+              </div>
+              <!--passenger-->
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="form-group" >
+                    <pick-user-multi
+                      label="{{'Passenger'|l}}"
+                      id-value="ctrl._insert_value.passenger"
+                      pick-func="ctrl.pick_passenger_insert(params)"
+                      select-all="true"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- contact passenger -->
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="form-group" >
+                    <pick-user-multi
+                      label="{{'contactperson'|l}}"
+                      id-value="ctrl._insert_value.contact_passenger"
+                      pick-func="ctrl.pick_contact_passenger_insert(params)"
+                      select-all="true"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!--to department-->
+              <div class="row col-md-12">
+                <div class="col-md-12">
+                  <div class="form-group" >
+                    <organization-multi label="{{'Department'|l}}" id-value="ctrl._insert_value.to_department"
+                      select-func="ctrl.pick_department_insert(params)" />
+                  </div>
+                </div>
+              </div>
+              <!-- Number of people -->
+              <div class="form-group col-md-6">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Number of people'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')"
+                    type="number" ng-model="ctrl._insert_value.number_of_people" class="form-control"
+                    min="{{(ctrl._insert_value.passenger.length>0?ctrl._insert_value.passenger.length:1)}}"
+                    name="insert_number_of_people"
+                    ng-class="{ 'is-invalid': insertForm.insert_number_of_people.$invalid }" required />
+                  <div ng-show="insertForm.insert_number_of_people.$invalid" class="errorMsg">
+                    {{'Number of the participarnt must greater than or equal to'|l:({number:(ctrl._insert_value.passenger.length>0?ctrl._insert_value.passenger.length:1)})}}
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- time_to_go -->
+              <div class="col-md-3 form-group">
+                <datetime-local
+                  id-value="ctrl._insert_value.time_to_go"
+                  func="ctrl.chooseTimeToGo_insert(params)"
+                  label="{{'Time to go'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')" required="true"
+                  min="ctrl.now"
+                  require="true"
+                />
+              </div>
+              <!-- pick_up_time -->
+              <div class="col-md-3 form-group">
+                <datetime-local
+                  min="ctrl.now"
+                  id-value="ctrl._insert_value.pick_up_time"
+                  func="ctrl.choosePickUpTime_insert(params)"
+                  label="{{'Pick up time'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','insert','doing')"
+                />
+                <div 
+                  style="margin-top: 4px;"
+                  ng-show="ctrl._insert_value.pick_up_time != null && ctrl._insert_value.time_to_go > ctrl._insert_value.pick_up_time"
+                  class="errorMsg">{{'Pick up time cannot be less than or equal to time to go'|l}}</div>
+              </div>
+              <!-- content -->
+              <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'Content'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <div class="form-group">
+                    <text-area-with-suggestions ng-model="ctrl._insert_value.content" required="true"
+                      placeholder="{{'InputNote'|l}}"></text-area-with-suggestions>
+                  </div>
+                </div>
+              </div>
+              <!-- attachment -->
+              <div class="col-md-6" style="border-right: 1px solid #eee">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>{{'Attachment'|l}}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in ctrl._insert_value.files">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          <attachment-just-show my-item="item"></attachment-just-show>
+                        </td>
+                        <td>
+                          <i class="fas fa-times text-danger" ng-click="ctrl.removeFile_insert(item)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                  <tbody>
+                    <tr>
+                      <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                              </span>
+                              <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                            </span>
+                          </span>
+                          <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                            file-reading="ctrl._insert_value.files" size="1" multiple style="width: 100%" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new modal-button-new-label="{{'Register'|l}}" modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-new-objname="CarManagement" modal-button-new-actionname="insert"
+          modal-button-new-invalid="insertForm.$invalid" modal-button-new-func="ctrl.insert()">
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

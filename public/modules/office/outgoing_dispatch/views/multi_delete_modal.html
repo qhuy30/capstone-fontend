@@ -1,0 +1,20 @@
+<div class="modal fade modal_DA_DO_Delete" id="modal_DO_Delete_Multi" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantMultiDelete'|l}}
+                <span ng-repeat="item in ctrl._list_delete_value">
+                    {{item.symbol_number}}<span ng-if="!$last">,</span>
+                </span>?
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="OD" modal-button-delete-actionname="multi_delete"
+                    modal-button-delete-func="ctrl.multiDelete()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

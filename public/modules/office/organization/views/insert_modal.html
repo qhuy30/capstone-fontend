@@ -1,0 +1,108 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Organization_Insert">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="insertForm">
+
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Code'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"
+                                type="number" ng-model="ctrl._insert_value.ordernumber" class="form-control" required />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Title'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"
+                                type="text" ng-model="ctrl._insert_value.title['vi-VN']" class="form-control"
+                                ng-change="ctrl.changeTitle()" name="insert_title_vi" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': insertForm.insert_title_vi.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"
+                                type="text" ng-model="ctrl._insert_value.title['en-US']" class="form-control"
+                                name="insert_title_us" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': insertForm.insert_title_vi.$invalid }" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Abbreviation'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"
+                                type="text" alphabets uppercase ng-model="ctrl._insert_value.abbreviation"
+                                class="form-control" name="insert_abbreviation" placeholder="{{'Input abbreviation'|l}}"
+                                ng-class="{ 'is-invalid': insertForm.insert_abbreviation.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Type'|l}}</span>
+                            </div>
+                            <input type="radio" ng-model="ctrl._insert_value.type" value="department" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"/>
+                            <span>{{'Department'|l}}</span>
+                            <input type="radio" ng-model="ctrl._insert_value.type" value="temporary_department" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"/>
+                            <span>{{'Temporary Department'|l}}</span>
+                            <input type="radio" ng-model="ctrl._insert_value.type" value="board" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"/>
+                            <span>{{'Board'|l}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Icon'|l}}</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')"
+                                type="text" ng-model="ctrl._insert_value.icon" class="form-control" name="insert_icon"
+                                placeholder="Input icon" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <pick-user pick-func="ctrl.pickLeader_insert(params)" id-value="ctrl._insert_value.leader"
+                            label="{{'PersonInChargeOfLeadershipLevel'|l}}" require="false"></pick-user>
+                    </div>
+                    <div class="form-group">
+                        <pick-user pick-func="ctrl.pickDepartmentLeader_insert(params)"
+                            id-value="ctrl._insert_value.departmentLeader"
+                            label="{{'PersonInChargeOfDepartmentLeadershipLevel'|l}}" require="false"></pick-user>
+                    </div>
+                    <div class="form-group">
+                        <input-checkbox input-checkbox-label="{{'IsActive'|l}}"
+                            input-checkbox-model="ctrl._insert_value.isactive"
+                            input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','insert','doing')">
+                        </input-checkbox>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="Organization"
+                    modal-button-new-actionname="insert" modal-button-new-invalid="insertForm.$invalid"
+                    modal-button-new-func="ctrl.insert()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

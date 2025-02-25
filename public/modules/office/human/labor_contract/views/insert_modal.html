@@ -1,0 +1,591 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_LaborContract_Insert">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" ng-click="ctrl._insert_value.tab ='attachment'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._insert_value.tab =='attachment'}">{{'Attachment'|l}}
+                            <span>&nbsp;</span>
+                            <span class="require-sympton">*</span>
+                            <span ng-show="ctrl._insert_value.files.length===0"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="ctrl._insert_value.files.length===0"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._insert_value.tab ='general'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._insert_value.tab =='general'}">{{'GeneralInfo'|l}}
+                            <span>&nbsp;</span>
+                            <span class="require-sympton">*</span>
+                            <span ng-show="insertForm_general.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="insertForm_general.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._insert_value.tab ='education'">
+                        <a class="nav-link" ng-class="{'active':ctrl._insert_value.tab =='education'}">{{'Education'|l}}
+                            <span>&nbsp;</span>
+                            <span class="require-sympton">*</span>
+                            <span ng-show="insertForm_education.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="insertForm_education.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._insert_value.tab ='mission'">
+                        <a class="nav-link" ng-class="{'active':ctrl._insert_value.tab =='mission'}">{{'MissionInfo'|l}}
+                            <span>&nbsp;</span>
+                            <span class="require-sympton">*</span>
+                            <span ng-show="insertForm_mission.$invalid"><i
+                                    class="fas fa-exclamation-circle text-warning"></i></span>
+                            <span ng-hide="insertForm_mission.$invalid"><i
+                                    class="far fa-check-circle text-success"></i></a></span>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show">
+                        <div ng-show="ctrl._insert_value.tab=='attachment'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-6" style="border-right: 1px solid #eee;">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <td>
+                                                            #
+                                                        </td>
+                                                        <td>
+                                                            {{'AttachedFile'|l}}
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ctrl._insert_value.files">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>
+                                                            <attachment-just-show my-item="item"></attachment-just-show>
+                                                        </td>
+                                                        <td><i class="fas fa-times text-danger" ng-click="ctrl.removeFile_insert(item)" ></i></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                        colspan=" 0">
+                                                        <div class="diskuf-uploader">
+                                                            <span class="wd-fa-add-file-light">
+                                                                <span class="wd-fa-add-file-light-text">
+                                                                    <span class="wd-fa-add-file-light-title">
+                                                                        <span
+                                                                            class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                                    </span>
+                                                                    <span
+                                                                        class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                                </span>
+                                                            </span>
+                                                            <input class="diskuf-fileUploader wd-test-file-light-inp "
+                                                                type="file" file-reading="ctrl._insert_value.files"
+                                                                size="1" multiple style="width:100%;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <form class="form-horizontal " name="insertForm_general"
+                            ng-show="ctrl._insert_value.tab=='general'">
+
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'BasicSalary'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="number" ng-model="ctrl._insert_value.basic_salary" class="form-control"
+                                                name="insert_basic_salary"  min="0"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_basic_salary.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.LaborContractType_Config"
+                                            pick-func="ctrl.chooseTypeLaborContract_insert(params)"
+                                            id-value="ctrl._insert_value.type"
+                                            label="{{'TypeLaborContract'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <date id-value="ctrl._insert_value.from_date"
+                                            func="ctrl.chooseFrom_insert(params)" label="{{'From'|l}}"
+                                                disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                require="true"></date>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <date id-value="ctrl._insert_value.to_date"
+                                            func="ctrl.chooseTo_insert(params)" label="{{'To'|l}}"
+                                                disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                require="true"
+                                                endday="true"></date>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'LastName'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.lastname" class="form-control"
+                                                name="insert_lastname" placeholder="Input lastname"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_lastname.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'MidName'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.midname" class="form-control"
+                                                name="insert_midname" placeholder="Input midname" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'FirstName'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.firstname" class="form-control"
+                                                name="insert_firstname" placeholder="Input firstname"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_firstname.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <date id-value="ctrl._insert_value.birth_date"
+                                            func="ctrl.chooseBirthDate_insert(params)" label="{{'DateOfBirth'|l}}"
+                                            disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            require="true"></date>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'Living'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Country_Config"
+                                            pick-func="ctrl.chooseCountry1_insert(params)"
+                                            id-value="ctrl._insert_value.living.country"
+                                            label="{{'Country'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.City_Config"
+                                            pick-func="ctrl.chooseCity1_insert(params)"
+                                            id-value="ctrl._insert_value.living.city"
+                                            label="{{'City'|l}}"
+                                            filter ="ctrl.filterCity_living_insert"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.living.country"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.District_Config"
+                                            pick-func="ctrl.chooseDistrict1_insert(params)"
+                                            id-value="ctrl._insert_value.living.district"
+                                            label="{{'District'|l}}"
+                                            filter ="ctrl.filterDistrict_living_insert"
+                                            
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.living.city"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Ward_Config"
+                                            pick-func="ctrl.chooseWard1_insert(params)"
+                                            id-value="ctrl._insert_value.living.ward"
+                                            label="{{'Ward'|l}}"
+                                            filter ="ctrl.filterWard_living_insert"
+                                            
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.living.district"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.Village_Config"
+                                            pick-func="ctrl.chooseVillage1_insert(params)"
+                                            id-value="ctrl._insert_value.living.village"
+                                            label="{{'Village'|l}}"
+                                            filter ="ctrl.filterVillage_living_insert"
+                                            
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.living.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'Address'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.living.address"
+                                                class="form-control" name="insert_living_address"
+                                                placeholder="Input address"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_living_address.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'PermanentAddress'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Country_Config"
+                                            pick-func="ctrl.chooseCountry2_insert(params)"
+                                            id-value="ctrl._insert_value.permanent_address.country"
+                                            label="{{'Country'|l}}"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.City_Config"
+                                            pick-func="ctrl.chooseCity2_insert(params)"
+                                            id-value="ctrl._insert_value.permanent_address.city"
+                                            label="{{'City'|l}}"
+                                            filter ="ctrl.filterCity_permanent_address_insert"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.permanent_address.country"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.District_Config"
+                                            pick-func="ctrl.chooseDistrict2_insert(params)"
+                                            id-value="ctrl._insert_value.permanent_address.district"
+                                            label="{{'District'|l}}"
+                                            filter ="ctrl.filterDistrict_permanent_address_insert"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.permanent_address.city"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Ward_Config"
+                                            pick-func="ctrl.chooseWard2_insert(params)"
+                                            id-value="ctrl._insert_value.permanent_address.ward"
+                                            label="{{'Ward'|l}}"
+                                            filter ="ctrl.filterWard_permanent_address_insert"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.permanent_address.district"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.Village_Config"
+                                            pick-func="ctrl.chooseVillage2_insert(params)"
+                                            id-value="ctrl._insert_value.permanent_address.village"
+                                            label="{{'Village'|l}}"
+                                            filter ="ctrl.filterVillage_permanent_address_insert"
+                                           
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')|| !ctrl._insert_value.permanent_address.ward"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'Address'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.permanent_address.address"
+                                                class="form-control" name="insert_permanent_address_address"
+                                                placeholder="Input address"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_permanent_address_address.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-12">
+                                        <pick-modal-directory
+                                            extend="ctrl.TypeOfResidence_Config"
+                                            pick-func="ctrl.chooseTypeResidence_insert(params)"
+                                            id-value="ctrl._insert_value.type_residence"
+                                            label="{{'TypeOfResidence'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'PhoneNumber'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.phonenumber"
+                                                class="form-control" name="insert_phonenumber"
+                                                placeholder="Input phonenumber"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_phonenumber.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'Email'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="email" ng-model="ctrl._insert_value.email" class="form-control"
+                                                name="insert_email" placeholder="Input email"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_email.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'IdCard'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.idcard" class="form-control"
+                                                name="insert_idcard" placeholder="Input idcard"
+                                                ng-class="{ 'is-invalid': insertForm_general.insert_idcard.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Nationality_Config"
+                                            pick-func="ctrl.chooseNationality_insert(params)"
+                                            id-value="ctrl._insert_value.nationality"
+                                            label="{{'Nationality'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Religion_Config"
+                                            pick-func="ctrl.chooseReligion_insert(params)"
+                                            id-value="ctrl._insert_value.religion"
+                                            label="{{'Religion'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="insertForm_education"
+                            ng-show="ctrl._insert_value.tab=='education'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Education_Config"
+                                            pick-func="ctrl.chooseEducation_insert(params)"
+                                            id-value="ctrl._insert_value.education"
+                                            label="{{'Education'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Degree_Config"
+                                            pick-func="ctrl.chooseDegree_insert(params)"
+                                            id-value="ctrl._insert_value.degree"
+                                            label="{{'Degree'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Specialized_Config"
+                                            pick-func="ctrl.chooseSpecialized_insert(params)"
+                                            id-value="ctrl._insert_value.specialized"
+                                            label="{{'Degree'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.School_Config"
+                                            pick-func="ctrl.pickTrainingSchool_insert(params)"
+                                            id-value="ctrl._insert_value.school"
+                                            label="{{'TrainingSchool'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-group-new">
+                                            <div class="input-group-prepend-new"><span
+                                                    class="input-group-text-new">{{'GraduationYear'|l}}</span>
+                                                    <span class="require-sympton">*</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                                type="text" ng-model="ctrl._insert_value.graduation_year"
+                                                class="form-control" name="insert_graduation_year"
+                                                placeholder="Input graduation year"
+                                                ng-class="{ 'is-invalid': insertForm_education.insert_graduation_year.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.StateManagement_Config"
+                                            pick-func="ctrl.chooseStateManagement_insert(params)"
+                                            id-value="ctrl._insert_value.state_management"
+                                            label="{{'StateManagement'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.PoliticalTheory_Config"
+                                            pick-func="ctrl.choosePoliticalTheory_insert(params)"
+                                            id-value="ctrl._insert_value.political_theory"
+                                            label="{{'StateManagement'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.ComputerSkills_Config"
+                                            pick-func="ctrl.chooseIT_insert(params)"
+                                            id-value="ctrl._insert_value.it"
+                                            label="{{'ComputerSkills'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.EnglishLevel_Config"
+                                            pick-func="ctrl.chooseDegreeEnglish_insert(params)"
+                                            id-value="ctrl._insert_value.degree_english"
+                                            label="{{'EnglishLevel'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="insertForm_mission"
+                            ng-show="ctrl._insert_value.tab=='mission'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <organization label="{{'Department'|l}}" 
+                                            id-value="ctrl._insert_value.department"
+                                            select-func="ctrl.chooseDepartment_insert(params)" require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')">
+                                        </organization>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-directory
+                                            extend="ctrl.Competence_Config"
+                                            pick-func="ctrl.chooseCompetence_insert(params)"
+                                            id-value="ctrl._insert_value.competence"
+                                            label="{{'Competence'|l}}"
+                                            require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'LaborContract','insert','doing')"
+                                            ></pick-modal-directory>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-new-objname="LaborContract" modal-button-new-actionname="insert"
+                    modal-button-new-invalid="
+                    ctrl._insert_value.files.length===0
+                    || insertForm_general.$invalid 
+                    || insertForm_education.$invalid
+                    || insertForm_mission.$invalid" modal-button-new-func="ctrl.insert()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<!-- TODO: Will Apply for if Show all tree structure -->
+<div ng-repeat="item in files">
+    <table class="table table-sm table-hover"
+        ng-class="{'no-data':ctrlChild.tasks_created.length ===0}">
+        <tbody id="taskList">
+            <tr ng-click="toggleNode(item)">
+                <td>
+                    <div>
+                        <span ng-style="{'margin-left': 'calc(30px * ' + item.multiplier + ')'}">{{ item.name }}</span>
+                    </div>
+                </td>
+                <td
+                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                    <div>
+                        <span>
+                            {{item.username}}
+                        </span>
+                    </div>
+                </td>
+                <td
+                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                    <div>
+                        <time-show2 time-show-data="item.from_date"
+                            time-show-type="just_date">
+                        </time-show2>
+                    </div>
+                </td>
+                <td
+                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                    <div>
+                        <time-show2 time-show-data="item.last_update_date"
+                            time-show-type="just_date">
+                        </time-show2>
+                    </div>
+                </td>
+                <td
+                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                    <div>
+                        <span>
+                            {{item.size}}
+                        </span>
+                    </div>
+                </td>
+                <td
+                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                    <div>
+                        <span>
+                            {{item.version}}
+                        </span>
+                    </div>
+                </td>
+                <td style="width: 150px;">
+                    <!-- <button-new-item button-new-item-modal="#modal_Task_Insert"
+                        button-new-item-func="ctrlChild.prepareInsert(params)"
+                        button-new-item-params="item">
+                    </button-new-item> -->
+                    <button-edit-item ng-hide=" item.username !== $root.logininfo.data.username
+                           || item.status ==='Completed'
+                           " button-edit-item-modal="#modal_Task_Update"
+                        button-edit-item-func="ctrlChild.prepareUpdate(params)"
+                        button-edit-item-params="item">
+                    </button-edit-item>
+                    <button-delete-item ng-hide=" item.username !== $root.logininfo.data.username
+                            || item.status ==='Completed'
+                            " button-delete-item-modal="#modal_Task_Delete"
+                        button-delete-item-func="ctrlChild.prepareDelete(params)"
+                        button-delete-item-params="item">
+                    </button-delete-item>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <tree-file ng-if="item.isOpen && item.children.length > 0"
+        files="item.children"></tree-file>
+</div>

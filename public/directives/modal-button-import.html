@@ -1,0 +1,29 @@
+<my-async async-status-label="'Adding Item...'" async-ctrlname="{{modalButtonImportCtrlname}}"
+    async-objname="{{modalButtonImportObjname}}" async-actionname="{{modalButtonImportActionname}}">
+    <async-default>
+        <button class="btn btn-warning" ng-class='{"btn-sm":modalButtonImportType==="small"}' type="button"
+            ng-disabled="modalButtonImportInvalid||$root.statusValue.get(modalButtonImportCtrlname,modalButtonImportObjname,modalButtonImportActionname,'doing')"
+            ng-click="modalButtonImportClick()">
+            <i class="fas fa-file-import"></i>&nbsp;{{modalButtonImportLabel ?modalButtonImportLabel :('Import')}}
+        </button>
+    </async-default>
+    <async-success>
+        <span class="btn " style="color: #4dbd74;" ng-class='{"btn-sm":modalButtonImportType==="small"}'>
+            {{'SuccessAdding'|l}}
+        </span>
+        <button class="btn btn-outline-success" type="button" ng-class='{"btn-sm":modalButtonImportType==="small"}'
+            ng-click="$root.statusValue.generate(modalButtonImportCtrlname,modalButtonImportObjname,modalButtonImportActionname)">
+            <i class="fas fa-file-import"></i>&nbsp;{{'Import'}}
+        </button>
+    </async-success>
+    <async-fail>
+        <span class="btn" style="color: #f86c6b;" ng-class='{"btn-sm":modalButtonImportType==="small"}'>
+            {{$root.statusValue.get(modalButtonImportCtrlname,modalButtonImportObjname,modalButtonImportActionname,'message')|l}}
+        </span>
+        <button class="btn-outline-warning" type="button" ng-class='{"btn-sm":modalButtonImportType==="small"}'
+            ng-disabled="modalButtonImportInvalid||$root.statusValue.get(modalButtonImportCtrlname,modalButtonImportObjname,modalButtonImportActionname,'doing')"
+            ng-click="modalButtonImportClick()">
+            <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+        </button>
+    </async-fail>
+</my-async>

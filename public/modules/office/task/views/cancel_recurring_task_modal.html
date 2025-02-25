@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal_Recurring_Task_Cancel" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'CancelTask'|l}}"></modal-header>
+            <div class="modal-body">
+                {{'Are you sure you want to cancel this task?'|l}} <br>
+            </div>
+            <div class="modal-footer">
+                <modal-button-cancel modal-button-cancel-ctrlname="{{ctrlChild._ctrlName}}"
+                                     modal-button-cancel-objname="Task" modal-button-cancel-actionname="cancel"
+                                     modal-button-cancel-func="ctrlChild.update_status()">
+                </modal-button-cancel>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

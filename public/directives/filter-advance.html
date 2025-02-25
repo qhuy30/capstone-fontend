@@ -1,0 +1,60 @@
+<div class="container" ng-class="{ 'disabled': disable }">
+    <div class="label" ng-show="false">
+        {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+    </div>
+    <div class="value-label" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="show-value-label" style="display:flex;align-items: center;cursor: pointer" ng-click="init()">
+            <div style="width: 90%; overflow: hidden;">
+                <div ng-repeat="item in selectedItems" class="label-container">
+                    <span>{{_translate ? (item.showValue|l) : item.showValue}}</span>
+                </div>
+            </div>
+            <div class="dropdown-toggle ml-2"></div>
+        </div>
+    </div>
+    <input type="text" ng-required="require" ng-model="selectedItem.showValue"
+           ng-show="false">
+    <div class="dropdown-menu" style="max-height: 300px; overflow: auto">
+        <div class="tool" ng-show="_search">
+            <div class="search">
+                <input type="text" ng-model="search" my-watch-text-input my-scope="search" my-func="init()"
+                       my-start="!_notyetInit" placeholder="{{'FindByName'|l}}">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <div class="table-responsive" ng-class="{'mt-4': _search, 'mt-2': !_search}">
+            <table class="table-hover" style="width: 100%">
+                <tbody>
+                    <label style="padding-left: 4px; font-style: italic" ng-if="!data.length">{{'NoData'|l}}</label>
+                    <tr>
+                        <td>
+                            <label class="label-filter" ng-show="data.length" style="cursor: pointer">
+                                <input type="checkbox" ng-model="selectAll" ng-change="selectAllItems()"> {{'All'|l}}
+                            </label>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in data">
+                        <td>
+                            <label class="label-filter" style="cursor: pointer">
+                                <input type="checkbox" ng-model="item.isSelected" ng-change="updateSelectAll()" > {{_translate ? (item.showValue|l) : item.showValue}}
+                            </label>
+                            <div ng-repeat="child in item.child_labels" ng-if="item.child_labels.length">
+                                <ul style="padding-left: 20px;margin: 4px">
+                                    <li style="list-style: none">
+                                        <label class="label-filter" style="cursor: pointer">
+                                            <input type="checkbox" ng-model="child.isSelected" ng-change="updateSelectAll()" > {{child.title}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="ctrl.data.length ==0" class="no-data">{{'NoData'|l}}</div>
+        <pagination pagination-ctrlname="{{_ctrlName}}" pagination-objname="Count" pagination-actionname="count"
+                    pagination-currentpage="currentPage" pagination-noi="numOfItemPerPage" pagination-total="totalItems"
+                    pagination-func="load(params)"></pagination>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Task_Dir_Cancel">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="Huỷ bỏ công việc"></modal-header>
+            <div class="modal-body">
+                {{'Are you sure you want to cancel this task?'|l}} <br>
+                {{'Reason'|l}}:
+                <textarea id="cancelTask_dir_content" class="custom-input pt-2" type="text"></textarea>
+            </div>
+            <div class="modal-footer">
+                <modal-button-cancel modal-button-cancel-ctrlname="{{ctrl._ctrlName}}"
+                                     modal-button-cancel-objname="Task" modal-button-cancel-actionname="cancel"
+                                     modal-button-cancel-func="ctrl.cancel()">
+                </modal-button-cancel>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

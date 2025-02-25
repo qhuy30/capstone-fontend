@@ -1,0 +1,36 @@
+<div class="modal fade" id="notify_reject_modal" role="dialog" tabindex="-1" ng-form="rejectForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{ctrl._approve_value.allowApprove_recall ? ('RejectRecall'|l) : ('Reject'|l)}}"></modal-header>
+            <div class="modal-body">
+                <span ng-bind-html="ctrl._approve_value.allowApprove_recall 
+                ? ('RejectRecallRequestForThisNotify' | l:{title: '<strong>' + ctrl._reject_value.title + '</strong>'})
+                : ('DoYouWantRejectNotify' | l:{title: '<strong>' + ctrl._reject_value.title + '</strong>'})">
+                </span>
+                <div class="input-group-edit">
+                    <div class="input-group-prepend-new">
+                        <span class="input-group-text-new" style="margin: 12px 4px 4px 0px;">{{'Reason'|l}}:</span>
+                        <span class="require-sympton">*</span>
+                    </div>
+                    <textarea style="border: 1px solid black;" ng-model="ctrl._reject_value.reason"
+                        placeholder="{{'InputReason'|l}}"required class="form-control" type="text"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-reject
+                    modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-reject-objname="Notify" 
+                    modal-button-reject-actionname="reject"
+                    modal-button-reject-func="ctrl.reject()"
+                    ng-show="ctrl._reject_value.reason"
+                    modal-button-confirm-text="{{ctrl._approve_value.allowApprove_recall ? 
+                        ('RejectRecallRequestForThisNotify' | l:{title: '<strong>' + ctrl._reject_value.title + '</strong>'}) 
+                        : 'AreYouSureYouRejectThisNotify'}}"
+                    modal-button-reject-label="{{ctrl._approve_value.allowApprove_recall ? ('RejectRecall'|l) : null}}"
+                >
+                </modal-button-reject>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

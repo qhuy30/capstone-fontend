@@ -1,0 +1,191 @@
+<div>
+    <div ng-repeat="item_department in myData">
+        <div class="item-or generic-animation">
+            <span ng-click="expand(item_department)">
+                <i class="fas fa-folder" ng-hide="item_department.expand"></i>
+                <i class="fas fa-folder-open" ng-show="item_department.expand"></i>
+                &nbsp;{{item_department.title[$root.Language.current]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </div>
+        <div ng-if="item_department.items && item_department.expand" class="child-or">
+            <statistic-organization my-data="item_department.items" ctrl="ctrl"></statistic-organization>
+        </div>
+        <div ng-if="item_department.employees.length>0&&item_department.expand">
+            <div id="empList" style="padding-left: 10px;">
+                <div ng-repeat="(keys,value) in item_department.employees">
+                    <div id="empListDetails{{keys}}" style="padding-top:10px;">
+                        <show-username employee="value.id">
+                        </show-username>
+                        <span style="text-decoration: underline;cursor: pointer;" data-toggle="collapse"
+                            data-target="#collapseDetails{{keys}}">
+                            - {{value.task.total}} {{'Task'|l}}
+                            ( <span
+                                ng-class="{'text-success':value.task.completed.length>0}">{{value.task.completed.length}}</span>
+                            /<span
+                                ng-class="{'text-danger':value.task.outdeadline.length>0}">{{value.task.outdeadline.length}}</span>
+                            /<span
+                                ng-class="{'text-warning':value.task.notcompleted.length>0}">{{value.task.notcompleted.length}}</span>
+                            )
+                            <span ng-if="value.task.salary_hour_total >0">
+                                ({{value.task.salary_hour_completed}}/{{value.task.salary_hour_total}}
+                                {{'NumberOfHours'|l}})
+                            </span>
+                        </span>
+                        <div id="collapseDetails{{keys}}"
+                            style="overflow-y: auto;padding-top: 10px;padding-left: 10px;" class="collapse "
+                            aria-labelledby="headingOne" data-parent="#empList">
+
+                            <div class="text-dark" style="text-decoration: underline;cursor: pointer;"
+                                data-toggle="collapse" data-target="#collapseCompleted{{keys}}"><i>-
+                                    {{'Completed'|l}} :
+                                    {{value.task.completed.length}} <span ng-hide="value.task.salary_hour_completed==0">(
+                                        {{value.task.salary_hour_completed}}
+                                        {{'NumberOfHours'|l}})</span></i> </div>
+                            <div id="collapseCompleted{{keys}}" style="max-height: 300px;overflow-y: auto;"
+                                class="collapse " aria-labelledby="headingOne"
+                                data-parent="#empListDetails{{keys}}">
+
+                                <div class="table-responsive">
+                                    <table class="table table-sm" style="background-color:transparent;">
+                                        <tr ng-repeat="item in value.task.completed">
+                                            <td>{{$index + 1}}</td>
+                                            <td>
+                                                <small><span class="grey-text float-left"><i class="fa fa-clock"
+                                                            aria-hidden="true"></i>
+                                                        <time-show time-show-type="short"
+                                                            time-show-data="item.event[0].time">
+                                                        </time-show>
+                                                    </span></small>
+                                            </td>
+                                            <td>
+                                                <a class="text-dark" href="/task-details?code={{item.code}}">{{item.title}}</a>
+                                                <div class="text-muted text-nowrap mb-1"><small>{{item.code}}</small></div>
+                                                <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                                    <attachment-show ng-repeat="at in item.attachment"
+                                                        attachment-show-item="at"
+                                                        attachment-show-func="ctrl.loadfile(params)"
+                                                        attachment-show-params="{id:item._id,name:at.name}">
+                                                    </attachment-show>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <show-status id-value="item.status"></show-status>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div ng-if="value.task.completed.length ==0" class="no-data">
+                                    {{'NoData'|l}}
+                                </div>
+                            </div>
+
+                            <div class="text-dark" style="text-decoration: underline;cursor: pointer;"
+                                data-toggle="collapse" data-target="#collapseOutDeadline{{keys}}"><i>-
+                                    {{'OutDeadline'|l}} :
+                                    {{value.task.outdeadline.length}}.</i></div>
+                            <div id="collapseOutDeadline{{keys}}" style="max-height: 300px;overflow-y: auto;"
+                                class="collapse " aria-labelledby="headingOne"
+                                data-parent="#empListDetails{{keys}}">
+
+                                <div class="table-responsive">
+                                    <table class="table table-sm" style="background-color:transparent;">
+                                        <tr ng-repeat="item in value.task.outdeadline">
+                                            <td>{{$index + 1}}</td>
+
+                                            <td>
+                                                <small><span class="grey-text float-left"><i class="fa fa-clock"
+                                                            aria-hidden="true"></i>
+                                                        <time-show time-show-type="short"
+                                                            time-show-data="item.event[0].time">
+                                                        </time-show>
+                                                    </span></small>
+                                            </td>
+                                            <td>
+                                                <show-username username="item.username"
+                                                    employee="item.employee">
+                                                </show-username>
+                                            </td>
+                                            <td>
+                                                <a class="text-dark" href="/task-details?code={{item.code}}">{{item.title}}</a>
+                                                <div class="text-muted text-nowrap mb-1"><small>{{item.code}}</small></div>
+                                                <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                                    <attachment-show ng-repeat="at in item.attachment"
+                                                        attachment-show-item="at"
+                                                        attachment-show-func="ctrl.loadfile(params)"
+                                                        attachment-show-params="{id:item._id,name:at.name}">
+                                                    </attachment-show>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <show-status id-value="item.status"></show-status>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div ng-if="value.task.outdeadline.length ==0" class="no-data">
+                                    {{'NoData'|l}}
+                                </div>
+
+                            </div>
+                            <div class="text-dark" style="text-decoration: underline;cursor: pointer;"
+                                data-toggle="collapse" data-target="#collapseNotCompleted{{keys}}"><i>-
+                                    {{'NotCompleted'|l}}
+                                    :
+                                    {{value.task.notcompleted.length}}.</i></div>
+                            <div id="collapseNotCompleted{{keys}}" style="max-height: 300px;overflow-y: auto;"
+                                class="collapse " aria-labelledby="headingOne"
+                                data-parent="#empListDetails{{keys}}">
+
+                                <div class="table-responsive">
+                                    <table class="table table-sm" style="background-color:transparent;">
+                                        <tr ng-repeat="item in value.task.notcompleted">
+                                            <td>{{$index + 1}}</td>
+
+                                            <td>
+                                                <small><span class="grey-text float-left"><i class="fa fa-clock"
+                                                            aria-hidden="true"></i>
+                                                        <time-show time-show-type="short"
+                                                            time-show-data="item.event[0].time">
+                                                        </time-show>
+                                                    </span></small>
+                                            </td>
+                                            <td>
+                                                <show-username username="item.username"
+                                                    employee="item.employee">
+                                                </show-username>
+                                            </td>
+                                            <td>
+                                                <a class="text-dark" href="/task-details?code={{item.code}}">{{item.title}}</a>
+                                                <div class="text-muted text-nowrap mb-1"><small>{{item.code}}</small></div>
+                                                <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                                    <attachment-show ng-repeat="at in item.attachment"
+                                                        attachment-show-item="at"
+                                                        attachment-show-func="ctrl.loadfile(params)"
+                                                        attachment-show-params="{id:item._id,name:at.name}">
+                                                    </attachment-show>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <show-status id-value="item.status"></show-status>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div ng-if="value.task.notcompleted.length ==0" class="no-data">
+                                    {{'NoData'|l}}
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    
+
+            <div ng-if="item_department.employees.length ==0" class="no-data">
+                {{'NoData'|l}}
+            </div>
+        </div>
+    </div>
+</div>

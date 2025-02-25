@@ -1,0 +1,40 @@
+<div>
+    <my-async async-status-label="'Adding Item...'" async-ctrlname="{{modalButtonNewCtrlname}}"
+        async-objname="{{modalButtonNewObjname}}" async-actionname="{{modalButtonNewActionname}}">
+        <async-default>
+            <button class="btn btn-primary" ng-class='{"btn-sm":modalButtonNewType==="small"}' type="button"
+                ng-disabled="modalButtonNewInvalid||$root.statusValue.get(modalButtonNewCtrlname,modalButtonNewObjname,modalButtonNewActionname,'doing')"
+                ng-click="modalButtonNewClick()">
+                <i class="fas fa-plus-circle"></i>&nbsp;{{modalButtonNewLabel ?modalButtonNewLabel :('New'|l)}}
+            </button>
+        </async-default>
+        <async-doing>
+            <div class="sk-wave">
+                <div class="sk-rect sk-rect1"></div>
+                <div class="sk-rect sk-rect2"></div>
+                <div class="sk-rect sk-rect3"></div>
+                <div class="sk-rect sk-rect4"></div>
+                <div class="sk-rect sk-rect5"></div>
+            </div> {{loadingLabel || ('Saving'|l)}}...
+        </async-doing>
+        <async-success>
+            <span class="btn " style="color: #4dbd74;" ng-class='{"btn-sm":modalButtonNewType==="small"}'>
+                {{'SuccessAdding'|l}}
+            </span>
+            <button class="btn btn-outline-success" type="button" ng-class='{"btn-sm":modalButtonNewType==="small"}'
+                ng-click="$root.statusValue.generate(modalButtonNewCtrlname,modalButtonNewObjname,modalButtonNewActionname)">
+                <i class="fas fa-plus-circle"></i>&nbsp;{{'AddMore'|l}}
+            </button>
+        </async-success>
+        <async-fail>
+            <span class="btn" style="color: #f86c6b;" ng-class='{"btn-sm":modalButtonNewType==="small"}'>
+                {{$root.statusValue.get(modalButtonNewCtrlname,modalButtonNewObjname,modalButtonNewActionname,'message')|l}}
+            </span>
+            <button class="btn btn-outline-primary" type="button" ng-class='{"btn-sm":modalButtonNewType==="small"}'
+                ng-disabled="modalButtonNewInvalid||$root.statusValue.get(modalButtonNewCtrlname,modalButtonNewObjname,modalButtonNewActionname,'doing')"
+                ng-click="modalButtonNewClick()">
+                <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+            </button>
+        </async-fail>
+    </my-async>
+</div>

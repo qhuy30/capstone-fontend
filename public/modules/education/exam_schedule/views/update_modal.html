@@ -1,0 +1,165 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Exam_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header
+                modal-header-title="{{'UpdateExamSchedule'| l}}"></modal-header>
+            <div class="modal-body">
+                <div class="card" style="width: 100%;">
+                    <form class="form-horizontal " name="updateForm">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-6 form-group">
+                                <div ng-if="!ctrl._import_exam_schedule_value.files"
+                                    class="no-data">
+                                    {{'NoAttachment'|l}}
+                                </div>
+                                <div class="table-responsive"
+                                    ng-if="ctrl._import_exam_schedule_value.files">
+                                    <table class="table table-sm">
+
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <attachment-just-show
+                                                        my-item="ctrl._import_exam_schedule_value.files">
+                                                    </attachment-just-show>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <table
+                                    class="diskuf-selector-table wd-fa-add-file-light-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                colspan=" 0">
+                                                <div class="diskuf-uploader">
+                                                    <span
+                                                        class="wd-fa-add-file-light">
+                                                        <span
+                                                            class="wd-fa-add-file-light-text">
+                                                            <span
+                                                                class="wd-fa-add-file-light-title">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                            </span>
+                                                            <span
+                                                                class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                        </span>
+                                                    </span>
+                                                    <input id="fileInput"
+                                                        class="diskuf-fileUploader wd-test-file-light-inp "
+                                                        type="file" size="1"
+                                                        style="width:100%;"
+                                                        attachment-single
+                                                        attachment-single-func="ctrl.getFileUpdate(params)">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-responsive card card2">
+                    <span class="title">{{'UploadHistory'|l}}</span>
+                    <table class="table table-sm table-hover"
+                        ng-class="{'no-data':ctrl.list_files.length ===0}">
+                        <thead>
+                            <tr>
+                                <td
+                                    style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                    <div class="title">
+                                        {{'File Name'|l}}:
+                                    </div>
+                                </td>
+                                <td
+                                    style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                    {{'Creator'|l}}:
+                                </td>
+                                <td
+                                    style="font-weight: 600;vertical-align: middle;width: 120px; text-align: center;">
+                                    Ngày Upload
+                                </td>
+                            </tr>
+
+                        </thead>
+                        <tbody id="taskList">
+                            <tr ng-repeat="item in ctrl.file_history.history">
+                                <td>
+                                    <!-- <attachment-show attachment-show-item="item"
+                                        attachment-show-params="{name:item.name}">
+                                    </attachment-show> -->
+                                    <attachment-show attachment-show-item="item"
+                                        attachment-show-func="ctrl.loadFile_examSchedule(params)"
+                                        attachment-show-params="item" attachment-show-review="false"
+                                        attachment-show-service-name="'education/exam_schedule'">
+                                    </attachment-show>
+                                </td>
+                                <td
+                                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                    <span>
+                                        {{item.username}}
+                                    </span>
+                                </td>
+                                <td
+                                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                    <span>
+                                        <time-show2
+                                            time-show-data="item.upload_date"
+                                            time-show-type="just_date">
+                                        </time-show2>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr ng-if="ctrl.file_history.value">
+                                <td>
+                                    <!-- <attachment-show attachment-show-item="ctrl.file_history.value"
+                                        attachment-show-params="{name:ctrl.file_history.value.name}">
+                                    </attachment-show> -->
+                                    <attachment-show attachment-show-item="ctrl.file_history.value"
+                                        attachment-show-func="ctrl.loadFile_examSchedule(params)"
+                                        attachment-show-params="ctrl.file_history.value" attachment-show-review="false"
+                                        attachment-show-service-name="'education/exam_schedule'">
+                                    </attachment-show>
+                                </td>
+                                <td
+                                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                    <span>
+                                        {{ctrl.file_history.value.username || ctrl.file_history.username}}
+                                    </span>
+                                </td>
+                                <td
+                                    style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                    <span>
+                                        <time-show2
+                                            time-show-data="ctrl.file_history.value.upload_date || ctrl.file_history.upload_date"
+                                            time-show-type="just_date">
+                                        </time-show2>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save
+                    modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="ExamSchedule"
+                    modal-button-save-actionname="update"
+                    modal-button-save-invalid="updateForm.$invalid"
+                    modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

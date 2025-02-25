@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal_Task_Resume" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'ResumeTask'|l}}"></modal-header>
+            <div class="modal-body">
+                {{'Are you sure you want to resume this task?'|l}} <br>
+            </div>
+            <div class="modal-footer">
+                <modal-button-submit modal-button-submit-ctrlname="{{ctrlChild._ctrlName}}"
+                                     modal-button-submit-objname="Task" modal-button-submit-actionname="update_status"
+                                     modal-button-submit-func="ctrlChild.update_status()">
+                </modal-button-submit>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

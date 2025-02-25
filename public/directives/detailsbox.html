@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="../modules/management/style.scss">
+<div >
+    <div class="animated" >
+        <ol class="breadcrumb" style="background-color: #f0f3f5;margin-bottom: 0px;">
+            <li class="breadcrumb-item">
+                <button ng-if="$root.detailsInfo.step === 'step-1' || $root.detailsInfo.step !== 'step-2'"
+                        ng-click="$root.DetailsInfoService.hide()" class="btn">
+                    <i class="fas fa-times"></i>
+
+                </button>
+                <button ng-if="$root.detailsInfo.step === 'step-2'"
+                        class="btn"
+                        link-details
+                        link-details-display="{{$root.detailsInfo.department.title[$root.Language.current]}}"
+                        link-details-url="/task-department-details?id={{$root.detailsInfo.department.id}}&&_id={{$root.detailsInfo.department._id}}"
+                        link-details-route="task-department-details"
+                        link-details-step="step-1"
+                >
+                    <i class="fas fa-times"></i>
+                </button>
+                <small class="text-muted text-nowrap mr-1">{{$root.detailsInfo.code}}</small>
+                <a class="align-middle pr-2" href="{{$root.detailsInfo.url}}">
+                    <span style="font-weight: bold;">{{$root.detailsInfo.prefix}}</span>
+                    <b ng-if="!$root.detailsInfo.showDirectory">{{$root.detailsInfo.display}}</b>
+                    <b ng-if="$root.detailsInfo.showDirectory">{{$root.detailsInfo.titleDirectory}}</b>
+                </a>
+                <show-state ng-if="$root.detailsInfo.state === 'GonnaLate' || $root.detailsInfo.state === 'Overdue' || $root.detailsInfo.state === 'Expired' ||  $root.detailsInfo.state === 'OnSchedule'" id-Value="$root.detailsInfo.state"></show-state>
+            </li>
+            <li class="breadcrumb-menu" ng-include="$root.detailsInfo.urlToolbar">
+
+            </li>
+        </ol>
+    </div>
+    <div ng-include="$root.detailsInfo.urlPage">
+        </div>
+    <!-- <div class="card-body">
+
+    </div> -->
+    <!-- <div class="card-footer">
+        <button ng-click="$root.DetailsInfoService.hide()" class="btn "><i class="fas fa-times"></i></button>&nbsp;
+        <a href="{{$root.detailsInfo.url}}"><b>{{$root.detailsInfo.display}}</b></a>
+    </div> -->
+</div>

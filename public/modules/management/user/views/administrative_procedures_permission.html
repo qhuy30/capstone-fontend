@@ -1,0 +1,20 @@
+<div id="administrative_procedures_permision">
+    <div class="main-permission">
+        <ul class="mb-0">
+            <li>
+                <div class="item d-flex">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng quản lý yêu cầu thủ tục hành chính sinh viên
+                        <i>(bao gồm việc thêm, xóa, sửa thông tin)</i>
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox"
+                            ng-model="ctrl.rule['Education.AdministrativeProcedures.Use'].value"
+                            brige-func="ctrl.updateRule(params)"
+                            brige-value="'Education.AdministrativeProcedures.Use'" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

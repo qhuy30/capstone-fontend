@@ -1,0 +1,26 @@
+<a class="waves-effect ringbell-header-item task_overdue_notify" href="/task?tab=personal">
+  <i class="fas fa-exclamation"></i>
+  <div class="content">
+    <div>
+      <span>
+        {{'You have number tasks with upcoming deadlines this week'|l:({number: item.params.length})}}</span>
+      <ul>
+        <li ng-repeat="task in item.params.slice(0, 3)" style="font-size: 90%;">
+          {{task.title}}&nbsp;
+        </li>
+        <li ng-if="item.params.length>3" style="font-size: 90%;">
+          ...
+        </li>
+      </ul>
+    </div>
+    <div>
+      <small class="grey-text">
+        <i class="fa fa-clock" aria-hidden="true"></i>
+        <time-show time-show-type="long" time-show-data="item.notify_time">
+        </time-show>
+      </small>
+    </div>
+
+  </div>
+
+</a>

@@ -1,0 +1,28 @@
+<a class="waves-effect ringbell-header-item task_assigned"
+    href="/task-details?code={{item.params.taskid}}">
+    <i class="fas fa-tasks"></i>
+    <div class="content">
+        <div>
+            <span  >
+                <span >{{'Task'|l}}</span>&nbsp;
+                <span class="title">[{{item.params.taskid}}]&nbsp;{{item.params.title}}</span>&nbsp;
+                <span class="text-lowercase">{{'CreatedBy'|l}}</span>&nbsp;
+                <show-username-onlyname username="item.params.username_create_task"
+                without-tooltip="true">
+              </show-username-onlyname>
+            </span>
+        </div>
+        <div class="ringbell-action danger">
+            <i class="fas fa-tasks"></i>&nbsp;{{'Need you to lead'|l}}
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

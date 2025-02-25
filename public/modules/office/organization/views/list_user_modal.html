@@ -1,0 +1,48 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_List_User_By_Department">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'InformationDepartment'|l}}"></modal-header>
+            <div class="modal-body">
+                <table class="table table-striped table-hover" datatable>
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                {{'DisplayName'|l}}
+                            </th>
+                            <th>
+                                {{'UserName'|l}}
+                            </th>
+                            <th>
+                                {{'Competence'|l}}
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.listUser">
+                            <td>
+                                <strong> {{$index +1}}</strong>
+                            </td>
+                            <td>
+                                <show-username hide-image="true" username="item.username"></show-username>
+                            </td>
+                            <td>
+                                {{item.username}}
+                            </td>
+                            <td>
+                                <get-field-competence
+                                    id-value="item.competence"
+                                    localization="true"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

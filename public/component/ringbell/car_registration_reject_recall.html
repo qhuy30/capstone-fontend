@@ -1,0 +1,34 @@
+<a class="waves-effect ringbell-header-item project_update_info"
+    href="/car-registration-details?code={{item.params.code}}"
+>
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span>
+                <show-username-onlyname username="item.params.action_by" without-tooltip="true">
+                </show-username-onlyname>
+                <span style="text-transform: lowercase;">
+                     {{'Registered Reject'|l}} {{'car'|l}}
+                </span>
+                <span class="title" >[{{item.params.code}}]</span>
+                <span class="title" >{{item.params.title}}</span>
+                <span class="text-lowercase" >{{'WrittenBy'|l}}</span>
+                <show-username-onlyname username="item.params.username_create" without-tooltip="true">
+                </show-username-onlyname>
+            </span>
+        </div>
+        <div class="ringbell-action danger">
+            <span>
+                <i class="fas fa-book"></i>&nbsp;{{'Registration room recall rejected'|l}}
+            </span>
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fas fa-times" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+</a>

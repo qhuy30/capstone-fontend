@@ -1,0 +1,21 @@
+<div
+  ng-repeat="item in buttonRadioParams"
+  ng-class="{'active':buttonRadioModel == item.val}"
+  ng-click="!buttonRadioDisabled && buttonRadioClick(item.val)"
+>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input
+        type="radio"
+        ng-model="buttonRadioModel"
+        ng-value="item.val"
+        ng-checked="buttonRadioModel == item.val"
+        class="form-check-input"
+        name="buttonRadioName"
+        ng-disabled="buttonRadioDisabled"
+      />
+      <span ng-if="isLocalization">{{item.label|l}}</span>
+      <span ng-if="!isLocalization">{{item.label}}</span>
+    </label>
+  </div>
+</div>

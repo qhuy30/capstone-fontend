@@ -1,0 +1,10 @@
+<span 
+class="btn btn-square " 
+ng-repeat="item in buttonCheckboxArrayData"
+ng-class="{'btn-secondary': item.checked ==true,'btn-light':!item.checked}"
+ng-click="buttonCheckboxArrayClick(item)"
+>
+    <i class="far fa-check-square" ng-show="item.checked"></i>
+    <i class="far fa-square" ng-show="!item.checked"></i>
+    {{buttonCheckboxArrayLocalization? (item[buttonCheckboxArrayKeyShow]|l):item[buttonCheckboxArrayKeyShow]}}
+</span>

@@ -1,0 +1,210 @@
+<my-content>
+  <content-content>
+    <div ng-controller="journey_time_form_controller as ctrl">
+      <div class="card">
+        <div class="card-body">
+          <more-option-bar>
+            <bar-content class="row">
+              <div class="col-md-6 form-group">
+                <button-select
+                  button-select-label="{{'Display'|l}}"
+                  button-select-data="[15,30,50,100]"
+                  button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'JTF','load','doing')"
+                  button-select-func="ctrl.chooseNumberItem(params)"
+                  button-select-model="ctrl.numOfItemPerPage"
+                >
+                </button-select>
+              </div>
+              <div class="col-md-6 form-group">
+                <pick-modal-directory
+                extend="ctrl.LeaveFormType_Config"
+                pick-func="ctrl.chooseType(params)"
+                id-value="ctrl._filterType"
+                label="{{'Type'|l}}"
+                disable="$root.statusValue.get(ctrl._ctrlName,'JTF','load','doing')"
+              ></pick-modal-directory>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <date
+                  model="ctrl._filterFromDate"
+                  func="ctrl.chooseFromDate(params)"
+                  label="{{'FromDate'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'JTF','load','doing')"
+                ></date>
+              </div>
+              <div class="col-md-6 form-group">
+                <date
+                  model="ctrl._filterToDate"
+                  func="ctrl.chooseToDate(params)"
+                  label="{{'ToDate'|l}}"
+                  disabled="$root.statusValue.get(ctrl._ctrlName,'JTF','load','doing')"
+                ></date>
+              </div>
+            </bar-content>
+          </more-option-bar>
+
+          <button-search
+            button-search-func="ctrl.refreshData()"
+            button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData"
+          >
+          </button-search>
+          <ul class="nav nav-tabs" role="tablist">
+            <li
+              class="nav-item"
+              ng-click="ctrl.switchTab('my_journey_time_form')"
+            >
+              <a
+                class="nav-link"
+                ng-class="{'active':ctrl.tab =='my_journey_time_form'}"
+                >{{'MyJourneyTimeForm'|l}}
+              </a>
+            </li>
+
+            <li
+              class="nav-item"
+              ng-click="ctrl.switchTab('journey_time_handle')"
+              ng-show="['Office.JourneyTimeForm.Approval']|checkRule"
+            >
+              <a
+                class="nav-link"
+                ng-class="{'active':ctrl.tab =='journey_time_handle', 'text-warning':ctrl.numberPending>0}"
+                >{{'NeedToHandle'|l}}({{ctrl.numberPending}})</a
+              >
+            </li>
+            <li
+              class="nav-item"
+              ng-click="ctrl.switchTab('handled')"
+              ng-show="['Office.JourneyTimeForm.Approval']|checkRule"
+            >
+              <a class="nav-link" ng-class="{'active':ctrl.tab =='handled'}"
+                >{{'All'|l}}
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade active show">
+              <my-Async
+                async-ctrlname="{{ctrl._ctrlName}}"
+                async-objname="JTF"
+                async-actionname="load"
+              >
+                <async-success>
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <!-- <thead>
+                                            <tr>
+                                                <td>
+                                                    #
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;">
+                                                    {{'Name'|l}}
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;">
+                                                    {{'Status'|l}}
+                                                </td>
+                                            </tr>
+    
+                                        </thead> -->
+                      <tbody>
+                        <tr ng-repeat="item in ctrl.journey_time_forms">
+                          <td>
+                            <small
+                              ><span class="grey-text float-left"
+                                ><i class="fa fa-clock" aria-hidden="true"></i>
+                                <time-show
+                                  time-show-type="short"
+                                  time-show-data="item.event[0].time"
+                                >
+                                </time-show> </span
+                            ></small>
+                          </td>
+                          <td ng-if="ctrl.tab==='journey_time_handle'">
+                            <show-username
+                              username="item.username"
+                              employee="item.employee"
+                            >
+                            </show-username>
+                          </td>
+                          <td>
+                            <a
+                              class="text-dark"
+                              ng-if="ctrl.tab==='journey_time_handle'"
+                              link-details
+                              link-details-display="{{item.username +'-'+item.type }}"
+                              link-details-url="/leaveform-details?{{item._id}}"
+                              link-details-route="leaveform-details"
+                            >
+                              <get-field-directory
+                                id-value="item.type"
+                                extend="ctrl.LeaveFormType_Config"
+                                localization="true"
+                              ></get-field-directory>
+                            </a>
+                            <div
+                              ng-if="ctrl.tab==='journey_time_handle'"
+                              class="showfile-bar"
+                              ng-if="item.attachment.length>0"
+                            >
+                              <attachment-show
+                                ng-repeat="at in item.attachment"
+                                attachment-show-item="at"
+                                attachment-show-func="ctrl.loadfile(params)"
+                                attachment-show-params="{id:item._id,name:at.name}"
+                              >
+                              </attachment-show>
+                            </div>
+
+                            <a
+                              class="text-dark"
+                              ng-if="ctrl.tab!=='journey_time_handle'"
+                              link-details
+                              link-details-display="{{item.username +'-'+item.type }}"
+                              link-details-url="/journey-time-form-details?{{item._id}}"
+                              link-details-route="journey-time-form-details"
+                            >
+                              <span ng-if="ctrl.tab==='handled'"
+                                ><show-username employee="item.to_employee">
+                                </show-username
+                                >&nbsp;-&nbsp;</span
+                              >
+
+                              <get-field-directory
+                                id-value="item.type"
+                                extend="ctrl.LeaveFormType_Config"
+                                localization="true"
+                              ></get-field-directory>
+                              ({{item.number_day}}{{'days'|l}})
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div
+                    ng-if="ctrl.journey_time_forms.length ==0"
+                    class="no-data"
+                  >
+                    {{'NoData'|l}}
+                  </div>
+                  <pagination
+                    pagination-ctrlname="{{ctrl._ctrlName}}"
+                    pagination-objname="JTF"
+                    pagination-actionname="count"
+                    pagination-currentpage="ctrl.currentPage"
+                    pagination-noi="ctrl.numOfItemPerPage"
+                    pagination-total="ctrl.totalItems"
+                    pagination-func="ctrl.load(params)"
+                  ></pagination>
+                </async-success>
+              </my-Async>
+            </div>
+          </div>
+          <div ng-include="ctrl._urlInsertModal"></div>
+        </div>
+      </div>
+    </div>
+  </content-content>
+</my-content>

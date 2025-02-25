@@ -1,0 +1,235 @@
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="modal_Task_DetailChallenge"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="height: calc(100vh - 45px)">
+      <modal-header
+        modal-header-title="{{'Challenge'|l}}"
+      ></modal-header>
+
+      <div class="modal-body" style="overflow: auto">
+        <h5 class="mb-3">
+          <span>{{ctrlChild.challenge.title}}</span>
+        </h5>
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <p class="grey-text">
+              {{'WrittenBy' | l}}
+              <a>
+                <strong>
+                  <show-username username="ctrlChild.challenge.username">
+                  </show-username>
+                </strong> </a
+              >,
+              <time-show
+                time-show-data="ctrlChild.challenge.time"
+                time-show-type="long"
+              >
+              </time-show>
+              <small class="grey-text" ng-if="ctrl.Item.has_time">
+                , {{ctrl.Item.hours}} {{'NumberOfHours' | l}}
+              </small>
+            </p>
+          </div>
+          <button
+            style="flex-basis: 1"
+            class="btn btn-outline-success"
+            type="button"
+            ng-click="ctrlChild.resolveChallenge()"
+            ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','resolveChallenge','doing')"
+          >
+            <span>
+              <i class="far fa-check-square"></i>&nbsp;&nbsp;{{'ChallengeResolved'|l}}
+            </span>
+          </button>
+        </div>
+        <div
+          style="
+            border-top: 1px solid #eee;
+            margin-bottom: 15px;
+            margin-top: 10px;
+          "
+        ></div>
+        <div ng-bind-html="ctrlChild.challenge.content"></div>
+        <div
+          style="
+            border-top: 1px solid #eee;
+            margin-bottom: 15px;
+            margin-top: 10px;
+          "
+        ></div>
+        <div
+          class="showfile-bar"
+          ng-if="ctrlChild.challenge.attachment.length > 0"
+        >
+          <i>{{'Attachment' | l}}:</i>&nbsp;&nbsp;
+          <attachment-show
+            ng-repeat="at in ctrlChild.challenge.attachment"
+            attachment-show-item="at"
+            attachment-show-service-name="'comment'"
+            attachment-show-func="ctrlChild.loadfile(params)"
+            attachment-show-params="{id:ctrlChild.thisTaskId, name:at.name}"
+          >
+          </attachment-show>
+        </div>
+        <div
+          style="
+            border-top: 1px solid #eee;
+            margin-bottom: 15px;
+            margin-top: 10px;
+          "
+        ></div>
+        <div class="comment">
+          <div style="background-color: white">
+            <div
+              class="add-comment d-flex justify-content-between align-content-around"
+              ng-if="ctrlChild.status !== 'completed'"
+            >
+              <div class="show-avatar">
+                <show-username
+                  style="margin-top: 10px"
+                  username="$root.logininfo.username"
+                  just-image="true"
+                ></show-username>
+              </div>
+              <div class="input-comment flex-grow-1 d-flex align-items-end">
+                <div
+                  class="placeholder"
+                  ng-hide="ctrlChild.showPushGuidChallenge"
+                  ng-click="ctrlChild.focusGuidChallenge()"
+                  style="
+                    border: 1px solid #c2cfd6;
+                    border-radius: 10px;
+                    padding: 12px;
+                    margin: 4px;
+                    font-style: italic;
+                    flex: 1;
+                  "
+                >
+                  {{'TypeCommentHere' | l}}
+                </div>
+                <div
+                  ng-show="ctrlChild.showPushGuidChallenge"
+                  class="flex-grow-1"
+                >
+                  <textarea
+                    id="Task_guidChallenge"
+                    class="form-control"
+                  ></textarea>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="file-upload-container">
+                      <label
+                        for="file-guid-challenge-upload"
+                        class="custom-file-upload"
+                        style="
+                          cursor: pointer;
+                          background-color: #f5f5f5;
+                          border: 1px solid #ccc;
+                          padding: 3px 6px;
+                          border-radius: 4px;
+                        "
+                      >
+                        <i class="fas fa-paperclip"></i> {{'AddFile'|l}}
+                      </label>
+                      <input
+                        class="d-none"
+                        id="file-guid-challenge-upload"
+                        type="file"
+                        file-reading="ctrlChild.guidChallengeFiles"
+                        max-file-size="5"
+                        size="1"
+                        multiple
+                      />
+                    </div>
+                    <div style="margin-top: 10px; float: right">
+                      <button
+                        class="btn btn-primary"
+                        ng-click="ctrlChild.insertGuidChallenge()"
+                        ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','insertGuidChallenge','doing')"
+                      >
+                        {{'Save' | l}}
+                      </button>
+                      <button
+                        class="btn btn-gray-300"
+                        ng-click="ctrlChild.blurPushGuidChallenge()"
+                      >
+                        {{'Cancel' | l}}
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Display selected files -->
+                  <div
+                    ng-repeat="file in ctrlChild.guidChallengeFiles"
+                    class="file-list-item"
+                  >
+                    <span class="file-name">{{file.name}}</span>
+                    <i
+                      class="fas fa-trash-alt"
+                      style="cursor: pointer"
+                      ng-click="ctrlChild.removeGuidChallengeFiles(file.name)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="label" style="margin-top: 15px">
+          <i class="far fa-comments"></i>&nbsp;{{'Comment' |
+          l}}&nbsp;({{ctrlChild._countGuidChallenges}})
+        </div>
+        <hr />
+        <div class="comment-list">
+          <div
+            class="comment-item d-flex mt-3"
+            ng-repeat="item in ctrlChild._guidChallenges | orderBy: '-time'"
+            ng-style="item.type == 'Remind' && {'background-color': '#FFD580', 'border-radius': '10px'}"
+          >
+            <div class="show-avatar">
+              <show-username
+                style="margin-top: 6px"
+                username="item.username"
+                just-image="true"
+              ></show-username>
+            </div>
+            <div class="comment-content">
+              <show-username
+                username="item.username"
+                hide-image="true"
+              ></show-username
+              >,
+              <time-show
+                time-show-type="long"
+                time-show-data="item.time"
+              ></time-show>
+              <div class="content" ng-bind-html="item.content"></div>
+              <div
+                class="attachment"
+                style="margin-top: 5px; display: block"
+                ng-if="item.attachment.length > 0"
+              >
+                <attachment-show
+                  ng-repeat="at in item.attachment"
+                  attachment-show-item="at"
+                  attachment-show-func="ctrlChild.loadfile(params)"
+                  attachment-show-params="{id: ctrlChild.thisTaskId, name: at.name}"
+                  attachment-show-service-name="'comment'"
+                >
+                </attachment-show>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

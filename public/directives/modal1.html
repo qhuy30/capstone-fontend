@@ -1,0 +1,15 @@
+
+<div abindex="-1" role="dialog" ng-show="myStatus" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="float: right;">
+        <div class="modal-content" style="width: 96%;">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">{{myTitle}}</h2>
+                <button type="button" ng-click="toggle()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ng-transclude>
+            </div>
+        </div>
+    </div>
+</div>

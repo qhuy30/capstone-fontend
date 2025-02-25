@@ -1,0 +1,18 @@
+<div class="modal fade" id="modal_Task_CloseProject" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'CloseProject'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantToCloseProject'|l:{title:ctrlChild.currentProject.title} }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-submit modal-button-submit-ctrlname="{{ctrlChild._ctrlName}}"
+                modal-button-submit-label="{{'CloseProject'|l }}"
+                    modal-button-submit-objname="Task" modal-button-submit-actionname="closeProject"
+                    modal-button-submit-func="ctrlChild.closeProject()">
+                </modal-button-submit>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div class="outgoing-dispatch-details">
+    <section>
+        <div>
+            <div class="card-body row odb-process">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body row" style="padding: 20px">
+                        <table class="col-md-12">
+                            <tr>
+                                <td>{{'DispatchArrivedBook' | l}}:</td>
+                                <td>
+                                    <get-field-directory id-value="ctrl.Item.outgoing_dispatch_book"
+                                                         extend="ctrl.OutgoingDispatchBook_Config"
+                                                         localization="true"></get-field-directory>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'NumberCodeDocument'|l}}:</td>
+                                <td><b>{{ctrl.Item.code}}</b></td>
+                            </tr>
+                            <tr>
+                                <td>{{'DateDocument' | l}}:</td>
+                                <td>
+                                    <time-show time-show-data="ctrl.Item.event[0].time"
+                                               time-show-type="justyear"></time-show>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'ReleaseDate' | l}}:</td>
+                                <td>
+                                    <time-show time-show-data="ctrl.Item.release_date"
+                                               time-show-type="justdate"></time-show>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'TypeDocumentAndExcerpt' | l}}:</td>
+                                <td>
+                                    <div>{{ctrl.Item.document_type_title[$root.Language.current]}} - {{ctrl.Item.excerpt}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'TheSigner' | l}}:</td>
+                                <td>
+                                  <span class="mr-2" ng-repeat="signer in ctrl.Item.signers">
+                                    <show-username username="signer" hide-image="true"></show-username>
+                                  </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'OrganizationEdit' | l}}:</td>
+                                <td>
+                                    <show-department department="ctrl.Item.draft_department"></show-department>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'ReceivingDocumentDepartment'|l}}:</td>
+                                <td>
+                                    <span ng-repeat="d in ctrl.Item.department_notification track by $index">
+                                        <span ng-if="$index !=0">,</span>
+                                        <show-department department="d" ></show-department>
+                                    </span>
+                                    <span ng-repeat="u in ctrl.Item.receiver_notification track by $index">
+                                        <span ng-if="$index !=0">,</span>
+                                        <show-username username="u" hide-image="true"></show-username>
+                                    </span>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'ExpirationDate'|l}}:</td>
+                                <td>
+                                    <time-show time-show-data="ctrl.Item.expiration_date"
+                                               time-show-type="justdate"></time-show>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'EmergencyLevel'|l}}:</td>
+                                <td>
+                                    <get-field-directory id-value="ctrl.Item.priority"
+                                                         extend="ctrl.IncommingDispatchPririoty_Config"
+                                                         localization="true"></get-field-directory>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'OutgoingDocuments'|l}}:</td>
+                                <td>
+                                    <div ng-repeat="item in ctrl.Item.outgoing_documents" class="p-2">
+                                            <attachment-show my-item="item"
+                                                             attachment-show-item="item"
+                                                             attachment-show-params="{id:ctrl.Item._id,name:item.name}"
+                                                             attachment-show-func="ctrl.loadFile(params)">
+                                            </attachment-show>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'AttachDocuments'|l}}:</td>
+                                <td>
+                                    <div ng-repeat="item in ctrl.Item.attach_documents" class="p-2">
+                                        <attachment-show my-item="item"
+                                                         attachment-show-item="item"
+                                                         attachment-show-params="{id:ctrl.Item._id,name:item.name}"
+                                                         attachment-show-func="ctrl.loadFile(params)">
+                                        </attachment-show>
+                                    </div>
+                                    <div ng-if="ctrl.Item.attach_documents.length ==0" class="no-data">
+                                        {{'NoData'|l}}
+                                      </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

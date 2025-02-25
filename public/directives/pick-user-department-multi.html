@@ -1,0 +1,135 @@
+<div class="container">
+    <div class="label" ng-if="label">
+        {{label}}
+    </div>
+    <div class="value">
+        <div class="show-value">
+            <span ng-repeat="item in idValue.user track by $index">
+                <show-username username="item" hide-image="true" without-tooltip="true">
+                </show-username>&nbsp;&nbsp;
+            </span>
+            <span ng-repeat="item in idValue.department track by $index">
+                <show-department department="item">
+                </show-department>&nbsp;&nbsp;
+            </span>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary " ng-click="init()" ng-disabled="disable"
+            modal-toggle="#{{ctrl._ctrlName}}">
+        {{'Pick'|l}}&nbsp;<i class="fas fa-external-link-alt"></i>
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+        <i class="fas fa-times"></i>
+    </button>
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{ctrl._ctrlName}}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{label ? label : ('Department'|l)}}" modal-header-id={{ctrl._ctrlName}}>
+                </modal-header>
+                <div class="modal-body">
+                    <div class="part-container">
+                        <div class="part">
+
+                            <div class="tool" ng-show="!disableUserSelection">
+                                <div class="search">
+                                    <input type="text" ng-model="search" my-watch-text-input my-scope="search"
+                                           my-func="refreshData_user()" my-start="!_notyetInit"
+                                           placeholder="{{'FindByName'|l}}">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <ul class="department-container">
+                                <li ng-repeat="item in data" ng-show="!departmentId || item.id === departmentId">
+                                    <div class="department-item" ng-class="{'can-expand': !disableUserSelection && item.canExpand}">
+                                        <div class="title">
+                                            <span ng-click="ctrl.expandDepartment(item)">
+                                                <span ng-show="!disableUserSelection && item.canExpand">
+                                                    <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                                    <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                                </span>
+                                                &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                            </span>
+                                        </div>
+                                        <div class="tool">
+                                            <button type="button" class="btn btn-primary" ng-click="ctrl.pick_department(item.id)">
+                                                {{'Pick'|l}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="user-item" ng-repeat="u in item.users" ng-show="item.open">
+                                        <div class="title" ng-if="!idValue.user.includes(u.username)">
+                                            <div class="show-user__img">
+                                                <img ng-if="u.avatar.url" ng-src="{{u.avatar.url}}" />
+                                            </div>
+                                            <div class="show-user__title" style="cursor: default">
+                                                &nbsp;<span>{{u.title}}</span>
+                                            </div>
+
+                                            <div class="show-user__status" ng-if="u.online ">
+                                            </div>
+                                        </div>
+                                        <div class="tool" ng-if="!idValue.user.includes(u.username)">
+                                            <button type="button" ng-click="ctrl.pick_user(u.username)"
+                                                    class="btn btn-primary">{{'Pick'|l}}</button>
+                                        </div>
+                                    </div>
+                                    <div class="pagination-item" ng-if="ctrl.pagination[item.id].totalItems > ctrl.numOfItemPerPage">
+                                        <pagination pagination-ctrlname="{{ctrl._ctrlName}}"
+                                                    pagination-objname="Load" pagination-actionname="load"
+                                                    pagination-currentpage="ctrl.pagination[item.id].currentPage"
+                                                    pagination-noi="ctrl.numOfItemPerPage"
+                                                    pagination-total="ctrl.pagination[item.id].totalItems"
+                                                    pagination-func="ctrl.load_user(params,item)"></pagination>
+                                    </div>
+                                    <pick-user-multi-child item="item" ctrl="ctrl" id-value="idValue"></pick-user-multi-child>
+                                </li>
+                            </ul>
+                            <div ng-if="ctrl.data.length ==0" class="no-data">
+                                {{'NoData'|l}}
+                            </div>
+
+
+                        </div>
+                        <div class="part selected-part">
+                            <div class="container">
+                                <div class="label pl-0">
+                                    {{'Selected'|l}}
+                                </div>
+                                <div class="user-container" ng-show="!disableUserSelection">
+                                    <div style="font-weight: bold">{{'Staff'|l}}&nbsp&nbsp({{idValue.user.length || 0}})</div>
+                                    <div class="user-item" ng-repeat="item in idValue.user">
+                                        <i class="material-icons" ng-click="remove_user(item)">clear</i>
+                                        <show-username username="item">
+                                        </show-username>
+                                    </div>
+                                    <div class="no-data-selected" ng-if="idValue.user.length==0">
+                                        {{'NoUserSelectedYet'|l}}
+                                    </div>
+                                </div>
+
+                                <div style="border-top: 1px solid #c2cfd6;border-left: 2px solid #20a8d8;"></div>
+
+                                <div class="department-container">
+                                    <div style="font-weight: bold">{{'Department'|l}}&nbsp&nbsp({{idValue.department.length || 0}})</div>
+                                    <div class="department-item" ng-repeat="item in idValue.department">
+                                        <i class="material-icons" ng-click="remove_department(item)">clear</i>
+                                            <show-department department="item">
+                                            </show-department>
+                                    </div>
+                                    <div class="no-data-selected" ng-if="idValue.department.length==0">
+                                        {{'NoDepartmentSelectedYet'|l}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" ng-click="close()">{{'Close'|l}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

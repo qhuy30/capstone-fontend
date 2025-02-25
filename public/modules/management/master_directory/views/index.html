@@ -1,0 +1,104 @@
+<my-content>
+  <content-content>
+    <div class="card">
+      <div class="card-body">
+        <div
+          ng-controller="master_directory_controller as ctrl"
+          class="main-content"
+        >
+        <div ng-include="ctrl._urlInsertModal" include-replace></div>
+        <div ng-include="ctrl._urlUpdateModal" include-replace></div>
+        <div ng-include="ctrl._urlDeleteModal" include-replace></div>
+          <button-new
+            button-new-func="ctrl.prepareInsert()"
+            button-new-label="{{'New'|l}}"
+            button-new-modal="#modal_MasterDirectory_Insert"
+          >
+          </button-new>
+          <button-search
+            button-search-func="ctrl.refreshData()"
+            button-search-start="ctrl._notyetInit"
+            button-search-model="ctrl._searchByKeyToFilterData"
+          >
+            <button-moreop
+              button-moreop-modal="#modal_masterdirectory_filter"
+            ></button-moreop>
+          </button-search>
+          <my-Async
+            async-ctrlname="{{ctrl._ctrlName}}"
+            async-objname="MasterDirectory"
+            async-actionname="load"
+          >
+            <async-success>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover" datatable>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+
+                      <th>
+                        {{'Title'|l}}
+                      </th>
+                      <th>
+                        {{'Key'|l}}
+                      </th>
+                      <th>
+                        {{'ExtendData'|l}}
+                      </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr
+                      ng-repeat="item in ctrl.master_directory track by $index"
+                    
+                    >
+                      <td>
+                        <strong> {{item.ordernumber}}</strong>
+                      </td>
+                      <td>{{item.title[$root.Language.current]}}</td>
+                      <td>{{item.key}}</td>
+                      <td>
+                        {{item.extend}}
+                      </td>
+                      <td>
+                        <button-edit-item
+                          ng-hide="item.root"
+                          button-edit-item-modal="#modal_MasterDirectory_Update"
+                          button-edit-item-func="ctrl.prepareUpdate(params)"
+                          button-edit-item-params="item"
+                        >
+                        </button-edit-item>
+                        <button-delete-item
+                          ng-hide="item.root || item.isactive"
+                          button-delete-item-modal="#modal_MasterDirectory_Delete"
+                          button-delete-item-func="ctrl.prepareDelete(params)"
+                          button-delete-item-params="item"
+                        >
+                        </button-delete-item>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div ng-if="ctrl.master_directory.length ==0" class="no-data">
+                {{'NoData'|l}}
+              </div>
+              <pagination
+                pagination-ctrlname="{{ctrl._ctrlName}}"
+                pagination-objname="MasterDirectory"
+                pagination-actionname="count"
+                pagination-currentpage="ctrl.currentPage"
+                pagination-noi="ctrl.numOfItemPerPage"
+                pagination-total="ctrl.totalItems"
+                pagination-func="ctrl.load(params)"
+              ></pagination>
+            </async-success>
+          </my-Async>
+        </div>
+      </div>
+    </div>
+  </content-content>
+</my-content>

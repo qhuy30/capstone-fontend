@@ -1,0 +1,25 @@
+<my-content>
+    <content-content>
+        <div ng-controller="setting_controller as ctrl">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" ng-click="ctrl.switchTab('general')">
+                            <a class="nav-link " ng-class="{'active':ctrl.tab =='general'}">{{'General'|l}}
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="ctrl.switchTab('module')">
+                            <a class="nav-link " ng-class="{'active':ctrl.tab =='module'}">{{'Module'|l}}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" >
+                            <div ng-include="ctrl._urlMain"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

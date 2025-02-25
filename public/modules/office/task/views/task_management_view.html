@@ -1,0 +1,235 @@
+<div ng-controller="task_management_controller as ctrlChild" class="task-department-feature">
+
+
+    <div ng-include="ctrlChild._urlInsertModal"></div>
+    <div ng-include="ctrlChild._urlDeleteModal"></div>
+    <div ng-include="ctrlChild._urlUpdateModal"></div>
+    <div ng-include="ctrlChild._urlInsertMajorLabelModal"></div>
+    <div ng-include="ctrlChild._urlInsertMinorLabelModal"></div>
+    <div ng-include="ctrlChild._urlUpdateMajorLabelModal"></div>
+    <div ng-include="ctrlChild._urlUpdateMinorLabelModal"></div>
+
+    <div class="content" style="margin-left: 4px;">
+        <div class="part" ng-show="['Office.Task.Import_Multiple_Departments']|checkRule">
+            <div id="accordion2">
+                <div class="title" id="headingTwo">
+                    <div class="label" ng-click="ctrlChild.toogleCollapseTask()" class="btn btn-link"
+                         data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                         aria-controls="collapseTwo">
+                        <i class="fas fa-angle-down" ng-show="ctrlChild.collapseTask"></i><i class="fas fa-angle-right"
+                                                                                             ng-show="!ctrlChild.collapseTask"></i>&nbsp;&nbsp;{{"DepartmentTaskManagement" | l}}
+                    </div>
+                </div>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion2">
+                    <div class="task-container">
+                        <div class="task-filter">
+                            <div class="task-filter-item" style="border-right: none">
+                                <button
+                                        type="button"
+                                        style="padding: 0 7px;
+                                        margin-left: 20px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: bold;"
+                                        class="btn btn-outline-primary btn-sm">
+                                    <a class="text-dark" link-details
+                                       link-details-display="{{'Add Task by template for department'|l}}"
+                                       link-details-url="/task-details?add-tasks-for-departments"
+                                       link-details-route="task-details">
+                                        <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;"
+                                           class="fas fa-file-excel"></i>
+                                        {{"AddTask" | l}}
+                                    </a>
+                                </button>
+                            </div>
+
+                            <div class="task-filter-item">
+                                <button
+                                        type="button"
+                                        style="padding: 0 7px;
+                                        margin-left: 20px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: bold;"
+                                        class="btn btn-outline-primary btn-sm">
+                                    <a class="text-dark" link-details
+                                       link-details-display="{{'Add recurring task for department'|l}}"
+                                       link-details-url="/task-details?add-recurring-department-tasks"
+                                       link-details-route="task-details">
+                                        <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;"
+                                           class="fas fa-undo-alt"></i>
+                                        {{"RecurringTask" | l}}
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="border-top:1px solid #eee;margin-top:10px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="part" ng-show="['Office.Task.Import_Multiple_Projects']|checkRule">
+            <div id="accordionProject">
+                <div class="title" id="headingTwo">
+                    <div class="label" ng-click="ctrlChild.toogleCollapseProject()" class="btn btn-link"
+                         data-toggle="collapse" data-target="#collapseProject" aria-expanded="true"
+                         aria-controls="collapseProject">
+                        <i class="fas fa-angle-down" ng-show="ctrlChild.collapseProject"></i><i
+                            class="fas fa-angle-right"
+                            ng-show="!ctrlChild.collapseProject"></i>&nbsp;&nbsp;{{'ProjectTaskManagement'|l}}
+                    </div>
+                </div>
+                <div id="collapseProject" class="collapse show" aria-labelledby="headingTwo"
+                     data-parent="#accordionProject">
+                    <div class="task-container">
+                        <div class="task-filter">
+                            <div class="task-filter-item">
+                                <button
+                                        type="button"
+                                        style="padding: 0 7px;
+                                        margin-left: 20px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: bold;"
+                                        class="btn btn-outline-primary btn-sm">
+                                    <a class="text-dark" link-details
+                                       link-details-display="{{'Add Task by template for project'|l}}"
+                                       link-details-url="/task-details?add-tasks-for-projects"
+                                       link-details-route="task-details">
+                                        <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;"
+                                           class="fas fa-file-excel"></i>
+                                        {{"AddTask" | l}}
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="border-top:1px solid #eee;margin-top:10px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="part" ng-if="(['Office.Task.Management_MajorLabels_Department']|checkRule) || ('Office.Task.Management_MinorLabels_Department'|task_department_checkRuleLabel)">
+            <div id="accordionManagementLabel">
+                <div class="title" id="headingTwo">
+                    <div class="label pb-3" ng-click="ctrlChild.toogleCollapseLabel()" class="btn btn-link"
+                         data-toggle="collapse" data-target="#collapseManagementLabel" aria-expanded="true"
+                         aria-controls="collapseManagementLabel">
+                        <i class="fas fa-angle-down" ng-show="ctrlChild.collapseManagementLabel"></i><i
+                            class="fas fa-angle-right"
+                            ng-show="!ctrlChild.collapseManagementLabel"></i>&nbsp;&nbsp;{{'LabelManagementForDepartment' | l}}
+                    </div>
+                    <div id="collapseManagementLabel" class="collapse show" aria-labelledby="headingTwo"
+                         data-parent="#accordionManagementLabel">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul class="department-container mt-2">
+                                    <li>
+                                        <div class="department-item">
+                                            <div class="title">
+                                                <div ng-show="['Office.Task.Management_MajorLabels_Department']|checkRule">
+                                                    <button-new button-new-func="ctrlChild.prepareInsertLabel()"
+                                                                button-new-label="{{'AddNewMajorLabel'|l}}"
+                                                                button-new-modal="#modal_MajorLabel_Insert">
+                                                    </button-new>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="status">
+                                                {{'Status' | l}}
+                                            </div>
+                                            <div class="tool">
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li ng-repeat="item in ctrlChild.labels">
+                                        <div class="department-item" ng-class="{'can-expand':item.expand}">
+                                            <div class="title">
+                                                <span ng-click="ctrlChild.expandLabel(item)">
+                                                <span ng-show="item.expand">
+                                                    <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                                    <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                                </span>
+                                        &nbsp;&nbsp;            {{item.title}}
+                                                </span>
+                                            </div>
+                                            <div class="status">
+                                                <isactive isactive-value="true"></isactive>
+                                            </div>
+                                            <div class="tool">
+                                                <span ng-show="('Office.Task.Management_MinorLabels_Department'|task_department_checkRuleLabel)">
+                                                    <button-new button-new-func="ctrlChild.prepareInsertMinorLabel(item)"
+                                                                button-new-label="{{'AddNewMinorLabel'|l}}"
+                                                                button-new-modal="#modal_MinorLabel_Insert">
+                                                    </button-new>
+                                                </span>
+                                                <!-- <button-new-item button-new-item-modal="#modal_Organization_Insert"
+                                                    button-new-item-func="ctrl.prepareInsert(params)" button-new-item-params="item">
+                                                </button-new-item> -->
+                                                <span ng-show="['Office.Task.Management_MajorLabels_Department']|checkRule">
+                                                    <button-edit-item button-edit-item-modal="#modal_majorLabel_Update"
+                                                                      button-edit-item-func="ctrlChild.prepareUpdate_major_label(params)"
+                                                                      button-edit-item-params="item">
+                                                    </button-edit-item>
+<!--                                                    <button-delete-item ng-hide="item.isactive"-->
+<!--                                                                        button-delete-item-modal="#modal_Organization_Delete"-->
+<!--                                                                        button-delete-item-func="ctrlChild.prepareDelete({},item)">-->
+<!--                                                    </button-delete-item>-->
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <ul ng-if="item.child_labels.length" ng-show="item.child_labels.length"
+                                                class="department-container child">
+                                                <li ng-repeat="child_item in item.child_labels">
+                                                    <div class="department-item"
+                                                         ng-class="{'can-expand':child_item.canExpand}">
+                                                        <div class="title">
+                                                            <span class="pl-2">
+                                                                <i class="fas fa-square-full" style="color: #80808052"></i>
+                                                                    &nbsp;{{child_item.title}}
+                                                            </span>
+                                                        </div>
+                                                        <div class="status">
+                                                            <isactive isactive-value="true"></isactive>
+                                                        </div>
+                                                        <div class="tool">
+                                                            <div ng-show="('Office.Task.Management_MinorLabels_Department'|task_department_checkRuleLabel)">
+                                                                <button-edit-item
+                                                                        button-edit-item-modal="#modal_minorLabel_Update"
+                                                                        button-edit-item-func="ctrlChild.prepareUpdate_minor_label(child_item, item)">
+                                                                </button-edit-item>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div ng-if="ctrlChild.data.length ==0" class="no-data">
+                                    {{'NoData' | l}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

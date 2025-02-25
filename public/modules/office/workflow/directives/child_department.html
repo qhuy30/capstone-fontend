@@ -1,0 +1,47 @@
+<ul ng-if="item.canExpand" ng-show="item.open" class="department-container child">
+    <li ng-repeat="child_item in item.childs">
+        <div class="department-item" ng-class="{'can-expand':child_item.canExpand}">
+            <div class="title">
+                <span ng-click="ctrl.expandDepartment(child_item)">
+                    <span ng-repeat="space in child_item.parent" class="space">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span ng-show="child_item.canExpand">
+                        <i class="fas fa-angle-right" ng-show="!child_item.open"></i>
+                        <i class="fas fa-angle-down" ng-show="child_item.open"></i>
+                    </span>
+                    &nbsp;&nbsp;{{child_item.title[$root.Language.current]}}
+                </span>
+            </div>
+            <div class="key">
+                {{child_item.key}}
+            </div>
+            <div class="tool">
+                <button-new button-new-func="ctrl.prepareInsert(child_item)"
+                    button-new-label="{{'NewWorkflow'|l}}"
+                    button-new-modal="#modal_Workflow_Insert">
+                </button-new>
+            </div>
+        </div>
+        <div ng-show="child_item.open" class="workflow-item" ng-repeat="wf in child_item.wfs">
+            <div class="title">
+
+                <i
+                    class="fas fa-signature text-primary"></i>&nbsp;&nbsp;{{wf.title[$root.Language.current]}}
+
+            </div>
+            <div class="key">
+                <get-field-directory id-value="wf.key" extend="ctrl.DocumentType_Config"
+                    localization="true"></get-field-directory>
+            </div>
+            <div class="tool">
+                <button-edit-item button-edit-item-modal="#modal_Workflow_Update"
+                    button-edit-item-func="ctrl.prepareUpdate(params)" button-edit-item-params="wf">
+                </button-edit-item>
+                <button-delete-item button-delete-item-modal="#modal_Workflow_Delete"
+                    button-delete-item-func="ctrl.prepareDelete(params)"
+                    button-delete-item-params="wf">
+                </button-delete-item>
+            </div>
+        </div>
+        <workflow-feature-department-child item="child_item" ctrl="ctrl"></workflow-feature-department-child>
+    </li>
+</ul>

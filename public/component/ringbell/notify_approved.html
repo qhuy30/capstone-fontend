@@ -1,0 +1,34 @@
+<a class="waves-effect ringbell-header-item project_update_info" 
+    href="/notify-details?code={{item.params.code}}"
+>
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span>
+                <span>{{'Newsletter'|l}}</span>&nbsp;
+               
+                <span class="title" >[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+                <span class="text-lowercase" >{{'WrittenBy'|l}}</span>
+                <show-username-onlyname username="item.params.created_by" without-tooltip="true">
+                </show-username-onlyname>
+                <span class="text-lowercase">{{'From'|l}}</span>&nbsp;
+                <show-department show-department show-abbreviation="false" department="item.params.department"></show-department>
+            </span>
+        </div>
+
+        <div>
+            <span class="ringbell-action success" style="display: flex; flex-direction: row; align-items: center;">
+                <i class="fas fa-book"></i>&nbsp;
+                <show-username-onlyname style="color: #28a745;" username="item.params.action_by" without-tooltip="true"></show-username-onlyname>&nbsp;
+                {{'approved the notify'|l}}
+            </span>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+
+    </div>
+
+</a>

@@ -1,0 +1,146 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Employee_Import">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Import Data'}}"></modal-header>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <div class="col-md-12">
+                            <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                            colspan=" 0">
+                                            <div class="diskuf-uploader">
+                                                <span class="wd-fa-add-file-light">
+                                                    <span class="wd-fa-add-file-light-text">
+                                                        <span class="wd-fa-add-file-light-title">
+                                                            <span
+                                                                class="wd-fa-add-file-light-title-text">{{'Import File'}}</span>
+                                                        </span>
+                                                        <span
+                                                            class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input class="diskuf-fileUploader wd-test-file-light-inp " type="file"
+                                                    file-reading-excel="ctrl.importFiles"
+                                                    file-excel-func="ctrl.loadData(params)" size="1"
+                                                    style="width:100%;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body row" style="border-left:2px solid #20a8d8">
+                        <button-search button-search-func="ctrl.searchImport(val)"
+                            button-search-model="ctrl._searchImportTemp">
+                        </button-search>
+                        &nbsp;
+                        <button type="button"  alt="Return edit" style ="height:35px;"class="btn btn-outline-secondary btn-sm"
+                            ng-click="ctrl.refreshImportData();$event.stopPropagation();">
+                            <i class="fas fa-undo-alt"></i>
+                        </button>
+                        &nbsp;
+                        <button type="button"  alt="Export to excel" style ="height:35px;"class="btn btn-outline-success btn-sm"
+                            ng-click="ctrl.export();$event.stopPropagation();">
+                            <i class="fas fa-file-excel"></i>
+                        </button>
+                        <iframe id="txtArea1" style="display:none"></iframe>
+
+                        <div class="text-muted col-md-12 text-danger" ng-show="ctrl.importStatus=='error'"><b>{{'DuplicateData'|l}}</b></div>
+                        <div class="text-muted col-md-12" ng-show="ctrl.importStatus=='load'"><b>{{'LoadedData'|l}}</b></div>
+                        <div class="table-responsive ">
+                            <table class="table table-sm" id="exportTable">
+                                <thead >
+                                    <tr>
+                                        
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            # 
+                                        </td>
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            {{'UserName'|l}}
+                                        </td>
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            {{'LastName'|l}}
+                                        </td>
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            {{'MidName'|l}}
+                                        </td>
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            {{'FirstName'|l}}
+                                        </td>
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            {{'EmployeeCode'|l}}
+                                        </td>
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            {{'Department'|l}}
+                                        </td>
+                                        <td style="font-weight: 600;vertical-align: middle;">
+                                            {{'Competence'|l}}
+                                        </td>
+                                        <td></td>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        ng-repeat="item in ctrl.importData|orderBy:'firstname'|filter:ctrl._searchImportData track by $index">
+                                        
+                                        <td>
+                                            {{$index+1}}
+                                        </td>
+                                        <td>
+                                            {{item.username}}
+                                        </td>
+                                        <td>
+                                            {{item.lastname}}
+                                        </td>
+                                        <td>
+                                            {{item.midname}}
+                                        </td>
+                                        <td>
+                                            {{item.firstname}}
+                                        </td>
+                                        <td>
+                                            {{item.employeecode}}
+                                        </td>
+                                        <td>
+                                            <show-department department="item.department"></show-department>
+                                        </td>
+                                        <td>
+                                            <get-field id-value="item.competence"
+                                        load-details-func="ctrl.loadCompetence_details(params)" field="title"
+                                        localization="true"></get-field>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                ng-click="ctrl.removeItemImport(item.id);$event.stopPropagation();">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-if="ctrl.importData.length ==0||!ctrl.importData" class="no-data col-md-12">
+                            {{'NoData'|l}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-import modal-button-import-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-import-objname="Employee" modal-button-import-actionname="import"
+                    modal-button-import-invalid="!ctrl.importData||ctrl.importData.length ==0||ctrl.importStatus=='error'" modal-button-import-func="ctrl.import()">
+                </modal-button-import>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

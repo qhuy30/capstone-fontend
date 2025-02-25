@@ -1,0 +1,28 @@
+<a class="waves-effect ringbell-header-item notify_need_approve" 
+    href="/notify-details?code={{item.params.code}}"
+>
+    <i class="fas fa-newspaper"></i>
+    <div class="content">
+
+        <div>
+            <span>
+                <span>{{'Newsletter'|l}}</span>&nbsp;
+                <span class="title">[{{item.params.code}}]&nbsp;{{item.params.title}}</span>&nbsp;
+                <span class="text-lowercase">{{'CreatedBy'|l}}</span>&nbsp;
+                <show-username-onlyname username="item.params.created_by" without-tooltip="true">
+                </show-username-onlyname>
+                <span class="text-lowercase">{{'From'|l}}</span>&nbsp;
+                <show-department show-department show-abbreviation="false" department="item.params.department"></show-department>
+            </span>
+        </div>
+        
+        <div>
+            <span class="ringbell-action success"><i class="fas fa-book"></i>&nbsp;{{'There is a news notify that has not been viewed yet'|l}}</span><br>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+    </div> 
+</a>

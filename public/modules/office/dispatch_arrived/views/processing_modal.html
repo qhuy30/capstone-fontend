@@ -1,0 +1,108 @@
+<div>
+    <div style="height: 50px;" class="d-flex button-action-dispatch">
+        <button-approval-item
+            class="mr-2"
+            ng-if="ctrl.Item.allow_reciver_internal"
+            button-approval-item-modal="#modal_DA_Receive"
+            button-approval-item-func="ctrl.prepareReceive(params)"
+            button-approval-item-params="ctrl.Item"
+            button-label="{{'DA_Receive'}}"
+        />
+
+        <button-approval-item
+            class="mr-2"
+            ng-if="ctrl.Item.allow_forward_CVP"
+            button-approval-item-modal="#modal_DA_Forward"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrl.Item, action:'forward_CVP'}"
+            button-label="{{'SentToCVP'}}"
+        />
+
+        <button-approval-item
+            class="mr-2"
+            ng-if="ctrl.Item.allow_forward_BGH"
+            button-approval-item-modal="#modal_DA_Forward"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrl.Item, action:'forward_BGHOpinion'}"
+            button-label="{{'RequestBGHOpinion'}}"
+        />
+
+        <button-approval-item
+            class="mr-2"
+            ng-if="ctrl.Item.allow_forward_unit"
+            button-approval-item-modal="#modal_DA_Forward"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrl.Item, action:'forward_unit'}"
+            button-label="{{'ForwardtoUnit'}}"
+        />
+
+        <button-approval-item
+            class="mr-2"
+            ng-if="ctrl.Item.allow_return_CVP"
+            button-approval-item-modal="#modal_DA_Forward"
+            button-approval-item-func="ctrl.prepareAssess(params)"
+            button-approval-item-params="{item:ctrl.Item, action:'return_CVP'}"
+            button-label="{{'ReturnCVP'}}"
+        />
+
+        <modal-button-approve-dispatch
+            class="mr-2"
+            ng-if="ctrl.Item.allow_reciver_work"
+            modal-button-approve-ctrlname="{{ctrl._ctrlName}}"
+            modal-button-approve-objname="DA"
+            modal-button-approve-actionname="forward"
+            modal-button-approve-invalid="forwardForm.$invalid"
+            modal-button-approve-func="ctrl.transfer_department_approve(params)"
+            modal-button-approve-label="{{'AcceptResponsibilities'}}"
+            modal-button-confirm-text="{{'Are You Sure You Want to Take the Job?'}}"
+            modal-header-content="{{'AcceptResponsibilities'|l}}"
+            function-apply-suggestions="ctrl.function_apply_suggestions"
+        />
+
+        <modal-button-approve-dispatch
+            class="mr-2"
+            ng-if="ctrl.Item.allow_seen_work"
+            modal-button-approve-ctrlname="{{ctrl._ctrlName}}"
+            modal-button-approve-objname="DA"
+            modal-button-approve-actionname="forward"
+            modal-button-approve-invalid="forwardForm.$invalid"
+            modal-button-approve-func="ctrl.seen_work(params)"
+            modal-button-approve-label="{{'MarkAsViewed'}}"
+            modal-button-confirm-text="Are You Sure You Have Seen It?"
+            modal-header-content="{{'MarkAsViewed'|l}}"
+            function-apply-suggestions="ctrl.function_apply_suggestions"
+        />
+
+
+
+        <!-- <button-approval-item
+        <button-approval-item-dispatch
+            class="mr-3"
+            button-approval-item-modal="#modal_DA_Forward"
+            button-approval-item-func="ctrl.prepareForward(params)"
+            button-approval-item-params="ctrl.Item"
+            button-label="{{'Forward'}}"
+        ></button-approval-item> -->
+
+        
+        
+
+        <!-- <modal-button-approve-dispatch
+            modal-button-approve-ctrlname="{{ctrl._ctrlName}}"
+            modal-button-approve-objname="DA"
+            modal-button-approve-actionname="forward"
+            modal-button-approve-invalid="forwardForm.$invalid"
+            modal-button-approve-func="ctrl.transfer_department_approve()"
+            modal-button-approve-label="{{'AcceptResponsibilities'| l}}"
+        /> -->
+        
+    </div>
+    <!-- <button class="btn btn-warning" style="color: white;">{{'Recall'|l}}</button>
+    <button class="btn btn-danger">{{'End'|l}}</button>
+    <button class="btn btn-primary">{{'Complete'|l}}</button>
+    <button class="btn btn-primary">{{'Print'|l}}</button>
+    <button class="btn btn-warning" style="color: white;">{{'CreateTask'|l}}</button> -->
+</div>
+
+
+

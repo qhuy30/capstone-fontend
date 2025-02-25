@@ -1,0 +1,92 @@
+<my-content>
+    <content-content ng-class="{'card ':!$root.detailsInfo.url}" class="wiki-details-container">
+        <div ng-controller="project_wiki_details_controller as ctrl" ng-class="{'card-body':!$root.detailsInfo.url}">
+            <div>
+                <section class="pb-3">
+                    <!-- Post data -->
+                    <div class=" text-center post-data">
+                        <h2><a><strong>{{ctrl.Item.title}}</strong></a></h2>
+                        <p class="grey-text">{{'WrittenBy'|l}}
+                            <a>
+                                <show-username username="ctrl.Item.username">
+                                </show-username>
+                            </a>, <time-show time-show-data="(ctrl.Item.entity.his[0].created)"></time-show>
+                        </p>
+                        <div class="social-counters ">
+
+                            <!-- Facebook -->
+                            <a class="btn badge-info waves-effect waves-light" style="cursor: default">
+                                <i class="far fa-eye"></i>
+                                <span class="hidden-md-down ">{{'Views'|l}}</span>
+                            </a>
+                            <span class="counter ">{{ctrl.Item.view}}</span>
+
+                            <!-- Twitter -->
+                            <a class="btn badge-primary waves-effect waves-light" style="cursor: default">
+                                <i class="far fa-user"></i>
+                                <span class="hidden-md-down ">{{'Viewers'|l}}</span>
+                            </a>
+                            <span class="counter ">{{ctrl.Item.watched.length}}</span>
+
+                            <!-- Comments -->
+                            <a class="btn btn-pink  waves-effect waves-light" style="color: #fff;"
+                                ng-click="ctrl.like(ctrl.Item.like.indexOf($root.logininfo.username)===-1)">
+                                <i ng-if="ctrl.Item.like.indexOf($root.logininfo.username)===-1 "
+                                    class="far fa-heart"></i>
+                                <i ng-if="ctrl.Item.like.indexOf($root.logininfo.username)!==-1 "
+                                    class="fas fa-heart"></i>
+                                <span class="hidden-md-down ">{{'Love'|l}}</span>
+                            </a>
+                            <span class="counter ">{{ctrl.Item.like.length}}</span>
+
+                        </div>
+                    </div>
+                    <!-- Post data -->
+
+                    <p ng-bind-html="ctrl.Item.content"></p>
+
+                </section>
+
+                <section class="pb-3">
+                    <p class="note note-primary attachment" ng-show="ctrl.Item.attachment.length>0">
+                        <strong>{{"Attachment"|l}}:</strong>
+
+                        <attachment-show ng-repeat="at in ctrl.Item.attachment" attachment-show-item="at"
+                            attachment-show-func="ctrl.loadFileInfo(params)"
+                            attachment-show-params="{id:ctrl.Item._id,name:at.name}">
+                        </attachment-show>
+                    </p>
+                </section>
+            </div>
+            <div class="comments-list text-center text-md-left">
+
+                <h4 class="text-center font-weight-bold mb-5 grey-text">{{'Events'|l}} <span
+                        class="badge pink">{{ctrl.Item.events.length}}</span></h4>
+
+                <!-- First row -->
+                <table class="table">
+
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.Item.events|orderBy:'time':-1">
+
+                            <td>
+                                <show-username username="item.username">
+                                </show-username>
+                            </td>
+                            <td>
+                                {{item.action|l}}
+                            </td>
+                            <td class="hour">
+                                <span class="grey-text float-right"><i class="fa fa-clock" aria-hidden="true"></i>
+                                    <time-show time-show-data="item.time"></time-show>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </content-content>
+</my-content>

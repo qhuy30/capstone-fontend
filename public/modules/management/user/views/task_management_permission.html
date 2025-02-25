@@ -1,0 +1,192 @@
+<div class="taskmanagement generic-animation" ng-class="{'active':ctrl.tabTask==='taskmanagement'}">
+    <ul>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có hiển thị tab <b>{{'TaskManagement'|l}}</b> không ?
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Show_TaskManagementTab'].value"
+                        brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Show_TaskManagementTab'" />
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Cấp quyền sử dụng tính năng thêm công việc cho tất cả phòng ban
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Import_Multiple_Departments'].value"
+                        brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Import_Multiple_Departments'" />
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Cấp quyền sử dụng tính năng thêm công việc cho tất cả dự án.
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Import_Multiple_Projects'].value"
+                           brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Import_Multiple_Projects'" />
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Cấp quyền sử dụng tính năng quản lý công việc lặp lại
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.TaskTemplate.Use'].value"
+                           brige-func="ctrl.updateRule(params)" brige-value="'Office.TaskTemplate.Use'" />
+                </div>
+            </div>
+        </li>
+
+        <!-- Working new  -->
+        <li>
+            <div class="item">
+                <div class="label">
+                    Cấp quyền quản trị công việc cấp <b>thủ trưởng</b>
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Director_Manage'].value"
+                           brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Director_Manage'" />
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+    <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #e8f0fe">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền quản trị công việc cấp <b>lãnh đạo</b>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Không được phép quản trị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Leader_Mangage'].value"
+                                       value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị đang công tác
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Leader_Mangage'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Task.Leader_Mangage'" value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Toàn bộ đơn vị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Leader_Mangage'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị cụ thể
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Task.Leader_Mangage'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Task.Leader_Mangage'"
+                                                     disable="ctrl.rule['Office.Task.Leader_Mangage'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Leader_Mangage'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #FFFFFF">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền quản trị công việc cấp <b>trưởng đơn vị</b>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Không được phép quản trị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Department_Leader_Manage'].value"
+                                       value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị đang công tác
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Department_Leader_Manage'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Task.Department_Leader_Manage'" value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Toàn bộ đơn vị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Department_Leader_Manage'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị cụ thể
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Task.Department_Leader_Manage'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Task.Department_Leader_Manage'"
+                                                     disable="ctrl.rule['Office.Task.Department_Leader_Manage'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Task.Department_Leader_Manage'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

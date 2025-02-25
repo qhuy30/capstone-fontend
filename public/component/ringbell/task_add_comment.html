@@ -1,0 +1,24 @@
+<a class="waves-effect ringbell-header-item project_update_info"
+    href="/task-details?code={{item.params.taskCode}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span  >
+                <show-username-onlyname username="item.params.username_add_comment" 
+                without-tooltip="true"></show-username-onlyname>
+                <span >{{'added comment to task'|l}}</span>
+                <span class="title">[{{item.params.taskCode}}]&nbsp;{{item.params.title}}</span>
+            </span>
+        </div>
+   
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

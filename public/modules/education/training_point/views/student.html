@@ -1,0 +1,34 @@
+<div class="card" ng-controller="training_point_student_controller as ctrl" class="training-point-student-controller">
+    <div class="card-body">
+        <div class="task-container" style="padding: 0 1.25rem;">
+            <div class="task-filter"
+                style="padding-bottom:0.5rem; border-bottom: 1px solid rgb(202, 202, 202); max-width: none">
+                <div class="task-filter-item col-md-2">
+                    <div class="title-filter">{{'FromDate'|l}}:</div>
+                    <div class="value">
+                        <div>
+                            <input type="date" ng-model="ctrl._filterStartDate" ng-change="ctrl.refreshData()" />
+                        </div>
+                        <div>
+                            <time-show2 time-show-data="ctrl._filterStartDate" time-show-type="just_date"
+                                bind-object="true"></time-show2>
+                        </div>
+                    </div>
+                </div>
+                <div class="task-filter-item col-md-2">
+                    <div class="title-filter">{{'ToDate'|l}}:</div>
+                    <div class="value">
+                        <div>
+                            <input type="date" ng-model="ctrl._filterEndDate" ng-change="ctrl.refreshData()" />
+                        </div>
+                        <div>
+                            <time-show2 time-show-data="ctrl._filterEndDate" time-show-type="just_date"
+                                bind-object="true">
+                            </time-show2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,205 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_insert_storage">
+    <div class="modal-dialog modal-full" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{'Storage'|l}}"></modal-header>
+        <div class="modal-body">
+          <form name="insertForm">
+            <div>
+              <div class="card-body row">
+                <div class="col-md-12" style="font-weight: 700;">{{'Briefcase'|l}}</div>
+                <div class="col-md-12"
+                  style="border-top: 1px solid #eee;
+                        margin-bottom: 15px;
+                        margin-top: 10px;
+                        "></div>
+                <div class="form-group col-md-12">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'BriefcaseTitle'|l}}</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                      type="text"
+                      ng-model="ctrl._insert_to_storage_value.title"
+                      class="form-control"
+                      name="insert_briefcase_title"
+                      ng-class="{ 'is-invalid': insertForm.insert_briefcase_title.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'BriefcaseCode'|l}}</span>
+                    </div>
+                    <input
+                      type="text"
+                      value="{{ctrl._insert_to_storage_value.code}}"
+                      class="form-control"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'IdentifierCodeOfTheAgencyOrOrganizationCompilingTheBriefcaseInventory'|l}}</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                      type="text"
+                      ng-model="ctrl._insert_to_storage_value.organ_id"
+                      class="form-control"
+                      name="insert_briefcase_organ_id"
+                      ng-class="{ 'is-invalid': insertForm.insert_briefcase_organ_id.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'NumberAndNotationOfBriefcase'|l}}</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                      type="text"
+                      ng-model="ctrl._insert_to_storage_value.file_notation"
+                      class="form-control"
+                      name="insert_briefcase_file_notation"
+                      ng-class="{ 'is-invalid': insertForm.insert_briefcase_file_notation.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-6" style="display: flex; top: 18px;">
+                  <div style="border-bottom-left-radius: 4px;
+                              border-bottom: 1px solid #4285f4;
+                              width: 130px;
+                              height: 30px;
+                              font-weight: bold;
+                              color: #4285f4;
+                              padding: 7px 12px;
+                              font-size: 11px;">
+                    {{'StorageDuration'|l}}
+                  </div>
+                  <input style="height: 30px;
+                                border: 0;
+                                background-color: rgba(66, 133, 244, 0.1);
+                                width: 80px;
+                                "
+                    class="form-control"
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"            
+                    type="number"
+                    min="0"
+                    ng-model="ctrl._insert_to_storage_value.maintenance_time.amount"
+                    name="insert_briefcase_maintenance_time_amount"
+                    ng-class="{ 'is-invalid': insert_briefcase_maintenance_time_amount.$invalid }"
+                    required
+                  >
+                  <div style="width: 10px;"></div>
+                  <select style="width: 100px; border: 0; background-color: rgba(66, 133, 244, 0.1);"
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                    class="form-control"
+                    ng-model="ctrl._insert_to_storage_value.maintenance_time.unit"
+                    name="insert_briefcase_maintenance_time_unit"
+                    ng-class="{ 'is-invalid': insert_briefcase_maintenance_time_unit.$invalid }"
+                    required
+                  >
+                    <option value="day">{{'Day'|l}}</option>
+                    <option value="week">{{'Week'|l}}</option>
+                    <option value="month">{{'Month'|l}}</option>
+                    <option value="year">{{'Year'|l}}</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'UsageMode'|l}}</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                      type="text"
+                      ng-model="ctrl._insert_to_storage_value.rights"
+                      class="form-control"
+                      name="insert_briefcase_rights"
+                      ng-class="{ 'is-invalid': insertForm.insert_briefcase_rights.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'Language'|l}}</span>
+                    </div>
+                    <select style="border: 2px solid #d3d9e2; border-radius: 3px;"
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName, 'waiting_storage', 'insert', 'doing')"
+                      class="form-control"
+                      ng-model="ctrl._insert_to_storage_value.language"
+                      name="insert_briefcase_language"
+                      ng-class="{ 'is-invalid': insertForm.insert_briefcase_language.$invalid }"
+                      required>
+                      <option style="font-size: 13px; padding: 10px;"
+                        ng-repeat="item in $root.Language.list"
+                        value="{{item.key}}"
+                      >
+                        {{item.title}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'Year'|l}}</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                      type="number"
+                      ng-model="ctrl._insert_to_storage_value.year"
+                      class="form-control"
+                      name="insert_briefcase_year"
+                      minlength="4"
+                      min="1000"
+                      ng-class="{ 'is-invalid': insertForm.insert_briefcase_year.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span class="input-group-text-new">{{'Notes'|l}}</span>
+                    </div>
+                    <input
+                      ng-disabled="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                      type="text"
+                      ng-model="ctrl._insert_to_storage_value.description"
+                      class="form-control"
+                      name="insert_briefcase_description"
+                      ng-class="{ 'is-invalid': insertForm.insert_briefcase_description.$invalid }"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <modal-button-new
+            modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+            modal-button-new-objname="waiting_storage"
+            modal-button-new-actionname="insert"
+            modal-button-new-invalid="insertForm.$invalid"
+            modal-button-new-func="ctrl.insertToStorage()"
+          >
+          </modal-button-new>
+          <modal-button-close></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,451 @@
+<style>
+    show-username  .show-user__title span{
+        white-space: nowrap;
+    }
+</style>
+
+<my-content>
+    <content-content>
+        <div ng-controller="task_department_controller as ctrlChild"
+            class="content-add-task task-add-new-task task-department-feature" style="margin-left: 20px;">
+            <div ng-include="ctrlChild._urlInsertStrategicModal"></div>
+            <div ng-include="ctrlChild._urlUpdateStrategicModal"></div>
+            <div ng-include="ctrlChild._urlDeleteStrategicModal"></div>
+            <div ng-include="ctrlChild._urlObtainedStrategicModal"></div>
+            <div ng-include="ctrlChild._urlInsertObjectModal"></div>
+            <div ng-include="ctrlChild._urlUpdateObjectModal"></div>
+            <div ng-include="ctrlChild._urlDeleteObjectModal"></div>
+            <div ng-include="ctrlChild._urlObtainedObjectModal"></div>
+
+            <div ng-include="ctrlChild._urlInsertModal"></div>
+            <div ng-include="ctrlChild._urlDeleteModal"></div>
+            <div ng-include="ctrlChild._urlUpdateModal"></div>
+            <h5>{{'AddFile'|l}}</h5>
+            <div class="row part">
+                <div class="col-md-6" style="border: 1px solid #d1d0d0;
+                                            padding: 0;
+                                            box-shadow: 0 7px 12px 0 rgba(0,0,0,.18), 0 4px 2px 0 rgba(0,0,0,.15);">
+                    <div class="row part">
+                        <div class="col-md-6">
+                            <div ng-if="!ctrlChild._insertExcel.excelFile.length" class="no-data">
+                                {{'NoAttachment'|l}}
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrlChild._insertExcel.excelFile">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                <attachment-just-show my-item="item"></attachment-just-show>
+                                            </td>
+                                            <td><i class="fas fa-times text-danger"
+                                                    ng-click="ctrlChild.removeExcelFile_insert(item)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                            colspan=" 0">
+                                            <div class="diskuf-uploader">
+                                                <span class="wd-fa-add-file-light">
+                                                    <span class="wd-fa-add-file-light-text">
+                                                        <span class="wd-fa-add-file-light-title">
+                                                            <span
+                                                                class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                        </span>
+                                                        <span
+                                                            class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input class="diskuf-fileUploader wd-test-file-light-inp " type="file"
+                                                    file-reading-excel-template="ctrlChild._insertExcel.excelFile"
+                                                    size="1"
+                                                    file-func-excel-template="ctrlChild.insertNewTaskExcel(params)"
+                                                    style="width:100%;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 sample-file-div">
+                    <div class="sample-file"><span>{{'DownloadSampleFile'|l}}: </span>
+                        <button type="button" ng-click="ctrlChild.loadTemplate()"
+                            ng-disabled="ctrlChild.loadingTemplate" style="padding: 0 7px;
+                            margin-left: 5px;
+                            box-shadow: none;
+                            display: flex;
+                            justify-content: space-around;
+                            align-items: center;
+                            border-radius: 5px;
+                            height: 30px;
+                            width: 100px;
+                            font-weight: bold;" class="btn btn-outline-primary btn-sm">
+                            <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;"
+                                class="fas fa-file-excel"></i>
+                            {{'Download'|l}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row part" ng-if="ctrlChild._insertExcel.excelFile.length">
+                <div class="col-md-12 button-group-add-task">
+                    <button type="button" style="padding: 0 7px;
+                                        margin-left: 15px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: bold;
+                                        width: 100px;
+                                        " class="btn btn-primary btn-sm" ng-click="ctrlChild.import_excel_task()"
+                        ng-class="{
+                                            'disabled-addnew': !ctrlChild.isWatched }"
+                        ng-disabled="!ctrlChild.isWatched">
+                        {{'New'|l}}
+                    </button>
+                    <button type="button" style="padding: 0 7px;
+                                        margin-left: 15px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        width: 100px;
+                                        font-weight: bold;" class="btn btn-outline-primary btn-sm"
+                        ng-click="ctrlChild.removeExcelFile_insert(ctrlChild._insertExcel.excelFile[0])">
+                        Huỷ
+                    </button>
+                </div>
+            </div>
+            <div ng-if="ctrlChild.dataExcelConverted.length" class="task-department table-responsive table-visible">
+                <div class="content card-body" style="padding-bottom: 10px">
+                    <div class="label">
+                        <i class="fas fa-tasks"></i>&nbsp;{{'Task'|l}}
+                    </div>
+                    <div class="search-nav-container">
+                        <div class="search">
+                            <input-search load-data-func="ctrlChild.searchTasks(params)" />
+                        </div>
+                        <div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-end">
+                                    <li class="page-item" ng-class="{'disabled': ctrlChild.currentPage == 1}" ng-click="ctrlChild.previousPage()">
+                                        <a class="page-link" href="#" tabindex="-1">{{'PreviousPage'|l}}</a>
+                                    </li>
+                                    <li class="page-item" ng-repeat="page in ctrlChild.pages track by $index" ng-class="{'active': ctrlChild.currentPage == page}" ng-click="ctrlChild.setPage(page)">
+                                        <a class="page-link" href="#">{{page}}</a>
+                                    </li>
+                                    <li class="page-item" ng-class="{'disabled': ctrlChild.currentPage == ctrlChild.totalPages}" ng-click="ctrlChild.nextPage()">
+                                        <a class="page-link" href="#">{{'NextPage'|l}}</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-hover table-excel-import" ng-class="{'no-data':ctrlChild.tasks.length === 0}">
+                        <thead>
+                            <tr>
+                                <td class="expand-20">
+                                    <p>{{'Title'|l}}&nbsp;<span style="color: red;">*</span></p>
+                                    
+                                </td>
+                                <td class="expand-20">
+                                    <p>{{'Content'|l}}</p>
+                                </td>
+                                <td class="expand-5">
+                                    <p>{{'FromDate'|l}}&nbsp;<span style="color: red;">*</span></p>
+                                    
+                                </td>
+                                <td class="expand-5">
+                                    <p>{{'ToDate'|l}}&nbsp;</p>
+                                    
+                                </td>
+                                <td class="expand-8-5">
+                                    <p>{{'HostPerson'|l}}</p>
+                                </td>
+                                <td class="expand-8-5">
+                                    <p>{{'Coordinator'|l}}</p>
+                                </td>
+                                <td class="expand-8-5">
+                                    <p>{{'Observer'|l}}</p>
+                                <td class="expand-5">
+                                    <p>{{'Priority'|l}}&nbsp;<span style="color: red;">*</span></p>
+                                </td>
+
+                                <td class="expand-8-5">
+                                    <p>{{'Label'|l}}&nbsp;<span style="color: red;"></span></p>
+                                </td>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="taskList">
+                            <tr ng-repeat="(index, item) in ctrlChild.paginatedData | limitTo: 10">
+                                <td>
+                                    <div class="errorMess">
+                                        <span ng-repeat="errorItem in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'title'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details }}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <input ng-blur="ctrlChild.valueImportChange()" class="colorBlue custom-input break-line" type="text" ng-model="item.title">
+                                </td>
+                                <td>
+                                    <div class="errorMess">
+                                        <span ng-repeat="(key, errorItem) in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'content'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details}}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <textarea ng-blur="ctrlChild.valueImportChange()" class="custom-input break-line" type="text" ng-model="item.content"></textarea>
+                                </td>
+                                <td>
+                                    <div class="errorMess">
+                                        <span ng-repeat="(key, errorItem) in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'from_date'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details}}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="fromDateExcel">
+                                        {{(item.from_date | date: 'dd/MM/yyyy') || '' }}
+                                        <div class="labelDatePicker">
+                                            <label class="datepickerImportExcel">
+                                                <input ng-change="ctrlChild.valueImportChange()" type="date" value="item.from_date" ng-model="item.from_date">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="errorMess">
+                                        <span ng-repeat="(key, errorItem) in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'to_date'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details}}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="fromDateExcel">
+                                        {{(item.to_date | date: 'dd/MM/yyyy') || '' }}
+                                        <div class="labelDatePicker">
+                                            <label class="datepickerImportExcel">
+                                                <input type="date" value="item.to_date" ng-change="ctrlChild.valueImportChange()" ng-model="item.to_date">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="colorBlue">
+                                    <div class="errorMess" ng-hide="ctrlChild.isOpenAddmorePeople === item.id && ctrlChild.togglePerson === 'main_person'">
+                                        <span ng-repeat="(key, errorItem) in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'main_person'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details}}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div data-toggle="dropdown">
+                                        <span class="d-flex flex-column align-items-start" style="cursor: pointer; font-weight: 700;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span ng-show="item.main_person.length===0">{{'PickPerson'|l}}</span>
+                                            <span class="mt-1 " ng-repeat="mp in item.main_person">
+                                                <div style="display: inline-block;">
+                                                    <div class="userEmployee">
+                                                        <show-username without-tooltip="true" username="mp" hide-image="true"></show-username>
+                                                        <span style="padding-left: 5px;" ng-click="ctrlChild.pickMainUser(item,{username:mp},$event, 'main_person')">x</span>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </span>
+                                        <div class="dropdown-menu dropdown-primary quickicon-container" style="box-shadow:none;">
+                                            <div class="quickicon-content-language">
+                                                <div class="text-muted quickicon-header" ng-click="ctrlChild.stopPropagation($event)">
+                                                    <input type="text" ng-model="item.searching" />
+                                                </div>
+                                                <a class="dropdown-item" ng-click="ctrlChild.pickMainUser(item,emp,$event,'main_person')" ng-repeat="emp in ctrlChild.listEmployeeAPI|filter:item.searching">
+                                                    <i class="fa fa-check-square" ng-show="item.check_main_person[emp.username]"></i>
+                                                    <i class="fa fa-square" ng-hide="item.check_main_person[emp.username]"></i>&nbsp;{{emp.title}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="colorBlue">
+                                    <div class="errorMess" ng-hide="ctrlChild.isOpenAddmorePeople === item.id && ctrlChild.togglePerson === 'participant'">
+                                        <span ng-repeat="(key, errorItem) in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'participant'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details}}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div data-toggle="dropdown">
+                                        <span class="d-flex flex-column align-items-start" style="cursor: pointer; font-weight: 700;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span ng-show="item.participant.length===0">{{'PickPerson'|l}}</span>
+                                            <span class="mt-1" ng-repeat="mp in item.participant">
+                                                <div style="display: inline-block;">
+                                                    <div class="userEmployee">
+                                                        <show-username without-tooltip="true" username="mp" hide-image="true"></show-username>
+                                                        <span style="padding-left: 5px;" ng-click="ctrlChild.pickMainUser(item,{username:mp},$event, 'participant')">x</span>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </span>
+                                        <div class="dropdown-menu dropdown-primary quickicon-container" style="box-shadow:none;">
+                                            <div class="quickicon-content-language">
+                                                <div class="text-muted quickicon-header" ng-click="ctrlChild.stopPropagation($event)">
+                                                    <input type="text" ng-model="item.searching" />
+                                                </div>
+                                                <a class="dropdown-item" ng-click="ctrlChild.pickMainUser(item,emp,$event, 'participant')" ng-repeat="emp in ctrlChild.listEmployeeAPI|filter:item.searching">
+                                                    <i class="fa fa-check-square" ng-show="item.check_participant[emp.username]"></i>
+                                                    <i class="fa fa-square" ng-hide="item.check_participant[emp.username]"></i>&nbsp;{{emp.title}}
+                                                    {{item.check_participant[emp.username]}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="colorBlue">
+                                    <div class="errorMess" ng-hide="ctrlChild.isOpenAddmorePeople === item.id && ctrlChild.togglePerson === 'observer'">
+                                        <span ng-repeat="(key, errorItem) in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'observer'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details}}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div data-toggle="dropdown">
+                                        <span class="d-flex flex-column align-items-start" style="cursor: pointer; font-weight: 700;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span ng-show="item.observer.length===0">{{'PickPerson'|l}}</span>
+                                            <span class="mt-1" ng-repeat="mp in item.observer">
+                                                <div style="display: inline-block;">
+                                                    <div class="userEmployee">
+                                                        <show-username without-tooltip="true" username="mp" hide-image="true"></show-username>
+                                                        <span style="padding-left: 5px;" ng-click="ctrlChild.pickMainUser(item,{username:mp},$event, 'observer')">x</span>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </span>
+                                        <div class="dropdown-menu dropdown-primary quickicon-container" style="box-shadow:none;">
+                                            <div class="quickicon-content-language">
+                                                <div class="text-muted quickicon-header" ng-click="ctrlChild.stopPropagation($event)">
+                                                    <input type="text" ng-model="item.searching" />
+                                                </div>
+                                                <a class="dropdown-item" ng-click="ctrlChild.pickMainUser(item,emp,$event, 'observer')" ng-repeat="emp in ctrlChild.listEmployeeAPI|filter:item.searching">
+                                                    <i class="fa fa-check-square" ng-show="item.check_observer[emp.username]"></i>
+                                                    <i class="fa fa-square" ng-hide="item.check_observer[emp.username]"></i>&nbsp;{{emp.title}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="errorMess">
+                                        <span ng-repeat="(key, errorItem) in ctrlChild.listErrorExcelImport">
+                                            <span class="tooltipError" ng-if="index === errorItem.index && errorItem.property === 'priority'">
+                                                <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                <span class="tooltipErrorText">{{ errorItem.details}}</span>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="dropdownList">
+                                        <div class="dropdownText" ng-style="{'opacity': ctrlChild.searchText && ctrlChild.activeItemId === item.id && ctrlChild.togglePerson === 'priority' ? 0 : 1}" ng-click="ctrlChild.toggleDropdown(item.id, 'priority')">
+                                            <div ng-repeat="option in ctrlChild.priorityListImport">
+                                                <div class="priority-tag" ng-class=" {'critical-prio': item.priority === 1, 'high-prio': item.priority === 2, 'medium-prio': item.priority === 3, 'low-prio': item.priority === 4}" ng-if="item.priority === option.value" style="cursor:pointer;">
+                                                    {{ option.title }}
+                                                </div>
+                                            </div>
+                                            <div ng-if="!item.priority" style="cursor:pointer;">
+                                                ---
+                                            </div>
+                                        </div>
+                                        <div class="inputDropdown dropdownPriority" ng-show="ctrlChild.activeItemId === item.id && ctrlChild.togglePerson === 'priority'">
+                                            <ul class="dropdownValue">
+                                                <li ng-repeat="option in ctrlChild.priorityListImport | filter:ctrlChild.searchText" ng-click="ctrlChild.selectOption(index, option.value, item.id, 'priority')" style="cursor:pointer;">
+                                                    {{ option.title }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <pick-modal-advance-multi-2
+                                        disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','import_excel_task','doing')"
+                                        load-data-func="ctrlChild.loadLabel_InsertTranferTask(params)"
+                                        id-value="item.label"
+                                        load-details-func="ctrlChild.loadLabel_details_InsertTranferTask(params)"
+                                        localized="false"
+                                        pick-func="ctrlChild.pickLabel_InsertTranferTask(params, item)"
+                                        enable-insert-new-item="true"
+                                        hiddenLabel="true"
+                                        item-show="1"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div ng-if="ctrlChild.showPopup" class="popupImportExcel">
+                <div class="popup-content">
+                    <div class="title-popup"
+                        ng-class="{'error': ctrlChild.titleType === 'error', 'success':ctrlChild.titleType === 'success'}">
+                        {{ctrlChild.titleInputExcelPopup}}
+                    </div>
+                    <span class="close x-icon" ng-click="ctrlChild.closePopup()"></span>
+                    <div class="content-popup">
+                        <p>{{ctrlChild.contentinputExcelPopup}}</p>
+                    </div>
+                    <div class="button-add-task-popup d-flex d-flex" style="justify-content: space-around; ">
+                        <div class="group-button-input">
+                            <button ng-if="ctrlChild.titleType == 'success'" type="button" style="
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: bold;" class="btn btn-outline-primary btn-sm"
+                                     link-details
+                                     link-details-display="{{ctrlChild.currentDepartment.title[$root.Language.current]}}"
+                                     link-details-url="/task-details?department"
+                                     link-details-route="task-details"
+                                     department="{{ctrlChild.currentDepartment}}"
+                                     link-details-step="step-1"
+                                     ng-click="ctrlChild.reloadPage()"
+                                    >
+                                    {{'ViewTaskDetail'|l}}
+                            </button>
+                        </div>
+                        <div class="group-button-input">
+
+                            <button
+                                ng-if="ctrlChild.titleType == 'success'" type="button"
+                                style="box-shadow: none; display: flex; justify-content: space-around; align-items: center; border-radius: 5px; height: 30px; font-weight: bold; cursor: pointer;" class="btn btn-outline-primary btn-sm"
+                                ng-click="ctrlChild.closePopup(); ctrlChild.removeExcelFile_insert(ctrlChild._insertExcel.excelFile[0])"
+                            >
+                                {{'KeepAddingTask'|l}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+    </content-content>
+</my-content>

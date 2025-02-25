@@ -1,0 +1,41 @@
+<div id="question_answer_permission">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng Hỏi đáp
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Education.QnA.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Education.QnA.Use'"/>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng Chuyển tiếp câu hỏi
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Education.ForwardQuestion.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Education.ForwardQuestion.Use'"/>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng Câu Trả Lời Sinh Viên
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Education.StudentQuestion.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Education.StudentQuestion.Use'"/>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng Cài Đặt
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Education.TypeQuestion.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Education.TypeQuestion.Use'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

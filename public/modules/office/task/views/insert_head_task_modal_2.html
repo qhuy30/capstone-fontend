@@ -1,0 +1,165 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Head_Task_Insert_In_Department_Dashboard_2">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'AddTask'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="insertTaskForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span><span class="require-sympton">*</span>
+                                </div>
+                                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert','doing')"
+                                    type="text" ng-model="ctrl._insert_value.title" class="form-control"
+                                    name="insert_task_title" placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': insertTaskForm.insert_task_title.$invalid }" required />
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <date
+                                id-value="ctrl._insert_value.from_date"
+                                func="ctrl.chooseFromDate_insert(params)"
+                                label="{{'FromDate'|l}}"
+                                disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert','doing')"
+                                require="true"
+                                ></date>
+                            <div class="errorMsg" ng-show="ctrl.fromDate_ErrorMsg">{{ ctrl.fromDate_ErrorMsg }}</div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <date
+                                id-value="ctrl._insert_value.to_date"
+                                func="ctrl.chooseToDate_insert(params)"
+                                label="{{'ToDate'|l}}"
+                                disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert','doing')"
+                                require="true"
+                            />
+                            <div class="errorMsg" ng-show="ctrl.toDate_ErrorMsg">{{ ctrl.toDate_ErrorMsg }}</div>
+                        </div>
+    
+                        <div class="d-flex align-items-center col-md-4 pr-0">
+                            <div class="input-group w-100" style="width: auto; align-items: center">
+                                <label class="input-group-text ng-binding" style="border-top-right-radius: 0;border-bottom-right-radius: 0;padding-top: 4.7px;padding-bottom: 4.7px;" for="estimate">
+                                    {{'RequestCompletedWithin'|l}}
+                                </label>
+                                <input type="number" id="estimate" ng-model="ctrl._insert_value.estimate"
+                                    class="form-control" style="height: 32px" min="1" step="1" required 
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" />
+                                <span class="input-group-text ng-binding" style="padding-bottom: 4.7px;padding-top: 4.7px;border-top-left-radius: 0;border-bottom-left-radius: 0;">
+                                    {{'hours'|l}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <organization
+                                    label="{{'Department'|l}}"
+                                    id-value="ctrl._insert_value.currentDepartment"
+                                    select-func="ctrl.chooseDepartment_insert(params)"
+                                    require="true"
+                                    disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert','doing')"
+                                />
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <select-multi-users-by-rule
+                                    label="{{'Observer'|l}}"
+                                    require="true"
+                                    pick-func="ctrl.pickObserver_insert(params)"
+                                    id-value="ctrl._insert_value.observer"
+                                    rule="Office.Task.observerExternal"
+                                />
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <pick-modal-directory
+                                    extend="ctrl.TaskPriority"
+                                    pick-func="ctrl.chooseTaskPriority_insert(params)"
+                                    id-value="ctrl._insert_value.priority"
+                                    label="{{'Priority'|l}}"
+                                />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <pick-modal-advance-multi
+                                label="{{'Label'|l}}"
+                                disable="$root.statusValue.get(ctrl._ctrlName,'Task','insert','doing')"
+                                load-data-func="ctrl.loadLabel(params)" id-value="ctrl._insert_value.label"
+                                load-details-func="ctrl.loadLabel_details(params)" localized="false"
+                                pick-func="ctrl.pickLabel_insert(params)" enable-insert-new-item="true"
+                                insert-item-func="ctrl.insertLabel(params)"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea id="insertHeadTask_content" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row part">
+                        <div class="col-md-6">
+                            <div ng-if="ctrl._insert_value.files.length == 0" class="no-data">{{'NoAttachment'|l}}</div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl._insert_value.files">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                <attachment-just-show my-item="item"></attachment-just-show>
+                                            </td>
+                                            <td>
+                                                <i style="cursor: pointer;" class="fas fa-times text-danger" ng-click="ctrl.removeFile_insert(item)"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                            colspan="0">
+                                            <div class="diskuf-uploader">
+                                                <span class="wd-fa-add-file-light">
+                                                    <span class="wd-fa-add-file-light-text">
+                                                        <span class="wd-fa-add-file-light-title">
+                                                            <span class="wd-fa-add-file-light-title-text">{{'Attachment'|l}}</span>
+                                                        </span>
+                                                        <span
+                                                            class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                                                    file-reading="ctrl._insert_value.files" size="1" multiple
+                                                    style="width:100%;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new
+                    modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-new-objname="Task"
+                    modal-button-new-actionname="insert"
+                    modal-button-new-invalid="insertTaskForm.$invalid || ctrl.fromDate_ErrorMsg || ctrl.toDate_ErrorMsg || ctrl._insert_value.currentDepartment === null"
+                    modal-button-new-func="ctrl.insert()"
+                />
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

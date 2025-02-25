@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="label">
+    {{label}}
+  </div>
+  <div class="value">
+    <div class="show-value">
+      <span ng-repeat="item in idValue track by $index" ng-if="idValue.length>=4"> 
+        <show-username username="item"  just-name="true" ng-if="$index<5">
+        </show-username>&nbsp;&nbsp;
+        <span ng-if="$index==5">,...</span>
+      </span>
+      <span ng-repeat="item in idValue track by $index" ng-if="idValue.length<4"> 
+        <show-username username="item"  >
+        </show-username>&nbsp;&nbsp;
+      </span>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary " ng-click="open()" ng-disabled="disable" modal-toggle="#{{_ctrlName}}">
+    {{'Pick'|l}}&nbsp;<i class="fas fa-external-link-alt"></i>
+  </button>
+  <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+    <i class="fas fa-times"></i>
+  </button>
+  <div class="modal fade" tabindex="-1" role="dialog" id="{{_ctrlName}}">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{label}}" modal-header-id={{_ctrlName}}></modal-header>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 part">
+
+              <div class="tool" >
+                <div class="search">
+                  <input type="text" ng-model="search" my-watch-text-input
+                    my-scope="search" my-func="refreshData_user(currentDepartment)"
+                    my-start="_notyetInit" placeholder="{{'FindByName'|l}}">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+              
+              <ul class="department-container">
+                <li ng-repeat="item in Departments">
+                  <div class="department-item">
+                    <div class="title">
+                      <span ng-click="expandDepartment(item)">
+                        <span ng-show="item.canExpand">
+                          <i class="fas fa-angle-right" ng-show="!item.open" ></i>
+                          <i class="fas fa-angle-down" ng-show="item.open"></i>
+                        </span>
+                        &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="user-container" ng-repeat="u in item.users" ng-show="item.open">
+                    <div class="user-item">
+                      <div class="title">
+                        <div class="show-user__img" >
+                          <img ng-if="u.avatar.url" ng-src="{{u.avatar.url}}" />
+                        </div>
+                        <div class="show-user__title" style="cursor: default">
+                          &nbsp;<span >{{u.title}}</span>
+                        </div>
+              
+                      <div  class="show-user__status" ng-if="u.online " >
+                      </div>
+                      </div>
+                      <div class="tool"><i class="material-icons" ng-click="pick(u.username)">trending_flat</i></div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+            <div class="col-md-6 part selected-part">
+              <div class="table-responsive" style="margin-top: 5px;">
+                <table class="table table-sm table-bordered">
+                  <thead>
+                    <tr>
+                      <td>
+                        
+                      </td>
+                      <td>
+                        {{'SelectedPart'|l}}
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in idValue track by $index">
+                      <td style="text-align: center;padding-top: 8px;">
+                        <i class="material-icons" ng-click="remove(item)">clear</i>
+                      </td>
+                      <td>
+                        <show-username username="item" >
+                        </show-username>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" ng-click="close()">{{'Close'|l}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

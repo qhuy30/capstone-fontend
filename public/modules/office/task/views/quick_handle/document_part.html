@@ -1,0 +1,197 @@
+<div class="task-part"
+ng-show="
+[
+    'Office.DispatchArrived.Lead',
+    'Office.DispatchArrived.ApproveLevel1',
+    'Office.DispatchArrived.Confirm',
+    'Office.DispatchArrived.FollowDA'
+]|checkRule
+">
+    <div class="title" id="headingDocument">
+        <div style="display: inline-block;" class="label" ng-click="ctrlChild.toogleCollapseDocument()" class="btn btn-link"
+            data-toggle="collapse" data-target="#collapseDocument" aria-expanded="true"
+            aria-controls="collapseDocument" style="font-style: bold;">
+            <i class="fas fa-angle-down" ng-show="ctrlChild.collapseDocument"></i><i class="fas fa-angle-right"
+            ng-show="!ctrlChild.collapseDocument"></i>&nbsp;&nbsp;<label>{{'DispatchArrived'|l}}&nbsp;(<span>{{ctrlChild.totalItems_document}}</span>)</label>&nbsp;&nbsp;
+        </div>
+        <div style="display: inline-block;" ng-hide="ctrlChild.collapseDocument === false">
+            <span class="overdue">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_needtohandle_document"
+                    ng-change="ctrlChild.refreshData_document()" />&nbsp;{{'NeedToHandle'|l}}
+            </span>&nbsp;&nbsp;
+            <span class="gonnalate">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_gonnalate_document"
+                    ng-change="ctrlChild.refreshData_document()" />&nbsp;{{'GonnaLate'|l}}
+            </span>
+        </div>
+    </div>
+    <div id="collapseDocument" class="collapse" ng-class="{'show':ctrlChild.collapseDocument}" aria-labelledby="headingDocument">
+    <div class="the-content">
+        <div class="table-responsive">
+            <table class="table table-sm table-hover" ng-class="{'no-data':ctrlChild.documents.length ===0}">
+                <thead>
+                    <tr>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 30px;">#</td>
+                        <td style="font-weight: 600;color: #212529;vertical-align: middle; text-align: center; width: 100px;">
+                            {{'ArrivedDate'|l}}</td>
+                        <td style="font-weight: 600;color: #212529;vertical-align: middle; text-align: center; width: 80px;">{{'DispatchArrivedNumber'|l}}</td>
+                        <td style="font-weight: 600;color: #212529;vertical-align: middle; text-align: center;">{{'PlaceOfDispatchArrived'|l}}</td>
+                        <td style="font-weight: 600;color: #212529;vertical-align: middle; text-align: center;">{{'NumberCodeDocument'|l}}</td>
+                        <td class="tool">
+                            <div class="search" style="margin-bottom: 5px;">
+                                <input type="text" ng-model="ctrlChild._searchFilter_document" my-watch-text-input
+                                    my-scope="ctrlChild._searchFilter_document"
+                                    my-func="ctrlChild.refreshData_document()"
+                                    my-start="!ctrlChild._notyetInit_document"
+                                    placeholder="{{'Find task by name and code'|l}}">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div style="color: #212529; font-weight: 600;">
+                                {{'TypeDocumentAndExcerpt'|l}}
+                            </div>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 100px;">
+                            {{'State'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 160px;">
+                            {{'Processing time'|l}}
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center;">
+                            {{'Action'|l}}
+                        </td>
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in ctrlChild.documents track by $index">
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center;">
+                            <strong> {{$index +1}}</strong>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 100px;">
+                            <time-show time-show-type="justdate" time-show-data="item.incomming_date" bind-object="true">
+                            </time-show>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle; text-align: center; width: 80px;">
+                            <a class="text-dark" link-details link-details-display="{{item.title}}"
+                                link-details-url="/da-details?{{item._id}}"
+                                link-details-route="da-details">{{item.incoming_number}}</a>
+                        </td>
+                        <td>{{item.sending_place}}</td>
+                        <td><strong>{{item.symbol_number}}</strong></td>
+                        <td style="vertical-align: middle;">
+                            <div class="text-muted text-nowrap" title="{{item.content}}">
+                                <get-field-directory id-value="item.type" extend="ctrlChild.KindOfDispatchTo_Config"
+                                    localization="true"></get-field-directory> -
+
+                                {{item.content | subString:20:'...'}}
+                            </div>
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                            <show-state id-value="item.state"></show-state>
+                            <!-- <show-status id-value="item.status"></show-status>
+                            <br>
+                            <span class="mt-1 d-block" style="font-size: 0.7rem; color: grey;text-wrap: nowrap;">
+                              {{'by'|l}}
+                              <show-username-onlyname hide-image="true"
+                                username="item.events[item.events.length-1].username "></show-username-onlyname>
+                            </span> -->
+                        </td>
+                        <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                            <time-show time-show-data="item.expried" time-show-type="long"></time-show>
+                        </td>
+                        <td class="text-start">
+                            <!-- ng-hide="item.employee !== $root.logininfo.data.employee
+                                    || item.username !== $root.logininfo.data.username" -->
+                            
+                            <button-approval-item
+                                class="mr-2"
+                                ng-if="item.allow_forward_CVP"
+                                button-approval-item-modal="#modal_DA_Forward_quick"
+                                button-approval-item-func="ctrlChild.prepareAssessDA(params)"
+                                button-approval-item-params="{item:item, action:'forward_CVP'}"
+                                button-label="{{'SentToCVP'}}"
+                                button-edit-item-class="my-1"
+                            />
+                    
+                            <button-approval-item
+                                class="mr-2"
+                                ng-if="item.allow_forward_BGH"
+                                button-approval-item-modal="#modal_DA_Forward_quick"
+                                button-approval-item-func="ctrlChild.prepareAssessDA(params)"
+                                button-approval-item-params="{item:item, action:'forward_BGHOpinion'}"
+                                button-label="{{'RequestBGHOpinion'}}"
+                                button-edit-item-class="my-1"
+                            />
+                    
+                            <button-approval-item
+                                class="mr-2"
+                                ng-if="item.allow_forward_unit"
+                                button-approval-item-modal="#modal_DA_Forward_quick"
+                                button-approval-item-func="ctrlChild.prepareAssessDA(params)"
+                                button-approval-item-params="{item:item, action:'forward_unit'}"
+                                button-label="{{'ForwardtoUnit'}}"
+                                button-edit-item-class="my-1"
+                            />
+                    
+                            <button-approval-item
+                                class="mr-2"
+                                ng-if="item.allow_return_CVP"
+                                button-approval-item-modal="#modal_DA_Forward_quick"
+                                button-approval-item-func="ctrlChild.prepareAssessDA(params)"
+                                button-approval-item-params="{item:item, action:'return_CVP'}"
+                                button-label="{{'ReturnCVP'}}"
+                                button-edit-item-class="my-1"
+                            />
+                    
+                            <modal-button-approve-dispatch
+                                class="mr-2"
+                                ng-if="item.allow_reciver_work"
+                                modal-button-approve-ctrlname="{{ctrlChild._ctrlName}}"
+                                modal-button-approve-objname="DispatchArrived"
+                                modal-button-approve-actionname="forward"
+                                modal-button-approve-invalid="forwardForm.$invalid"
+                                modal-button-approve-func="ctrlChild.transfer_department_approve(params)"
+                                modal-button-approval-params="item"
+                                modal-button-approve-label="{{'AcceptResponsibilities'}}"
+                                modal-header-content="{{'AcceptResponsibilities'|l}}"
+                                modal-button-confirm-text="{{'Are You Sure You Want to Take the Job?'}}"
+                                modal-button-approve-type="small"
+                                modal-button-approve-params="item"
+                                function-apply-suggestions="ctrlChild.function_apply_suggestions_da"
+                            />
+                    
+                            <modal-button-approve-dispatch
+                                class="mr-2"
+                                ng-if="item.allow_seen_work"
+                                modal-button-approve-ctrlname="{{ctrlChild._ctrlName}}"
+                                modal-button-approve-objname="DispatchArrived"
+                                modal-button-approve-actionname="forward"
+                                modal-button-approve-invalid="forwardForm.$invalid"
+                                modal-button-approve-func="ctrlChild.seen_work(params)"
+                                modal-button-approve-label="{{'MarkAsViewed'}}"
+                                modal-header-content="{{'MarkAsViewed'|l}}"
+                                modal-button-confirm-text="{{'Are You Sure You Have Seen It?'}}"
+                                modal-button-approve-type="small"
+                                modal-button-approve-params="item"
+                                function-apply-suggestions="ctrlChild.function_apply_suggestions_da"
+                            />
+                          </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div ng-if="ctrlChild.documents.length ==0" class="no-data">
+            {{'NoData'|l}}
+        </div>
+        <pagination ng-show="ctrlChild.totalItems_document>0" pagination-ctrlname="{{ctrlChild._ctrlName}}"
+            pagination-objname="DispatchArrived" pagination-actionname="count"
+            pagination-currentpage="ctrlChild.currentPage_document" pagination-noi="ctrlChild.numOfItemPerPage"
+            pagination-total="ctrlChild.totalItems_document" pagination-func="ctrlChild.load_document(params)">
+        </pagination>
+    </div>
+    </div>
+</div>
+<div ng-include="ctrlChild._urlForwardModal"></div>

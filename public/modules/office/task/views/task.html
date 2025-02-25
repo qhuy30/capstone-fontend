@@ -1,0 +1,64 @@
+<my-content class="task-feature">
+    <content-content>
+        <div class="card" ng-controller="task_controller as ctrl">
+            <div class="card-body">
+                <div class="direction-container">
+                    <div class="direction-content">
+                        <div class="direction-item" style="font-size: 0.8rem;" 
+                            ng-class="{'active': ctrl.tab==='quickhandle'}"
+                            ng-click="ctrl.switchTab('quickhandle')">
+                            <i class="fab fa-gripfire"></i>&nbsp;&nbsp;{{'fast job processing'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;" 
+                            ng-class="{'active': ctrl.tab==='department'}"
+                            ng-click="ctrl.switchTab('department')"
+                            ng-if="['Office.Task.Show_DepartmentTab']|checkRule">
+                            <i class="fas fa-users"></i>&nbsp;&nbsp;{{'Department'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;"
+                            ng-class="{'active': ctrl.tab==='task_external'}"
+                            ng-click="ctrl.switchTab('task_external')"
+                            ng-if="['Office.Task.CreateExternal', 'Office.Task.observerExternal']|checkRule"
+                            >
+                            <i class="fas fa-users"></i>&nbsp;&nbsp;{{'TaskExternal'|l}}
+                        </div>
+                        <div class="direction-item " style="font-size: 0.8rem;"
+                            ng-class="{'active': ctrl.tab==='project'}"
+                            ng-click="ctrl.switchTab('project')"
+                            ng-if="['Office.Task.Show_ProjectTab']|checkRule"
+                            >
+                            <i class="fas fa-project-diagram"></i>&nbsp;&nbsp;{{'Project'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;"
+                            ng-class="{'active': ctrl.tab==='personal'}"
+                            ng-click="ctrl.switchTab('personal')">
+                            <i class="fas fa-user-clock"></i>&nbsp;&nbsp;{{'Personal'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;"
+                            ng-class="{'active': ctrl.tab==='statistic'}"
+                            ng-click="ctrl.switchTab('statistic')"
+                            ng-if="['Office.Task.Show_StatisticTab']|checkRule">
+                            <i class="fas fa-chart-pie"></i>&nbsp;&nbsp;{{'Statistic'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;"
+                            ng-class="{'active': ctrl.tab==='my_calendar'}"
+                            ng-click="ctrl.switchTab('my_calendar')">
+                            <i class="far fa-calendar-alt"></i>&nbsp;&nbsp;{{'My calendar'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;" 
+                            ng-class="{'active': ctrl.tab==='taskmanagement'}"
+                            ng-click="ctrl.switchTab('taskmanagement')"
+                            ng-if="['Office.Task.Show_TaskManagementTab']|checkRule">
+                            <i class="fas fa-tasks"></i>&nbsp;&nbsp;{{'LabelManagement'|l}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="content-container">
+                    <div ng-include="ctrl._urlContent"></div>
+                </div>
+
+            </div>
+        </div>
+    </content-content>
+</my-content>

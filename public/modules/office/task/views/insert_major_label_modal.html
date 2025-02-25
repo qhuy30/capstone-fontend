@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal_MajorLabel_Insert" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'AddNewMajorLabel'|l}}"></modal-header>
+            <div class="modal-body">
+                <form name="insertForm">
+                    <div class="form-group col-md-12">
+                        <div class="input-prepend input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Label','insert','doing')"
+                                   type="text" ng-model="ctrlChild._insert_majorLabel_value.title" class="form-control"
+                                   name="insert_title" placeholder="{{'InputTitle'|l}}"
+                                   ng-class="{ 'is-invalid': insertForm.insert_title.$invalid }" required />
+                        </div>
+                        <div class="pt-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" ng-model="ctrlChild._insert_majorLabel_value.labelChosen_type" name="insert_labelChosen_type"
+                                       id="insert_radio_all" value="all" ng-class="{ 'is-invalid': insertForm.insert_labelChosen_type.$invalid }" required>
+                                <label class="form-check-label font-weight-normal text-reset" for="insert_radio_all">{{'AllDepartments'|l}}</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" ng-model="ctrlChild._insert_majorLabel_value.labelChosen_type" name="insert_labelChosen_type"
+                                       id="insert_radio_specific" value="specific" ng-class="{ 'is-invalid': insertForm.insert_labelChosen_type.$invalid }" required>
+                                <label class="form-check-label font-weight-normal text-reset" for="insert_radio_specific">{{'SomeDepartments'|l}}</label>
+                            </div>
+                        </div>
+                        <div class="item pt-3" ng-if="ctrlChild._insert_majorLabel_value.labelChosen_type === 'specific'">
+                            <div class="label">
+                                <organization-multi  label="{{'Department'|l}}"
+                                                     id-value="ctrlChild._insert_majorLabel_value.department"
+                                                     select-func="ctrlChild.handleDepartmentLabel(params)"
+                                >
+                                </organization-multi>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrlChild._ctrlName}}"
+                                  modal-button-new-objname="Label"
+                                  modal-button-new-actionname="insert"
+                                  modal-button-new-invalid="insertForm.$invalid || (ctrlChild._insert_majorLabel_value.labelChosen_type !== 'all' && !ctrlChild._insert_majorLabel_value.department.length)"
+                                  modal-button-new-func="ctrlChild.insert_label()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

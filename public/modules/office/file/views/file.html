@@ -1,0 +1,53 @@
+<my-content class="file-feature">
+    <content-content>
+        <div class="card" ng-controller="file_controller as ctrl">
+            <div class="card-body">
+                <div class="direction-container">
+                    <div class="direction-content">
+                        <div class="direction-item"
+                            ng-class="{'active': ctrl.tab==='general'}"
+                            ng-click="ctrl.switchTab('general')"
+                            ng-if="['Office.File.Use']|checkRule">
+                            <i
+                                class="fas fa-folder-open"></i>&nbsp;&nbsp;{{'General'|l}}
+                        </div>
+                        <div class="direction-item"
+                            ng-class="{'active': ctrl.tab==='department'}"
+                            ng-click="ctrl.switchTab('department')"
+                            ng-if="['Office.File.Use']|checkRule">
+
+                            <i
+                                class="fas fa-people-carry"></i>&nbsp;&nbsp;{{'Department'|l}}
+                        </div>
+                        <div class="direction-item "
+                            ng-class="{'active': ctrl.tab==='project'}"
+                            ng-click="ctrl.switchTab('project')"
+                            ng-if="['Office.File.Use']|checkRule">
+                            <i
+                                class="fas fa-project-diagram"></i>&nbsp;&nbsp;{{'Project'|l}}
+                        </div>
+                        <div class="direction-item"
+                            ng-class="{'active': ctrl.tab==='personal'}"
+                            ng-click="ctrl.switchTab('personal')"
+                            ng-if="['Office.File.Use']|checkRule">
+                            <i
+                                class="fas fa-user-clock"></i>&nbsp;&nbsp;{{'Personal'|l}}
+                        </div>
+                        <div class="direction-item"
+                            ng-class="{'active': ctrl.tab==='shareWithMe'}"
+                            ng-click="ctrl.switchTab('shareWithMe')"
+                            ng-if="['Office.File.Use']|checkRule">
+                            <i
+                                class="fas fa-share-alt-square"></i>&nbsp;&nbsp;{{'ShareWithMe'|l}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="content-container">
+                    <div ng-include="ctrl._urlContent"></div>
+                </div>
+
+            </div>
+        </div>
+    </content-content>
+</my-content>

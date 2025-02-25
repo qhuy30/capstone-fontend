@@ -1,0 +1,26 @@
+<a class="waves-effect ringbell-header-item da_department_read_dispatch_arrived"
+    href="/da-details?code={{item.params.code}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span >
+                {{'DepartmentLeader'|l}} 
+                <span class="department">
+                    <show-department department="item.params.department_action_by"></show-department>
+                </span>
+                <span class="ringbell-action success">{{'Seen'|l}}</span>
+                <span class="code">{{item.params.code}}</span>
+            </span>
+        </div>
+   
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

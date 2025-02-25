@@ -1,0 +1,406 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_LaborContract_Info">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'DetailsInformation'|l}}"></modal-header>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" ng-click="ctrl._info_value.tab ='attachment'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._info_value.tab =='attachment'}">{{'Attachment'|l}}
+             
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._info_value.tab ='general'">
+                        <a class="nav-link "
+                            ng-class="{'active':ctrl._info_value.tab =='general'}">{{'GeneralInfo'|l}}
+                        </a>
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._info_value.tab ='education'">
+                        <a class="nav-link" ng-class="{'active':ctrl._info_value.tab =='education'}">{{'Education'|l}}</a>
+        
+                    </li>
+                    <li class="nav-item" ng-click="ctrl._info_value.tab ='mission'">
+                        <a class="nav-link" ng-class="{'active':ctrl._info_value.tab =='mission'}">{{'MissionInfo'|l}}</a>
+   
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active show">
+                        <div ng-show="ctrl._info_value.tab=='attachment'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12" style="border-right: 1px solid #eee;">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <td>
+                                                            #
+                                                        </td>
+                                                        <td>
+                                                            {{'AttachedFile'|l}}
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ctrl._info_value.attachment">
+                                                        <td>{{$index+1}}</td>
+                                                        <td><attachment-show
+                                                            attachment-show-item="item"
+                                                            attachment-show-func="ctrl.loadfile(params)"
+                                                            attachment-show-params="{id:ctrl._info_value._id,name:item.name}"
+                                                            >
+                                                        </attachment-show></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+
+                        </div>
+                        <form class="form-horizontal " name="insertForm_general"
+                            ng-show="ctrl._info_value.tab=='general'">
+
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'BasicSalary'|l}}</span>
+                                            </div>
+                                            <input disabled type="number" ng-model="ctrl._info_value.basic_salary" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'TypeLaborContract'|l}}"
+                                            id-value="ctrl._info_value.type"
+                                            load-details-func="ctrl.loadTypeLaborContract_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'From'|l}}</span>
+                                            </div>
+                                            <input disabled type="date" ng-model="ctrl._info_value.from_date" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'To'|l}}</span>
+                                            </div>
+                                            <input disabled type="date" ng-model="ctrl._info_value.to_date" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'LastName'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.lastname" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'MidName'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.midname" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'FirstName'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.firstname" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'Living'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'ProvinceCity'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.living.city" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'District'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.living.district" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'Ward'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.living.ward" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'Address'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.living.address" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'PermanentAddress'|l}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'ProvinceCity'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.permanent_address.city" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'District'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.permanent_address.district" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'Ward'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.permanent_address.ward" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'Address'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.permanent_address.address" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-12">
+                                        <button-select-nl button-select-label="{{'TypeOfResidence'|l}}"
+                                            id-value="ctrl._info_value.type_residence"
+                                            load-details-func="ctrl.loadTypeResidence_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'PhoneNumber'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.phonenumber" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'Email'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.email" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'IdCard'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.idcard" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'Nationality'|l}}"
+                                            id-value="ctrl._info_value.nationality"
+                                            load-details-func="ctrl.loadNationality_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'Religion'|l}}"
+                                            id-value="ctrl._info_value.religion"
+                                            load-details-func="ctrl.loadReligion_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="insertForm_education"
+                            ng-show="ctrl._info_value.tab=='education'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'Education'|l}}"
+                                            id-value="ctrl._info_value.education"
+                                            load-details-func="ctrl.loadEducation_details(params)"
+                                            button-select-key="title"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'Degree'|l}}"
+                                            id-value="ctrl._info_value.degree"
+                                            load-details-func="ctrl.loadDegree_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'Specialized'|l}}"
+                                            id-value="ctrl._info_value.specialized"
+                                            load-details-func="ctrl.loadSpecialized_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <pick-modal-l 
+                                        id-value="ctrl._info_value.training_school"
+                                        load-func="ctrl.loadTrainingSchool(params)"
+                                            load-details-func="ctrl.loadDetails_TrainingSchool(params)"
+                                            count-func="ctrl.countTrainingSchool(params)"
+                                            pick-func="ctrl.pickTrainingSchool_insert(params)" show-field="title"
+                                            sort-field="title" num-of-item-per-page="30" label="{{'TrainingSchool'|l}}"
+                                            require="true" 
+                                            disable="true">
+                                        </pick-modal-l>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'GraduationYear'|l}}</span>
+                                            </div>
+                                            <input disabled type="text" ng-model="ctrl._info_value.graduation_year" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'StateManagement'|l}}"
+                                            id-value="ctrl._info_value.state_management"
+                                            load-details-func="ctrl.loadStateManagement_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'PoliticalTheory'|l}}"
+                                            id-value="ctrl._info_value.political_theory"
+                                            load-details-func="ctrl.loadPoliticalTheory_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'IT'|l}}"
+                                            id-value="ctrl._info_value.it"
+                                            load-details-func="ctrl.loadIT_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'EnglishDegree'|l}}"
+                                            id-value="ctrl._info_value.degree_english"
+                                            load-details-func="ctrl.loadDegreeEnglish_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal " name="insertForm_mission"
+                            ng-show="ctrl._info_value.tab=='mission'">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-6">
+                                        <organization label="{{'Department'|l}}"
+                                            id-value="ctrl._info_value.department"
+                                            disable="true">
+                                        </organization>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <button-select-nl button-select-label="{{'Competence'|l}}"
+                                            id-value="ctrl._info_value.competence"
+                                            load-details-func="ctrl.loadCompetence_details(params)"
+                                            button-select-key="title"
+                                            localization="true"
+                                            disable="true">
+                                        </button-select-nl>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

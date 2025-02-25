@@ -1,0 +1,277 @@
+@import "./variables";
+@import "./variables_aside";
+@import "./mixins_aside";
+@import "./mixins";
+
+.aside-menu {
+  position: relative;
+}
+
+.tool-friend-panel {
+  @include panel_small();
+  width: 100%;
+  padding-top: 10px;
+  text-transform: uppercase;
+  i {
+    float: right;
+    margin-left: 5px;
+    margin-right: 3px;
+  }
+}
+.receive-request-panel {
+  @include panel_small();
+  width: 100%;
+  font-weight: bold;
+  padding-left: 20px;
+  padding-right: 10px;
+  height: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  &__label {
+    float: left;
+  }
+  &__count {
+    float: right;
+    margin-right: 10px;
+    height: 18px;
+    width: 18px;
+    color: $sidebar--bgc;
+    background-color: $icon;
+    text-align: center;
+    border-radius: 3px;
+  }
+  &:hover {
+    .receive-request-panel__label {
+      color: $icon--hover;
+    }
+    .receive-request-panel__count {
+      background-color: $icon--hover;
+    }
+  }
+}
+.add-friend-block {
+  margin-top: 20px;
+  padding-left: 10px;
+  &__label {
+    text-transform: uppercase;
+    color: $icon;
+    font-weight: bold;
+  }
+  &__item {
+    display: block;
+    height: 40px;
+  }
+}
+.feature-panel-bottom {
+  display: block;
+  width: 100%;
+  @include panel_small();
+  padding: 0px;
+  border-top: 1px solid $border-panel-bottom;
+  background-color: $panel-bottom-bgc;
+  position: absolute;
+  bottom: 2px;
+  &__button {
+    display: block;
+    height: 26px;
+    width: 34px;
+    text-align: center;
+    border: 1px solid $icon;
+    padding-top: 5px;
+    background-color: $body--bgc;
+    &:hover {
+      border: 2px solid $icon--hover;
+    }
+  }
+}
+
+.aside-menu .chat-box {
+  .row {
+    margin-left: 0px;
+    margin-right: 0px;
+    .col-md-4,
+    .col-md-8 {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+  cursor: default;
+  background-color: $sidebar--bgc;
+  border: 1px solid $border-panel-bottom;
+  display: none;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  margin-left: -500px;
+  width: 500px;
+  height: 350px;
+  opacity: 0.9;
+  color: $icon;
+  &-room {
+    display: block;
+    height: 348px;
+    border-right: 1px solid $border-panel-bottom;
+    overflow-y: auto;
+    .current-room.chat-box-room-item {
+      border-left: 3px solid $icon;
+    }
+    &-item {
+      height: 50px;
+      width: 100%;
+
+      &__container {
+        padding: 8px;
+        height: 100%;
+        width: 100%;
+      }
+      i{
+        display: none;
+        float: right;
+      }
+      &:hover i{
+        display: block;
+      }
+    }
+    .current-room .chat-box-room-item__container {
+      background-color: $panel-bottom-bgc;
+    }
+  }
+  &-content {
+    display: block;
+    height: 348px;
+
+    &-panel {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+      height: 46px;
+      &__username {
+        flex-grow: 8;
+        padding: 6px;
+      }
+      &__tool {
+        padding: 8px;
+        flex-grow: 2;
+        i {
+          float: right;
+          margin-right: 8px;
+          height: 30px;
+        }
+        &:hover{
+          color: $icon--hover;
+        }
+      }
+    }
+    &-body {
+      border-top: 1px solid $icon;
+      position: relative;
+      display: block;
+      height: 300px;
+      &-box {
+        overflow-y: auto;
+        height: 270px;
+        padding: 10px;
+        @include no-scrollbar();
+      }
+      textarea {
+        position: absolute;
+        display: block;
+        width: 100%;
+        bottom: 0px;
+        border: 1px solid $icon;
+        background-color: $panel-bottom-bgc;
+        height: 30px;
+        resize: none;
+        &:focus {
+          outline: none;
+          color: $icon--hover;
+        }
+        @include no-scrollbar();
+      }
+    }
+  }
+}
+.aside-menu .show-chat-box .chat-box {
+  display: block;
+}
+#ReceiveRequestFriendModal .modal-dialog,
+#AddRequestFriendModal .modal-dialog {
+  max-width: none !important;
+  width: 60% !important;
+  pointer-events: none;
+  .user-item {
+    margin-bottom: 20px;
+  }
+  .small {
+    opacity: 0.7;
+  }
+  .title {
+    text-transform: uppercase;
+    font-weight: bold;
+    opacity: 0.7;
+  }
+  .modal-body {
+    overflow-y: auto;
+    padding-bottom: 0px;
+    border-bottom-style: double;
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: #f5f5f5;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #000000;
+      border: 2px solid #555555;
+    }
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #f5f5f5;
+    }
+    i {
+      color: $icon !important;
+      opacity: 0.5;
+      display: none;
+      &:hover {
+        color: $icon--hover !important;
+        opacity: 1;
+      }
+    }
+    .user-item:hover > i {
+      display: block;
+    }
+  }
+  .close-modal {
+    @include btn_primary();
+    border-top: double;
+    border-bottom: none;
+    text-transform: uppercase;
+    margin: 0 auto;
+    height: 32px;
+    padding: 0px 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: -1px;
+  }
+}
+
+#ReceiveRequestFriendModal .modal-dialog {
+  width: 40% !important;
+  overflow-x: hidden !important;
+  .modal-content,
+  .modal-body {
+    overflow-x: hidden !important;
+  }
+  modal-header {
+    margin-bottom: 10px;
+  }
+  .modal-body {
+    border-top: 1px solid $icon;
+  }
+  .user-item {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+}
+
+#chat-box-content-body-box-friend__bottom{
+  height: 10px;
+}

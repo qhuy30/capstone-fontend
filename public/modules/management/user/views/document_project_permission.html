@@ -1,0 +1,333 @@
+<div class="project generic-animation"
+    ng-class="{'active':ctrl.tabDocument==='project'}">
+    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+    </div>
+    <ul>
+        <!-- Folder -->
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể thêm mới <b>thư mục</b> của dự án:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được thêm mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Create_Folder_Project'].value"
+                                brige-func="ctrl.updateRule(params)"
+                                brige-value="'Office.File.Create_Folder_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Create_Folder_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                            <organization-multi label="{{''}}"
+                                id-value="ctrl.rule['Office.File.Create_Folder_Project'].project"
+                                select-func="ctrl.update_Project_Permission(params)"
+                                my-params="'Office.File.Create_Folder_Project'"
+                                disable="ctrl.rule['Office.File.Create_Folder_Project'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Create_Folder_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể chỉnh sửa <b>thư mục</b> của dự án:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được chỉnh sửa
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Update_Folder_Project'].value"
+                                brige-func="ctrl.updateRule(params)"
+                                brige-value="'Office.File.Update_Folder_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Update_Folder_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                            <organization-multi label="{{''}}"
+                                id-value="ctrl.rule['Office.File.Update_Folder_Project'].project"
+                                select-func="ctrl.update_Project_Permission(params)"
+                                my-params="'Office.File.Update_Folder_Project'"
+                                disable="ctrl.rule['Office.File.Update_Folder_Project'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Update_Folder_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể xoá <b>thư mục</b> của dự án:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được xoá
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Delete_Folder_Project'].value"
+                                brige-func="ctrl.updateRule(params)"
+                                brige-value="'Office.File.Delete_Folder_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Delete_Folder_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                            <organization-multi label="{{''}}"
+                                id-value="ctrl.rule['Office.File.Delete_Folder_Project'].project"
+                                select-func="ctrl.update_Project_Permission(params)"
+                                my-params="'Office.File.Delete_Folder_Project'"
+                                disable="ctrl.rule['Office.File.Delete_Folder_Project'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Delete_Folder_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <!-- File -->
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể thêm mới <b>tệp tin</b> của dự án:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được thêm mới
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Create_File_Project'].value"
+                                brige-func="ctrl.updateRule(params)"
+                                brige-value="'Office.File.Create_File_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Create_File_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                            <organization-multi label="{{''}}"
+                                id-value="ctrl.rule['Office.File.Create_File_Project'].project"
+                                select-func="ctrl.update_Project_Permission(params)"
+                                my-params="'Office.File.Create_File_Project'"
+                                disable="ctrl.rule['Office.File.Create_File_Project'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Create_File_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể chỉnh sửa <b>tệp tin</b> của dự án:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được chỉnh sửa
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Update_File_Project'].value"
+                                brige-func="ctrl.updateRule(params)"
+                                brige-value="'Office.File.Update_File_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Update_File_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                            <organization-multi label="{{''}}"
+                                id-value="ctrl.rule['Office.File.Update_File_Project'].project"
+                                select-func="ctrl.update_Project_Permission(params)"
+                                my-params="'Office.File.Update_File_Project'"
+                                disable="ctrl.rule['Office.File.Update_File_Project'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Update_File_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Có thể xoá <b>tệp tin</b> của dự án:
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Không được xoá
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Delete_File_Project'].value"
+                                brige-func="ctrl.updateRule(params)"
+                                brige-value="'Office.File.Delete_File_Project'"
+                                value="NotAllow" />
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Tất cả dự án
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Delete_File_Project'].value"
+                                value="All" />
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="label">
+                            Một số dự án cụ thể:
+                            <organization-multi label="{{''}}"
+                                id-value="ctrl.rule['Office.File.Delete_File_Project'].project"
+                                select-func="ctrl.update_Project_Permission(params)"
+                                my-params="'Office.File.Delete_File_Project'"
+                                disable="ctrl.rule['Office.File.Delete_File_Project'].value!='Specific'">
+                            </organization-multi>
+                        </div>
+                        <div class="tool">
+                            <input type="radio"
+                                ng-model="ctrl.rule['Office.File.Delete_File_Project'].value"
+                                value="Specific" />
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

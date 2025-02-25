@@ -1,0 +1,81 @@
+<div class="card">
+    <div class="card-header">
+       NHÓM CÂU HỎI
+      </div>
+    <div class="card-body">
+        <div ng-controller="setting_question_answer_controller as ctrl">
+            <div class="form-group row">
+                <button-new button-new-func="ctrl.prepareInsert()" button-new-label="Thêm mới"
+                    button-new-modal="#modal_Group_Qna_Insert">
+                </button-new>
+            </div>
+            <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+                button-search-model="ctrl._searchByKeyToFilterData">
+            </button-search>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" datatable>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th>
+                                       {{'Title'|l}}
+                                    </th>
+                                    <th>
+                                        {{'Value'|l}}
+                                    </th>
+                                    <th>
+                                        {{'Status'|l}}
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="item in ctrl.typeQuestions" modal-toggle="#modal_User_Info"
+                                    ng-click="ctrl.assignInfo(item)" ng-if="!item.root">
+                                    <td>
+                                        <strong> {{$index +1}}</strong>
+                                    </td>
+                                    <td>
+                                        {{item.title_vi}}
+                                    </td>
+                                    <td>
+                                        {{item.value}}
+                                    </td>
+                                    <td>
+                                        <isactive isactive-value="item.active"></isactive>
+                                    </td>
+                                    <td>
+                                        <button-edit-item button-edit-item-modal="#modal_Group_Qna_Update"
+                                            button-edit-item-func="ctrl.prepareUpdate(params)"
+                                            button-edit-item-params="item">
+                                        </button-edit-item>
+                                        <button-delete-item button-delete-item-modal="#modal_Type_Delete"
+                                            button-delete-item-func="ctrl.prepareDelete(params)"
+                                            button-delete-item-params="item">
+                                        </button-delete-item>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div ng-if="ctrl.typeQuestions.length == 0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                    <pagination pagination-ctrlname="{{ctrl._ctrlName}}" 
+                        pagination-objname="QuestionAnswer"
+                        pagination-actionname="count_type_question" 
+                        pagination-currentpage="ctrl.currentPage"
+                        pagination-noi="ctrl.numOfItemPerPage" 
+                        pagination-total="ctrl.totalItems"
+                        pagination-func="ctrl.load_type_question(params)"></pagination>
+
+            <div ng-include="ctrl._urlInsertModal"></div>
+            <div ng-include="ctrl._urlUpdateModal"></div>
+            <div ng-include="ctrl._urlDeleteModal"></div>
+        </div>
+    </div>
+</div>

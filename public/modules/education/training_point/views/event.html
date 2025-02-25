@@ -1,0 +1,144 @@
+<div ng-controller="event_controller as ctrl" class="task-personal-feature">
+    <div ng-include="ctrl._urlUpdateModal"></div>
+    <div ng-include="ctrl._urlDeleteModal"></div>
+    <div ng-include="ctrl._urlInsertModal"></div>
+    <div class="created container">
+        <div class="content">
+            <div class="task-container">
+                <div class="task-filter">
+                    <div class="task-filter-item">
+                        <div class="title-filter">{{'FromDate'|l}}:</div>
+                        <div class="value">
+                            <div>
+                                <input type="date" ng-model="ctrl._filterStartDate"
+                                    ng-change="ctrl.refreshData()" />
+                            </div>
+                            <div>
+                                <time-show2 time-show-data="ctrl._filterStartDate" time-show-type="just_date"
+                                    bind-object="true"></time-show2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-filter-item col-md-2">
+                        <div class="title-filter">{{'ToDate'|l}}:</div>
+                        <div class="value">
+                            <div>
+                                <input type="date" ng-model="ctrl._filterEndDate"
+                                    ng-change="ctrl.refreshData()" />
+                            </div>
+                            <div>
+                                <time-show2 time-show-data="ctrl._filterEndDate" time-show-type="just_date"
+                                    bind-object="true">
+                                </time-show2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="border-top:1px solid #eee;margin-top:10px;">
+                </div>
+                <div class="task-content">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover" ng-class="{'no-data':ctrl.events.length === 0}">
+                            <thead>
+                                <tr>
+                                    <td class="tool" style="font-weight: 600;vertical-align: middle;">
+                                        <div class="new">
+                                            <button-new button-new-func="ctrl.prepareInsert()"
+                                                button-new-label="{{'CreatetrainingPointActivity'|l}}"
+                                                button-new-modal="#modal_Training_Point_Insert">
+                                            </button-new>
+                                        </div>
+                                        <div class="search" style="max-width: none;">
+                                            <input type="text" ng-model="ctrl._searchByKeyToFilterData"
+                                                my-watch-text-input my-scope="ctrl._searchByKeyToFilterData"
+                                                my-func="ctrl.refreshData()" my-start="!ctrl._notyetInit"
+                                                placeholder="{{'SearchEvent'|l}}">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;">
+                                        {{'EventQuantity'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;">
+                                        {{'EventPoint'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;">
+                                        {{'EventTime'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;">
+                                        {{'EventRegister'|l}}
+                                    </td>
+                                    <!-- <td style="font-weight: 600;vertical-align: middle;">
+                                        {{'Status'|l}}
+                                    </td> -->
+                                </tr>
+
+                            </thead>
+                            <tbody id="taskList">
+                                <tr ng-repeat="item in ctrl.events">
+                                    <td style="font-weight: 600;vertical-align: middle;">
+                                        <a class="text-dark" link-details link-details-display="{{item.title}}"
+                                            link-details-url="/training-point-details?{{item._id}}"
+                                            link-details-route="training-point-details">{{item.title}}</a>
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                        {{ item.quantity }}
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                        {{ item.point }}
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                        <time-show2 time-show-data="item.start_date" time-show-type="just_date">
+                                        </time-show2> -
+                                        <time-show2 time-show-data="item.end_date" time-show-type="just_date">
+                                        </time-show2>
+
+                                    </td>
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                        <time-show2 time-show-data="item.start_registered_date"
+                                            time-show-type="just_date">
+                                        </time-show2> -
+                                        <time-show2 time-show-data="item.end_registered_date"
+                                            time-show-type="just_date">
+                                        </time-show2>
+                                    </td>
+                                    <!-- <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                        <p class="text-dark">{{item.status|l}}</p>
+                                    </td> -->
+                                    <td
+                                        style="font-weight: 600;vertical-align: middle;text-align: center;">
+                                        <div class="group-button">
+                                            <button-edit-item class="item-button"
+                                                button-edit-item-modal="#modal_Training_Point_Update"
+                                                button-edit-item-func="ctrl.prepareUpdate(params)"
+                                                button-edit-item-params="item">
+                                            </button-edit-item>
+                                            <button-delete-item class="item-button"
+                                                button-delete-item-modal="#modal_Training_Point_Delete"
+                                                button-delete-item-func="ctrl.prepareDelete(params)"
+                                                button-delete-item-params="item">
+                                            </button-delete-item>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-if="ctrl.events.length ==0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                    <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="TrainingPoint"
+                        pagination-actionname="count_event" pagination-currentpage="ctrl.currentPage"
+                        pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                        pagination-func="ctrl.load_events(params)"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

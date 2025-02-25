@@ -1,0 +1,37 @@
+<my-async async-status-label="'Executing...'" async-ctrlname="{{modalButtonSubmitCtrlname}}"
+    async-objname="{{modalButtonSubmitObjname}}" async-actionname="{{modalButtonSubmitActionname}}">
+    <async-default>
+        <button class="btn btn-primary" type="button" ng-class='{"btn-sm":modalButtonSubmitType==="small"}'
+            ng-disabled="modalButtonSubmitInvalid||$root.statusValue.get(modalButtonSubmitCtrlname,modalButtonSubmitObjname,modalButtonSubmitActionname,'doing')"
+            ng-click="modalButtonSubmitFunc()">
+            <i class="fa fa-dot-circle-o"></i>&nbsp;{{modalButtonSubmitLabel ?modalButtonSubmitLabel :('Save'|l)}}</button>
+    </async-default>
+    <async-doing>
+        <div class="sk-wave">
+            <div class="sk-rect sk-rect1"></div>
+            <div class="sk-rect sk-rect2"></div>
+            <div class="sk-rect sk-rect3"></div>
+            <div class="sk-rect sk-rect4"></div>
+            <div class="sk-rect sk-rect5"></div>
+        </div> {{loadingLabel || ('Executing...'|l) }}
+    </async-doing>
+    <async-success>
+        <span class="btn" style="color: #4dbd74;" ng-class='{"btn-sm":modalButtonSubmitType==="small"}'>
+            {{'SuccessExecuting'|l}}
+        </span>
+        <button class="btn  btn-outline-success" type="button" ng-class='{"btn-sm":modalButtonSubmitType==="small"}'
+            ng-click="$root.statusValue.generate(modalButtonSubmitCtrlname,modalButtonSubmitObjname,modalButtonSubmitActionname)">
+            <i class="fa fa-dot-circle-o"></i>&nbsp;{{'UpdateMore'|l}}
+        </button>
+    </async-success>
+    <async-fail>
+        <span class="btn " style="color: #f86c6b;" ng-class='{"btn-sm":modalButtonSubmitType==="small"}'>
+            {{$root.statusValue.get(modalButtonSubmitCtrlname,modalButtonSubmitObjname,modalButtonSubmitActionname,'message')|l}}
+        </span>
+        <button class="btn btn-outline-primary" type="button" ng-class='{"btn-sm":modalButtonSubmitType==="small"}'
+            ng-disabled="modalButtonSubmitInvalid||$root.statusValue.get(modalButtonSubmitCtrlname,modalButtonSubmitObjname,modalButtonSubmitActionname,'doing')"
+            ng-click="modalButtonSubmitClick()">
+            <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+        </button>
+    </async-fail>
+</my-async>

@@ -1,0 +1,64 @@
+<div id="document_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng và quản lý tài liệu
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox"
+                            ng-model="ctrl.rule['Office.File.Use'].value"
+                            brige-func="ctrl.updateRule(params)"
+                            brige-value="'Office.File.Use'" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-direction-container">
+        <div class="tab-direction">
+            <div class="item"
+                ng-class="{'active': ctrl.tabDocument==='general'}"
+                ng-click="ctrl.switchDocumentTab('general')">
+                <i
+                    class="fas fa-folders"></i>&nbsp;&nbsp;{{'General'|l}}
+            </div>
+            <div class="item"
+                ng-class="{'active': ctrl.tabDocument==='department'}"
+                ng-click="ctrl.switchDocumentTab('department')">
+                <i
+                    class="fas fa-people-carry"></i>&nbsp;&nbsp;{{'Department'|l}}
+            </div>
+            <div class="item "
+                ng-class="{'active': ctrl.tabDocument==='project'}"
+                ng-click="ctrl.switchDocumentTab('project')">
+                <i
+                    class="fas fa-project-diagram"></i>&nbsp;&nbsp;{{'Project'|l}}
+            </div>
+            <div class="item"
+                ng-class="{'active': ctrl.tabDocument==='personal'}"
+                ng-click="ctrl.switchDocumentTab('personal')">
+                <i
+                    class="fas fa-user-clock"></i>&nbsp;&nbsp;{{'Personal'|l}}
+            </div>
+            <div class="item"
+                ng-class="{'active': ctrl.tabDocument==='shareWithMe'}"
+                ng-click="ctrl.switchDocumentTab('shareWithMe')">
+                <i
+                    class="fas fa-share-alt-square"></i>&nbsp;&nbsp;{{'ShareWithMe'|l}}
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div ng-include="ctrl._urlDocument_Department_Permission"></div>
+        <div ng-include="ctrl._urlDocument_Project_Permission"></div>
+        <div ng-include="ctrl._urlDocument_Personal_Permission"></div>
+        <div ng-include="ctrl._urlDocument_General_Permission"></div>
+        <div ng-include="ctrl._urlDocument_Share_Permission"></div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="label" ng-if="label">
+        {{label}}
+    </div>
+    <div class="value">
+        <div class="show-value" ng-if="idValue.length">
+            <show-username username="idValue" ng-if="idValue"></show-username>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary " ng-click="init()" ng-disabled="disable"
+        modal-toggle="#{{ctrl._ctrlName}}">
+        {{'Pick'|l}}&nbsp;<i class="fas fa-external-link-alt"></i>
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+        <i class="fas fa-times"></i>
+    </button>
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{ctrl._ctrlName}}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{label ? label : ('Department'|l)}}" modal-header-id={{ctrl._ctrlName}}>
+                </modal-header>
+                <div class="modal-body">
+                    <div class="tool">
+                        <div class="search">
+                            <input type="text" ng-model="search" my-watch-text-input my-scope="search"
+                                my-func="ctrl.search()" my-start="!_notyetInit"
+                                placeholder="{{'FindByName'|l}}">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <ul class="department-container">
+                        <li ng-repeat="item in data">
+                            <div class="department-item" ng-class="{'can-expand':item.canExpand}">
+                                <div class="title">
+                                    <span ng-click="ctrl.expandDepartment(item)">
+                                        <span ng-show="item.canExpand">
+                                            <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                            <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                        </span>
+                                        &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                    </span>
+                                </div>
+                                <div class="tool">
+
+                                </div>
+                            </div>
+                            <div class="user-item" ng-repeat="u in item.users" ng-show="item.open">
+                                <div class="title">
+                                    <div class="show-user__img">
+                                        <img ng-if="u.avatar.url" ng-src="{{u.avatar.url}}" />
+                                    </div>
+                                    <div class="show-user__title" style="cursor: default">
+                                        &nbsp;<span>{{u.title}}</span>
+                                    </div>
+
+                                    <div class="show-user__status" ng-if="u.online ">
+                                    </div>
+                                </div>
+                                <div class="tool">
+                                    <button type="button" ng-click="ctrl.pick(u.username)"
+                                        class="btn btn-primary">{{'Pick'|l}}</button>
+                                </div>
+                            </div>
+                            <div class="pagination-item" ng-if="ctrl.pagination[item.id].totalItems > ctrl.numOfItemPerPage">
+                                <pagination pagination-ctrlname="{{ctrl._ctrlName}}"
+                                    pagination-objname="Load" pagination-actionname="load"
+                                    pagination-currentpage="ctrl.pagination[item.id].currentPage"
+                                    pagination-noi="ctrl.numOfItemPerPage"
+                                    pagination-total="ctrl.pagination[item.id].totalItems"
+                                    pagination-func="ctrl.load_user(params,item)"></pagination>
+                            </div>
+                            <pick-user-child item="item" ctrl="ctrl"></pick-user-child>
+                        </li>
+                    </ul>
+                    <div ng-if="ctrl.data.length ==0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" ng-click="close()">{{'Close'|l}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

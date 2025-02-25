@@ -1,0 +1,13 @@
+require('../public/functions');
+require('../public/fRoot');
+require('../public/filters');
+require('../public/system/route');
+require('../public/system/system.ringbell');
+require('../public/system/system.socket');
+require('../public/system/system');
+require('../public/directive');
+require('../public/datasources/lib/coreui_directive');
+require('../public/component/header.service');
+require('../public/component/header.controller');
+require('../public/component/aside.service');
+require('../public/component/aside.controller');

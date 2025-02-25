@@ -1,0 +1,151 @@
+<my-content>
+    <content-content>
+        <div class="card">
+            <!-- <div class="card-header">
+                {{'UserData'|l}}
+            </div> -->
+            <div class="card-body">
+                <div ng-controller="user_controller as ctrl">
+                    <div class="form-group row">
+                        <button-new style="margin-right: 5px;" button-new-func="ctrl.prepareInsert()" button-new-label="{{'RegisterUser'|l}}"
+                            button-new-modal="#modal_User_Insert">
+                        </button-new>
+                        <button-new button-new-func="ctrl.prepareImport()"
+                            button-new-label="{{'RegisterUserTemplate'|l}}" button-new-modal="#modal_User_Import">
+                        </button-new>
+                    </div>
+                
+                    <div class="form-group row" ng-if="ctrl._checkActive">
+                        <button-checkbox button-checkbox-label="{{'Active'|l}}"
+                            button-checkbox-func="ctrl.changeActiveFilterData(params)"
+                            button-checkbox-model="ctrl._activeFilterData"></button-checkbox>
+                    </div>
+                    <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+                        button-search-model="ctrl._searchByKeyToFilterData">
+                        <button-moreop button-moreop-modal="#modal_user_filter"></button-moreop>
+                    </button-search>
+                    <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="User" async-actionname="load">
+                        <async-success>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" datatable>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+
+                                            <th>
+                                                {{'DisplayName'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="title"></order>
+                                            </th>
+                                            <th>
+                                                {{'UserName'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="username"></order>
+                                            </th>
+                                            <th>
+                                                {{'Department'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="isactive"></order>
+                                            </th>
+                                            <th>
+                                                {{'Status'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="isactive"></order>
+                                            </th>
+                                            <th>
+                                                {{'Group'|l}}
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl.users|orderBy:ctrl.sort.name:ctrl.sort.value track by $index"
+                                            modal-toggle="#modal_User_Info" ng-click="ctrl.assignInfo(item)"
+                                            ng-if="!item.root">
+                                            <td>
+                                                <strong>{{ ($index + 1) + (ctrl.currentPage - 1) * ctrl.numOfItemPerPage }}</strong>
+                                            </td>
+                                            <td>
+                                                {{item.title}}
+                                            </td>
+                                            <td>
+                                                {{item.username}}
+                                            </td>
+                                            <td>
+                                                {{item.departmentName[$root.Language.current]}}
+                                            </td>
+                                            <td>
+                                                <isactive isactive-value="item.isactive"></isactive>
+                                            </td>
+                                            <td>
+                                                {{item.groups|joinByColumn:'title'}}
+                                            </td>
+                                            <td>
+                                                <button-edit-item button-edit-item-modal="#modal_User_Update"
+                                                    button-edit-item-func="ctrl.prepareUpdate(params)"
+                                                    button-edit-item-params="item">
+                                                </button-edit-item>
+                                                <button-delete-item
+                                                    ng-show=" !item.isactive && ['Management.User.DeleteUser']|checkRule"
+                                                    button-delete-item-modal="#modal_User_Delete"
+                                                    button-delete-item-func="ctrl.prepareDelete(params)"
+                                                    button-delete-item-params="item">
+                                                </button-delete-item>
+                                                <button class="btn btn-sm btn-outline-primary" type="button"
+                                                    modal-toggle="#modal_User_ResetPassword"
+                                                    ng-click="ctrl.prepareResetPassword(item);$event.stopPropagation();">
+                                                    <i class="fas fa-retweet"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" type="button"
+                                                    modal-toggle="#modal_User_ResetPermission"
+                                                    ng-click="ctrl.prepareResetPermission(item);$event.stopPropagation();"
+                                                    title="{{'Reset Permission'| l}}">
+                                                    <i class="fas fa-sync"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div ng-if="ctrl.users.length ==0" class="no-data">
+                                {{'NoData'|l}}
+                            </div>
+                            <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="User"
+                                pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                                pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                                pagination-func="ctrl.loadUser(params)"></pagination>
+                        </async-success>
+                    </my-Async>
+
+                    <div ng-if="ctrl.showPopup" class="popupTaskDetails">
+                        <div class="popup-content">
+                            <div class="title-popup"
+                                ng-class="{
+                                    'error':ctrl.typePopup === 'error',
+                                    'success':ctrl.typePopup === 'success',
+                                    'warning':ctrl.typePopup === 'warning'}">
+                                {{ctrl.titlePopup|l}}
+                            </div>
+                            <span class="close x-icon" ng-click="ctrl.closePopup();"></span>
+                            <div class="content-popup">
+                                {{ctrl.contentPopup|l}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-include="ctrl._urlFilterModal"></div>
+                    <div ng-include="ctrl._urlInsertModal"></div>
+                    <div ng-include="ctrl._urlImportModal"></div>
+                    <div ng-include="ctrl._urlUpdateModal"></div>
+                    <div ng-include="ctrl._urlDeleteModal"></div>
+                    <div ng-include="ctrl._urlResetPasswordModal"></div>
+                    <div ng-include="ctrl._urlResetPermissionModal"></div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

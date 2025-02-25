@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="label" ng-if="label">
+        {{label}}
+    </div>
+    <div class="value" style="display: flex">
+        <div class="show-value">
+            {{selectedItem.title[$root.Language.current]}}
+        </div>
+        <button type="button" class="btn btn-primary" ng-disabled="disable" modal-toggle="#{{_ctrlName}}"
+                ng-click="init()">{{'Pick' | l}}&nbsp;<i class="fas fa-external-link-alt"></i></button>
+        <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{_ctrlName}}">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                   <modal-header modal-header-title="{{label ? label : ('Department'|l)}}" modal-header-id={{_ctrlName}}></modal-header>
+                <div class="modal-body">
+                    <div class="tool">
+                        <div class="search">
+                            <input type="text" ng-model="search" placeholder="{{'FindByName'|l}}">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <ul class="department-container">
+                        <li ng-repeat="item in data | filter:search">
+                            <div class="department-item" ng-class="{'can-expand': item.canExpand}">
+                                <div class="title item-container">
+                                    <span ng-show="item.canExpand" ng-click="ctrl.expandDepartment(item, $event)" class="expand-item">
+                                        <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                        <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                    </span>
+                                    <span>
+                                        &nbsp;&nbsp;<i class="fas fa-house-user"></i>&nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                    </span>
+                                </div>
+                                <div class="tool">
+                                    <button type="button" ng-click="ctrl.pick(item)"
+                                            class="btn btn-primary">{{'Pick' | l}}
+                                    </button>
+                                </div>
+                            </div>
+                            <department-child item="item" ctrl="ctrl"></department-child>
+                        </li>
+                    </ul>
+                    <div ng-if="ctrl.data.length == 0" class="no-data">
+                        {{'NoData'|l}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn " ng-click="close()">{{'Close' | l}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

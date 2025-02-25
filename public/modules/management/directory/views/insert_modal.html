@@ -1,0 +1,226 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Directory_Insert">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'New'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertForm">
+          <div class="form-group">
+            <my-async async-ctrlname="{{ctrl._ctrlName}}" async-objname="Directory" async-actionname="getOrderNumber">
+              <async-success>
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span class="input-group-text-new">{{'OrderNumber'|l}}</span>
+                    <span class="require-sympton">*</span>
+                  </div>
+                  <input
+                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing') || ctrl.isDisabledOrderNumberEdit"
+                    type="number" ng-model="ctrl._insert_value.ordernumber" class="form-control"
+                    name="insert_ordernumber" vld-sync vld-sync-func="$root.validate.min(model,params)"
+                    vld-sync-params="{min:1}" ng-class="{ 'is-invalid': insertForm.insert_ordernumber.$invalid }"
+                    required />
+                </div>
+                <invalid invalid-status="insertForm.insert_ordernumber.$error.vldsync">
+                  {{'AtLeast'|l:({title:1})}}.
+                </invalid>
+              </async-success>
+            </my-async>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.title['vi-VN']" class="form-control" name="insert_title_vi"
+                placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_vi.$invalid }" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.title['en-US']" class="form-control" name="insert_title_en"
+                placeholder="{{'InputTitle'|l}}" ng-class="{ 'is-invalid': insertForm.insert_title_en.$invalid }" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Value'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.value" class="form-control" name="insert_value" placeholder="Input value"
+                ng-class="{ 'is-invalid': insertForm.insert_value.$invalid }" required />
+            </div>
+          </div>
+          <div class="form-group" ng-repeat="control in ctrl.master_directory_item.extend" ng-switch="control.control">
+
+            <organization ng-switch-when="organization" label="{{control.label|l}}"
+              id-value="ctrl._insert_value.submission_department" select-func="ctrl.chooseSubmissionDepartment(params)"
+              require="true">
+            </organization>
+
+            <pick-modal-directory ng-switch-when="pick_modal" extend="control"
+              pick-func="ctrl.pickExtend(params,params2)" id-value="ctrl._insert_value.item[control.name]"
+              label="{{control.label ? (control.label|l) : control.name.toUpperCase()}}"
+              require="control.required"></pick-modal-directory>
+
+            <pick-modal-directory-multi ng-switch-when="pick_modal_directory_multi" extend="control"
+              pick-func="ctrl.pickExtend(params,params2)" id-value="ctrl._insert_value.item[control.name]"
+              label="{{control.label ? (control.label|l) : control.name.toUpperCase()}}"
+              require="control.required"></pick-modal-directory-multi>
+
+            <div class="input-prepend input-group" ng-switch-when="text_box">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{control.label ? (control.label|l) : control.name.toUpperCase()}}</span>
+                <span ng-show="{{control.required}}" class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.item[control.name]" class="form-control"
+                placeholder="{{'Input ' + (control.label ? (control.label|l) : control.name)}}" 
+                ng-required="{{control.required}}" />
+            </div>
+
+            <div class="input-prepend input-group" ng-switch-when="number">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{control.label ? (control.label|l) : control.name.toUpperCase()}}</span>
+                <span ng-show="{{control.required}}" class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="number"
+                ng-model="ctrl._insert_value.item[control.name]" class="form-control" 
+                ng-required="{{control.required}}" />
+            </div>
+
+            <div class="input-prepend input-group" ng-switch-when="password">
+              <div class="input-group-prepend">
+                <span class="input-group-text">{{control.label ? (control.label|l) : control.name.toUpperCase()}}</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="password"
+                ng-model="ctrl._insert_value.item[control.name]" class="form-control" />
+            </div>
+
+            <div class="input-group-new" ng-switch-when="date_to_date">
+              <div class="row">
+                <date id-value="ctrl.from_date" func="ctrl.chooseFromDate_insert(params)" label="{{'FromDate'|l}}"
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')"></date>
+                <date style="margin-left: 70px" id-value="ctrl.to_date" func="ctrl.chooseToDate_insert(params)"
+                  label="{{'ToDate'|l}}"
+                  ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')"></date>
+              </div>
+              <div class="errorMsg" ng-show="ctrl.fromDate_ErrorMsg">
+                {{ ctrl.fromDate_ErrorMsg }}
+              </div>
+              <div class="errorMsg" ng-show="ctrl.toDate_ErrorMsg">
+                {{ ctrl.toDate_ErrorMsg }}
+              </div>
+            </div>
+
+            <div class="input-prepend input-group" ng-switch-when="number_to_number" style="margin-bottom: 30px;">
+              <div class="row">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">{{'from_number'|l}}</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="text"
+                  ng-model="ctrl._insert_value.from_number" class="form-control"
+                  placeholder="{{'Input ' + (control.label ? (control.label|l) : control.name)}}"
+                  ng-pattern="/^[0-9]{2,}$/" ng-change="ctrl.onChangeNumber_insert()" />
+                <div class="input-group-prepend" style="margin-left: 70px;">
+                  <span class="input-group-text">{{'to_number'|l}}</span>
+                </div>
+                <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="text"
+                  ng-model="ctrl._insert_value.to_number" class="form-control"
+                  placeholder="{{'Input ' + (control.label ? (control.label|l) : control.name)}}"
+                  ng-pattern="/^[0-9]{2,}$/" ng-change="ctrl.onChangeNumber_insert()" />
+              </div>
+              <div class="errorMsg" ng-show="ctrl.Number_Error_Msg">
+                {{ ctrl.Number_Error_Msg }}
+              </div>
+            </div>
+
+            <div class="input-group-new" ng-switch-when="year">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Year'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="number"
+                ng-model="ctrl._insert_value.item[control.name]" class="form-control" name="control.name"
+                placeholder="Input year" minlength="4" min="1000" required />
+            </div>
+
+            <div class="input-group-new" ng-switch-when="text_input_for_number">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{control.label ? (control.label|l) : control.name}}</span>
+              </div>
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="text"
+                ng-model="ctrl._insert_value.item[control.name]" class="form-control" name="control.name"
+                placeholder="{{'Input ' + (control.label ? (control.label|l) : control.name)}}"
+                ng-pattern="/^[0-9]{2,}$/" />
+            </div>
+
+            <div class="input-group-new" ng-switch-when="check_in_out_dispatch_book">
+              <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')" type="hidden"
+                ng-model="ctrl.dispatch_book" class="form-control" name="dispatch_book"
+                ng-init="ctrl.dispatch_book = 'dispatch_book'" />
+            </div>
+
+            <div class="input-group-new" ng-switch-when="color_input">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{control.label ? (control.label|l) : control.name}}</span>
+              </div>
+              <input type="color" ng-model="ctrl._insert_value.item[control.name]" />
+            </div>
+
+            <div class="input-group-new" ng-switch-when="boolean">
+              <input-checkbox input-checkbox-label="{{control.label ? (control.label|l) : control.name}}" input-checkbox-model="ctrl._insert_value.item[control.name]"
+                input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')">
+              </input-checkbox>
+            </div>
+
+            <div class="input-group-new" ng-switch-when="radio">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Unit'|l}}</span>
+              </div>
+              <button-radio-basic
+                button-radio-name="unit"
+                button-radio-params="[{ label: 'Internal school unit', val: 'internal' },{ label: 'External school unit', val: 'external' }]"
+                button-radio-model="ctrl._insert_value.item[control.name]"
+                is-localization="true"
+                button-radio-func="ctrl.chooseUnit(params)"
+                button-radio-disabled="false">
+              </button-radio-basic>
+            </div>
+
+            <div class="input-group-new" ng-switch-when="multi_organization" ng-show="ctrl._insert_value.item['unit'] === 'internal'">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Department used'|l}}</span>
+              </div>
+              <organization-multi 
+                id-value="ctrl._insert_value.item[control.name]"
+                select-func="ctrl.pickUsedDepartment(params)">
+              </organization-multi>
+            </div>
+            
+          </div>
+          <div class="form-group">
+            <input-checkbox input-checkbox-label="{{'IsActive'|l}}" input-checkbox-model="ctrl._insert_value.isactive"
+              input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'Directory','insert','doing')">
+            </input-checkbox>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-objname="Directory"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid=" insertForm.$invalid || ctrl.fromDate_ErrorMsg || ctrl.toDate_ErrorMsg || ctrl.Number_Error_Msg"
+          modal-button-new-func="ctrl.insert()">
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

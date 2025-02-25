@@ -1,0 +1,596 @@
+<div ng-controller="task_department_controller as ctrlChild" class="task-department-feature"
+     ng-if="['Office.Task.Show_DepartmentTab']|checkRule">
+
+
+    
+    <div ng-include="ctrlChild._urlDeleteModal"></div>
+    <div ng-include="ctrlChild._urlCancelModal"></div>
+    <div ng-include="ctrlChild._urlUpdateModal"></div>
+    <div ng-include="ctrlChild._urlReceiveTaskModal"></div>
+    <div ng-include="ctrlChild._urlInsertHeadTaskModal"></div>
+    <div ng-include="ctrlChild._urlAssignmentModal"></div>
+
+    <wfp-insert-modal insert-success-func="ctrlChild.handleInsertWFPSuccess(params)"></wfp-insert-modal>
+
+    <div class="content home-container">
+        
+        <div class="part" ng-if="ctrlChild.currentDepartment._id">
+            <div id="accordion2">
+                <div class="title" id="headingTwo">
+                    <div class="label" style="cursor: default;">
+                        &nbsp;&nbsp;{{'DepartmentTaskManagement'|l}}
+                    </div>
+                    <div class="label mt-4" style="cursor: pointer; color: #b3b2b2;" ng-click="ctrlChild.toogleCollapseTask()" class="btn btn-link"
+                        data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                        aria-controls="collapseTwo">
+                        <i class="fas fa-angle-down" ng-show="ctrlChild.collapseTask"></i>
+                        <i class="fas fa-angle-right" ng-show="!ctrlChild.collapseTask"></i>&nbsp;&nbsp;
+                        <i class="fas fa-filter"></i>&nbsp;&nbsp;
+                        {{'AdvancedFilter'|l}}
+                    </div>
+                </div>
+                <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordion2">
+                    <div class="task-container" style="padding: 0 1.25rem;">
+                        <div class="task-filter" style="padding-bottom:0.5rem; border-bottom: 1px solid rgb(202, 202, 202);">
+                            <div class="task-filter-item col-md-2">
+                                <div class="title-filter">{{'FromDate'|l}}:</div>
+                                <div class="value">
+                                    <div>
+                                        <input type="date" ng-model="ctrlChild._filterFromDate"
+                                               ng-change="ctrlChild.refreshData()" />
+                                    </div>
+                                    <div>
+                                        <time-show2 time-show-data="ctrlChild._filterFromDate"
+                                                    time-show-type="just_date" bind-object="true"></time-show2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="task-filter-item col-md-2">
+                                <div class="title-filter">{{'ToDate'|l}}:</div>
+                                <div class="value">
+                                    <div>
+                                        <input type="date" ng-model="ctrlChild._filterToDate"
+                                               ng-change="ctrlChild.refreshData()" />
+                                    </div>
+                                    <div>
+                                        <time-show2 time-show-data="ctrlChild._filterToDate" time-show-type="just_date"
+                                                    bind-object="true">
+                                        </time-show2>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row direction-content pt-5 pb-4" style="padding-left: 1.5rem">
+                                <div class="tooltip-container" title="{{!ctrlChild.checkImportPermission ? ('You dont have permission to do this'|l) : ''}}">
+                                    <button
+                                    type="button"
+                                    style="padding: 0 7px;
+                                    margin-left: 5px;
+                                    box-shadow: none;
+                                    display: flex;
+                                    justify-content: space-around;
+                                    align-items: center;
+                                    border-radius: 5px;
+                                    height: 30px;
+                                    font-weight: 400;"
+                                    ng-click="ctrlChild.export_tasks()"
+                                    ng-disabled="!ctrlChild.checkImportPermission"
+                                    ng-class="{'disabled-placeholder': !ctrlChild.checkImportPermission}"
+                                    class="btn btn-square btn-outline-primary ng-binding ng-isolate-scope">
+                                    <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;" class="fas fa-file-excel"></i>
+                                    {{'Download'|l}}
+                                </button>
+                                </div>
+                                <div class="tooltip-container" title="{{!ctrlChild.checkImportPermission ? ('You dont have permission to do this'|l) : ''}}">
+                                    <button
+                                        type="button"
+                                        style="padding: 0 7px;
+                                        margin-left: 20px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: 400;"
+                                        ng-click="ctrlChild.export_tasks()"
+                                        ng-disabled="!ctrlChild.checkImportPermission"
+                                        class="btn btn-square btn-outline-primary ng-binding ng-isolate-scope">
+                                    <a class="text-dark" link-details link-details-display="Thêm công việc bằng template"
+                                       link-details-url="/task-details?add-task"
+                                       link-details-route="task-details">
+                                        <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;" class="fas fa-file-excel"></i>
+                                        {{'AddTask'|l}}
+                                    </a>
+                                </button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <more-option-bar>
+                                <bar-content class="row">
+                                    <div class="col-md-3 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Employee'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_employee_filter(params)"
+                                                    id-value="ctrlChild._filter_value_employee"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickEmployees(params)"
+                                                    search-event="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Priority'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_priority_filter(params)"
+                                                    id-value="ctrlChild._filter_value_priority"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickPriority(params)"
+                                                    translate="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'StatusProcess'|l}}:</div>
+                                        <div>
+                                            <filter-advance2
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_status_filter(params)"
+                                                    id-value="{{ctrlChild._filter_value_status_default}}"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickStatus(params)"
+                                                    translate="true"
+                                                    default-value="true"
+                                                    default-select-all="true"
+                                            >
+                                            </filter-advance2>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 advance-filter" style="border-right: none">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'State'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_state_filter(params)"
+                                                    id-value="ctrlChild._filter_value_state"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickState(params)"
+                                                    translate="true">
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'TaskType'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_taskType_filter(params)"
+                                                    id-value="ctrlChild._filter_value_taskType"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickTaskTypeFilter(params)"
+                                                    translate="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-3 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Label'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.loadLabel(params)"
+                                                    id-value="ctrlChild._filter_value_label"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickLabelFilter(params)"
+                                                    search-event="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3 advance-filter">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Department/Project'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_taskGroup_filter(params)"
+                                                    id-value="ctrlChild._filter_value_taskGroup"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickTaskGroup(params)"
+                                                    translate="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 advance-filter" style="border-right: none">
+                                        <div class="title-filter" style="margin-bottom: 4px">{{'Project'|l}}:</div>
+                                        <div>
+                                            <filter-advance
+                                                    disable=""
+                                                    load-data-func="ctrlChild.load_project_by_department(params)"
+                                                    id-value="ctrlChild._filter_value_taskProject"
+                                                    load-details-func=""
+                                                    localized="false"
+                                                    pick-func="ctrlChild.pickProjectFilter(params)"
+                                                    search-event="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div> -->
+                                </bar-content>
+                            </more-option-bar>
+                        </div>
+                        <div style="border-top:1px solid #eee;margin-top:10px;">
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="task-content">
+                    <div class="card shadow-none" style="margin-bottom: 0px;">
+                        <div class="card-body">
+                            <div class="direction-container position-sticky">
+                                <div class="row direction-content">
+                                    <a class="direction-item col-md-2 border-right:1px"
+                                       ng-class="{'active': ctrlChild.isActiveChartTab('overview') === true}"
+                                       ng-click="ctrlChild.changeChartTab('overview')">
+                                        {{'Overview'|l}}
+                                    </a>
+                                    <a class="direction-item col-md-4 border-right:1px"
+                                       ng-class="{'active': ctrlChild.isActiveChartTab('gantt') === true}"
+                                       ng-click="ctrlChild.changeChartTab('gantt')">
+                                        {{'GanttChart'|l}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:2px;"></div>
+                    </div>
+                    <div class="row" ng-show="ctrlChild.isActiveChartTab('overview')">
+                        <div class="col-md-6 chart">
+                            <div class="chart-container with-value">
+                                <div class="chart-value">
+                                    <div class="main-value">
+                                        <div class="label">
+                                            {{'Completed'|l}}:
+                                        </div>
+                                        <div class="value">
+                                            {{ctrlChild.statistic_count.percent}}%
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-item">
+                                    <canvas class="chart chart-doughnut"
+                                            chart-data="ctrlChild.statistic_count.data"
+                                            chart-labels="ctrlChild.statistic_count.label"
+                                            chart-options="ctrlChild.statistic_count.options"
+                                            chart-colors="ctrlChild.statistic_count.colors">
+                                    </canvas>
+                                </div>
+                            </div>
+                            <div ng-if="ctrlChild.tasks.length == 0" class="no-data-text">
+                                <i class="fas fa-exclamation-triangle"></i> {{'NoData'|l}}
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-6 chart">
+                            <div class="chart-container with-value">
+
+                                <div class="chart-item">
+                                    <canvas class="chart chart-line"
+                                            chart-data="ctrlChild.statistic_growth.data"
+                                            chart-labels="ctrlChild.statistic_growth.label"
+                                            chart-series="ctrlChild.statistic_growth.series"
+                                            chart-options="ctrlChild.statistic_growth.options"
+                                            chart-colors="ctrlChild.statistic_growth.colors">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="strategic-container" ng-show="ctrlChild.isActiveChartTab('gantt')">
+                        <div class="chart-strategic-container">
+                            <div class="chart-strategic-content">
+                                <div style="position:relative" class="gantt" id="chart_task"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="head-task container">
+                        
+                        <div class="content">
+                            <div class="task-container">
+                                <div class="label">
+                                    <i class="fas fa-tasks"></i>&nbsp;{{'Task'|l}}
+                                </div>
+                                <div class="search-nav-container">
+                                    <div class="search">
+                                        <input-search 
+                                            load-data-func="ctrlChild.searchTasks(params)" />
+                                    </div>
+                                    <div class="new">
+                                    <button-new
+                                    ng-show="'Office.Task.Create_Task_Department'|task_department_checkRule:ctrlChild.currentDepartment.id"
+                                    button-new-func="ctrlChild.prepareInsertHeadTask()" button-new-label="{{'AddTask'|l}}"
+                                    button-new-modal="#modal_Head_Task_Insert">
+                                    </button-new>
+                                    </div>
+                                </div>          
+                                <div class="task-content">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover" ng-class="{'no-data':ctrlChild.headTasks.length ===0}">
+                                            <thead>
+                                                <tr>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 5px;">STT</td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 115px;">{{'TaskCode'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="code"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 400px;">
+                                                        {{'Title'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="title"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 100px;">
+                                                        {{'PriorityLevel'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="priority"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 160px;">
+                                                        {{'HostPerson'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="main_person"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 100px;">
+                                                        {{'FromDate'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="from_date"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 100px;">
+                                                        {{'ToDate'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="to_date"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                        {{'Estimate'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="estimate"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 100px;">
+                                                        {{'Progress'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="progress"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 100px;">
+                                                        {{'StatusProcess'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="status"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="font-weight: 600;vertical-align: middle;width: 100px;">
+                                                        {{'State'|l}}
+                                                        <order
+                                                            order-func="ctrlChild.load_head_task()"
+                                                            order-model="ctrlChild.sortTask"
+                                                            order-name="state"
+                                                        ></order>
+                                                    </td>
+                                                    <td style="width: 150px;"></td>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody id="headTaskList">
+                                            <tr ng-repeat="item in ctrlChild.headTasks track by $index"
+                                                ng-class="{'late': item.state === 'Overdue',
+                                                           'gonna_late': item.state === 'GonnaLate'
+                                                           }">
+                                                <td>
+                                                    <strong> {{$index +1}}</strong>
+                                                </td>
+                                                <td style="vertical-align: middle;text-align: center;width: 115px;">
+                                                    <a class="text-muted text-nowrap mb-1" link-details link-details-display="{{item.title}}"
+                                                        link-details-url="/task-details?code={{item.code}}"
+                                                        link-details-route="task-details" link-details-step="step-2">
+                                                        <small>&nbsp;{{item.parent_code ? item.parent_code: item.code}}</small>
+                                                    </a>
+                                                </td>
+                                                <td style="text-align: left;">
+                                                    <a class="text-dark truncated-title" link-details link-details-display="{{item.title}}"
+                                                        link-details-url="/task-details?code={{item.code}}"
+                                                        link-details-route="task-details" link-details-step="step-2">{{item.title}}</a>
+                                                    <span class="text-dark" ng-if="item.childs.length>0"
+                                                          ng-click="ctrlChild.loadHeadTaskChild(item._id,item.childs)"
+                                                          style="text-decoration: underline;cursor: pointer;" data-toggle="collapse"
+                                                          data-target="#collapseChild{{item._id}}"><i>
+                                                                -
+                                                                {{item.childs.length}} {{'ChildTask'|l}}</i> 
+                                                    </span>
+                                                    <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                                        <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                                                         attachment-show-func="ctrlChild.loadfile(params)"
+                                                                         attachment-show-params="{id:item._id,name:at.name}"
+                                                                         attachment-show-service-name="'task'">
+                                                        </attachment-show>
+                                                    </div>
+                                                    <div class="showfile-bar" ng-if="item.transfer_ticket_info.name">
+                                                        <attachment-show attachment-show-item="item.transfer_ticket_info"
+                                                                         attachment-show-func="ctrlChild.loadfile(params)"
+                                                                         attachment-show-params="{id:item._id,name:item.transfer_ticket_info.name}"
+                                                                         attachment-show-service-name="'task'">
+                                                        </attachment-show>
+                                                    </div>
+                                                    <div id="collapseChild{{item._id}}"
+                                                         style="max-height: 300px;overflow-y: auto;padding-top: 10px;" class="collapse "
+                                                         aria-labelledby="headingOne" data-parent="#taskList">
+                                                        &nbsp;&nbsp;<a ng-repeat="t in item.childTask" class="text-dark" href="/task-details?code={{t.code}}"><i>-
+                                                        {{t.title}}</i></a>
+                                                    </div>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                                                    <show-priority id-value="item.priority">{{priority}}</show-priority>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                                                    <div class="no-data" ng-show="!item.main_person[0]">
+                                                        {{'Not yet assigned'|l}}
+                                                      </div>
+                                                    <show-username hide-image="true" username="item.main_person[0]" ng-if="item.main_person[0]">
+                                                    </show-username>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                                                    <time-show2 time-show-data="item.from_date" time-show-type="just_date">
+                                                    </time-show2>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                                                    <time-show2 time-show-data="item.to_date" time-show-type="just_date">
+                                                    </time-show2>
+                                                </td>
+                                                <td style="font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 80px;">
+                                                    {{item.estimate}}
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                                                    <show-progress id-value="item.progress"></show-progress>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                                                    <show-status id-value="item.status"></show-status>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 100px;">
+                                                    <show-state id-value="item.state"></show-state>
+                                                </td>
+                                                <td style="width: 150px;">
+                                                    <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                                        <!-- <button-new-item button-new-item-modal="#modal_Task_Insert"
+                                                                        button-new-item-func="ctrlChild.prepareInsert(params)"
+                                                                        button-new-item-params="item">
+                                                                    </button-new-item> -->
+                                                        <button-edit-item
+                                                                ng-if="item.allow_edit"
+                                                                button-label="Edit"
+                                                                button-edit-item-modal="#modal_Task_Update"
+                                                                button-edit-item-func="ctrlChild.prepareUpdate(params, 'U')"
+                                                                button-edit-item-params="item">
+                                                        </button-edit-item>
+    
+                                                        <button-edit-item 
+                                                            ng-if="item.allow_assignment"
+                                                            button-edit-item-modal="#modal_Task_Assignment"
+                                                            button-edit-item-func="ctrlChild.prepareUpdate(params, 'A')" 
+                                                            button-edit-item-params="item"
+                                                            button-edit-item-icon="fas fa-tasks"
+                                                            button-label="{{'Assign'}}">
+                                                        </button-edit-item>
+    
+                                                        <button-cancel-item
+                                                                ng-if="item.allow_cancel"
+                                                                button-cancel-item-modal="#modal_Task_Cancel"
+                                                                button-cancel-item-func="ctrlChild.prepareCancel(params)"
+                                                                button-cancel-item-params="item">
+                                                        </button-cancel-item>
+    
+                                                        <button-delete-item
+                                                                ng-if="item.allow_remove_task"
+                                                                button-label="Delete"
+                                                                button-delete-item-modal="#modal_Task_Delete"
+                                                                button-delete-item-func="ctrlChild.prepareDelete(params)"
+                                                                button-delete-item-params="item">
+                                                        </button-delete-item>
+
+                                                        <button-approval-item
+                                                            ng-if="item.allow_recive_task"
+                                                            button-approval-item-modal="#modal_Receive_Task_Assess"
+                                                            button-approval-item-func="ctrlChild.prepareReceive_Task(params)"
+                                                            button-approval-item-params="{ item:item, action: 'recive_task' }"
+                                                            button-label="{{'Receive task'}}"
+                                                        />
+                                                        <button-reject-item
+                                                            ng-if="item.allow_recive_task"
+                                                            button-reject-item-modal="#modal_Receive_Task_Assess"
+                                                            button-reject-item-func="ctrlChild.prepareReceive_Task(params)"
+                                                            button-reject-item-params="{ item:item, action: 'recive_task' }"
+                                                            button-label="{{'Reject receive task'}}"
+                                                        />
+
+                                                        <button-approval-item
+                                                            ng-if="item.allow_approve_recive_task"
+                                                            button-approval-item-modal="#modal_Receive_Task_Assess"
+                                                            button-approval-item-func="ctrlChild.prepareReceive_Task(params)"
+                                                            button-approval-item-params="{ item:item, action: 'approve_recive_task' }"
+                                                            button-label="{{'Approval'}}"
+                                                        />
+
+                                                        <button-reject-item
+                                                            ng-if="item.allow_approve_recive_task"
+                                                            button-reject-item-modal="#modal_Receive_Task_Assess"
+                                                            button-reject-item-func="ctrlChild.prepareReceive_Task(params)"
+                                                            button-reject-item-params="{ item:item, action: 'approve_recive_task' }"
+                                                            button-label="{{'Reject'}}"
+                                                        />
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div ng-if="ctrlChild.headTasks.length ==0" class="no-data">
+                                        {{'NoData'|l}}
+                                    </div>
+                                    <pagination pagination-ctrlname="{{ctrlChild._ctrlName}}" pagination-objname="Task"
+                                                pagination-actionname="count_head_task" pagination-currentpage="ctrlChild.currentHeadTaskPage"
+                                                pagination-noi="ctrlChild.numOfItemPerPage" pagination-total="ctrlChild.totalHeadTaskItems"
+                                                pagination-func="ctrlChild.load_head_task(params)"></pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

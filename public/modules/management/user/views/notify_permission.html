@@ -1,0 +1,331 @@
+<div id="notify_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng bản tin
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.Notify.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.Notify.Use'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền tạo mới bản tin
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.Notify.Create'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.Notify.Create'"
+                        />
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    
+                    <div class="label">
+                        Cấp quyền phê duyệt cấp lãnh đạo <strong>Văn phòng trường</strong>
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.Notify.ApprovalLevel_1'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.Notify.ApprovalLevel_1'"
+                        />
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền phê duyệt cấp lãnh đạo <strong>trường</strong>
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.Notify.ApproveExternal'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.Notify.ApproveExternal'"
+                        />
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền nhận bản tin <strong>Ban giám hiệu</strong>
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Office.Notify.BoardOfDirectors'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.Notify.BoardOfDirectors'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #FFFFFF">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền duyệt bản tin cấp đơn vị
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Không được phép phê duyệt
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.ApprovalLevel_2'].value"
+                                       value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị đang công tác
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.ApprovalLevel_2'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Notify.ApprovalLevel_2'" value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Toàn bộ đơn vị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.ApprovalLevel_2'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị cụ thể
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Notify.ApprovalLevel_2'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Notify.ApprovalLevel_2'"
+                                                     disable="ctrl.rule['Office.Notify.ApprovalLevel_2'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.ApprovalLevel_2'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #fff;">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Nhận thông báo thuộc về phòng ban
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Not allow'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.NotifyDepartment'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Notify.NotifyDepartment'" value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For department is working'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.NotifyDepartment'].value"
+                                       value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'All departments'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.NotifyDepartment'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For specific departments'|l}}
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Notify.NotifyDepartment'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Notify.NotifyDepartment'"
+                                                     disable="ctrl.rule['Office.Notify.NotifyDepartment'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.NotifyDepartment'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #FFFFFF">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Quyền quản trị bản tin thuộc phạm vị đơn vị:
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Không được phép phê duyệt
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Manager'].value"
+                                       value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị đang công tác
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Manager'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Notify.Manager'" value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Toàn bộ đơn vị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Manager'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị cụ thể
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Notify.Manager'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Notify.Manager'"
+                                                     disable="ctrl.rule['Office.Notify.Manager'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Manager'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div> -->
+    <!-- <div class="main-permission" style="background-color: white;">
+        <ul style="background-color: #FFFFFF">
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Quyền hủy bản tin thuộc phạm vi đơn vị:
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Không được phép phê duyệt
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Cancel'].value"
+                                       value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị đang công tác
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Cancel'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.Notify.Cancel'" value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Toàn bộ đơn vị
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Cancel'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                Đơn vị cụ thể
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.Notify.Cancel'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.Notify.Cancel'"
+                                                     disable="ctrl.rule['Office.Notify.Cancel'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.Notify.Cancel'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div> -->
+</div>

@@ -1,0 +1,26 @@
+<my-async async-ctrlname="{{paginationCtrlname}}" async-objname="{{paginationObjname}}" async-actionname="{{paginationActionname}}">
+    <async-success>
+        <nav aria-label="Page navigation example" >
+            <ul class="pagination justify-content-end">
+              <li class="page-item " ng-class="{'disabled':paginationCurrentpage ==1}" ng-click="previous();$event.stopPropagation();">
+                <a class="page-link" href="#" tabindex="-1" >{{'PreviousPage'|l}}</a>
+              </li>
+              <li class="page-item" 
+              ng-repeat="item in items track by $index"
+              ng-class="{'active':paginationCurrentpage == item}"
+              ng-click="paginationClick(item);$event.stopPropagation();"><a class="page-link" href="#">{{item}}</a></li>
+              <li class="page-item" ng-click="next();$event.stopPropagation();"
+              ng-class="{'disabled':(paginationCurrentpage*paginationNoi >=paginationTotal)}">
+                <a class="page-link" href="#">{{'NextPage'|l}}</a>
+              </li>
+              
+            </ul>
+          </nav>
+    </async-success>
+    <async-fail>
+        <div class="invalid-feedback">
+            {{'LoadPaginationFail'|l}}
+        </div>
+    </async-fail>
+</my-async>
+

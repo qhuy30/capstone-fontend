@@ -1,0 +1,18 @@
+<div id="{{_ctrlName+'_container'}}" class="container" >
+    <canvas id="{{_ctrlName+'_main_board'}}" class="main_board">
+    </canvas>
+    <div class="edit-rectangle" >
+        <button type="button" ng-click="addNew()">{{'New'|l}}</button>
+        <div ng-show="rectangle.id">
+            <input type="text" ng-model="rectangle.name" my-watch-text-input my-scope="rectangle.name"
+            my-func="updateRectangle()"
+            my-start="true"/>
+            <input type="color" ng-model="rectangle.color" ng-change="updateRectangle()" />
+            <button type="button" ng-click="deleteRectangle()">{{'Delete'|l}}</button>
+        </div>
+        <div ng-show="arrow.id">
+             <label>from: {{arrow.from}} to: {{arrow.to}}</label> 
+            <button type="button" ng-click="deleteArrow()">{{'Delete'|l}}</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal_DA_Task_Delete" role="dialog" tabindex="-1">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantDeleteTask'|l:{title:ctrl._task_delete_value.title} }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="Task" modal-button-delete-actionname="delete"
+                    modal-button-delete-func="ctrl.deleteTask()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

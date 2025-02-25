@@ -1,0 +1,106 @@
+<div class="modal fade" ng-class="ctrlChild.action_workflow" id="quick_handle_workflow" role="dialog" tabindex="-1">
+    <div class="modal-dialog" style="width: 100%; max-width: 420px;">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{ctrlChild.action_workflow|l }}"></modal-header>
+            <div class="modal-body">
+                <text-area-with-suggestions ng-model="ctrlChild.comment_workflow" style="width: 100%"
+                    placeholder="{{'InputNote'|l}} ({{'required'|l}}*)"></text-area-with-suggestions>
+                <div class="row">
+                    <div ng-show="ctrlChild.action_workflow!=='Sign'" class="col-md-6"
+                        style="border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>{{'RelatedFile'|l}}</td>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in ctrlChild.relatedFiles_workflow">
+                                        <td>{{$index+1}}</td>
+                                        <td>
+                                            <attachment-just-show my-item="item"></attachment-just-show>
+                                        </td>
+                                        <td>
+                                            <i class="fas fa-times text-danger"
+                                                ng-click="ctrlChild.removeRelatedFile_workflow(item)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-show="ctrlChild.action_workflow!=='Sign'">
+                        <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                            <tbody>
+                                <tr>
+                                    <td class="
+                              diskuf-selector
+                              wd-fa-add-file-light-cell wd-fa-add-file-from-main
+                            " colspan=" 0">
+                                        <div class="diskuf-uploader">
+                                            <span class="wd-fa-add-file-light">
+                                                <span class="wd-fa-add-file-light-text">
+                                                    <span class="wd-fa-add-file-light-title">
+                                                        <span
+                                                            class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                    </span>
+                                                    <span
+                                                        class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                </span>
+                                            </span>
+                                            <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                                                file-reading="ctrlChild.relatedFiles_workflow" size="1" multiple
+                                                style="width: 100%" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="display: block; overflow: hidden;margin: 0 auto;" ng-if="ctrlChild.action_workflow ==='Sign'">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>{{'Signature'|l}}</div>
+                            <div ng-if="ctrlChild.sign">
+                                <img ng-src="{{ctrlChild.sign}}" alt="User Signature" style="width: 100%;">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div>{{'Quotation mark'|l}}</div>
+                            <div ng-if="ctrlChild.quotationMark">
+                                <img ng-src="{{ctrlChild.quotationMark}}" alt="User Quotation mark" style="width: 100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-switch="ctrlChild.action_workflow">
+                <button ng-switch-when="Approve" class="btn btn-success" type="button"
+                    ng-disabled="!ctrlChild.comment_workflow||$root.statusValue.get(ctrlChild._ctrlName,'Workflow','approval','doing')"
+                    ng-click="ctrlChild.approval_workflow()">
+                    <i class="fas fa-check"></i>&nbsp;{{('Approval'|l)}}</button>
+                <button ng-switch-when="Sign" class="btn btn-success" type="button"
+                    ng-disabled="!ctrlChild.comment_workflow||$root.statusValue.get(ctrlChild._ctrlName,'Workflow','sign','doing')"
+                    ng-click="ctrlChild.signAFile_workflow()">
+                    <i class="fas fa-check"></i>&nbsp;{{('Sign'|l)}}</button>
+                <button ng-switch-when="Reject" class="btn btn-danger" type="button"
+                    ng-disabled="!ctrlChild.comment_workflow||$root.statusValue.get(ctrlChild._ctrlName,'Workflow','reject','doing')"
+                    ng-click="ctrlChild.reject_workflow()">
+                    <i class="fas fa-check"></i>&nbsp;{{('Reject'|l)}}</button>
+                <button ng-switch-when="Return" class="btn btn-danger" type="button"
+                    ng-disabled="!ctrlChild.comment_workflow||$root.statusValue.get(ctrlChild._ctrlName,'Workflow','return','doing')"
+                    ng-click="ctrlChild.return_workflow()">
+                    <i class="fas fa-check"></i>&nbsp;{{('Return'|l)}}</button>
+                <button ng-switch-when="Resubmit" class="btn btn-success" type="button"
+                    ng-disabled="!ctrlChild.comment_workflow||$root.statusValue.get(ctrlChild._ctrlName,'Workflow','resubmit','doing')"
+                    ng-click="ctrlChild.resubmit()">
+                    <i class="fas fa-check"></i>&nbsp;{{('Resubmit'|l)}}</button>    
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

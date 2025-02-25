@@ -1,0 +1,225 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Task_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Update'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="updateForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span><span style="color: red;">*</span>
+                                </div>
+                                <input ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                    type="text" ng-model="ctrlChild._update_value.title" class="form-control"
+                                    name="update_title" placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': updateForm.update_title.$invalid }" 
+                                    required
+                                     />
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <pick-modal-directory
+                                    extend="ctrlChild.TaskPriority"
+                                    pick-func="ctrlChild.pickPriorityUpdate(params)"
+                                    id-value="ctrlChild._update_value.priority"
+                                    label="{{'Priority'|l}}"
+                                    require="true"
+                                    >
+                                </pick-modal-directory>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <pick-modal-advance-multi
+                                    label="{{'Label'|l}}" require="false"
+                                    disable="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                    load-data-func="ctrlChild.loadLabel(params)"
+                                    id-value="ctrlChild._update_value.label"
+                                    load-details-func="ctrlChild.loadLabel_details(params)"
+                                    localized="false"
+                                    pick-func="ctrlChild.pickLabel_update(params)"
+                                    enable-insert-new-item="true"
+                                    insert-item-func="ctrlChild.insertLabel(params)">
+                            </pick-modal-advance-multi>
+                        </div>
+                    </div>
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea id="updateTask_content" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div ng-if="ctrlChild._update_value.attachment.length ==0" class="no-data">
+                                {{'NoAttachment'|l}}
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrlChild._update_value.attachment">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                <attachment-just-show my-item="item"></attachment-just-show>
+                                            </td>
+                                            <td><i class="fas fa-times text-danger" ng-click="ctrlChild.removeFile_update(item)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main" colspan=" 0">
+                                            <div class="diskuf-uploader">
+                                                <span class="wd-fa-add-file-light">
+                                                    <span class="wd-fa-add-file-light-text">
+                                                        <span class="wd-fa-add-file-light-title">
+                                                            <span class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                        </span>
+                                                        <span class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input class="diskuf-fileUploader wd-test-file-light-inp " type="file" file-reading
+                                                    file-func="ctrlChild.pushFile_update(params)" size="1" style="width:100%;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--
+                        <div class="col-md-12 my-2">
+                            <div
+                                class="my-1"
+                                ng-show="ctrlChild.workflow_plays.length === 0 && ctrlChild._update_value.task_type === 'WorkflowPlay'"
+                            >
+                                <button-new
+                                    button-new-label="{{'Create new Workflow play'|l}}"
+                                    button-new-modal="#modal_WFP_Insert"
+                                />
+                            </div>
+                            <div
+                                class="my-1"
+                                ng-if="['Office.Notify.Use']|checkRule"
+                                ng-show="ctrlChild.notify_detail === null && ctrlChild._update_value.task_type === 'Notification'"
+                            >
+                                <button-new
+                                    button-new-label="{{'TaskAddNewNotification'|l}}"
+                                    button-new-modal="#notify_insert_modal"
+                                />
+                            </div>
+                        </div>
+
+                         <div class="WFP-task col-md-12" ng-show="ctrlChild.workflow_plays.length > 0">
+                            <div class="table-responsive">
+                                <div class="title">{{'WorkflowPlay' | l}}</div>
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrlChild.workflow_plays">
+                                            <td>
+                                                <small><span class="grey-text float-left"><i class="fa fa-clock" aria-hidden="true"></i>
+                                                        <time-show time-show-type="short" time-show-data="item.event[0].time">
+                                                        </time-show>
+                                                    </span></small>
+                                            </td>
+                                            <td>
+                                                <show-username username="item.username" employee="item.employee">
+                                                </show-username>
+                                            </td>
+                                            <td style="width: 35%">
+                                                <a class="text-dark" href="/signing-details?code={{item.code}}" target="_blank">{{item.title}}</a>
+                                                <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                                    <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                                        attachment-show-func="ctrlChild.loadfileWFP(params)"
+                                                        attachment-show-params="{id:item._id,name:at.name}"
+                                                        attachment-show-service-name="'workflow_play'">
+                                                    </attachment-show>
+                                                </div>
+                                                <div class="showfile-bar" ng-if="item.customTemplate">
+                                                    <attachment-show attachment-show-item="item.customTemplate"
+                                                        attachment-show-func="ctrlChild.loadfileWFP(params)"
+                                                        attachment-show-params="{id:item._id,name:item.customTemplate.name}"
+                                                        attachment-show-service-name="'workflow_play'">
+                                                    </attachment-show>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <show-status id-value="item.status"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="WFP-task col-md-12" ng-show="ctrlChild.notify_detail !== null">
+                            <div class="table-responsive">
+                                <div class="title">{{'Notify' | l}}</div>
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <small>
+                                                    <span class="grey-text float-left">
+                                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                                        <time-show
+                                                            time-show-type="short"
+                                                            time-show-data="ctrlChild.notify_detail.events[0].time"
+                                                        />
+                                                    </span>
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <show-username username="ctrlChild.notify_detail.username"/>
+                                            </td>
+                                            <td style="width: 35%" >
+                                                <a
+                                                    class="text-dark"
+                                                    link-details
+                                                    link-details-display="{{ctrlChild.notify_detail.title}}"
+                                                    link-details-url="/notify-details?{{ctrlChild.notify_detail._id}}"
+                                                    link-details-route="notify-details"
+                                                    link-details-func="ctrlChild.reloadModalBox(params)"
+                                                >
+                                                    {{ctrlChild.notify_detail.title}}
+                                                </a>
+                                                <div class="showfile-bar"
+                                                     ng-if="ctrlChild.notify_detail.attachment && ctrlChild.notify_detail.attachment.length > 0">
+                                                    <attachment-show
+                                                        ng-repeat="at in ctrlChild.notify_detail.attachment"
+                                                        attachment-show-item="at"
+                                                        attachment-show-func="ctrlChild.load_notify_file(params)"
+                                                        attachment-show-params="{id: ctrlChild.notify_detail._id, name: at.name}"
+                                                        attachment-show-service-name="'notify'"
+                                                    >
+                                                    </attachment-show>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <show-status id-value="ctrlChild.notify_detail.status"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-save-objname="Task"
+                    modal-button-save-actionname="update"
+                    modal-button-save-invalid="ctrlChild._update_value.status === 'Cancelled' || !ctrlChild._update_value.title"
+                    modal-button-save-func="ctrlChild.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

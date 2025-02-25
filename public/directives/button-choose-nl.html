@@ -1,0 +1,55 @@
+<style>
+    button-choose-l .dropdown-menu>div {
+        max-height: 250px;
+        overflow-y: auto;
+    }
+</style>
+<div class="form-group" style="width: 100%;">
+    <div class="btn-group" style="width: 100%;">
+        <div class="input-prepend input-group">
+            <div class="input-group-prepend"><span class="input-group-text">{{buttonChooseLabel}}</span>
+            </div>
+            <div>
+                <button ng-hide="buttonChooseDataInternal.length ===0" ng-disabled="doing ||buttonChooseDisabled" type="button"
+                    class="btn btn-primary dropdown-toggle " data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    {{buttonChooseChoosen[buttonChooseKey]}}
+                </button>
+                <div class="dropdown-menu">
+                    <input type="text" ng-model="buttonChoose" style="width: 100%;height: 30px;" placeholder="Search" />
+                    <div>
+                        <a class="dropdown-item" ng-repeat="item in buttonChooseDataInternal|filter:buttonChoose"
+                            ng-click="buttonChooseChoose(item)" ng-disabled="buttonChooseDisabled">
+                            {{item[buttonChooseKey]}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-hide="buttonChooseDataInternal.length ===0" class="input-group-append"><button
+                    class="btn btn-primary" type="button" ng-click="buttonChooseAdd()" ng-disabled="buttonChooseDisabled">{{'Add'|l}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group ">
+    <loading loading-label="Updating..." loading-value="doing">
+    </loading>
+    <div ng-show="!status">
+        <span class="btn btn-sm" style="color: #f86c6b;">
+            {{'FailedSaving'|l}}
+        </span>
+        <button class="btn btn-sm btn-outline-primary" type="button" ng-click="retry()">
+            <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+        </button>
+    </div>
+    <div class="input-group-text" ng-hide="buttonChooseModel.length>0">
+        {{'NoMoreInformation'|l:{title:buttonChooseLabel} }}
+    </div>
+    <div class="multiple choosen" ng-hide="buttonChooseModel.length==0">
+        <div class="option" ng-repeat="item in buttonChooseModel"><span ng-show="!doing" class="deselect-option"
+                ng-click="buttonChooseRemove(item)"> ✕ </span>
+            {{(item|getField:buttonChooseKeyval:buttonChooseKey:buttonChooseData)}}
+        </div>
+    </div>
+</div>

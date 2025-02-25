@@ -1,0 +1,38 @@
+<div id="user_permision">
+
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng quản lý tài khoản 
+                        <i>(bao gồm việc thêm, sửa thông tin  và reset mật khẩu cho tài khoản)</i>
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Management.User.Use'].value" brige-func="ctrl.updateRule(params)" brige-value="'Management.User.Use'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Được phép phân quyền cho tài khoản
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Management.User.AssignPermission'].value" brige-func="ctrl.updateRule(params)" brige-value="'Management.User.AssignPermission'"/>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Được phép xoá tài khoản
+                    </div>
+                    <div class="tool">
+                        <input type="checkbox" ng-model="ctrl.rule['Management.User.DeleteUser'].value" brige-func="ctrl.updateRule(params)" brige-value="'Management.User.DeleteUser'"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

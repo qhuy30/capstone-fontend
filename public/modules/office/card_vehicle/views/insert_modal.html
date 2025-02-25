@@ -1,0 +1,71 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Card_Insert">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'NewCard'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="insertGroupForm">
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Name'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CardVehicle','insert','doing')"
+                type="text"
+                ng-model="ctrl._insert_value.name"
+                class="form-control"
+                name="insertCardVehical_name"
+                placeholder="input name of card"
+                ng-class="{ 'is-invalid': insertGroupForm.insertCardVehical_name.$invalid }"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Code'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CardVehicle','insert','doing')"
+                type="text"
+                ng-model="ctrl._insert_value.code"
+                vld-async
+                vld-async-func="ctrl.checkExist(model)"
+                class="form-control"
+                name="insertCardVehical_code"
+                placeholder="input code of card"
+                ng-class="{ 'is-invalid': insertGroupForm.insertCardVehical_code.$invalid }"
+                required
+              />
+            </div>
+            <div
+              style="
+                width: 100%;
+                margin-top: 0.25rem;
+                font-size: 80%;
+                color: #f86c6b;
+              "
+              ng-if="insertGroupForm.insertCardVehical_code.$error.vldasync"
+            >
+              {{'ExistCode'|l}}
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-new
+          modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-new-objname="CardVehicle"
+          modal-button-new-actionname="insert"
+          modal-button-new-invalid="insertGroupForm.$invalid || insertGroupForm.insertCardVehical_code.$pending.vldasync"
+          modal-button-new-func="ctrl.insert_func()"
+        >
+        </modal-button-new>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

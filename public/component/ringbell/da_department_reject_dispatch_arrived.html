@@ -1,0 +1,26 @@
+<a class="waves-effect ringbell-header-item da_department_accept_dispatch_arrived"
+    href="/da-details?{{item.params.id}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span>
+                <!-- <span class="department">{{item.params.department_title[$root.Language.current]}}</span> -->
+                <show-username-onlyname username="item.params.action_by" without-tooltip="true">
+                </show-username-onlyname>
+                <!-- <span style="color: #ffc107; font-weight: 600; font-size: 0.8rem !important;">{{'refuse the processing of incoming official document'|l}}</span> -->
+                <span class="ringbell-action warning">{{'returned incoming official document'|l}}</span>
+                <span class="code">{{item.params.code}}</span>
+            </span>
+        </div>
+   
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

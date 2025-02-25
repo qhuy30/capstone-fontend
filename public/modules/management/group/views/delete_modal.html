@@ -1,0 +1,17 @@
+<div class="modal fade" id="modal_Group_Delete" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+                <div class="modal-body">
+                    {{'DoYouWantDelete'|l:{title:ctrl._delete_value.key} }}
+                </div>
+                <div class="modal-footer">
+                    <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                        modal-button-delete-objname="Group" modal-button-delete-actionname="delete"
+                        modal-button-delete-func="ctrl.delete_func()">
+                    </modal-button-delete>
+                    <modal-button-close></modal-button-close>
+                </div>
+            </div>
+        </div>
+    </div>

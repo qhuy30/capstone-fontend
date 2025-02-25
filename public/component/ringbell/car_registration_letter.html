@@ -1,0 +1,32 @@
+<a class="waves-effect ringbell-header-item project_update_info"
+    href="/car-registration-details?code={{item.params.code}}"
+>
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span>
+                <span>{{'CarRegister'|l}}</span>
+                <span class="title" >[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+                <span class="text-lowercase" >{{'WrittenBy'|l}}</span>
+                <show-username-onlyname username="item.params.username_create_ticket" 
+                without-tooltip="true"></show-username-onlyname>`
+                
+            </span>
+        </div>
+        <div class="ringbell-action" ng-switch="item.params.status">
+            <span class="danger" ng-switch-when="recalled">
+                <i class="fas fa-book"></i>&nbsp;{{'Unfortunately, it has to be canceled'|l}}
+            </span>
+        </div>
+   
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+           </small>
+        </div>
+        
+    </div>
+
+</a>

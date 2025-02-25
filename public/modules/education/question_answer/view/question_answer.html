@@ -1,0 +1,37 @@
+<my-content class="task-feature">
+    <content-content>
+        <div class="card" ng-controller="question_answer_controller as ctrl">
+            <div class="card-body">
+                <div class="direction-container">
+                    <div class="direction-content">
+                        <div 
+                            class="direction-item"
+                            ng-class="{'active': ctrl.tab ==='commonQuestion'}"
+                            ng-click="ctrl.switchTab('commonQuestion')">
+                            <i class="fas fa-question-circle"></i>&nbsp;&nbsp;
+                            Câu hỏi thường gặp
+
+                        </div>
+                        <div ng-if="['Education.StudentQuestion.Use'] || ['Education.ForwardQuestion.Use'] | checkRule"
+                            class="direction-item "
+                            ng-class="{'active': ctrl.tab ==='studentAnswer'}"
+                            ng-click="ctrl.switchTab('studentAnswer')">
+                            <i class="fas fa-list-alt"></i>&nbsp;&nbsp; Câu trả
+                            lời sinh viên
+                        </div>
+                        <div ng-if="['Education.TypeQuestion.Use'] || ['Education.ForwardQuestion.Use'] | checkRule"
+                            class="direction-item"
+                            ng-class="{'active': ctrl.tab ==='settings'}"
+                            ng-click="ctrl.switchTab('settings')">
+                            <i class="fas fa-cog"></i>&nbsp;&nbsp; Cài đặt
+                        </div>
+                    </div>
+
+                </div>
+                <div class="content-container">
+                    <div ng-include="ctrl._urlContent"></div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

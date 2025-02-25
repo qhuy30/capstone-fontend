@@ -1,0 +1,32 @@
+<div class="btn-group" style="width: 100%;">
+    <div class="input-group-new">
+        <!-- Date Input -->
+        <div ng-if="label !== ''" class="input-group-prepend-new">
+            <span class="input-group-text-new">
+                {{label}}<span>&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
+            </span>
+        </div>
+        <input type="date"
+               name="{{_ctrlName}}_date"
+               ng-model="dateValue"
+               ng-disabled="disable"
+               ng-required="require"
+               class="form-control"
+               ng-change="pickDate()"
+               min="{{minValue}}"
+               max="{{maxValue}}" />
+    </div>
+
+    <div class="input-group-new" style="margin-left: 10px;">
+        <!-- Time Input -->
+        <div style="height: 20px">
+        </div>
+        <input type="time"
+               name="{{_ctrlName}}_time"
+               ng-model="timeValue"
+               ng-disabled="disable"
+               ng-required="require"
+               class="form-control"
+               ng-change="pickTime()" />
+    </div>
+</div>

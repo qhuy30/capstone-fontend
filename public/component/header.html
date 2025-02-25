@@ -1,0 +1,426 @@
+<script type="text/javascript">
+  // $(".quickicon-container").on("click", function () {
+  //   this.removeClass("show");
+  // });
+</script>
+
+<header class="app-header navbar" ng-controller="header_controller as ctrlHeaders" click-outside="ctrlHeaders.hideRingbell()">
+  <a class="navbar-brand" href="/home" ng-click="$root.currentGroupMenu ='home'">
+    <!-- <strong >Era</strong> -->
+    <div class="logo-header">
+      <img ng-src="{{ctrlHeaders.logo.urlDisplay}}" />
+    </div>
+  </a>
+
+  <!-- <button class="navbar-toggler sidebar-toggler" type="button" data-toggle="sidebar-show">
+        <span class="navbar-toggler-icon"></span>
+    </button> -->
+  <a class="nav-link navbar-toggler sidebar-toggler" href="#">
+    <span class="navbar-toggler-icon"></span>
+  </a>
+  <!-- <ul class="nav navbar-nav d-md-down-none">
+        <li class="nav-item px-3"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item px-3"><a class="nav-link" href="#">Users</a></li>
+        <li class="nav-item px-3"><a class="nav-link" href="#">Settings</a></li>
+    </ul> -->
+
+  <div class="navbar-title">{{'NavbarTitle'|l}}</div>
+
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown d-md-down-none">
+      <a class="nav-link" data-toggle="dropdown" dropdowntoggle="" href="#" role="button"><i
+          class="fas fa-chart-pie"></i>
+        <span ng-show="ctrlHeaders.countAr.length>0"
+          class="badge badge-pill badge-danger">{{ctrlHeaders.countAr.length <100?ctrlHeaders.countAr.length:'99+'}}</span></a>
+      <div class="
+          dropdown-menu dropdown-primary
+          quickicon-container
+          dropdown-menu-right
+        " ng-class="{'quickicon-hide':ctrlHeaders.countAr.length===0}" style="box-shadow: none; padding-right: 20px">
+        <div class="quickicon-content-notify">
+          <div class="text-muted quickicon-header">
+            <small>{{'ThingsNeedToHandle'|l}}</small>
+          </div>
+          <span ng-repeat="item in ctrlHeaders.countAr">
+            <a ng-if="item.name==='notify_count_pending'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/notify">
+              <i class="fas fa-bullhorn text-warning"></i><span>{{'There are some notices that require your approval'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='notify_count_notseen'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/notify">
+              <i class="fas fa-bullhorn text-primary"></i><span>{{'You have not read some notifications'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='task_count_created'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/task?tab=personal">
+              <i class="fas fa-tasks text-danger"></i><span>{{'The some task you created have not been completed'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='task_count_assigned'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/task?tab=personal">
+              <i class="fas fa-tasks text-danger"></i><span>{{'You have not completed some tasks'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='dispatch_arrived_count_pending'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/da">
+              <i class="fas fa-tasks text-warning"></i><span>{{'There are some incoming dispatch documents that need to be processed'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='work_play_count_pending'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/signing">
+              <i class="fas fa-signature text-warning"></i><span>{{'There are some documents requesting your approval'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='leave_form_count_pending'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/leaveform">
+              <i class="fas fa-signature text-warning"></i><span>{{'There are some leave requests that require your approval'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='journey_time_form_count_pending'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/journey-time-form">
+              <i class="far fa-edit text-warning"></i><span>{{'There are some requirements for journey time'|l:({count:item.count})}}.</span>
+            </a>
+            <a ng-if="item.name==='labor_contract_count_pending'" class="
+                dropdown-item
+                waves-effect waves-light
+                quickicon-header-item
+              " href="/human-larbor-contract">
+              <i class="far fa-edit text-warning"></i><span>{{'There are some labor contracts that require your approval'|l:({count:item.count})}}.</span>
+            </a>
+            <div class="col-md-12" style="border-top: 1px solid #eee"></div>
+          </span>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item  d-md-down-none" style="margin-right: 20px !important;">
+      <a class="nav-link"  ng-click="ctrlHeaders.isOpenRingbell = !ctrlHeaders.isOpenRingbell" role="button"><i class="fas fa-bell"></i>
+        <span ng-show="ctrlHeaders.countRingBellItem>0"
+          class="badge badge-pill badge-danger">{{ctrlHeaders.countRingBellItem<100?ctrlHeaders.countRingBellItem:'99+'}}</span></a>
+
+    </li>
+  </ul>
+  <!-- <ul class="nav navbar-nav ml-auto"></ul> -->
+  <div class="btn-group" style="margin-right: 15px;margin-top:0px">
+    <span style="cursor: pointer; font-weight: 550; " class="dropdown-toggle" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      {{$root.Language.current|getField:'key':'title':$root.Language.list}}
+    </span>
+    <div class="dropdown-menu dropdown-primary quickicon-container" style="box-shadow:none;">
+      <div class="quickicon-content-language">
+        <div class="text-muted quickicon-header" style="padding-left:5px">
+          <small>{{'YourLanguage'|l}}</small>
+        </div>
+        <a class="dropdown-item quickicon-header-item" ng-repeat="item in $root.Language.list"
+          ng-click="$root.chooseLanguage(item.key)"
+          ng-disabled="$root.statusValue.get($root._ctrlName,'Localization','chooseLanguage','doing')">{{item.title}}</a>
+      </div>
+
+    </div>
+  </div>
+  <div class="btn-group">
+    <span style="cursor: pointer; font-weight: 700" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+      data-display="static" aria-expanded="false" ng-click="ctrlHeaders.clickProfile()">
+      <show-username username="$root.logininfo.username" just-name="true" without-tooltip="true"></show-username>
+    </span>
+    <div class="dropdown-menu dropdown-primary dropdown-menu-right"
+        style="width: 300px; padding: 20px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);">
+      <div class="account-info text-center">
+          <show-username username="$root.logininfo.username" just-image="true" just-without-tooltip="true"></show-username>
+          <p style="margin-top: 10px; font-size: 16px;">Hi, {{$root.logininfo.username}}!</p>
+          <a class="dropdown-item quickicon-header-item" href="/profile?tab=general">{{'MyProfile'|l}}</a>
+          <a class="dropdown-item quickicon-header-item" href="/changepassword">{{'ChangePassword'|l}}</a>
+      </div>
+      <hr />
+      <div class="account-switcher">
+        <div class="account-header" ng-click="ctrlHeaders.toggleAccountList()">
+          <span ng-show="ctrlHeaders.accounts.length > 0">{{'MoreAccount'|l}}</span>
+        </div>
+          <div class="account-item" ng-repeat="account in ctrlHeaders.accounts">
+              <div class="account-details" ng-mouseenter="showTooltip()" ng-mouseleave="hideTooltip()" ng-click="ctrlHeaders.switchAccount(account)" >
+                  <img ng-src="{{account.imageUrl}}" class="rounded-circle account-img" />
+                  <div class="accounts-info">
+                      <p class="account-title">{{account.title}}</p>
+                  </div>
+              </div>
+          </div>
+          <a class="dropdown-item mt-2" ng-click="ctrlHeaders.addAnotherAccount()"><i class="fa fa-plus-circle"></i>{{'AddAnotherAccount'|l}}</a>
+      </div>
+      <hr />
+      <a class="dropdown-item" ng-click="$root.logout()"><i class="fa fa-sign-out-alt"></i>{{'Signout'|l}}</a>
+    </div>
+  </div>
+
+  <!-- <a class="nav-link aside-menu-toggler" href="#" >
+    <i class="far fa-comment-dots"></i>
+  </a> -->
+  <div 
+  class="ringbell-container
+        " ng-class="{ 'open':ctrlHeaders.isOpenRingbell }" style="box-shadow: none">
+    <div class="ringbell-content-notify">
+      <div class="ringbell-header">
+        <small class="text-muted" style="margin-left: 10px;">{{'Notify'|l}}</small>&nbsp;&nbsp;&nbsp;
+        <span class="not-seen" ng-class="{'active':ctrlHeaders.tab ==='notseen'}" ng-click="ctrlHeaders.switchTab('notseen')">{{'Not seen'|l}}</span>
+        <span class="all" ng-class="{'active':ctrlHeaders.tab ==='all'}" ng-click="ctrlHeaders.switchTab('all')">{{'All'|l}}</span>
+        <span class="see-all" ng-click="ctrlHeaders.seenAll()" ng-show="ctrlHeaders.showSeenAll"><i class="fas fa-check"></i>&nbsp;{{'Mark as seen all'|l}}</span>
+      </div>
+      <div >
+        <div class="ringbell-header-container" >
+          <span ng-repeat="item in ctrlHeaders.ringbellitems | filter_distinct:'_id'"
+          ng-click="ctrlHeaders.seenRingBellItem(item)"
+          ng-class="{'seen-item':item.seen && item.seen.indexOf($root.logininfo.username)!==-1}"
+          >
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='da_forward_to_head_of_office'">
+
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='da_forward_to_board_of_directors'">
+
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='da_forward_to_departments'">
+
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='da_department_accept_dispatch_arrived'">
+
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='da_department_reject_dispatch_arrived'">
+
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='da_department_read_dispatch_arrived'">
+
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='da_new_task'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_assigned_main_person'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_assigned_participant'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_assigned_observer'">
+        
+            </div>
+
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_assigned_department'">
+        
+            </div>
+
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='project_create'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='project_update_info'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_add_comment'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_update_comment'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_updated_status'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_add_proof'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_remove_proof'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_push_file'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_remove_file'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_updated_progress'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_updated'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='transfer_ticket_need_approve'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_need_approve'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_approved'">
+        
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_rejected'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_returned'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_rejected_creator'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_approved_creator'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_returned_creator'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_deleted'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_transform_sign'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='workflow_done'">
+              
+            </div>
+
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_receive_to_know'">
+              
+            </div>
+
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='obd_released'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_overdue_notify'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_upcoming_deadline_daily'">
+              
+            </div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_upcoming_deadline_weekly'">
+              
+            </div>
+  
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='notify_late_workflow_play'">
+              
+            </div>
+
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='project_update_status'">
+              
+            </div>
+                
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='task_transfered_leader_department'">
+            </div>
+
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='notify_need_approve'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='notify_need_approve_recall'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='notify_rejected'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='notify_approved'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='notify_approved_recall'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='notify_approved_to_user'"></div>
+            
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='registration_room_approve'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='registration_room_approve_recall'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='registration_room_reject'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='registration_room_reject_recall'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='registration_room_request_cancel'"></div>
+
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='registration_room_letter'"></div>
+
+            <!-- Car registration -->
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_need_to_approve'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_approve'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_registration_reject'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_need_review'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_registration_request_cancel'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_registration_approve_recall'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_registration_letter'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='car_registration_reject_recall'"></div>
+
+            <!-- Event calendar -->
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='event_calendar_need_approve'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='event_calendar_need_approve_recall'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='event_calendar_approve'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='event_calendar_reject'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='event_calendar_reject_recall'"></div>
+      
+            <!-- task -->
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='need_approve_receive_task'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='receive_task'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='reject_receive_task'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='need_approve_department_receive_task'"></div>
+            <div ng-include="ctrlHeaders.ringbellview[item.action]" ng-if="item.action==='reject_approval_receive_task'"></div>
+
+            <a ng-if="item.action==='qna_created'" class="
+                    dropdown-item
+                    waves-effect waves-light
+                    ringbell-header-item
+                  " href="/student-question-details?{{item.params.qnaId}}">
+              <small><span class="grey-text float-left">
+                  <i class="fa fa-clock" aria-hidden="true"></i>
+                  <time-show time-show-type="long" time-show-data="item.notify_time">
+                  </time-show>
+                </span></small>
+              <span  >{{'There is 1 new question created by a student'|l:({studentName: item.params.username_create_task})}}</span>
+            </a>
+  
+            <a ng-if="item.action==='qna_student_update'" class="
+                    dropdown-item
+                    waves-effect waves-light
+                    ringbell-header-item
+                  " href="/student-question-details?{{item.params.qnaId}}">
+              <small><span class="grey-text float-left">
+                  <i class="fa fa-clock" aria-hidden="true"></i>
+                  <time-show time-show-type="long" time-show-data="item.notify_time">
+                  </time-show>
+                </span></small>
+              <span  >{{'Questions are answered by students'|l:({subject: item.params.subject, studentName: item.params.username_create_task})}}</span>
+            </a>
+  
+            <a ng-if="item.action==='qna_student_closed'" class="
+                    dropdown-item
+                    waves-effect waves-light
+                    ringbell-header-item
+                  " href="/student-question-details?{{item.params.qnaId}}">
+              <small><span class="grey-text float-left">
+                  <i class="fa fa-clock" aria-hidden="true"></i>
+                  <time-show time-show-type="long" time-show-data="item.notify_time">
+                  </time-show>
+                </span></small>
+              <span  >{{'Questions are closed by students'|l:({subject: item.params.subject, studentName:item.params.username_create_task})}}</span>
+            </a>
+  
+            <a ng-if="item.action==='qna_forwarded'" class="
+                    dropdown-item
+                    waves-effect waves-light
+                    ringbell-header-item
+                  " href="/student-question-details?{{item.params.qnaId}}">
+              <small><span class="grey-text float-left">
+                  <i class="fa fa-clock" aria-hidden="true"></i>
+                  <time-show time-show-type="long" time-show-data="item.notify_time">
+                  </time-show>
+                </span></small>
+              <span  >{{'There is a forwarded question from'|l:({employeeName: item.params.user_forwarded_question})}}</span>
+            </a>
+            <span class="seen-mark" ng-if="item.seen && item.seen.indexOf($root.logininfo.username)!==-1"><i class="far fa-check-circle"></i>&nbsp;{{'Seen'|l}}</span>
+          </span>
+        </div>
+        <div class="no-data" ng-show="ctrlHeaders.totalItems_ringbellitem ===0" style="margin-bottom: 10px;">
+          {{'NoData'|l}}
+        </div>
+        <div ng-click="ctrlHeaders.loadMoreRingBellItem();$event.stopPropagation();" class="text-center btn-light"
+          style="cursor: pointer; padding: 6px;border-radius: 8px;"
+          ng-show="ctrlHeaders.ringbellitems.length<ctrlHeaders.totalItems_ringbellitem">
+          {{'ViewOlderAnnouncements'|l}}
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</header>

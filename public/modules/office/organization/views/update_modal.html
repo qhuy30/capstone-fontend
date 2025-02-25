@@ -1,0 +1,115 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Organization_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'UpdateInformationDepartment'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="updateForm">
+
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Code'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"
+                                type="number" ng-model="ctrl._update_value.ordernumber" class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                    <span class="input-group-text-new">{{'ID'}}</span>
+                            </div>
+                            <input ng-disabled="true" type="text" ng-model="ctrl._update_value.id"
+                                class="form-control" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-NEW">{{'Title'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"
+                                type="text" ng-model="ctrl._update_value.title['vi-VN']" class="form-control"
+                                ng-change="ctrl.changeTitle()" name="update_title_vi" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': updateForm.update_title_vi.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"
+                                type="text" ng-model="ctrl._update_value.title['en-US']" class="form-control"
+                                name="update_title_us" placeholder="{{'InputTitle'|l}}"
+                                ng-class="{ 'is-invalid': updateForm.update_title_vi.$invalid }" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Abbreviation'|l}}</span>
+                                <span class="require-sympton">*</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"
+                                type="text" alphabets uppercase ng-model="ctrl._update_value.abbreviation" class="form-control"
+                                name="update_abbreviation" placeholder="{{'Input abbreviation'|l}}"
+                                ng-class="{ 'is-invalid': updateForm.update_abbreviation.$invalid }" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Type'|l}}</span>
+                            </div>
+                            <input type="radio" ng-model="ctrl._update_value.type" value="department" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"/>
+                            <span>{{'Department'|l}}</span>
+                            <input type="radio" ng-model="ctrl._update_value.type" value="temporary_department" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"/>
+                            <span>{{'Temporary Department'|l}}</span>
+                            <input type="radio" ng-model="ctrl._update_value.type" value="board" ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"/>
+                            <span>{{'Board'|l}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-new">
+                            <div class="input-group-prepend-new">
+                                <span class="input-group-text-new">{{'Icon'|l}}</span>
+                            </div>
+                            <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')"
+                                type="text" ng-model="ctrl._update_value.icon" class="form-control" name="update_icon"
+                                placeholder="Input icon" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <pick-user pick-func="ctrl.pickLeader_update(params)" id-value="ctrl._update_value.leader"
+                            label="{{'PersonInChargeOfLeadershipLevel'|l}}" require="false"></pick-user>
+                    </div>
+                    <div class="form-group">
+                        <pick-user pick-func="ctrl.pickDepartmentLeader_update(params)" id-value="ctrl._update_value.departmentLeader"
+                            label="{{'PersonInChargeOfDepartmentLeadershipLevel'|l}}" require="false"></pick-user>
+                    </div>
+                    <div class="form-group">
+                        <input-checkbox input-checkbox-label="{{'IsActive'|l}}"
+                            input-checkbox-model="ctrl._update_value.isactive"
+                            input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'Organization','update','doing')">
+                        </input-checkbox>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-save-objname="Organization" modal-button-save-actionname="update"
+                    modal-button-save-invalid="updateForm.$invalid" modal-button-save-func="ctrl.update()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

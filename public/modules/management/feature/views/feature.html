@@ -1,0 +1,40 @@
+<my-content>
+    <content-content>
+        <div ng-controller="feature_controller as ctrl" class="main-content mt-5 feature-management">
+            <div class="card">
+                <div class="card-body">
+                    <h1 style="font-weight: 800;">{{'Feature'|l}}</h1>
+                    <div class="col-md-12 separation"></div>
+                    <div class="card-body py-2 px-0">
+                        <div class="table-responsive tb-feature">
+                            <table class="table table-sm text-left">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-4">{{'FeatureName'|l}}</th>
+                                        <th class="col-md-8">{{'Status'|l}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h3>{{'ApplyNewStorageFlow'|l}}</h3>
+                                            <i
+                                                style="font-size:larger;color:gray;">{{'ApplyNewStorageFlowDescription'|l}}</i>
+                                        </td>
+                                        <td>
+                                            <button-switch button-switch-func="ctrl.changeNewStorageFlowFlag(params)"
+                                                button-switch-model="ctrl.applyNewStorageFlow.value"
+                                                button-switch-disabled="$root.statusValue.get(ctrl._ctrlName,'Feature','load','doing')
+                                                ||$root.statusValue.get(ctrl._ctrlName,'Feature','update','doing')"></button-switch>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 separation"></div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

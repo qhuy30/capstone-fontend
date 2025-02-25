@@ -1,0 +1,122 @@
+<div
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  id="modal_MasterDirectory_Update"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'Update'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal" name="updateForm">
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'OrderNumber'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MasterDirectory','update','doing')"
+                type="number"
+                ng-model="ctrl._update_value.ordernumber"
+                class="form-control"
+                name="update_ordernumber"
+                vld-sync
+                vld-sync-func="$root.validate.min(model,params)"
+                vld-sync-params="{min:1}"
+                ng-class="{ 'is-invalid': updateForm.update_ordernumber.$invalid }"
+                required
+              />
+            </div>
+            <invalid
+              invalid-status="updateForm.update_ordernumber.$error.vldsync"
+            >
+              {{'AtLeast'|l:({title:1})}}.
+            </invalid>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MasterDirectory','update','doing')"
+                type="text"
+                ng-model="ctrl._update_value.title['vi-VN']"
+                class="form-control"
+                name="update_title_vi"
+                placeholder="{{'InputTitle'|l}}"
+                ng-class="{ 'is-invalid': updateForm.update_title_vi.$invalid }"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Title'|l}} (en)</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MasterDirectory','update','doing')"
+                type="text"
+                ng-model="ctrl._update_value.title['en-US']"
+                class="form-control"
+                name="update_title_en"
+                placeholder="{{'InputTitle'|l}}"
+                ng-class="{ 'is-invalid': updateForm.update_title_en.$invalid }"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'Key'|l}}</span>
+                <span class="require-sympton">*</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MasterDirectory','update','doing')"
+                type="text"
+                ng-model="ctrl._update_value.key"
+                class="form-control"
+                name="update_key"
+                placeholder="Input key"
+                ng-class="{ 'is-invalid': updateForm.update_key.$invalid }"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group-new">
+              <div class="input-group-prepend-new">
+                <span class="input-group-text-new">{{'ExtendData'|l}}</span>
+              </div>
+              <input
+                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'MasterDirectory','update','doing')"
+                type="text"
+                ng-model="ctrl._update_value.extend"
+                class="form-control"
+                name="update_extend"
+                placeholder="Input extend data"
+                ng-class="{ 'is-invalid': updateForm.update_extend.$invalid }"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <modal-button-save
+          modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+          modal-button-save-objname="MasterDirectory"
+          modal-button-save-actionname="update"
+          modal-button-save-invalid=" updateForm.$invalid"
+          modal-button-save-func="ctrl.update()"
+        >
+        </modal-button-save>
+        <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

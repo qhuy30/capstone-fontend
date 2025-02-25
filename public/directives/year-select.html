@@ -1,0 +1,47 @@
+<div class="btn-group" style="width: 100%" ng-class="{ 'disabled': disable }">
+    <div class="input-prepend input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">{{label}}</span><span ng-if="require" class="require-sympton">*</span>
+        </div>
+        
+        <div class="dropdown-menu custom-dropdown-menu" style="width: auto; max-height: 250px; overflow-y: auto;">
+            <input
+                type="text"
+                ng-model="yearSearch"
+                style="width: 100%; height: 30px"
+                placeholder="Search Year"
+            />
+            <a
+                class="dropdown-item"
+                ng-repeat="year in years | filter:yearSearch"
+                ng-click="selectYear(year)"
+            >
+                {{year}}
+            </a>
+        </div>
+
+        <input
+            type="text"
+            ng-disabled="true"
+            ng-model="selectedYear"
+            class="form-control"
+            name="{{_ctrlName}}"
+            ng-required="require"
+        />
+
+        <button
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            ng-disabled="disable"
+        >
+            {{'Pick' | l}}
+        </button>
+        
+        <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>

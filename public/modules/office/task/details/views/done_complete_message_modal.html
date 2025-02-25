@@ -1,0 +1,47 @@
+<div class="modal fade" id="modal_Done_Complete_Message" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 700px; margin-left: -25%;">
+        <modal-header modal-header-title="{{ ctrl.Item.status === 'Processing' 
+        ? ('Done Approval' | l) 
+        : (ctrl.Item.status === 'WaitingForApproval' ? ('Complete Approval' | l) : '') }}"></modal-header>
+        
+        <div class="modal-body">
+          <form class="form-horizontal" name="assessForm">
+            <div class="card">
+              <div class="card-body row" style="border-left: 2px solid #20a8d8; padding: 10px;">
+                <div class="col-md-12">
+                  <div class="input-group-new">
+                    <div class="input-group-prepend-new">
+                      <span  >{{'AccessNote' | l}}</span>
+                      <span class="require-sympton" ng-show="ctrl._assess_value.note_required">*</span>
+                    </div>
+                    <div class="form-group mb-0">
+                      <text-area-with-suggestions-2 
+                        ng-model="ctrl._assess_value.note" 
+                        placeholder="{{ctrl._assess_value.note_placeholder}}"
+                        function-apply="ctrl.function_apply_suggestions"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+  
+        <div class="modal-footer" ng-switch="ctrl._assess_value.action">
+          <button ng-disabled="!ctrl._assess_value.note" type="button" class="btn btn-success"
+                  ng-click="ctrl.Item.status === 'Processing' ? ctrl.done() 
+                  : (ctrl.Item.status === 'WaitingForApproval' ? ctrl.complete() : null)">
+                  <i class="fas fa-check"></i> {{'Approve'|l}}
+          </button>
+          <modal-button-close></modal-button-close>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+
+

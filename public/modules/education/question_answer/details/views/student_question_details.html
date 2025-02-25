@@ -1,0 +1,105 @@
+<my-content class="task-personal-feature">
+    <content-content>
+        <div ng-controller="student_details_controller as ctrlChild">
+            <!-- <div ng-include="ctrlChild._urlUpdateModal"></div> -->
+            <div ng-include="ctrlChild._urlForwardModal"></div>
+            <div class="first">
+                <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"
+                    ng-hide="ctrlChild.status == 'see'">
+                </div>
+                <div class="question-details-container">
+                    <div style="width: 100%;">
+                        <p class="text-dark" ng-model="ctrlChild.Item.question">{{'Title'|l}} : {{
+                            ctrlChild.Item.subject }} </p>
+                        <p class="grey-text">{{'WrittenBy'|l}}
+                            <a>
+                                {{ ctrlChild.Item.username }} - {{ ctrlChild.Item.fullName }}
+                            </a>, <time-show time-show-data="ctrlChild.Item.create_date" time-show-type="long">
+                            </time-show>
+                        </p>
+                        <p class="grey-text">
+                            <a> {{'Department'|l}} : {{ctrlChild.Item.department.title[$root.Language.current]}}  </a>
+                        </p>
+                        <p class="text-dark">{{ctrlChild.Item.status|l}}</p>
+                    </div>
+                    <button-forward-item ng-if="['Education.ForwardQuestion.Use'] | checkRule"
+                        button-forward-item-modal=".task-personal-feature #modal_Forward_Detail"
+                        button-forward-item-func="ctrlChild.prepareForward(params)" button-forward-item-params="ctrlChild.Item">
+                    </button-forward-item>
+                    <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                    </div>
+                    <div style="width: 100%;">
+                        <p class="grey-text"> Câu hỏi:
+                        </p>
+                    </div>
+                    <div class="label">
+                        {{ ctrlChild.Item.question }}
+                    </div>
+                </div>
+            </div>
+            <div class="second">
+                <div class="comment-container">
+                    <div class="label">
+                        <i class="far fa-comments"></i>&nbsp;{{'answer'|l}}&nbsp;({{ctrlChild.Item.answers.length}})
+                    </div>
+                    <div class="content">
+                        <div ng-repeat="item in ctrlChild.Item.answers" class="item"
+                            ng-class="{'me':item.username==$root.logininfo.username}">
+                            <div ng-if = "item.isStudent">
+                                <span class="dot"></span>
+                                <p class="text-info" style=" padding-left: 25px; font-weight: bold;""> {{ ctrlChild.Item.username }} - {{ ctrlChild.Item.fullName }}</p>
+                            </div>
+                            <div ng-if = "!item.isStudent">
+                                <show-username username="item.username"> </show-username>  
+                            </div>
+                            
+                            <small class="time">
+                                <span class="grey-text"><i class="fa fa-clock" aria-hidden="true"></i>
+                                    <time-show time-show-type="long" time-show-data="item.create_date">
+                                    </time-show>
+                                </span>
+                            </small>
+                            <div class="message-content">
+                                <div class="label">
+                                    {{ item.answer }}
+                                </div>
+
+                                <div class="attachment" style="margin-top: 5px; display: block;"
+                                    ng-if="item.attachment.length>0">
+                                    <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                        attachment-show-func="ctrlChild.loadfile(params)"
+                                        attachment-show-params="{id:ctrlChild.Item._id,name:at.name}"
+                                        attachment-show-service-name="'task'">
+                                    </attachment-show>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="answer-container">
+                        <div class="attachment">
+                            <span class="item" ng-repeat="at in ctrlChild.files"
+                                ng-click="ctrlChild.removeFiles(at.name)">
+                                {{at.name}}
+                            </span>
+                        </div>
+                        <div class="send-answer">
+                            <!-- <div class="file">
+                                <i class="fas fa-paperclip"></i>
+                                <input type="file" file-reading="ctrlChild.files" size="1" multiple>
+                            </div> -->
+                            <div class="send">
+                                <textarea placeholder="{{'TypeCommentHere'|l}}" ng-model="ctrlChild._update_value.answer" class="form-control"
+                                    ng-enter="ctrlChild.update_student_question()" my-watch-text-input my-scope="ctrlChild._update_value.answer"
+                                    my-delay="100"></textarea>
+                                <button type="button" class="btn" style="font-size: 20px;"><i class="fas fa-paper-plane"
+                                        ng-click="ctrlChild.update_student_question()"></i></button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

@@ -1,0 +1,121 @@
+<my-content>
+    <content-content>
+        <div ng-controller="storage_controller as ctrl" class="office-da-feature">
+            <div ng-include="ctrl._urlUpdateModal"></div>
+            <div ng-include="ctrl._urlCancelModal"></div>
+            <div class="card">
+                <div class="card-body">
+                    <more-option-bar>
+                        <bar-content class="row">
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.IncommingDispatchBook_Config" pick-func="ctrl.pickDAB(params)"
+                                                      id-value="ctrl._filterDAB" label="{{'IncommingDispatchBook'|l}}"
+                                                      disable="$root.statusValue.get(ctrl._ctrlName,'storage','load','doing')"></pick-modal-directory>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.OutgoingDispatchBook_Config" pick-func="ctrl.pickODT(params)"
+                                                      id-value="ctrl._filterODT" label="{{'OutgoingDispatchBook'|l}}"
+                                                      disable="$root.statusValue.get(ctrl._ctrlName,'storage','load','doing')"></pick-modal-directory>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-directory extend="ctrl.stateStorage"
+                                                      pick-func="ctrl.pickState(params)" id-value="ctrl._filterState"
+                                                      label="{{'Status'|l}}"
+                                                      disable="$root.statusValue.get(ctrl._ctrlName,'storage','load','doing')"></pick-modal-directory>
+                            </div>
+                        </bar-content>
+                    </more-option-bar>
+
+                    <div class="content">
+                        <div class="task-container">
+                            <div style="border-top:1px solid #eee;margin-top:10px;">
+                            </div>
+                            <div class="task-content">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover" ng-class="{'no-data':ctrl.briefcase.length ===0}">
+                                        <thead>
+                                        <tr>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">#</td>
+                                            <td class="tool">
+                                                <div class="search" style="max-width: 100%">
+                                                    <input type="text" ng-model="ctrl._searchByKeyToFilterData"
+                                                           my-watch-text-input my-scope="ctrl._searchByKeyToFilterData"
+                                                           my-func="ctrl.refreshData()" my-start="!ctrl._notyetInit"
+                                                           placeholder={{'SearchByNameOrFileCode'|l}}>
+                                                    <i class="fas fa-search"></i>
+                                                </div>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 200px;">
+                                                {{'FileCode'|l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 120px;">
+                                                <div class="title">{{'Status'|l}}</div>
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 200px;">
+                                                {{'CreationTime'|l}}
+                                            </td>
+                                            <td style="font-weight: 600;vertical-align: middle;width: 200px;">
+                                                {{'Creator'|l}}
+                                            </td>
+                                            <td style="width: 150px;"></td>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody id="headTaskList">
+                                            <tr ng-repeat="item in ctrl.briefcase">
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                    {{$index+1}}
+                                                </td>
+                                                <td>
+                                                    <a class="text-dark" href="/storage/{{item.code}}">
+                                                        <i class="fas fa-file-signature text-primary"></i>&nbsp;&nbsp;{{item.title}}
+                                                    </a>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                    {{item.code}}
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                    <show-state id-value="item.state"></show-state>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                                    <time-show2 time-show-data="item.entity.his[0].created">
+                                                    </time-show2>
+                                                </td>
+                                                <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                                    <show-username username="item.username" just-name="true">
+                                                    </show-username>
+                                                </td>
+                                                <td style="width: 150px;">
+                                                    <div class="btn-group" ng-if="!item.cancelled_reason">
+                                                        <button-edit-item
+                                                                class="item-button"
+                                                                button-edit-item-modal="#modal_BriefCase_Update"
+                                                                button-edit-item-func="ctrl.prepareUpdate(params)"
+                                                                button-edit-item-params="item">
+                                                        ></button-edit-item>
+
+                                                        <button-cancel-item
+                                                                class="item-button"
+                                                                button-cancel-item-modal="#modal_BriefCase_Cancel"
+                                                                button-cancel-item-func="ctrl.prepareCancel(params)"
+                                                                button-cancel-item-params="item">
+                                                            ></button-cancel-item>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div ng-if="ctrl.briefcase.length ==0" class="no-data">
+                                    {{'NoData'|l}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

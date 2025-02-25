@@ -1,0 +1,24 @@
+<my-content class="task-feature">
+    <content-content>
+        <div class="card" ng-controller="training_point_controller as ctrl">
+            <div class="card-body">
+                <div class="direction-container">
+                    <div class="direction-content">
+                        <div class="direction-item" ng-class="{'active': ctrl.tab ==='event'}"
+                            ng-click="ctrl.switchTab('event')">
+                            <i class="far fa-calendar-alt"></i></i>&nbsp;&nbsp;
+                            <span>{{'Event'|l}}</span>
+                        </div>
+                        <!-- <div class="direction-item" ng-class="{'active': ctrl.tab ==='student'}"
+                            ng-click="ctrl.switchTab('student')">
+                            <i class="fas fa-calculator"></i></i>&nbsp;&nbsp;
+                            <span>{{'TrainingPoint'|l}}</span>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="content-container">
+                    <div ng-include="ctrl._urlContent"></div>
+                </div>
+            </div>
+    </content-content>
+</my-content>

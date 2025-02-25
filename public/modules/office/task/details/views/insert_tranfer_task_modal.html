@@ -1,0 +1,157 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Insert_Tranfer_Task">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Create task request'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="insertTaskForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <div class="form-group col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span><span class="require-sympton">*</span>
+                                    </div>
+                                    <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert_tranfer_task','doing')"
+                                    type="text" ng-model="ctrl._value_insert.title" class="form-control"
+                                    name="insert_task_title" placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': insertTaskForm.insert_task_title.$invalid }" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <date 
+                                id-value="ctrl._value_insert.from_date"
+                                func="ctrl.chooseFromDate_insert(params)"
+                                label="{{'FromDate'|l}}"
+                                disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert_tranfer_task','doing')"
+                                require="true"
+                            />
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <date id-value="ctrl._value_insert.to_date"
+                                func="ctrl.chooseToDate_insert(params)"
+                                label="{{'ToDate'|l}}"
+                                disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert_tranfer_task','doing')"
+                                endday="true"
+                                require="true"
+                            />
+                        </div>
+
+                        <div class="d-flex align-items-center col-md-4 pr-0">
+                            <div class="input-group w-100" style="width: auto; align-items: center">
+                                <label class="input-group-text ng-binding" style="border-top-right-radius: 0;border-bottom-right-radius: 0;padding-top: 4.7px;padding-bottom: 4.7px;" for="estimate">
+                                    Yêu cầu hoàn thành trong
+                                </label>
+                                <span class="require-sympton">*</span>
+                                <input type="number" id="estimate" ng-model="ctrl._value_insert.estimate" class="form-control" style="height: 32px" min="1" step="1" required>
+                                <span class="input-group-text ng-binding" style="padding-bottom: 4.7px;padding-top: 4.7px;border-top-left-radius: 0;border-bottom-left-radius: 0;">
+                                    giờ
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <organization
+                                    label="{{'Department'|l}}"
+                                    id-value="ctrl._value_insert.to_department"
+                                    select-func="ctrl.chooseDepartment_InsertTranferTask(params)"
+                                    require="true"
+                                    disabled="$root.statusValue.get(ctrl._ctrlName,'Task','insert_tranfer_task','doing')">
+                                </organization>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <pick-modal-directory
+                                    extend="ctrl.TaskPriority"
+                                    pick-func="ctrl.chooseTaskPriority_InsertTranferTask(params)"
+                                    id-value="ctrl._value_insert.priority"
+                                    label="{{'Priority'|l}}"
+                                />
+                            </div>
+                            <!-- <div class="form-group">
+                          <pick-modal-directory extend="ctrl.TaskType" pick-func="ctrl.chooseTaskType(params)"
+                            id-value="ctrl._value_insert._filterTaskType" label="{{'TaskType'|l}}">
+                          </pick-modal-directory>
+                        </div> -->
+                        </div>
+                        <div class="form-group col-md-12">
+                            <pick-modal-advance-multi
+                                label="{{'Label'|l}}"
+                                disable="$root.statusValue.get(ctrl._ctrlName,'Task','insert_tranfer_task','doing')"
+                                load-data-func="ctrl.loadLabel_InsertTranferTask(params)" id-value="ctrl._value_insert.label"
+                                load-details-func="ctrl.loadLabel_details_InsertTranferTask(params)" localized="false"
+                                pick-func="ctrl.pickLabel_InsertTranferTask(params)" enable-insert-new-item="true"
+                                insert-item-func="ctrl.insertLabel(params)">
+                            </pick-modal-advance-multi>
+                        </div>
+                    </div>
+
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea id="insertTranferTask_content" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="row part">
+                        <div class="col-md-6">
+                            <div ng-if="ctrl._value_insert.files.length == 0" class="no-data">{{'NoAttachment'|l}}</div>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl._value_insert.files">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                <attachment-just-show my-item="item"></attachment-just-show>
+                                            </td>
+                                            <td><i class="fas fa-times text-danger"
+                                                    ng-click="ctrl.removeFile_InsertTranferTask(item)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                            colspan="0">
+                                            <div class="diskuf-uploader">
+                                                <span class="wd-fa-add-file-light">
+                                                    <span class="wd-fa-add-file-light-text">
+                                                        <span class="wd-fa-add-file-light-title">
+                                                            <span class="wd-fa-add-file-light-title-text">{{'Attachment'|l}}</span>
+                                                        </span>
+                                                        <span
+                                                            class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                    </span>
+                                                </span>
+                                                <input class="diskuf-fileUploader wd-test-file-light-inp" type="file"
+                                                    file-reading="ctrl._value_insert.files" size="1" multiple
+                                                    style="width:100%;">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new
+                    modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-new-objname="Task"
+                    modal-button-new-actionname="insert_tranfer_task"
+                    modal-button-new-invalid="insertTaskForm.$invalid"
+                    modal-button-new-func="ctrl.insert_transferTicketTask()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

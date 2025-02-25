@@ -1,0 +1,6 @@
+<span>
+    <span ng-if="localization">
+        {{selectedItem[field][$root.Language.current]}}
+    </span>
+    <span ng-if="!localization">{{selectedItem[field]}}</span>
+</span>

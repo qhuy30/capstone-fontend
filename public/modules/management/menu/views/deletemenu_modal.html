@@ -1,0 +1,19 @@
+<div class="modal fade" id="modal_menu_delete" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantDelete'|l:{title:(ctrl._deleteMenu_value.type == 'component'?ctrl._deleteMenu_value.key:ctrl._deleteMenu_value.url)} }}
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="Menu" modal-button-delete-actionname="delete"
+                    modal-button-delete-func="ctrl.deleteMenu_func()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

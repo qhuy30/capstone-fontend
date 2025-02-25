@@ -1,0 +1,9 @@
+<div>
+    <span ng-repeat="space in treeviewHeaderItem[treeviewHeaderKey] track by $index" >&nbsp;</span>
+    <span ng-bind-html="treeviewHeaderItem[treeviewHeaderIconKey]"></span>
+    <span ng-if="treeviewHeaderItem.child" style="color: #20a8d8;" >
+            <i class="far fa-plus-square" ng-show="!treeviewHeaderItem.expand"></i>
+            <i class="far fa-minus-square" ng-show="treeviewHeaderItem.expand"></i>
+    </span>
+    {{treeviewHeaderLabel}}
+</div>

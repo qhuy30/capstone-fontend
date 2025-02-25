@@ -1,0 +1,35 @@
+<a class="waves-effect ringbell-header-item notify_need_approve"     
+    href="/task-details?code={{item.params.parent_code}}"
+>
+    <i class="fas fa-newspaper"></i>
+    <div class="content">
+        <div>
+            
+
+            <span>
+                <show-username-onlyname username="item.params.username" without-tooltip="true"></show-username-onlyname>
+                </show-username-onlyname>
+                <span style="text-transform: lowercase;">
+                    {{'Rejected approval receive task'|l}}
+               </span>
+               <span class="title">[{{item.params.parent_code}}]&nbsp;{{item.params.title}}</span>&nbsp;
+               <show-username-onlyname username="item.params.username_create_ticket" without-tooltip="true" />    
+            </span>
+        </div>
+        <div class="ringbell-action">
+            <!-- <div class="ringbell-action ">
+                <span class="danger"> 
+                    <i class="fas fa-book"></i>&nbsp;{{'Rejected approval receive task'|l}}
+                </span>
+            </div> -->
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.params.time">
+                </time-show>
+            </small>
+        </div>
+    </div> 
+</a>

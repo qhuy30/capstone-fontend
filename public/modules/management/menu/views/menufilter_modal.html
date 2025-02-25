@@ -1,0 +1,19 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_menu_filtermenu">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'DataFilterOptions'|l}}"></modal-header>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group ">
+              <button-checkbox button-checkbox-label="{{'FilterwithActiveProperty'|l}}"
+              button-checkbox-func="ctrl.changeCheckActive(params)"
+              button-checkbox-model="ctrl.__checkActive"></button-checkbox>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+          <modal-button-close></modal-button-close>
+      </div>
+    </div>
+  </div>
+</div>

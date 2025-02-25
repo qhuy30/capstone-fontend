@@ -1,0 +1,113 @@
+<my-content>
+    <content-content>
+        <div class="card">
+            <div class="card-body">
+                <div ng-controller="recyclebin_controller as ctrl">
+                    <div class="form-group row">
+                        <button-deleteall 
+                        button-deleteall-func="ctrl.openModal_delete()"
+                        button-deleteall-label="{{'DeleteAll'|l}}"
+                            button-deleteall-modal="#modal_RecycleBin_DeleteAll">
+                        </button-deleteall>
+                        <button-restoreall 
+                        button-restoreall-func="ctrl.openModal_restore()"
+                        button-restoreall-label="{{'RestoreAll'|l}}"
+                            button-restoreall-modal="#modal_RecycleBin_RestoreAll">
+                        </button-restoreall>
+                    </div>
+                    <div class="form-group row" ng-if="ctrl._checkActive">
+                        <button-checkbox button-checkbox-label="{{'Active'|l}}"
+                            button-checkbox-func="ctrl.changeActiveFilterData(params)"
+                            button-checkbox-model="ctrl._activeFilterData"></button-checkbox>
+                    </div>
+                    <button-search button-search-func="ctrl.refreshData()" button-search-start="ctrl._notyetInit"
+                        button-search-model="ctrl._searchByKeyToFilterData">
+                    </button-search>
+                    <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="RecycleBin" async-actionname="load">
+                        <async-success>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                {{'DBName'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="dbname"></order>
+                                            </th>
+                                            <th>
+                                                {{'Collection'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="collection"></order>
+                                            </th>
+                                            <th>
+                                                {{'UserName'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="username"></order>
+                                            </th>
+                                            <th>
+                                                {{'Time'|l}}
+                                                <order order-func="ctrl.refreshData()" order-model="ctrl.sort"
+                                                    order-name="time"></order>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr ng-repeat="item in ctrl.recyclebins|orderBy:ctrl.sort.name:ctrl.sort.value track by $index"
+                                            modal-toggle="#modal_RecycleBin_Info" ng-click="ctrl.assignInfo(item)">
+                                            <td>
+                                                <strong> {{$index +1}}</strong>
+                                            </td>
+                                            <td>
+                                                {{item.dbname}}
+                                            </td>
+                                            <td>
+                                                {{item.collection}}
+                                            </td>
+                                            <td>
+                                                {{item.username}}
+                                            </td>
+                                            <td>
+                                                {{item.time}}
+                                            </td>
+                                            <td>
+                                                <button-restore-item
+                                                    button-restore-item-modal="#modal_RecycleBin_Restore"
+                                                    button-restore-item-func="ctrl.prepareRestore(params)"
+                                                    button-restore-item-params="item">
+                                                </button-restore-item>
+                                                <button-delete-item button-delete-item-modal="#modal_RecycleBin_Delete"
+                                                    button-delete-item-func="ctrl.prepareDelete(params)"
+                                                    button-delete-item-params="item">
+                                                </button-delete-item>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div ng-if="ctrl.recyclebins.length ==0" class="no-data">
+                                {{'NoData'|l}}
+                            </div>
+                            <pagination pagination-ctrlname="{{ctrl._ctrlName}}" pagination-objname="RecycleBin"
+                                pagination-actionname="count" pagination-currentpage="ctrl.currentPage"
+                                pagination-noi="ctrl.numOfItemPerPage" pagination-total="ctrl.totalItems"
+                                pagination-func="ctrl.loadRecycleBin(params)"></pagination>
+                        </async-success>
+                    </my-Async>
+
+                   
+                    <div ng-include="ctrl._urlInfoModal"></div>
+                    <div ng-include="ctrl._urlDeleteModal"></div>
+                    <div ng-include="ctrl._urlRestoreModal"></div>
+                    <div ng-include="ctrl._urlDeleteAllModal"></div>
+                    <div ng-include="ctrl._urlRestoreAllModal"></div>
+                </div>
+            </div>
+        </div>
+    </content-content>
+</my-content>

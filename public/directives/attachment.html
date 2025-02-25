@@ -1,0 +1,16 @@
+<div ng-repeat="item in attachmentModel" style="color:#3c8dbc">
+    <i class="fa fa-file-o" aria-hidden="true"></i> <i>{{item.name}} </i>
+    <span style="color:#c12e2a;width:15px;padding:0px;cursor:pointer;" ng-click="removetep(item)">
+        <i style="padding:0px;margin:0px;" class="fa fa-trash fa-fix-0"></i></span>
+</div>
+<div ng-show="attachmentModel.length === 0" style="color:#c12e2a"><i> <i class="fa fa-exclamation"
+            aria-hidden="true"></i> {{'NoAttachment'|l}}</i></div>
+<div class="w3-container">
+    <div class="w3-row">
+        <div class="w3-col s12 m12 l5">
+            <div class="form-group">
+                <input type="file" file-reading="attachmentModel" id="dinhkem">
+            </div>
+        </div>
+    </div>
+</div>

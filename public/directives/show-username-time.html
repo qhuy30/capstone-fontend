@@ -1,0 +1,16 @@
+<div class="user-time-img"><img ng-if="selectedItem.userInfo.avatar.url"
+    ng-src="{{selectedItem.userInfo.avatar.url}}"
+/></div>
+<div class="text-blue user-time-title" >
+    <div class="item">
+        &nbsp;{{selectedItem.fullname?selectedItem.fullname:username}}
+    </div>
+    <div class="item">
+        <small><span class="grey-text">&nbsp;<i
+            class="fa fa-clock" aria-hidden="true"></i>
+            <time-show time-show-data="time" time-show-type="short">
+            </time-show>
+          </span></small>
+    </div>
+    
+</div>

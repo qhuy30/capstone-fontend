@@ -1,0 +1,813 @@
+<div class="task-details-directive">
+    <task-insert-modal
+            handle-success-func="ctrl.handleSuccess()"
+            insert-head-task-id="ctrl.Item._id"
+            insert-current-department="ctrl.Item.department"
+            insert-current-project="ctrl.Item.project"
+            parent-item="ctrl.Item"
+            parent-type="'task'"
+            />
+
+    <task-cancel-modal handle-success-func="ctrl.handleSuccess()" cancel-item="ctrl.Item"/>
+
+    <notify-insert-modal
+            on-success="ctrl.handle_insert_notify_success(params)"
+            task-id="ctrl.Item._id"
+    />
+
+    <project-insert-modal task-id="ctrl.Item._id" handle-success-func="ctrl.handleSuccess()"> </project-insert-modal>
+    <project-update-modal project-info="ctrl.Item.reference_project" handle-success-func="ctrl.handleSuccess()"> </project-update-modal>
+    <project-delete-modal project-info="ctrl.Item.reference_project" handle-success-func="ctrl.handleSuccess()"> </project-delete-modal>
+    <div ng-include="ctrl._urlInsertTransferTicketModal"></div>
+    <wfp-insert-modal insert-success-func="ctrl.handleInsertWFPSuccess(params)"></wfp-insert-modal>
+    <div class="first">
+        <div class="part">
+            <div style="display: flex; gap: 4px">
+                <div style="display: flex;" ng-if="ctrl.status == 'done' ">
+                    <my-async async-status-label="'Updating...'" async-ctrlname="{{ctrl._ctrlName}}"
+                              async-objname="Task" async-actionname="done">
+                        <async-default>
+                            <button class="btn btn-primary" type="button"
+                                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','done','doing') || ctrl.Item.progress < 100"
+                                    ng-click="ctrl.done()">
+                                <span ng-if="ctrl.Item.progress == 100"><i class="fas fa-check"></i>&nbsp;{{'Done'|l}}</span>
+                                <span ng-if="ctrl.Item.progress < 100"><i class="fa fa-spinner"></i>&nbsp;{{'Processing'|l}}</span>
+                            </button>
+                        </async-default>
+                        <async-doing>
+                            <div class="sk-wave">
+                                <div class="sk-rect sk-rect1"></div>
+                                <div class="sk-rect sk-rect2"></div>
+                                <div class="sk-rect sk-rect3"></div>
+                                <div class="sk-rect sk-rect4"></div>
+                                <div class="sk-rect sk-rect5"></div>
+                            </div> {{'Updating...'}}
+                        </async-doing>
+                        <async-success>
+                                <span class="btn" style="color: #4dbd74;"
+                                      ng-class='{"btn-sm":modalButtonSaveType==="small"}'>
+                                    {{'SuccessUpdating'|l}}
+                                </span>
+                        </async-success>
+                        <async-fail>
+                                <span class="btn" style="color: #f86c6b;">
+                                    {{$root.statusValue.get(ctrl._ctrlName,'Task','complete','message')|l}}
+                                </span>
+                            <button class="btn btn-outline-primary" type="button"
+                                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','done','doing')"
+                                    ng-click="ctrl.done()">
+                                <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+                            </button>
+                        </async-fail>
+                    </my-async>
+                </div>
+                <div style="display: flex;" ng-if="ctrl.status == 'completed' ">
+                    <my-async async-status-label="'Updating...'" async-ctrlname="{{ctrl._ctrlName}}"
+                              async-objname="Task" async-actionname="complete">
+                        <async-default>
+                            <button class="btn btn-primary" type="button"
+                                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','done','doing') || ctrl.Item.progress < 100"
+                                    ng-click="ctrl.complete()">
+                                <span ng-if="ctrl.Item.progress == 100"><i class="fas fa-check"></i>&nbsp;{{'Completed'|l}}</span>
+                                <span ng-if="ctrl.Item.progress < 100"><i class="fa fa-spinner"></i>&nbsp;{{'Processing'|l}}</span>
+                            </button>
+                        </async-default>
+                        <async-doing>
+                            <div class="sk-wave">
+                                <div class="sk-rect sk-rect1"></div>
+                                <div class="sk-rect sk-rect2"></div>
+                                <div class="sk-rect sk-rect3"></div>
+                                <div class="sk-rect sk-rect4"></div>
+                                <div class="sk-rect sk-rect5"></div>
+                            </div> {{'Updating...'}}
+                        </async-doing>
+                        <async-success>
+                                <span class="btn" style="color: #4dbd74;"
+                                      ng-class='{"btn-sm":modalButtonSaveType==="small"}'>
+                                    {{'SuccessUpdating'|l}}
+                                </span>
+                        </async-success>
+                        <async-fail>
+                                <span class="btn" style="color: #f86c6b;">
+                                    {{$root.statusValue.get(ctrl._ctrlName,'Task','complete','message')|l}}
+                                </span>
+                            <button class="btn btn-outline-primary" type="button"
+                                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Task','complete','doing')"
+                                    ng-click="ctrl.complete()">
+                                <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+                            </button>
+                        </async-fail>
+                    </my-async>
+                </div>
+                <div style="display: flex;" ng-if="ctrl.Item.status !== 'Cancelled' ">
+                    <button-cancel
+                            button-cancel-modal="#modal_Task_Dir_Cancel"
+                            button-cancel-func="ctrl.cancel(params)"
+                            button-cancel-params="ctrl.Item"
+                            button-cancel-label={{'Cancel'|l}}>
+                    </button-cancel>
+                </div>
+            </div>
+
+            <div ng-if="ctrl.Item.status === 'Cancelled' ">
+                <button class="btn btn-danger" type="button"
+                        ng-disabled="ctrl.Item.status == 'Cancelled'">
+                    <i class="fas fa-times-circle"></i>&nbsp;{{'Cancelled'|l}}
+                </button>
+                <div ng-repeat="comment in ctrl.Item.comment" ng-if="comment.type === 'Cancelled'">
+                    <p class="pt-4"><span style="font-weight: bold">{{'CancellationReason'|l}}</span>&nbsp;&nbsp;<span ng-bind-html="comment.content">{{comment.content}}</span></p>
+                </div>
+            </div>
+            <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;"
+                 ng-hide="ctrl.status == 'see'">
+            </div>
+            <div>
+                <div style="width: 100%;">
+                    <p class="grey-text">{{'WrittenBy'|l}}
+                        <a><strong>
+                            <show-username ng-if="ctrl.Item.department.id === ctrl.Item.from_department" username="ctrl.Item.username">
+                            </show-username>
+                            <show-department ng-if="ctrl.Item.department.id !== ctrl.Item.from_department"
+                            department="ctrl.Item.from_department">
+                            </show-department> </strong></a>,
+                        <time-show time-show-data="ctrl.Item.event[0].time" time-show-type="long">
+                        </time-show><small class="grey-text" ng-if="ctrl.Item.has_time">
+                            , {{ctrl.Item.hours}} {{'NumberOfHours'|l}}
+                        </small>
+                    </p>
+
+                </div>
+                <div>
+                    <div class="grey-text">
+                        <i>{{'FromDate'|l}}:&nbsp;<time-show time-show-data="ctrl.Item.from_date"
+                                                             time-show-type="long">
+                        </time-show>&nbsp;.{{'ToDate'|l}}:&nbsp;<time-show
+                                time-show-data="ctrl.Item.to_date" time-show-type="long">
+                        </time-show>.</i>
+                    </div>
+
+                    <div ng-if="ctrl.Item.has_repetitive" class="grey-text mt-2">
+                        <i>
+                                <span>
+                                    {{'RepeatEach'|l:({amount: ctrl.Item.repetitive.per})}} {{ctrl.cycle|l}}
+                                    <span ng-if="ctrl.Item.repetitive.has_endDate"> - {{'EndsOn'|l}} <time-show time-show-data="ctrl.Item.repetitive.endDate" time-show-type="justdate"></time-show>  </span>
+                                </span>
+                        </i>
+                    </div>
+
+
+                    <div ng-if="ctrl.Item.transfer_ticket_info" style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+
+                        <show-status id-value="ctrl.Item.status"></show-status>
+
+                        <attachment-show
+                                attachment-show-item="ctrl.Item.transfer_ticket_info" attachment-show-func="ctrl.loadfile(params)"
+                                attachment-show-params="{ id:ctrl.Item._id,name:ctrl.Item.transfer_ticket_info.name }"
+                                attachment-show-service-name="'task'">
+                        </attachment-show>
+
+                        <modal-button-sign-a-file modal-button-sign-a-file-ctrlname="{{ctrl._ctrlName}}"
+                                                  ng-show="!ctrl.Item.transfer_ticket_info.signature.isSigned"
+                                                  modal-button-sign-a-file-name="ctrl.Item.transfer_ticket_info.display"
+                                                  modal-button-sign-a-file-sign="ctrl.sign"
+                                                  modal-button-sign-a-file-show-button="true"
+                                                  modal-button-sign-a-file-quotation-mark="ctrl.quotationMark" modal-button-sign-a-file-params="{name: ''}"
+                                                  modal-button-sign-a-file-objname="Task" modal-button-sign-a-file-actionname="signAFile"
+                                                  modal-button-sign-a-file-func="ctrl.signAFile(params)">
+                        </modal-button-sign-a-file>
+                    </div>
+                </div>
+
+                <div ng-if="ctrl.Item.status == 'Processing'">
+                    <label class="process-label">
+                                <span class="label">
+                                    {{'Progress'|l}}:
+                                </span>
+                        <span class="value">
+                                    {{ctrl.Item.progress}}%
+                                </span>
+                    </label>
+                    <input type="range" class="form-control-range" min="0" max="100"
+                           ng-model="ctrl.Item.progress"
+                           ng-click="ctrl.changeProgressOfTask()"
+                           ng-disabled="!ctrl.Item.editProgressFlag || $root.statusValue.get(ctrl._ctrlName,'Task','updateProgress','doing') || $root.statusValue.get(ctrl._ctrlName,'Task','loadDetails','doing')">
+                </div>
+                <div style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                </div>
+                <div>
+                    <div ng-bind-html="ctrl.Item.content">
+                    </div>
+                    <div class=" showfile-bar" ng-if="ctrl.Item.attachment.length>0">
+                        <i>{{'Attachment'|l}}:</i>&nbsp;&nbsp;
+                        <attachment-show ng-repeat="at in ctrl.Item.attachment" attachment-show-item="at"
+                                         attachment-show-func="ctrl.loadfile(params)"
+                                         attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                                         attachment-show-service-name="'task'">
+                        </attachment-show>
+                    </div>
+                </div>
+
+                <div>
+                    <div ng-if="['Office.Signing.Use']|checkRule" class="pt-3" style="margin: 24px 0;"
+                         ng-show="ctrl.task_type === 'WorkflowPlay' && !ctrl.Item.workflowPlay">
+                        <button-new
+                                button-new-label="{{'Create new Workflow play'|l}}"
+                                button-new-modal=".task-insert-directive #modal_WFP_Insert">
+                        </button-new>
+                    </div>
+                </div>
+
+                <div>
+                    <div ng-if="['Office.Notify.Use']|checkRule" class="pt-3" style="margin: 24px 0;"
+                         ng-show="ctrl.task_type === 'Notification' && !ctrl.Item.notify_detail"
+                    >
+                        <button-new
+                                button-new-label="{{'TaskAddNewNotification' | l}}"
+                                button-new-modal=".task-insert-directive #notify_insert_modal">
+                        </button-new>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-show="ctrl.Item.workflowPlay"  style="padding:0">
+                    <div class="table-responsive">
+                        <div style="color: #778294;
+                                font-weight: 700;
+                                font-size: 90%;
+                                display: block;
+                                background-color: #fff;
+                                height: 20px;
+                                line-height: 20px;">Trình ký</div>
+                        <table class="table table-sm">
+                            <tbody>
+                            <tr ng-repeat="item in ctrl.workflow_play">
+                                <td>
+                                    <small><span class="grey-text float-left"><i class="fa fa-clock" aria-hidden="true"></i>
+                                                        <time-show time-show-type="short" time-show-data="item.event[0].time">
+                                                        </time-show>
+                                                    </span></small>
+                                </td>
+                                <td>
+                                    <show-username username="item.username" employee="item.employee">
+                                    </show-username>
+                                </td>
+                                <td>
+                                    <a class="text-dark" link-details link-details-display="{{item.title}}"
+                                       link-details-url="/signing-details?{{item._id}}"
+                                       link-details-route="signing-details">{{item.title}}</a>
+                                    <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                        <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                                         attachment-show-func="ctrl.loadfileWFP(params)"
+                                                         attachment-show-params="{id:item._id,name:at.name}"
+                                                         attachment-show-service-name="'workflow_play'">
+                                        </attachment-show>
+                                    </div>
+                                    <div class="showfile-bar" ng-if="item.customTemplate">
+                                        <attachment-show attachment-show-item="item.customTemplate"
+                                                         attachment-show-func="ctrl.loadfileWFP(params)"
+                                                         attachment-show-params="{id:item._id,name:item.customTemplate.name}"
+                                                         attachment-show-service-name="'workflow_play'">
+                                        </attachment-show>
+                                    </div>
+                                </td>
+                                <td>
+                                    <show-status id-value="item.status"></show-status>
+                                </td>
+                                <td>
+                                    <button-delete-item ng-hide="
+                                                        item.employee !== $root.logininfo.data.employee
+                                                        || item.username !== $root.logininfo.data.username
+                                                        "
+                                                        button-delete-item-modal="#modal_WFP_Delete"
+                                                        button-delete-item-func="ctrl.prepareDelete(params)" button-delete-item-params="item">
+                                    </button-delete-item>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-show="ctrl.Item.notify_detail" style="padding:0">
+                    <div class="table-responsive">
+                        <div class="title">{{'Notify' | l}}</div>
+                        <table class="table table-sm">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <small>
+                                                    <span class="grey-text float-left">
+                                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                                        <time-show
+                                                                time-show-type="short"
+                                                                time-show-data="ctrl.Item.notify_detail.events[0].time"
+                                                        />
+                                                    </span>
+                                    </small>
+                                </td>
+                                <td>
+                                    <show-username username="ctrl.Item.notify_detail.username"/>
+                                </td>
+                                <td style="width: 35%" >
+                                    <a
+                                            class="text-dark"
+                                            link-details
+                                            link-details-display="{{ctrl.Item.notify_detail.title}}"
+                                            link-details-url="/notify-details?{{ctrl.Item.notify_detail._id}}"
+                                            link-details-route="notify-details"
+                                            link-details-func="ctrlChild.reloadModalBox(params)"
+                                    >
+                                        {{ctrl.Item.notify_detail.title}}
+                                    </a>
+                                    <div class="showfile-bar"
+                                         ng-if="ctrl.Item.notify_detail.attachment && ctrl.Item.notify_detail.attachment.length > 0">
+                                        <attachment-show
+                                                ng-repeat="at in ctrl.Item.notify_detail.attachment"
+                                                attachment-show-item="at"
+                                                attachment-show-func="ctrl.load_notify_file(params)"
+                                                attachment-show-params="{id: ctrl.Item.notify_detail._id, name: at.name}"
+                                                attachment-show-service-name="'notify'"
+                                        >
+                                        </attachment-show>
+                                    </div>
+                                </td>
+                                <td>
+                                    <show-status id-value="ctrl.Item.notify_detail.status"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <div ng-if="ctrl.Item.addWorkItemFlag && ctrl.Item.department" class="pt-3" style="margin: 24px 0; border-top: 1px solid #eee;"
+                         ng-show="ctrl.Item.level === 'HeadTask' || 'TransferTicket'">
+                        <button-new button-new-label={{'AddTaskForThis'|l}} button-new-modal="#modal_Task_Dir_Insert">
+                        </button-new>
+
+                        <button-new button-new-func="ctrl.prepareInsertTransferTicket()" button-new-label={{'AddTransferTicket'|l}}
+                                    button-new-modal="#modal_TranferTicket_Insert">
+                        </button-new>
+
+                        <button-new ng-if="!ctrl.Item.reference_project" button-new-label={{'AddProject'|l}}
+                                    button-new-modal="#modal_Project_Dir_Insert">
+                        </button-new>
+                    </div>
+
+                    <div ng-if="ctrl.Item.project && ctrl.Item.addWorkItemFlag" class="pt-3" style="margin: 24px 0; border-top: 1px solid #eee;"
+                         ng-show="ctrl.Item.level === 'HeadTask'">
+                        <button-new button-new-label={{'AddTaskForThis'|l}} button-new-modal="#modal_Task_Dir_Insert">
+                        </button-new>
+                    </div>
+
+                    <div class="part">
+                        <div class="table-responsive" style="margin-top: 4px" ng-show="ctrl.Item.workItems.length">
+                            <table class="table table-sm table-hover" >
+                                <thead>
+                                <tr>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 80px;">#</td>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 160px">{{'Title'|l}}</td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                        {{'Creator'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{'PriorityLevel'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{'Progress'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <div class="title">{{'Status'|l}}</div>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <div class="title">{{'State'|l}}</div>
+                                    </td>
+                                </tr>
+                                </thead>
+                                <tbody id="taskList">
+                                <tr ng-repeat="item in ctrl.Item.workItems" ng-class="{'late': item.state === 'Overdue', 'gonna_late': item.state === 'GonnaLate'}">
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 80px;">
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        <a class="text-dark" link-details link-details-display="{{item.title}}"
+                                           link-details-code="{{item.code}}" link-details-url="/task-details?{{item._id}}"
+                                           link-details-route="task-details" disabled-breadcrumb="true">
+                                            <span ng-if="item.level==='TransferTicket'" style="font-weight: bold;">Phiếu chuyển</span>&nbsp;{{item.title}}</a>
+                                        <div class="text-muted text-nowrap mb-1"><small>{{item.code}}</small></div>
+                                        <span class="text-dark" ng-if="item.childs.length>0"
+                                              ng-click="ctrlChild.loadTaskChild(item._id,item.childs)"
+                                              style="text-decoration: underline;cursor: pointer;" data-toggle="collapse"
+                                              data-target="#collapseChild{{item._id}}"><i>
+                                                            -
+                                                            {{item.childs.length}} {{'ChildTask'|l}}</i> </span>
+                                        <div class="showfile-bar" ng-if="item.attachment.length>0">
+                                            <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                                             attachment-show-func="ctrlChild.loadfile(params)"
+                                                             attachment-show-params="{id:item._id,name:at.name}"
+                                                             attachment-show-service-name="'task'">
+                                            </attachment-show>
+                                        </div>
+                                        <div id="collapseChild{{item._id}}"
+                                             style="max-height: 300px;overflow-y: auto;padding-top: 10px;" class="collapse "
+                                             aria-labelledby="headingOne" data-parent="#taskList">
+                                            &nbsp;&nbsp;<a ng-repeat="t in item.childTask" class="text-dark" link-details
+                                                           link-details-display="{{t.title}}" link-details-code="{{t.code}}"
+                                                           link-details-url="/task-details?{{t._id}}"
+                                                           link-details-route="task-details"><i>-
+                                            {{t.title}}</i></a>
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                        <show-username username="item.username" just-name="true">
+                                        </show-username>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <show-priority id-value="item.priority">{{priority}}</show-priority>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <show-progress id-value="item.progress"></show-progress>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <show-status id-value="item.status"></show-status>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <show-state id-value="item.state"></show-state>
+                                    </td>
+                                    <!-- <td style="width: 150px;">
+                                        <button-edit-item
+                                            ng-show="'Office.Task.Edit_Task_Department'|task_department_checkRule:ctrlChild.currentDepartment.id"
+                                            ng-hide="item.status === 'Completed'"
+                                            button-edit-item-modal="#modal_Task_Update"
+                                            button-edit-item-func="ctrlChild.prepareUpdate(params)"
+                                            button-edit-item-params="item">
+                                        </button-edit-item>
+                                        <button-delete-item
+                                            ng-show="'Office.Task.Edit_Task_Department'|task_department_checkRule:ctrlChild.currentDepartment.id"
+                                            ng-hide="item.status === 'Completed'"
+                                            button-delete-item-modal="#modal_Task_Delete"
+                                            button-delete-item-func="ctrlChild.prepareDelete(params)"
+                                            button-delete-item-params="item">
+                                        </button-delete-item>
+                                    </td> -->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="ctrl.Item.reference_project">
+                    <div class="part">
+                        <div>Dự án liên kết: </div>
+                        <div class="table-responsive" style="margin-top: 4px" ng-show="ctrl.Item.reference_project">
+                            <table class="table table-sm table-hover" >
+                                <thead>
+                                <tr>
+                                    <td style="font-weight: 600;vertical-align: middle;width: 160px"></td>
+
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{'Creator'|l}}
+                                    </td>
+
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{'FromDate'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        {{'ToDate'|l}}
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <div class="title">{{'Status'|l}}</div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </thead>
+                                <tbody id="taskList">
+                                <tr>
+                                    <td>
+                                        <a href="/task?tab=project&id={{ctrl.Item.reference_project._id}}">
+                                            &nbsp;{{ctrl.Item.reference_project.title}}</a>
+                                        <div class="text-muted text-nowrap mb-1"><small>{{ctrl.Item.reference_project.code}}</small></div>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                                        <show-username username="ctrl.Item.reference_project.entity.his[0].createdby" just-name="true">
+                                        </show-username>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <time-show2 time-show-data="ctrl.Item.reference_project.from_date" time-show-type="just_date">
+                                        </time-show2>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <time-show2 time-show-data="ctrl.Item.reference_project.to_date" time-show-type="just_date">
+                                        </time-show2>
+                                    </td>
+                                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                        <show-status id-value="ctrl.Item.reference_project.status"></show-status>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;width: 120px;">
+                                        <button type="button" modal-toggle="#modal_Project_Dir_Update"
+                                                class="btn btn-square btn-outline-primary">
+                                            <i class="fas fa-pen-square"></i>
+                                        </button>
+                                    </td>
+                                    <td style="vertical-align: middle;text-align: center;width: 120px;">
+                                        <button type="button" modal-toggle="#modal_Project_Dir_Delete"
+                                                class="btn btn-square btn-outline-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-label" ng-if="ctrl.label.length">
+                    <div class="label">Nhãn</div>
+                    <div style="display:flex;align-items: center;justify-content: space-between;">
+                        <div ng-repeat="item in ctrl.label" class="show-label-value">
+                            <span>{{item.title}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checklist-container" style="margin-top: 20px;">
+                    <div class="title">
+                        <div>
+                            {{'CheckListofTask'|l}} ({{ctrl.Item.task_list.length}})
+                        </div>
+
+                        <button-new  ng-if="ctrl.Item.username == $root.logininfo.username"
+                                     button-new-func="ctrl.addTaskList()"
+                                     button-new-label="{{'AddCheckList'|l}}">
+                        </button-new>
+                    </div>
+
+                    <div class="content">
+                        <div class="item" ng-repeat="item in ctrl.Item.task_list">
+                            <div class="input-checkbox" ng-class="{'checked':item.status}">
+                                <label class="container-checkbox-1">
+                                    <input type="checkbox" checked="checked" ng-change="ctrl.update_task_list_status(item.id,item.status)" ng-model="item.status">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="input-text">
+                                <input type="text" ng-model="item.title"
+                                       placeholder="{{'InputCheckListName'|l}}"
+                                       ng-enter="ctrl.addTaskList()"
+                                       focus-me="item.id == ctrl.Item.focusChecklist"
+                                       ng-if="ctrl.Item.username == $root.logininfo.username"
+                                       my-watch-text-input my-scope="item.title" my-func="ctrl.changeTextTaskList()" my-start="!ctrl._notyetInit"
+                                />
+                                <div class="label" ng-if="ctrl.Item.username !== $root.logininfo.username">
+                                    {{item.title}}
+                                </div>
+                            </div>
+                            <div class="remove-icon" ng-if="ctrl.Item.username == $root.logininfo.username">
+                                <i class="fas fa-times" ng-click="ctrl.removeTaskList(item.id)"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="second">
+                        <div class="message-container" style="margin-top: 20px;">
+                            <div class="label"
+                                 style="font-weight: bold; text-transform: uppercase; color: #4285f4;padding-left: 4px">
+                                {{'ProofOfCompletion'|l}}
+                                <input ng-if="ctrl.proofErr" ng-model="ctrl.proofErr"
+                                       style="border: none; background-color: transparent; color: red; font-style: italic; width: 100%"
+                                       disabled />
+                                <input ng-if="ctrl.proofFileSizeErr" value="{{'File size must not exceed'|l:({size: '7mb'})}}"
+                                       style="border: none; background-color: transparent; color: red; font-style: italic; width: 100%"
+                                       disabled />
+                            </div>
+                            <div class="attachment">
+                                        <span class="item" ng-repeat="at in ctrl.filesProof"
+                                              ng-click="ctrl.removeFilesProof(at.name)">
+                                            {{at.name}}
+                                        </span>
+                            </div>
+                            <div class="send-message">
+                                <div class="file">
+                                    <i class="fas fa-paperclip"></i>
+                                    <input type="file" file-reading="ctrl.filesProof" max-file-size="2"
+                                           on-file-exceeds-limit="ctrl.onProofFileExceedsLimit(params)" size="1" multiple>
+                                </div>
+                                <div class="send">
+                                    <input type="text" placeholder="{{'UpdateProofOfCompletion'|l}}"
+                                           ng-model="ctrl.proofText" ng-enter="ctrl.addProof()" my-watch-text-input
+                                           my-scope="ctrl.proofText" my-start="ctrl.startWatchProof"
+                                           my-func="ctrl.addTempText()" my-delay="1000" />
+                                    <button type="button" class="btn"><i class="fas fa-paper-plane"
+                                                                         ng-click="ctrl.addProof()"></i></button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="proof-container">
+                            <div class="content">
+                                <div ng-repeat="item in ctrl.Item.proof|orderBy:'-time'" class="item"
+                                     ng-class="{'me':item.username==$root.logininfo.username}">
+                                    <show-username username="item.username">
+                                    </show-username>
+                                    <small class="time">
+                                                <span class="grey-text"><i class="fa fa-clock" aria-hidden="true"></i>
+                                                    <time-show time-show-type="long" time-show-data="item.time">
+                                                    </time-show>
+                                                </span>
+                                    </small>
+                                    <button type="button" class="btn btn-outline-dark btn-sm ng-isolate-scope"
+                                            ng-click="ctrl.removeProof(item.id)" ;
+                                            style="position: absolute; right: 15px; bottom: 15px;">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                    <div class="proof-content">
+                                        <div class="label">
+                                            {{item.content}}
+                                        </div>
+
+                                        <div class="attachment" style="margin-top: 5px; display: block;"
+                                             ng-if="item.attachment.length>0">
+                                            <attachment-show ng-repeat="at in item.attachment"
+                                                             attachment-show-item="at"
+                                                             attachment-show-func="ctrl.loadfile(params)"
+                                                             attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                                                             attachment-show-service-name="'task'">
+                                            </attachment-show>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="part">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" ng-click="ctrl.tab ='responsibility'">
+                    <a class="nav-link "
+                       ng-class="{'active':ctrl.tab =='responsibility'}"><i class="fas fa-male"></i>&nbsp;&nbsp;{{'Responsibility'|l}}
+                    </a>
+                </li>
+                <li class="nav-item" ng-click="ctrl.tab ='event'">
+                    <a class="nav-link " ng-class="{'active':ctrl.tab =='event'}"><i class="fas fa-history"></i>&nbsp;&nbsp;{{'Events'|l}}
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active show">
+
+                    <div ng-show="ctrl.tab =='responsibility'">
+                        <div >
+                            <span style="line-height: 28px;">- {{'HostPerson'|l}}:&nbsp;</span>
+
+                            <span ng-repeat="item in ctrl.Item.main_person">
+                                        <show-username username="item" just-name="true">
+                                        </show-username>
+                                        <span ng-show="$last">.</span>
+                                        <span ng-show="!$last">,&nbsp;</span>
+                                    </span>
+                        </div>
+                        <div >
+                            <span style="line-height: 28px;">- {{'Coordinator'|l}}:&nbsp;</span>
+                            <span ng-repeat="item in ctrl.Item.participant">
+                                        <show-username username="item" just-name="true">
+                                        </show-username>
+                                        <span ng-show="$last">.</span>
+                                        <span ng-show="!$last">,&nbsp;</span>
+                                    </span>
+                            <i ng-show="ctrl.Item.participant.length ===0">
+                                {{'NoData'|l}}
+                            </i>
+                        </div>
+                        <div >
+                            <span style="line-height: 28px;">- {{'Observer'|l}}:&nbsp;</span>
+                            <span ng-repeat="item in ctrl.Item.observer">
+                                        <show-username username="item" just-name="true">
+                                        </show-username>
+                                        <span ng-show="$last">.</span>
+                                        <span ng-show="!$last">,&nbsp;</span>
+                                    </span>
+                            <i ng-show="ctrl.Item.observer.length ===0">
+                                {{'NoData'|l}}
+                            </i>
+                        </div>
+                    </div>
+                    <div ng-show="ctrl.tab =='event'">
+                        <div class="container" ng-repeat="item in ctrl.Item.event|orderBy:'-time'">
+                            <div class="row align-items-center">
+                                <div class="col-md-3 col-sm-12 hour">
+                                    <small class="mt-2"><span class="grey-text float-left"><i
+                                            class="fa fa-clock" aria-hidden="true"></i>
+                                        <time-show time-show-type="long" time-show-data="item.time">
+                                        </time-show>
+                                        </span></small>
+                                </div>
+                                <div class="col-md-5 col-sm-12">
+                                    <show-username username="item.username">
+                                    </show-username>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="mt-2">
+                                        {{item.action|l}}
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+                                <attachment-show
+                                        class="mt-1"
+                                        ng-repeat="at in item.files"
+                                        attachment-show-item="at"
+                                        attachment-show-func="ctrl.loadfile(params)"
+                                        attachment-show-params="{id:item._id,name:at.name}"
+                                >
+                                </attachment-show>
+                            </div>
+                            <hr/>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="second">
+        <div class="message-container">
+            <div class="attachment">
+                        <span class="item" ng-repeat="at in ctrl.files" ng-click="ctrl.removeFiles(at.name)">
+                            {{at.name}}
+                        </span>
+            </div>
+            <div class="send-message">
+                <div class="file">
+                    <i class="fas fa-paperclip"></i>
+                    <input type="file" file-reading="ctrl.files" size="1" multiple>
+                </div>
+                <div class="send">
+                    <input type="text" placeholder="{{'TypeCommentHere'|l}}" ng-model="ctrl.commentText"
+                           ng-enter="ctrl.comment()" my-watch-text-input my-scope="ctrl.commentText"
+                           my-start="ctrl.startWatchComment" my-func="ctrl.addTempText()" my-delay="1000"/>
+                    <button type="button" class="btn"><i class="fas fa-paper-plane"
+                                                         ng-click="ctrl.comment()"></i></button>
+                </div>
+
+            </div>
+        </div>
+        <div class="comment-container">
+            <div class="label">
+                <i class="far fa-comments"></i>&nbsp;{{'Comment'|l}}&nbsp;({{ctrl.getCommentCountWithoutCancel(ctrl.Item.comment)}})
+            </div>
+            <div class="content">
+                <div ng-repeat="item in ctrl.Item.comment|orderBy:'-time'" class="item" ng-if="item.type !== 'Cancelled'"
+                     ng-class="{'me':item.username==$root.logininfo.username}">
+                    <show-username username="item.username">
+                    </show-username>
+                    <small class="time">
+                                <span class="grey-text"><i class="fa fa-clock" aria-hidden="true"></i>
+                                    <time-show time-show-type="long" time-show-data="item.time">
+                                    </time-show>
+                                </span>
+                    </small>
+                    <div class="message-content">
+                        <div class="label">
+                            {{item.content}}
+                        </div>
+
+                        <div class="attachment" style="margin-top: 5px; display: block;"
+                             ng-if="item.attachment.length>0">
+                            <attachment-show ng-repeat="at in item.attachment" attachment-show-item="at"
+                                             attachment-show-func="ctrl.loadfile(params)"
+                                             attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                                             attachment-show-service-name="'task'">
+                            </attachment-show>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="ctrl.showPopup" class="popupTaskDetails">
+        <div class="popup-content" >
+            <div class="title-popup"
+                 ng-class="{
+                            'error':ctrl.typePopup === 'error',
+                            'success':ctrl.typePopup === 'success',
+                            'warning':ctrl.typePopup === 'warning'}">
+                {{ctrl.titlePopup|l}}
+            </div>
+            <span class="close x-icon"
+                  ng-click="ctrl.closePopup();"></span>
+            <div class="content-popup">
+                {{ctrl.contentPopup|l}}
+            </div>
+        </div>
+    </div>
+</div>

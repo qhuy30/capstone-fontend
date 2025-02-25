@@ -1,0 +1,47 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_Question_Update">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="Chỉnh sửa câu hỏi và câu trả lời thường gặp"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal" name="updateForm">
+                    <div class="row part">
+                        <div class="form-group col-md-12">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Title'|l}}</span>
+                                </div>
+                                <input ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','update','doing')"
+                                    type="text" ng-model="ctrlChild._update_value.question" class="form-control"
+                                    name="update_title" placeholder="{{'InputTitle'|l}}"
+                                    ng-class="{ 'is-invalid': updateForm.update_title.$invalid }" required />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <pick-type-question label="Nhóm câu hỏi"
+                                    value-update="ctrlChild._update_value.type_question"
+                                    pick-func="ctrlChild.pickTypeQuestion(params, 'update')"
+                                    require="true">
+                                </pick-type-question>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row part">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea ng-model="ctrlChild._update_value.answer" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-save modal-button-save-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-save-objname="QuestionAnswer" modal-button-save-actionname="update"
+                    modal-button-save-invalid="!ctrlChild._update_value.question || !ctrlChild._update_value.answer"
+                    modal-button-save-func="ctrlChild.update_common_question()">
+                </modal-button-save>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="modal fade" id="modal_RecycleBin_Restore" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{'DoYouWantRestoreThisInformation'|l }}
+                    </div>
+                    <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="RecycleBin"
+                        async-actionname="loadDetailsForRestore">
+                        <async-success>
+                            <div class="form-group">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">{{'UserName'|l}}</span>
+                                    </div>
+                                    <div class="form-control bg-light">
+                                        {{ctrl._restore_value.username}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">{{'DBName'|l}}</span>
+                                    </div>
+                                    <div class="form-control bg-light">
+                                        {{ctrl._restore_value.dbname}}
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'Collection'|l}}</span>
+                                    </div>
+                                    <div class="form-control bg-light">
+                                        {{ctrl._restore_value.collection}}
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">{{'Time'|l}}</span>
+                                    </div>
+                                    <div class="form-control bg-light">
+                                        {{ctrl._restore_value.time}}
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Data'|l}}</span>
+                                </div>
+                                <div class=" bg-light">
+                                    {{ctrl._restore_value.data}}
+                                </div>
+                            </div>
+                        </async-success>
+                    </my-Async>
+    
+                </div>
+                <div class="modal-footer">
+                    <modal-button-restore modal-button-restore-ctrlname="{{ctrl._ctrlName}}"
+                        modal-button-restore-objname="RecycleBin" modal-button-restore-actionname="restore"
+                        modal-button-restore-func="ctrl.restore_func()">
+                    </modal-button-restore>
+                    <modal-button-close></modal-button-close>
+                </div>
+            </div>
+        </div>
+    </div>

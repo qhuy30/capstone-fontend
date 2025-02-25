@@ -1,0 +1,93 @@
+<button-approval-item
+  ng-if="ctrlChild.Item.allow_assess_department"
+  button-approval-item-modal="#{{ctrl._idModal_Access}}"
+  button-approval-item-func="ctrl.prepareAssess(params)"
+  button-approval-item-params="{item:ctrlChild.Item, action:'approve_department'}"
+  button-label="{{'Accept'}}"
+/>
+<button-reject-item
+  ng-if="ctrlChild.Item.allow_assess_department"
+  button-reject-item-modal="#{{ctrl._idModal_Access}}"
+  button-reject-item-func="ctrl.prepareAssess(params)"
+  button-reject-item-params="{item:ctrlChild.Item, action:'reject_department'}"
+  button-label="{{'Reject'}}"
+/>
+
+<button-approval-item
+  ng-if="ctrlChild.Item.allow_assess_host"
+  button-approval-item-modal="#{{ctrl._idModal_Access}}"
+  button-approval-item-func="ctrl.prepareAssess(params)"
+  button-approval-item-params="{item:ctrlChild.Item, action:'approve_host'}"
+  button-label="{{'Accept'}}"
+/>
+
+<button-reject-item
+  ng-if="ctrlChild.Item.allow_assess_host"
+  button-reject-item-modal="#{{ctrl._idModal_Access}}"
+  button-reject-item-func="ctrl.prepareAssess(params)"
+  button-reject-item-params="{item:ctrlChild.Item, action:'reject_host'}"
+  button-label="{{'Reject'}}"
+/>
+
+<button-reject-item
+  ng-if="ctrlChild.Item.allow_request_cancel"
+  button-reject-item-modal="#{{ctrl._idModal_Access}}"
+  button-reject-item-func="ctrl.prepareAssess(params)"
+  button-reject-item-params="{item:ctrlChild.Item, action:'request_cancel'}"
+  button-label="{{'RequestCancel'}}"
+/>
+
+<button-edit-item
+  ng-if="ctrlChild.Item.allow_creator_edit"
+  button-edit-item-modal="#{{ctrl._idModal_Update}}"
+  button-edit-item-func="ctrl.prepareUpdate(params)"
+  button-edit-item-params="ctrlChild.Item"
+  button-label="{{'Edit'}}"
+/>
+
+<button-delete-item
+  ng-if="ctrlChild.Item.allow_delete"
+  button-delete-item-modal="#{{ctrl._idModal_Access}}"
+  button-delete-item-func="ctrl.prepareAssess(params)"
+  button-delete-item-params="{item:ctrlChild.Item, action:'creator_delete'}"
+  button-label="{{'Delete'}}"
+/>
+
+<button-approval-item
+  ng-if="ctrlChild.Item.allow_assesst_recall_department"
+  button-approval-item-modal="#{{ctrl._idModal_Access}}"
+  button-approval-item-func="ctrl.prepareAssess(params)"
+  button-approval-item-params="{item: ctrlChild.Item, action:'approve_recall_department'}"
+  button-label="{{'ApproveCancel'}}"
+/>
+
+<button-reject-item
+  ng-if="ctrlChild.Item.allow_assesst_recall_department"
+  button-reject-item-modal="#{{ctrl._idModal_Access}}"
+  button-reject-item-func="ctrl.prepareAssess(params)"
+  button-reject-item-params="{item: ctrlChild.Item, action:'reject_recall_department'}"
+  button-label="{{'RejectCancel'}}"
+/>
+
+<button-approval-item
+  ng-if="ctrlChild.Item.allow_assess_recall_host"
+  button-approval-item-modal="#{{ctrl._idModal_Access}}"
+  button-approval-item-func="ctrl.prepareAssess(params)"
+  button-approval-item-params="{item: ctrlChild.Item, action:'approve_recall_host'}"
+  button-label="{{'ApproveCancel'}}"
+/>
+
+<button-reject-item
+  ng-if="ctrlChild.Item.allow_assess_recall_host"
+  button-reject-item-modal="#{{ctrl._idModal_Access}}"
+  button-reject-item-func="ctrl.prepareAssess(params)"
+  button-reject-item-params="{item: ctrlChild.Item, action:'reject_recall_host'}"
+  button-label="{{'RejectCancel'}}"
+/>
+
+<!-- <div ng-include="ctrl._urlRegisterModal"></div> -->
+<!-- <div ng-include="ctrl._urlUpdateModal"></div> -->
+<!-- <div ng-include="ctrl._urlInsertRoomRegistrationModal"></div>
+<div ng-include="ctrl._urlInsertCarRegistrationModal"></div> -->
+<div ng-include="ctrlChild._urlUpdateModal"></div>
+<div ng-include="ctrlChild._urlAssessEventCalendarModal"></div>

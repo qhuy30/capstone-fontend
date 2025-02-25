@@ -1,0 +1,17 @@
+<a class="waves-effect ringbell-header-item task_overdue_notify" href="/signing-details?code={{item.params.code}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            {{item.params.mes|l:({title: `[${item.params.code}] ${item.params.title}`, from_date: ctrlHeaders.formatDate(item.params.from_date),to_date: ctrlHeaders.formatDate(item.params.to_date)})}}
+        </div>
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+
+    </div>
+
+</a>

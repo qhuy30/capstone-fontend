@@ -1,0 +1,227 @@
+<style>
+  .setting-logo {
+    padding: 0;
+    width: 100%;
+    position: relative;
+    border: 2px dashed #20a8d8 !important;
+    border-radius: 3px;
+  }
+</style>
+<div
+  ng-controller="setting_general_controller as ctrlGeneral"
+  class="management-settings-general"
+>
+  <div class="general-information">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group-new">
+          <div class="input-group-prepend-new">
+            <span class="input-group-text-new">{{'PortalName'|l}}</span>
+          </div>
+          <input
+            type="text"
+            ng-model="ctrlGeneral.portalName.value"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group-new">
+          <div class="input-group-prepend-new">
+            <span class="input-group-text-new">{{'PortalSlogan'|l}}</span>
+          </div>
+          <input
+            type="text"
+            ng-model="ctrlGeneral.portalSlogan.value"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row update-button clearfix">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary "
+             ng-click="ctrlGeneral.update()">{{'Save'|l}}</button>
+        </div>
+        
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2 main-content">
+      <div class="row">
+        <div class="dx-field-label">- Logo</div>
+      </div>
+      <table class="diskuf-selector-table wd-fa-add-file-light-table">
+        <tbody>
+          <tr>
+            <td
+              class="
+                diskuf-selector
+                wd-fa-add-file-light-cell wd-fa-add-file-from-main
+              "
+              colspan=" 0"
+            >
+              <div class="diskuf-uploader">
+                <span class="wd-fa-add-file-light">
+                  <span class="wd-fa-add-file-light-text">
+                    <span class="wd-fa-add-file-light-title">
+                      <span class="wd-fa-add-file-light-title-text"
+                        >{{'UploadImage'|l}}</span
+                      >
+                    </span>
+                    <span class="wd-fa-add-file-light-descript"
+                      >{{'DragTheImageHereToUpload'|l}}</span
+                    >
+                  </span>
+                </span>
+                <input
+                  id="setting-logo"
+                  class="diskuf-fileUploader wd-test-file-light-inp"
+                  type="file"
+                  size="1"
+                  attachment-single
+                  attachment-single-func="ctrlGeneral.chooseLogo(params)"
+                  style="width: 100%"
+                />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <div style="text-align: center; display: block; margin-top: 5px">
+          <img
+            ng-show="ctrlGeneral.logo.file || ctrlGeneral.logo.url"
+            class="z-depth-1 mb-3 mx-auto"
+            ng-src="{{ctrlGeneral.logo.url}}"
+            style="
+              width: 100%;
+              box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+                0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            "
+            id="setting-logo-show"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 main-content">
+      <div class="row">
+        <div class="dx-field-label">- Background Login Page</div>
+      </div>
+
+      <table class="diskuf-selector-table wd-fa-add-file-light-table">
+        <tbody>
+          <tr>
+            <td
+              class="
+                diskuf-selector
+                wd-fa-add-file-light-cell wd-fa-add-file-from-main
+              "
+              colspan=" 0"
+            >
+              <div class="diskuf-uploader">
+                <span class="wd-fa-add-file-light">
+                  <span class="wd-fa-add-file-light-text">
+                    <span class="wd-fa-add-file-light-title">
+                      <span class="wd-fa-add-file-light-title-text"
+                        >{{'UploadImage'|l}}</span
+                      >
+                    </span>
+                    <span class="wd-fa-add-file-light-descript"
+                      >{{'DragTheImageHereToUpload'|l}}</span
+                    >
+                  </span>
+                </span>
+                <input
+                  id="setting-background-login"
+                  class="diskuf-fileUploader wd-test-file-light-inp"
+                  type="file"
+                  size="1"
+                  attachment-single
+                  attachment-single-func="ctrlGeneral.chooseBackgroundLogin(params)"
+                  style="width: 100%"
+                />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <div style="text-align: center; display: block; margin-top: 5px">
+          <img
+            ng-show="ctrlGeneral.backgroundLogin.file || ctrlGeneral.backgroundLogin.url"
+            class="z-depth-1 mb-3 mx-auto"
+            ng-src="{{ctrlGeneral.backgroundLogin.url}}"
+            style="
+              width: 100%;
+              box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+                0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            "
+            id="setting-background-login-show"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="row main-content">
+        <div class="dx-field-label">- Background</div>
+      </div>
+
+      <table class="diskuf-selector-table wd-fa-add-file-light-table">
+        <tbody>
+          <tr>
+            <td
+              class="
+                diskuf-selector
+                wd-fa-add-file-light-cell wd-fa-add-file-from-main
+              "
+              colspan=" 0"
+            >
+              <div class="diskuf-uploader">
+                <span class="wd-fa-add-file-light">
+                  <span class="wd-fa-add-file-light-text">
+                    <span class="wd-fa-add-file-light-title">
+                      <span class="wd-fa-add-file-light-title-text"
+                        >{{'UploadImage'|l}}</span
+                      >
+                    </span>
+                    <span class="wd-fa-add-file-light-descript"
+                      >{{'DragTheImageHereToUpload'|l}}</span
+                    >
+                  </span>
+                </span>
+                <input
+                  id="setting-background"
+                  class="diskuf-fileUploader wd-test-file-light-inp"
+                  type="file"
+                  size="1"
+                  attachment-single
+                  attachment-single-func="ctrlGeneral.chooseBackground(params)"
+                  style="width: 100%"
+                />
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <div style="text-align: center; display: block; margin-top: 5px">
+          <img
+            ng-show="ctrlGeneral.background.file || ctrlGeneral.background.url"
+            class="z-depth-1 mb-3 mx-auto"
+            ng-src="{{ctrlGeneral.background.url}}"
+            style="
+              width: 100%;
+              box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+                0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            "
+            id="setting-background-show"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div>
+    <div class="input-prepend input-group">
+        <div class="input-group-prepend"><span class="input-group-text">{{label}}</span>
+        </div>
+        <div >
+            <div class="input-group-text" ng-show="!datashow || datashow.length ==0">
+                {{'NoMoreInformation'|l:{title:label} }}
+            </div>
+            <div class="multiple choosen" ng-show="datashow.length>0">
+                <div class="option" ng-repeat="item in datashow"><span class="deselect-option" ng-click="remove(item)">
+                        ✕ </span>
+                    <span>{{item}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="input-group-append" ng-hide="disable">
+            <button type="button" class="btn btn-primary" modal-toggle="#{{_ctrlName}}"
+                ng-click="init()">{{'Pick'|l}}</button>
+            <button type="button" class="btn btn-primary" ng-click="clear()"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="{{_ctrlName}}">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{label}}" modal-header-id={{_ctrlName}}></modal-header>
+                <div class="modal-body">
+                    <div class="input-prepend input-group">
+                        <button-search button-search-func="init()" button-search-start="_notyetInit"
+                            button-search-model="search">
+                        </button-search>
+                        <div class="input-group-append">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" 
+                                ng-click="insert()" ng-disabled="!checkSearchItem()">{{'Insert'|l}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <my-Async async-ctrlname="{{_ctrlName}}" async-objname="Load" async-actionname="load">
+                        <async-success>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <tbody>
+                                        <tr ng-repeat="item in data track by $index">
+                                            <td>
+                                                {{item}}
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary"
+                                                    ng-click="add(item)">{{'Add'|l}}</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div ng-if="data.length ==0" class="no-data">
+                                {{'NoData'|l}}
+                            </div>
+                            <pagination pagination-ctrlname="{{_ctrlName}}" pagination-objname="Count"
+                                pagination-actionname="count" pagination-currentpage="currentPage"
+                                pagination-noi="numOfItemPerPage" pagination-total="totalItems"
+                                pagination-func="load(params)"></pagination>
+                        </async-success>
+                    </my-Async>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" ng-click="close()">{{'Close'|l}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

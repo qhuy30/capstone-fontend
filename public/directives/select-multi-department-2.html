@@ -1,0 +1,165 @@
+<style>
+  .remove-icon {
+    cursor: pointer;
+  }
+  .remove-icon:hover {
+    color: red;
+  }
+  .list-department {
+    height: 300px;
+    overflow-y: scroll;
+  }
+  .item-department {
+    height: 40px;
+  }
+</style>
+
+<div style="width: 100%">
+  <div class="d-flex align-self-stretch">
+    <div
+      class="label"
+      style="
+        color: #fff;
+        font-weight: 700;
+        padding: 0 10px;
+        display: block;
+        background-color: #4285f4;
+        height: 30px;
+        line-height: 30px;
+      "
+    >
+      {{label}}
+    </div>
+    <div class="value flex-grow-1">
+      <div class="show-value" style="height: 100%">
+        <span ng-repeat="item in choosedDepartments">
+          <span> {{item.title[languageCurrent]}} </span>
+        </span>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      modal-toggle="#{{ctrl._ctrlName}}"
+      ng-disabled="disabled"
+    >
+      {{'Pick'|l}}&nbsp;<i class="fas fa-external-link-alt"></i>
+    </button>
+    <button 
+      ng-disabled="disabled"
+      type="button" class="btn btn-primary" ng-click="clear()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    id="{{ctrl._ctrlName}}"
+    style="left: 100px"
+  >
+    <div
+      class="modal-dialog modal-lg"
+      role="document"
+      style="transform: translateY(3%)"
+    >
+      <div class="modal-content">
+        <modal-header
+          modal-header-title="{{label ? label : ('Department'|l)}}"
+          modal-header-id="{{ctrl._ctrlName}}"
+        >
+        </modal-header>
+        <div class="modal-body">
+          <div class="part-container row align-content-around">
+            <div class="part col-6 p-1">
+              <div class="p-3" style="border: 1px solid #eee; height: 100%">
+                <div
+                  class=""
+                  style="height: 30px; border-bottom: 1px solid #eee"
+                >
+                </div>
+
+                <div
+                  class="department-container d-flex flex-column mt-1 list-department"
+                >
+                  <div
+                    ng-repeat="u in departments"
+                    class="item-department"
+                    style="list-style-type: none"
+                  >
+                    <div class="row" style="border: 1px solid #eee">
+                      <div
+                        class="title col-9"
+                        style="border-right: 1px solid #eee"
+                      >
+                        <div class="show-user__title" style="cursor: default">
+                          &nbsp;<span>{{u.title[languageCurrent]}}</span>
+                        </div>
+                      </div>
+                      <div class="tool col-3">
+                        <button
+                          type="button"
+                          ng-click="ctrl.pick(u)"
+                          class="btn btn-primary"
+                        >
+                          {{'Pick'|l}}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="part selected-part col-6 p-1">
+              <div
+                class="user-container p-3"
+                style="border: 1px solid #eee; height: 100%"
+              >
+                <div
+                  class=""
+                  style="height: 30px; border-bottom: 1px solid #eee"
+                >
+                  {{'SelectedPart'|l}}&nbsp({{choosedDepartments.length}})
+                </div>
+                <div class="department-container d-flex flex-column mt-1 list-department">
+                  <div
+                    ng-repeat="u in choosedDepartments"
+                    class="item-department align-self-stretch"
+                    style="border: 1px solid #eee"
+                  >
+                    <div class="d-flex">
+                      <div
+                        class="d-flex align-items-center justify-content-center"
+                      >
+                        <i
+                          class="material-icons remove-icon"
+                          ng-click="remove(u._id)"
+                          custom-tooltip
+                          tooltip-content="bỏ chọn"
+                          style="font-size: 1rem"
+                          >clear</i
+                        >
+                      </div>
+
+                      <span
+                        class="ml-2 title flex-grow-1 show-user__title"
+                        style="border-right: 1px solid #eee"
+                        >{{u.title[languageCurrent]}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" ng-click="close()">
+            {{'Close'|l}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

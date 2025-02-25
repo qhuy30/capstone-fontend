@@ -1,0 +1,192 @@
+<my-content>
+    <content-content>
+        <div ng-controller="calculate_dimensions_controller as ctrl"
+            class="calculate_dimensions">
+            <div>
+                <h1 class="title">{{'CalculateDimensionsTool'|l}}</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-6 first-column">
+                    <form class="form-horizontal " name="calculateForm">
+                        <div class="form-group">
+                            <div class="input-prepend input-group group-input">
+                                <span class="text-input">
+                                    {{'Width (pixels)'|l}}*:&nbsp;&nbsp;
+                                </span>
+                                <input type="number"
+                                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CD','calculate','doing')"
+                                    ng-model="ctrl._calculate_value.width"
+                                    class="form-control input-value"
+                                    name="inputValue_width"
+                                    placeholder="Input width"
+                                    ng-class="{ 'is-invalid': calculateForm.inputValue_width.$invalid }"
+                                    required />
+                            </div>
+                            <div class="input-prepend input-group group-input">
+                                <span class="text-input">
+                                    {{'Height (pixels)'|l}}*:&nbsp;&nbsp;
+                                </span>
+                                <input type="number"
+                                    ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CD','calculate','doing')"
+                                    ng-model="ctrl._calculate_value.height"
+                                    class="form-control input-value"
+                                    name="inputValue_height"
+                                    placeholder="Input height"
+                                    ng-class="{ 'is-invalid': calculateForm.inputValue_height.$invalid }"
+                                    required />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <table
+                                        class="diskuf-selector-table wd-fa-add-file-light-table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                    colspan=" 0">
+                                                    <div
+                                                        class="diskuf-uploader">
+                                                        <span
+                                                            class="wd-fa-add-file-light">
+                                                            <span
+                                                                class="wd-fa-add-file-light-text">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title">
+                                                                    <span
+                                                                        class="wd-fa-add-file-light-title-text">{{'UploadFile'|l}}</span>
+                                                                </span>
+                                                                <span
+                                                                    class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                            </span>
+                                                        </span>
+                                                        <input class="fileInput"
+                                                            class="diskuf-fileUploader wd-test-file-light-inp "
+                                                            type="file" multiple
+                                                            style="width:100%;"
+                                                            attachment-multiple
+                                                            attachment-multiple-func="ctrl.getFile(params)">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <table
+                                        class="diskuf-selector-table wd-fa-add-file-light-table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                    colspan=" 0">
+                                                    <div
+                                                        class="diskuf-uploader">
+                                                        <span
+                                                            class="wd-fa-add-file-light">
+                                                            <span
+                                                                class="wd-fa-add-file-light-text">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title">
+                                                                    <span
+                                                                        class="wd-fa-add-file-light-title-text">{{'UploadFolder'|l}}</span>
+                                                                </span>
+                                                                <span
+                                                                    class="wd-fa-add-file-light-descript">{{'DragTheFolderHereToUpload'|l}}</span>
+                                                            </span>
+                                                        </span>
+                                                        <input class="fileInput"
+                                                            class="diskuf-fileUploader wd-test-file-light-inp "
+                                                            type="file" multiple
+                                                            style="width:100%;"
+                                                            attachment-multiple
+                                                            attachment-multiple-func="ctrl.getFile(params)"
+                                                            webkitdirectory="">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="group-input col-md-6"
+                                    style="text-align: right;">
+                                    <button class="btn btn-primary"
+                                        type="button"
+                                        ng-class='{"btn-sm":modalButtonCalculateType==="small"}'
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CD','calculate','doing')"
+                                        ng-click="ctrl.calculate_func()">
+                                        <i
+                                            class="fas fa-calculator"></i>&nbsp;{{$root.statusValue.get(ctrl._ctrlName,'CD','calculate','doing')
+                                        ? ('Calculating'|l)
+                                        : ('Calculate'|l)}}
+                                    </button>
+                                </div>
+                                <div class="group-input col-md-6"
+                                    style="text-align: left;">
+                                    <button class="btn btn-danger" type="button"
+                                        ng-class='{"btn-sm":modalButtonDeleteType==="small"}'
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CD','calculate','doing')"
+                                        ng-click="ctrl.reset()">
+                                        <i
+                                            class="fas fa-trash-alt"></i>&nbsp;{{('Reset'|l)}}
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="row file-list">
+                        <div class="col-md-6 box-column">
+                            <div class="div-title">
+                                <h2 class="title-box">
+                                    <i class="fas fa-file-image"></i>
+                                    {{'SelectedFiles'|l}}:
+                                </h2>
+                            </div>
+                            <ul class="file-items">
+                                <li class="file-item"
+                                    ng-repeat="item in ctrl._files">
+                                    {{item.name}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6 box-column">
+                            <div class="div-title">
+                                <h2 class="title-box">
+                                    <i class="fas fa-file-image"></i>
+                                    {{'FilesNotMatch'|l}}:
+                                </h2>
+                            </div>
+                            <ul class="file-items">
+                                <li class="file-item"
+                                    ng-repeat="item in ctrl._files_fail">
+                                    {{item.name}}
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div ng-show="ctrl._show_modal">
+                <modal-notification
+                    ng-if="ctrl._files_fail.length > 0"
+                    modal-notification-header="{{'HeaderModal'|l}}"
+                    modal-notification-content="{{'ContentModalFail' |l: ({count: ctrl._files_fail.length})}}"
+                    modal-notification-footer="{{'CloseModal'|l}}"
+                    modal-notification-func="ctrl.close_modal_func()">
+                </modal-notification>
+                <modal-notification
+                    ng-if="ctrl._files_fail.length === 0"
+                    modal-notification-header="{{'HeaderModal'|l}}"
+                    modal-notification-content="{{'ContentModalSuccess' |l}}"
+                    modal-notification-footer="{{'CloseModal'|l}}"
+                    modal-notification-func="ctrl.close_modal_func()">
+                </modal-notification>
+            </div>
+
+
+
+        </div>
+    </content-content>
+</my-content>

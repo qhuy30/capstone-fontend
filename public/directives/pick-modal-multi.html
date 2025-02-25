@@ -1,0 +1,104 @@
+<div>
+    <div class="input-prepend input-group">
+      <div class="input-group-prepend" ng-if="label">
+        <span class="input-group-text" >{{label}}</span>
+      </div>
+      <div class="dropdown-menu">
+        <button-search
+          button-search-func="init()"
+          button-search-start="_notyetInit"
+          button-search-model="search"
+        >
+        </button-search>
+        <my-Async
+          async-ctrlname="{{_ctrlName}}"
+          async-objname="Load"
+          async-actionname="load"
+        >
+          <async-success>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <tbody>
+                  <tr
+                    ng-repeat="item in data|orderBy:sort.name:sort.value track by $index"
+                  >
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        ng-click="pick(item)"
+                      >
+                        {{'Pick'|l}}
+                      </button>
+                    </td>
+                    <td><span ng-if="localization ==='1'">
+                      {{item[showField]}}
+                    </span>
+                    <span ng-if="localization ==='2'">
+                      {{item[showField]|l}}
+                    </span>
+                    <span ng-if="localization ==='3'">
+                      {{item[showField][$root.Language.current]}}
+                    </span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div ng-if="ctrl.data.length ==0" class="no-data">{{'NoData'|l}}</div>
+            <pagination
+              pagination-ctrlname="{{_ctrlName}}"
+              pagination-objname="Count"
+              pagination-actionname="count"
+              pagination-currentpage="currentPage"
+              pagination-noi="numOfItemPerPage"
+              pagination-total="totalItems"
+              pagination-func="load(params)"
+            ></pagination>
+          </async-success>
+        </my-Async>
+      </div>
+      <input
+        ng-disabled="true"
+        type="text"
+        ng-model="selectedItem[showField]"
+        class="form-control"
+        name="{{_ctrlName}}"
+        ng-required="require"
+      />
+
+      <button
+        ng-click="init()"
+        type="button"
+        class="btn btn-primary dropdown-toggle"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        ng-disabled="disable"
+      >
+        {{'Pick'|l}}
+      </button>
+      <button type="button" class="btn btn-primary" ng-click="clear()" ng-disabled="disable">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="form-group ">
+      <div class="input-group-text" ng-hide="selectedItem.length>0">
+          {{'NoInformationHasBeenSelectedYet'|l}}
+      </div>
+      <div class="multiple choosen" ng-hide="selectedItem.length==0">
+          <div class="option" ng-repeat="item in showItem">
+            <span ng-show="!doing" class="deselect-option" ng-click="remove(item)"> ✕ </span>
+            <span ng-if="localization ==='1'">
+              {{item[showField]}}
+            </span>
+            <span ng-if="localization ==='2'">
+              {{item[showField]|l}}
+            </span>
+            <span ng-if="localization ==='3'">
+              {{item[showField][$root.Language.current]}}
+            </span>
+          </div>
+      </div>
+  </div>
+  </div>

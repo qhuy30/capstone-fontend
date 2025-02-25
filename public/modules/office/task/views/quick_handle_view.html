@@ -1,0 +1,28 @@
+<div ng-controller="task_quick_handle_controller as ctrlChild" class="task-quick-handle-feature">
+    <div ng-include="ctrlChild.urlNotificationSuccess"></div>
+    <div ng-include="ctrlChild._urlHandleModal_workflow"></div>
+    <div ng-include="ctrlChild._urlCommentModal"></div>
+    <div ng-include="ctrlChild._urlInsertHeadTaskModal"></div>
+    <div ng-include="ctrlChild._urlInsertChallengeModal"></div>
+    <div ng-include="ctrlChild._urlDetailChallengeModal"></div>
+    <div ng-include="ctrlChild._urlApproveModal_news"></div>
+    <div ng-include="ctrlChild._urlEditModal_news"></div>
+    <div ng-include="ctrlChild._urlRejectModal_news"></div>
+    <div ng-include="ctrlChild._urlAssessModal_Task_Receiver"></div>
+
+    <div class="section-1" style="margin-bottom:10px;">
+        <!-- <button-new ng-show="''|checkRuleCreateTaskAll" button-new-func="ctrlChild.prepareInsert()"
+            button-new-label=" {{'AddTask'|l}}" button-new-modal="#modal_Head_Task_Insert_In_Department_Dashboard">
+        </button-new> -->
+    </div>
+    <div class="section-2">
+        <div ng-if="ctrlChild.hasNoItems" style="text-align: center; font-size: 18px; padding: 20px; margin: 20px auto; width: 50%;">
+            {{'You have run out of tasks to handle'|l}}
+        </div>
+        <div ng-include="ctrlChild._urlWorkflowPart"></div>
+        <div ng-include="ctrlChild._urlTaskPart"></div>
+        <div ng-include="ctrlChild._urlDocumentPart"></div>
+        <div ng-include="ctrlChild._urlNewsPart"></div>
+        <div ng-include="ctrlChild._urlRoomPart"></div>
+    </div>
+</div>

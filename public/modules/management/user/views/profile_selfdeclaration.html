@@ -1,0 +1,864 @@
+<div ng-controller="user_profile_selfdeclaration_controller as ctrl">
+    <ul class="nav nav-tabs" role="tablist">
+
+        <li class="nav-item" ng-click="ctrl.clickTab('background')">
+            <a class="nav-link "
+                ng-class="{'active':ctrl._update_value.tab =='background'}">{{'BackgroundInformation'|l}}
+                <!-- <span
+                    ng-show="updateForm_background_general.$invalid || ctrl._update_value.family.length===0 || !ctrl._update_value.signature.name"><i
+                        class="fas fa-exclamation-circle text-warning"></i></span>
+                <span
+                    ng-hide="updateForm_background_general.$invalid || ctrl._update_value.family.length===0 || !ctrl._update_value.signature.name"><i
+                        class="far fa-check-circle text-success"></i></span> -->
+                <span
+                    ng-show="!ctrl._update_value.signature.name"><i
+                        class="fas fa-exclamation-circle text-warning"></i></span>
+                <span
+                    ng-hide="!ctrl._update_value.signature.name"><i
+                        class="far fa-check-circle text-success"></i></span>
+            </a>
+        </li>
+        <!-- <li class="nav-item" ng-click="ctrl.clickTab('education')">
+            <a class="nav-link" ng-class="{'active':ctrl._update_value.tab =='education'}">{{'Education'|l}}
+                <span ng-show="updateForm_education_general.$invalid"><i
+                        class="fas fa-exclamation-circle text-warning"></i></span>
+                <span ng-hide="updateForm_education_general.$invalid"><i
+                        class="far fa-check-circle text-success"></i></a></span>
+        </li> -->
+        <!-- <li class="nav-item" ng-click="ctrl.clickTab('mission')">
+            <a class="nav-link" ng-class="{'active':ctrl._update_value.tab =='mission'}">{{'MissionInfo'|l}}
+                <span ng-show="updateForm_mission_general.$invalid"><i
+                        class="fas fa-exclamation-circle text-warning"></i></span>
+                <span ng-hide="updateForm_mission_general.$invalid"><i
+                        class="far fa-check-circle text-success"></i></a></span>
+        </li> -->
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active show">
+            <ul class="nav nav-tabs" role="tablist" ng-show="ctrl._update_value.tab=='background'"
+                style="margin-bottom: 10px;">
+
+                <!-- <li class="nav-item" ng-click="ctrl._update_value.childTab ='general'">
+                    <a class="nav-link "
+                        ng-class="{'active':ctrl._update_value.childTab =='general'}">{{'GeneralInfo'|l}}
+                        <span ng-show="updateForm_background_general.$invalid"><i
+                                class="fas fa-exclamation-circle text-warning"></i></span>
+                        <span ng-hide="updateForm_background_general.$invalid"><i
+                                class="far fa-check-circle text-success"></i></span>
+                    </a>
+                </li>
+                <li class="nav-item" ng-click="ctrl._update_value.childTab ='family'">
+                    <a class="nav-link"
+                        ng-class="{'active':ctrl._update_value.childTab =='family'}">{{'FamilyInformation'|l}}
+                        <span ng-hide="ctrl._update_value.family.length>0"><i
+                                class="fas fa-exclamation-circle text-warning"></i></span>
+                        <span ng-show="ctrl._update_value.family.length>0"><i
+                                class="far fa-check-circle text-success"></i></a></span>
+                </li> -->
+                <li class="nav-item" ng-click="ctrl._update_value.childTab ='signature'">
+                    <a class="nav-link"
+                        ng-class="{'active':ctrl._update_value.childTab =='signature'}">{{'Signature'|l}}
+                        <span ng-hide="ctrl._update_value.signature.name"><i
+                                class="fas fa-exclamation-circle text-warning"></i></span>
+                        <span ng-show="ctrl._update_value.signature.name"><i
+                                class="far fa-check-circle text-success"></i></a></span>
+                </li>
+            </ul>
+            <ul class="nav nav-tabs" role="tablist" ng-show="ctrl._update_value.tab=='education'"
+                style="margin-bottom: 10px;">
+
+                <li class="nav-item" ng-click="ctrl._update_value.childTab ='general'">
+                    <a class="nav-link "
+                        ng-class="{'active':ctrl._update_value.childTab =='general'}">{{'GeneralInfo'|l}}
+                        <span ng-show="updateForm_education_general.$invalid"><i
+                                class="fas fa-exclamation-circle text-warning"></i></span>
+                        <span ng-hide="updateForm_education_general.$invalid"><i
+                                class="far fa-check-circle text-success"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- <ul class="nav nav-tabs" role="tablist" ng-show="ctrl._update_value.tab=='mission'"
+                style="margin-bottom: 10px;">
+
+                <li class="nav-item" ng-click="ctrl._update_value.childTab ='general'">
+                    <a class="nav-link "
+                        ng-class="{'active':ctrl._update_value.childTab =='general'}">{{'GeneralInfo'|l}}
+                        <span ng-show="updateForm_mission_general.$invalid"><i
+                                class="fas fa-exclamation-circle text-warning"></i></span>
+                        <span ng-hide="updateForm_mission_general.$invalid"><i
+                                class="far fa-check-circle text-success"></i></span>
+                    </a>
+                </li>
+            </ul> -->
+            <ul class="nav nav-tabs" role="tablist" ng-show="ctrl._update_value.tab=='salary'"
+                style="margin-bottom: 10px;">
+
+                <li class="nav-item" ng-click="ctrl._update_value.childTab ='general'">
+                    <a class="nav-link "
+                        ng-class="{'active':ctrl._update_value.childTab =='general'}">{{'GeneralInfo'|l}}
+                        <span ng-show="updateForm_salary_general.$invalid"><i
+                                class="fas fa-exclamation-circle text-warning"></i></span>
+                        <span ng-hide="updateForm_salary_general.$invalid"><i
+                                class="far fa-check-circle text-success"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <div ng-show="ctrl._update_value.tab =='background' && ctrl._update_value.childTab =='general'">
+                <form class="form-horizontal " name="updateForm_background_general">
+                    <div style=" display: flex;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -ms-flex-pack: end;
+                    justify-content: flex-end;margin-bottom: 24px;">
+                        <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                            modal-button-save-objname='Employee'
+                            modal-button-save-actionname="update_background_general"
+                            modal-button-save-invalid="updateForm_background_general.$invalid"
+                            modal-button-save-func="ctrl.update_background_general()">
+                        </modal-button-save>
+                    </div>
+                    <!-- <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-4">
+                                <button-select-nl button-select-label="{{'TypeLaborContract'|l}}"   
+                                    button-select-data="ctrl.TypeLaborContract" id-value="ctrl._update_value.type"
+                                    load-details-func="ctrl.loadTypeLaborContract_details(params)"
+                                    button-select-func="ctrl.chooseTypeLaborContract_update(params)" button-select-key="title"
+                                    localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select-nl>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'LastName'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.lastname"
+                                        class="form-control" name="update_lastname"
+                                        placeholder="Input lastname"
+                                        ng-class="{ 'is-invalid': updateForm_general.update_lastname.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'MidName'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.midname"
+                                        class="form-control" name="update_midname"
+                                        placeholder="Input midname" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'FirstName'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.firstname"
+                                        class="form-control" name="update_firstname"
+                                        placeholder="Input firstname"
+                                        ng-class="{ 'is-invalid': updateForm_general.update_firstname.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <date id-value="ctrl._update_value.birth_date"
+                                    func="ctrl.chooseBirthDate_update(params)" label="{{'DateOfBirth'|l}}"
+                                    disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    required="true"></date>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="col-md-12">
+                                {{'PlaceOfBirth'|l}}
+                            </div>
+                            <div class="col-md-12"
+                                style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'ProvinceCity'|l}}"
+                                    button-select-data="ctrl.City"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-func="ctrl.chooseCity3_update(params)"
+                                    button-select-model="ctrl._update_value.place_birth.city"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'District'|l}}"
+                                    button-select-data="ctrl._update_value.place_birth.city.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.place_birth.district"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'Ward'|l}}"
+                                    button-select-data="ctrl._update_value.place_birth.district.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.place_birth.ward"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="col-md-12">
+                                {{'Domicile'|l}}
+                            </div>
+                            <div class="col-md-12"
+                                style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'ProvinceCity'|l}}"
+                                    button-select-data="ctrl.City"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-func="ctrl.chooseCity4_update(params)"
+                                    button-select-model="ctrl._update_value.domicile.city"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'District'|l}}"
+                                    button-select-data="ctrl._update_value.domicile.city.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.domicile.district"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'Ward'|l}}"
+                                    button-select-data="ctrl._update_value.domicile.district.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.domicile.ward"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'Address'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.domicile.address"
+                                        class="form-control" name="update_domicile_address"
+                                        placeholder="Input address" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="col-md-12">
+                                {{'Living'|l}}
+                            </div>
+                            <div class="col-md-12"
+                                style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'ProvinceCity'|l}}"
+                                    button-select-data="ctrl.City"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-func="ctrl.chooseCity1_update(params)"
+                                    button-select-model="ctrl._update_value.living.city"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'District'|l}}"
+                                    button-select-data="ctrl._update_value.living.city.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.living.district"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'Ward'|l}}"
+                                    button-select-data="ctrl._update_value.living.district.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.living.ward"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'Address'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.living.address"
+                                        class="form-control" name="update_living_address"
+                                        placeholder="Input address"
+                                        ng-class="{ 'is-invalid': updateForm_general.update_living_address.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="col-md-12">
+                                {{'PermanentAddress'|l}}
+                            </div>
+                            <div class="col-md-12"
+                                style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'ProvinceCity'|l}}"
+                                    button-select-data="ctrl.City"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-func="ctrl.chooseCity2_update(params)"
+                                    button-select-model="ctrl._update_value.permanent_address.city"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'District'|l}}"
+                                    button-select-data="ctrl._update_value.permanent_address.city.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.permanent_address.district"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select button-select-label="{{'Ward'|l}}"
+                                    button-select-data="ctrl._update_value.permanent_address.district.details"
+                                    button-select-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                    button-select-model="ctrl._update_value.permanent_address.ward"
+                                    button-select-key="name" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'Address'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.permanent_address.address"
+                                        class="form-control" name="update_permanent_address_address"
+                                        placeholder="Input address"
+                                        ng-class="{ 'is-invalid': updateForm_general.update_permanent_address_address.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-12">
+                                <button-select-nl button-select-label="{{'TypeOfResidence'|l}}"
+                                    button-select-data="ctrl.TypeResidence"
+                                    id-value="ctrl._update_value.type_residence"
+                                    load-details-func="ctrl.loadTypeResidence_details(params)"
+                                    button-select-func="ctrl.chooseTypeResidence_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select-nl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'PhoneNumber'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.phonenumber"
+                                        class="form-control" name="update_phonenumber"
+                                        placeholder="Input phonenumber"
+                                        ng-class="{ 'is-invalid': updateForm_general.update_phonenumber.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'Email'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="email" ng-model="ctrl._update_value.email"
+                                        class="form-control" name="update_email" placeholder="Input email"
+                                        ng-class="{ 'is-invalid': updateForm_general.update_email.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'IdCard'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')"
+                                        type="text" ng-model="ctrl._update_value.idcard"
+                                        class="form-control" name="update_idcard" placeholder="Input idcard"
+                                        ng-class="{ 'is-invalid': updateForm_general.update_idcard.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select-nl button-select-label="{{'Nationality'|l}}"
+                                    button-select-data="ctrl.Nationality"
+                                    id-value="ctrl._update_value.nationality"
+                                    load-details-func="ctrl.loadNationality_details(params)"
+                                    button-select-func="ctrl.chooseNationality_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select-nl button-select-label="{{'Religion'|l}}"
+                                    button-select-data="ctrl.Religion"
+                                    id-value="ctrl._update_value.religion"
+                                    load-details-func="ctrl.loadReligion_details(params)"
+                                    button-select-func="ctrl.chooseReligion_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button-select-nl button-select-label="{{'Folk'|l}}"
+                                    button-select-data="ctrl.Folk" id-value="ctrl._update_value.folk"
+                                    load-details-func="ctrl.loadFolk_details(params)"
+                                    button-select-func="ctrl.chooseFolk_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_general','doing')">
+                                </button-select-nl>
+                            </div>
+                        </div>
+                    </div>
+                    <div style=" display: flex;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -ms-flex-pack: end;
+                    justify-content: flex-end;">
+                        <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                            modal-button-save-objname='Employee'
+                            modal-button-save-actionname="update_background_general"
+                            modal-button-save-invalid="updateForm_background_general.$invalid"
+                            modal-button-save-func="ctrl.update_background_general()">
+                        </modal-button-save>
+                    </div>
+
+                </form>
+            </div>
+            <div ng-show="ctrl._update_value.tab =='background' && ctrl._update_value.childTab =='family'">
+                <div class="row">
+                    <style>
+                        .family-item:hover {
+                            cursor: default;
+                            text-decoration: underline;
+                        }
+
+                        .family-item-delete {
+                            display: none;
+                        }
+
+                        .family-record:hover .family-item-delete {
+                            display: block;
+                        }
+                    </style>
+                    <div class="col-md-8" style="padding-left:0px;">
+                        <form class="form-horizontal " name="updateForm_background_family">
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="form-group col-md-12">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'FullName'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_family','doing')"
+                                                type="text" ng-model="ctrl.familyItem.fullname"
+                                                class="form-control" name="update_family_fullname"
+                                                placeholder="Input fullname"
+                                                ng-class="{ 'is-invalid': updateForm_background_family.update_family_fullname.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <div class="input-prepend input-group">
+                                            <div class="input-group-prepend"><span
+                                                    class="input-group-text">{{'BornYear'|l}}</span>
+                                            </div>
+                                            <input
+                                                ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_family','doing')"
+                                                type="text" ng-model="ctrl.familyItem.born_in"
+                                                class="form-control" name="update_family_born_in"
+                                                placeholder="Input born_in"
+                                                ng-class="{ 'is-invalid': updateForm_background_family.update_family_born_in.$invalid }"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button-select-nl button-select-label="{{'Relationship'|l}}"
+                                            button-select-data="ctrl.Relationship"
+                                            id-value="ctrl.familyItem.relationship"
+                                            load-details-func="ctrl.loadRelationship_details(params)"
+                                            button-select-func="ctrl.chooseRelationship_update(params)"
+                                            button-select-key="title" localization="true" require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_family','doing')">
+                                        </button-select-nl>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button-select-nl button-select-label="{{'Job'|l}}"
+                                            button-select-data="ctrl.Job" id-value="ctrl.familyItem.job"
+                                            load-details-func="ctrl.loadJob_details(params)"
+                                            button-select-func="ctrl.chooseJob_update(params)"
+                                            button-select-key="title" localization="true" require="true"
+                                            disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update_background_family','doing')">
+                                        </button-select-nl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body row" style="border-left:2px solid #20a8d8">
+                                    <div class="col-md-12">
+                                        {{'Trước Cách mạng tháng 8 năm 1945 làm gì ? Ở đâu ?'}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea id="update_t8_1945" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        {{'Trong thời gian chống thực dân Pháp làm gì ? Ở đâu ?'}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea id="update_tdPhap" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        {{'Từ năm 1955 đến nay làm gì ? Ở đâu ?'}}
+                                    </div>
+                                    <div class="col-md-12"
+                                        style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea id="update_n1955" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <modal-button-new ng-show="ctrl.family_mode ==='new'"
+                            modal-button-new-ctrlname="{{ctrl._ctrlName}}"
+                            modal-button-new-objname='Employee'
+                            modal-button-new-actionname="update_background_family"
+                            modal-button-new-invalid="updateForm_background_family.$invalid"
+                            modal-button-new-func="ctrl.push_background_family()">
+                        </modal-button-new>
+                        <modal-button-save ng-show="ctrl.family_mode ==='update'"
+                            modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                            modal-button-save-objname='Employee'
+                            modal-button-save-actionname="update_background_family"
+                            modal-button-save-invalid="updateForm_background_family.$invalid"
+                            modal-button-save-func="ctrl.update_background_family()">
+                        </modal-button-save>
+                    </div>
+                    <div class="col-md-4" style="padding-left:0px;">
+                        <div class="card">
+                            <div class="card-body row">
+                                <div class="col-md-12">
+                                    <button class="btn btn-sm btn-outline-primary"
+                                        ng-show="ctrl.family_mode ==='update'"
+                                        ng-click="ctrl.prepareUpdate_familyItem_new()"><i
+                                            class="fas fa-plus"></i></button>
+                                    {{'ListOfRelatives'|l}}
+                                </div>
+                                <div class="col-md-12"
+                                    style="border-top:1px solid #eee;margin-bottom:15px;margin-top:10px;">
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <td style="font-weight: 600;vertical-align: middle;">
+                                                    {{'FullName'|l}}
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="family-record"
+                                                ng-repeat="item in ctrl._update_value.family track by $index">
+                                                <td class="family-item"
+                                                    ng-click="ctrl.prepareUpdate_familyItem_update(item)">
+                                                    {{item.relationship|l}}:{{item.fullname}} -
+                                                    {{item.born_in}}
+                                                </td>
+                                                <td>
+                                                    <i class="fas fa-times text-primary family-item-delete"
+                                                        ng-click="ctrl.remove_background_family(item.childid)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div
+                ng-show="ctrl._update_value.tab =='background' && ctrl._update_value.childTab =='signature'">
+                <div class="card" style="border-left:2px solid #20a8d8">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">{{'Signature'|l}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <style>
+                                    .image-container {
+                                        width: 140px;
+                                        height: auto;
+                                        display: block;
+                                        margin: 0 auto;
+                                        overflow: hidden;
+                                    }
+
+                                    .image-container img {
+                                        width: 100%;
+                                        display: block;
+                                        overflow: hidden;
+                                    }
+                                </style>
+                                <div class="image-container">
+                                    <img ng-src="{{ctrl._update_value.signature.link}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                colspan=" 0">
+                                                <div class="diskuf-uploader">
+                                                    <span class="wd-fa-add-file-light">
+                                                        <span class="wd-fa-add-file-light-text">
+                                                            <span class="wd-fa-add-file-light-title">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title-text">{{'TheFileWillAutomaticallyUploadWhenSelected'|l}}</span>
+                                                            </span>
+                                                            <span
+                                                                class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                        </span>
+                                                    </span>
+                                                    <input class="diskuf-fileUploader wd-test-file-light-inp "
+                                                        type="file" file-reading-single
+                                                        file-single-func="ctrl.update_signature(params)" size="1"
+                                                        style="width:100%;">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="border-left:2px solid #20a8d8">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">{{'Quotation mark'|l}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="image-container">
+                                    <img ng-src="{{ctrl._update_value.quotation_mark.link}}" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                                colspan=" 0">
+                                                <div class="diskuf-uploader">
+                                                    <span class="wd-fa-add-file-light">
+                                                        <span class="wd-fa-add-file-light-text">
+                                                            <span class="wd-fa-add-file-light-title">
+                                                                <span
+                                                                    class="wd-fa-add-file-light-title-text">{{'TheFileWillAutomaticallyUploadWhenSelected'|l}}</span>
+                                                            </span>
+                                                            <span
+                                                                class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload'|l}}</span>
+                                                        </span>
+                                                    </span>
+                                                    <input class="diskuf-fileUploader wd-test-file-light-inp "
+                                                        type="file" file-reading-single
+                                                        file-single-func="ctrl.update_quotation_mark(params)" size="1"
+                                                        style="width:100%;">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="ctrl._update_value.tab =='education' && ctrl._update_value.childTab =='general'">
+                <form class="form-horizontal " name="updateForm_education_general">
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-6">
+                                <button-select-nl button-select-label="{{'Education'|l}}"
+                                    button-select-data="ctrl.Education"
+                                    id-value="ctrl._update_value.education"
+                                    load-details-func="ctrl.loadEducation_details(params)"
+                                    button-select-func="ctrl.chooseEducation_update(params)"
+                                    button-select-key="title" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button-select-nl button-select-label="{{'Degree'|l}}"
+                                    button-select-data="ctrl.Degree" id-value="ctrl._update_value.degree"
+                                    load-details-func="ctrl.loadDegree_details(params)"
+                                    button-select-func="ctrl.chooseDegree_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button-select-nl button-select-label="{{'Specialized'|l}}"
+                                    button-select-data="ctrl.Specialized"
+                                    id-value="ctrl._update_value.specialized"
+                                    load-details-func="ctrl.loadSpecialized_details(params)"
+                                    button-select-func="ctrl.chooseSpecialized_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <pick-modal-l load-func="ctrl.loadTrainingSchool(params)"
+                                    load-details-func="ctrl.loadDetails_TrainingSchool(params)"
+                                    count-func="ctrl.countTrainingSchool(params)"
+                                    pick-func="ctrl.pickTrainingSchool_update(params)" show-field="title"
+                                    id-value="ctrl._update_value.training_school" sort-field="title"
+                                    num-of-item-per-page="30" label="{{'TrainingSchool'|l}}" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </pick-modal-l>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span
+                                            class="input-group-text">{{'GraduationYear'|l}}</span>
+                                    </div>
+                                    <input
+                                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')"
+                                        type="text" ng-model="ctrl._update_value.graduation_year"
+                                        class="form-control" name="update_graduation_year"
+                                        placeholder="Input graduation year"
+                                        ng-class="{ 'is-invalid': updateForm_education.update_graduation_year.$invalid }"
+                                        required />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <button-select-nl button-select-label="{{'StateManagement'|l}}"
+                                    button-select-data="ctrl.StateManagement"
+                                    id-value="ctrl._update_value.state_management"
+                                    load-details-func="ctrl.loadStateManagement_details(params)"
+                                    button-select-func="ctrl.chooseStateManagement_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button-select-nl button-select-label="{{'PoliticalTheory'|l}}"
+                                    button-select-data="ctrl.PoliticalTheory"
+                                    id-value="ctrl._update_value.political_theory"
+                                    load-details-func="ctrl.loadPoliticalTheory_details(params)"
+                                    button-select-func="ctrl.choosePoliticalTheory_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button-select-nl button-select-label="{{'IT'|l}}"
+                                    button-select-data="ctrl.IT" id-value="ctrl._update_value.it"
+                                    load-details-func="ctrl.loadIT_details(params)"
+                                    button-select-func="ctrl.chooseIT_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </button-select-nl>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <button-select-nl button-select-label="{{'EnglishDegree'|l}}"
+                                    button-select-data="ctrl.DegreeEnglish"
+                                    id-value="ctrl._update_value.degree_english"
+                                    load-details-func="ctrl.loadDegreeEnglish_details(params)"
+                                    button-select-func="ctrl.chooseDegreeEnglish_update(params)"
+                                    button-select-key="title" localization="true" require="true"
+                                    disable="$root.statusValue.get(ctrl._ctrlName,'Employee','update','doing')">
+                                </button-select-nl>
+                            </div>
+                        </div>
+                    </div>
+                    <div style=" display: flex;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -ms-flex-pack: end;
+                    justify-content: flex-end;margin-bottom: 24px;">
+                        <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+                            modal-button-save-objname='Employee'
+                            modal-button-save-actionname="update_education_general"
+                            modal-button-save-invalid="updateForm_education_general.$invalid"
+                            modal-button-save-func="ctrl.update_education_general()">
+                        </modal-button-save>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

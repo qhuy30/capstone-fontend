@@ -1,0 +1,62 @@
+<div class="modal fade" id="modal_ODB_Forward" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Release' |l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="releaseForm">
+                    <div class="col-md-12" style="
+                      border-top: 1px solid #eee;
+                      margin-bottom: 10px;
+                      margin-top: 10px;
+                    "></div>
+                    <div class="col-md-12">
+                        <div class="form-group" style="margin-top: 18px">
+                            <organization-multi  label="{{'ReceivingDepartment'|l}}"
+                                                 id-value="ctrl._update_value.notification_departments"
+                                                 select-func="ctrl.pickNotificationDepartments_release(params)"
+                            >
+                            </organization-multi>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group" style="margin-top: 36px">
+                            <pick-user-multi  label="{{'Receiver'|l}}"
+                                              id-value="ctrl._update_value.notification_recipients"
+                                              pick-func="ctrl.pickNotificationPerson_release(params)"
+                            >
+                            </pick-user-multi>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="
+                      border-top: 1px solid #eee;
+                      margin-bottom: 10px;
+                      margin-top: 10px;
+                    "></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div ng-show="ctrl.odbDetail.status !== 'Released'">
+                    <modal-button-submit modal-button-submit-ctrlname="{{ctrl._ctrlName}}"
+                                         modal-button-submit-label="{{'Update' |l}}"
+                                         modal-button-submit-objname="ODB" modal-button-submit-actionname="updateRelease"
+                                         modal-button-submit-invalid=" !('Office.DispatchOutgoing.EditODB'|odb_department_checkRule:ctrl.odbDetail.department.id)"
+                                         modal-button-submit-func="ctrl.updateRelease()">
+                    </modal-button-submit>
+                </div>
+                <div ng-show="ctrl.odbDetail.status !== 'Released'">
+                    <modal-button-forward modal-button-forward-ctrlname="{{ctrl._ctrlName}}"
+                                          modal-button-forward-label="{{'Release' |l}}"
+                                          modal-button-forward-objname="ODB" modal-button-forward-actionname="release"
+                                          modal-button-forward-func="ctrl.releaseODB()"
+                                          modal-button-forward-invalid="(['Office.DispatchOutgoing.Release']|checkRule) === false"
+                    >
+                    </modal-button-forward>
+                </div>
+                <div>
+                    <modal-button-close></modal-button-close>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

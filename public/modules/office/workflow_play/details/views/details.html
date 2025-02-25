@@ -1,0 +1,978 @@
+<div ng-controller="sign_details_controller as ctrl">
+<my-content>
+  <content-breadcrumb>
+    <breadcrumb items="ctrl.breadcrumb"></breadcrumb>
+  </content-breadcrumb>
+  <content-content>
+    <div class="workflow-play-detail">
+      <wfp-update-modal item="ctrl.Item" update-success-func="ctrl.handleUpdateWFPSuccess()"></wfp-update-modal>
+      <briefcase-Insert-Modal insert-success-func="ctrl.loadDetails()" briefcase-insert-item="ctrl.currentItem" briefcase-reference-type="OutgoingDispatch"></briefcase-Insert-Modal>
+
+      <div ng-include="ctrl._urlInsertModal"></div>
+      <div ng-include="ctrl._urlForwardModal"></div>
+      <div ng-include="ctrl._urlReleaseModal"></div>
+      <!-- Add modal insert dispatch outgoing -->
+      <div ng-include="ctrl._urlInsertModalDispatchOutgoing"></div>
+      <div ng-include="ctrl._urlAdditionalDocumentModal"></div>
+      <section class="pb-3 sign_details_controller" ng-if="ctrl.isLoadSuccess">
+        <div class="card">
+          <div class="card-body row" style="border-left:2px solid #20a8d8">
+            <div class="col-md-12">
+              <div style="width: 100%;margin-top: 5px;">
+                <h5 class="mb-3">
+                    <span>{{ctrl.Item.title}}</span>
+                </h5>
+                <p style="font-size:13px; margin-bottom: 4px;">
+                  <span class="grey-text">{{'Status' | l}}:&nbsp;</span>
+                  <show-status id-value="ctrl.Item.status"></show-status>&nbsp;&nbsp;&nbsp;<span
+                        class="grey-text">{{'DocumentType' | l}}:&nbsp;</span><span class="grey-text">
+                    <get-field-directory id-value="ctrl.Item.document_type" extend="ctrl.DocumentType_Config"
+                                         localization="true"></get-field-directory> </span>&nbsp;&nbsp;/&nbsp;&nbsp;<span
+                        class="grey-text">{{ctrl.Item.flow_info.title[$root.Language.current]}}</span>
+                </p>
+                <p class="grey-text" style="margin-bottom: 6px;">
+                  {{ctrl.transformWritenBy('WrittenBy' | l)}}
+                  <a>
+                    <show-username username="ctrl.Item.username">
+                    </show-username>
+                  </a>,
+                  <time-show time-show-data="ctrl.Item.event[0].time" time-show-type="long">
+                  </time-show>
+                </p>
+              </div>
+              <div>
+
+              </div>
+            </div>
+          </div>
+          <div style="border-top:1px solid #eee;border-left:2px solid #20a8d8"></div>
+
+          <!-- show here -->
+          <div class="card-body row py-3" style="border-left: 2px solid #20a8d8"> 
+            <div class="col-md-12" ng-if="false">
+              <text-area-with-suggestions ng-model="ctrl.comment" style="width: 100%"
+                placeholder="{{'InputNote'|l}} ({{'required'|l}}*)" ></text-area-with-suggestions>
+            </div>
+
+              <div  class="col-md-6" style="border-right: 1px solid #eee; border-bottom: 1px solid #eee;" ng-if="false">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <thead>
+                      <tr>
+                        <td>#</td>
+                        <td>{{'RelatedFile'|l}}</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in ctrl.relatedFiles">
+                        <td>{{$index+1}}</td>
+                        <td>
+                          <attachment-just-show
+                            my-item="item"
+                          ></attachment-just-show>
+                        </td>
+                        <td>
+                          <i
+                            class="fas fa-times text-danger"
+                            ng-click="ctrl.removeRelatedFile(item)"
+                          ></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+
+              <div class="col-md-6"  ng-if="false" ng-show="ctrl.status == 'pending' && ctrl.Item.status!=='Returned'">
+                <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                  <tbody>
+                    <tr>
+                      <td
+                        class="
+                          diskuf-selector
+                          wd-fa-add-file-light-cell wd-fa-add-file-from-main
+                        "
+                        colspan=" 0"
+                      >
+                        <div class="diskuf-uploader">
+                          <span class="wd-fa-add-file-light">
+                            <span class="wd-fa-add-file-light-text">
+                              <span class="wd-fa-add-file-light-title">
+                                <span class="wd-fa-add-file-light-title-text"
+                                  >{{'UploadFile'|l}}</span
+                                >
+                              </span>
+                              <span class="wd-fa-add-file-light-descript"
+                                >{{'DragTheFileHereToUpload'|l}}</span>
+                            </span>
+                          </span>
+                          <input
+                            class="diskuf-fileUploader wd-test-file-light-inp"
+                            type="file"
+                            file-reading="ctrl.relatedFiles"
+                            size="1"
+                            multiple
+                            style="width: 100%"
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            
+            
+            <div class="col-md-12" style="display: flex; margin-top: 14px;">
+              <modal-button-approval-transfer
+                ng-if="false"
+                class="mr-2"
+                modal-button-approval-label="{{'Completed'|l}}"
+                modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+                modal-button-approval-objname="WFP"
+                modal-button-approval-actionname="complete"
+                modal-button-approval-func="ctrl.completeDocument()"
+                modal-button-function-apply="ctrl.function_apply_suggestions"
+               ></modal-button-approval-transfer>
+              <modal-button-approval-transfer
+                class="mr-2"
+                ng-if="ctrl.getNodeType() === 'process' && ctrl.Item.flow.items.signature"
+                modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+                modal-button-approval-objname="WFP"
+                modal-button-approval-actionname="approval"
+                modal-button-approval-func="ctrl.approval(params)"
+                modal-button-approval-invalid="false"
+                modal-button-function-apply="ctrl.function_apply_suggestions"
+              ></modal-button-approval-transfer>
+              <modal-button-approval-transfer
+                class="mr-2"
+                ng-show="ctrl.getNodeType() !== 'process' && ctrl.status == 'pending' && ctrl.Item.status!=='Returned' && ctrl.isSignOther"
+                modal-button-approval-ctrlname="{{ctrl._ctrlName}}"
+                modal-button-approval-objname="WFP"
+                modal-button-approval-actionname="signOther"
+                modal-button-approval-func="ctrl.signOther()"
+                modal-button-approval-invalid="ctrl.isPendingSign()"
+                modal-button-function-apply="ctrl.function_apply_suggestions"
+              ></modal-button-approval-transfer>
+              <modal-button-return-transfer
+                class="mr-2"
+                modal-button-return-ctrlname="{{ctrl._ctrlName}}"
+                ng-if="ctrl.Item.allow_return"
+                modal-button-return-objname="WFP"
+                modal-button-return-actionname="return"
+                modal-button-return-func="ctrl.return(params)"
+                modal-button-function-apply="ctrl.function_apply_suggestions"
+              >
+              </modal-button-return-transfer>
+              <modal-button-reject-transfer 
+                class="mr-2"
+                ng-if="ctrl.Item.allow_assess"
+                modal-button-reject-ctrlname="{{ctrl._ctrlName}}"
+                modal-button-reject-objname="WFP"
+                modal-button-reject-actionname="reject"
+                modal-button-reject-func="ctrl.reject(params)"
+                modal-button-function-apply="ctrl.function_apply_suggestions"
+              />
+              <!-- <button-update
+                ng-if="ctrl.Item.status === 'Returned'"
+                button-update-label="{{'Resubmit'|l}}"
+                button-update-modal="#modal_WFP_Update"
+              ></button-update> -->
+              <div class="form-group row" style="margin-left: 16px;">
+                <button-approval-item
+                  button-approval-item-func="ctrl.prepareInsertDispatchOutgoing(ctrl.Item)"
+                  button-label="{{'Release document'}}"
+                  button-approval-item-modal="#modal_OD_Insert_WFP"
+                  ng-if="ctrl.Item.allow_create_dispatch_out"
+                />
+              </div>
+
+              <div class="form-group row" style="margin-left: 16px;">
+                <button-approval-item
+                  class="mr-2"
+                  ng-if="ctrl.Item.allow_additional_document"
+                  button-approval-item-modal="#modal_WFP_additional_document"
+                  button-approval-item-func="ctrl.prepareAdditional_document()"
+                  button-label="{{'Additional Document'}}"
+                />
+              </div>
+            </div>
+            <div ng-if="ctrl.getNodeType() === 'receiver'" class="col-md-12" style="display: flex; margin-top: 14px;" ng-show="ctrl.status != 'see'">
+              <modal-button-receiver
+                class="mr-2"
+                modal-button-receiver-label="{{'Confirm receipt of the notification'|l}}"
+                modal-button-receiver-ctrlname="{{ctrl._ctrlName}}"
+                modal-button-receiver-objname="WFP"
+                modal-button-receiver-actionname="received"
+                modal-button-receiver-func="ctrl.receivedNotification()"
+              ></modal-button-receiver>
+            </div>
+            <!-- <div class="col-md-12 text-success" ng-show="ctrl.status == 'approved'">
+              {{'SuccessApproval'|l}}
+            </div>
+            <div class="col-md-12 text-success" ng-show="ctrl.status == 'rejected'">
+              {{'SuccessReject'|l}}
+            </div>
+            <div class="col-md-12 text-success" ng-show="ctrl.status == 'returned'">
+              {{'SuccessReturn'|l}}
+            </div>
+            <div class="col-md-12 text-success" ng-show="ctrl.status == 'resubmitted'">
+              {{'SuccessResubmit'|l}}
+            </div>
+            <div class="col-md-12 text-success" ng-show="ctrl.status == 'singed'">
+              {{'SuccessSign'|l}}
+            </div> -->
+          </div>
+          <div class="col-md-12" style="border-top: 1px solid #d2cece;" ng-show="ctrl.status != 'see'"></div>
+
+          <div ng-if="!ctrl.isShowWFPDetails()" class="card-body py-2"
+          style="border-left: 2px solid #20a8d8">
+            <div class="table-responsive">
+              <table class="table table-sm text-center">
+                <thead>
+                  <tr>
+                    <th ng-if="ctrl.Item.document_type!=='exploit_document'" style="border-top: none;">{{'OutgoingDocuments'|l}}</th>
+                    <th ng-if="ctrl.Item.document_type==='exploit_document'" style="border-top: none;">{{'DocumentNeedToBeExploited'|l}}</th>
+                    <th style="border-top: none;">{{'RelatedFile'|l}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="at in ctrl.Item.attachment">
+                    <td ng-if="$index === 0">
+                      <div ng-if="ctrl.Item.archived_documents" ng-repeat="at in ctrl.Item.archived_documents">
+                        <attachment-show attachment-show-item="at" attachment-show-func="ctrl.loadfile(params)"
+                          attachment-show-params="{id:ctrl.Item._id,name:at.name}" attachment-show-service-name="'outgoing_dispatch'"
+                          attachment-show-owner="false">
+                        </attachment-show>
+                      </div>
+                      <div ng-if="ctrl.Item.outgoing_dispatch" ng-repeat="at in ctrl.Item.outgoing_dispatch.outgoing_documents">
+                        <attachment-show attachment-show-item="at" attachment-show-func="ctrl.loadfile(params)"
+                          attachment-show-params="{id:ctrl.Item._id,name:at.name}" attachment-show-service-name="'outgoing_dispatch'"
+                          attachment-show-owner="false">
+                        </attachment-show>
+                      </div>
+                    </td>
+                    <td ng-if="$index === 0">
+                      <div ng-repeat="at in ctrl.mergedRelatedFiles">
+                        <attachment-show attachment-show-item="at" attachment-show-func="ctrl.loadfile(params)"
+                          attachment-show-params="{id:ctrl.Item._id,name:at.name}" attachment-show-service-name="'workflow_play'"
+                          attachment-show-owner="false">
+                        </attachment-show>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div ng-if="ctrl.isShowWFPDetails()">
+            <div class="card-body py-2" style="border-left: 2px solid #20a8d8">
+              <div class="table-responsive">
+                <table class="table table-sm text-center">
+                  <thead>
+                    <tr>
+                      <th style="border-top: none;">{{'FileSigning'|l}}</th>
+                      <th style="border-top: none;">{{'attachments/appendices'|l}}</th>
+                      <th style="border-top: none;">{{'SignHistory'|l}}</th>
+                      <th style="border-top: none;">{{'RelatedFile'|l}}</th>
+                      <th style="border-top: none;" ng-show="ctrl.Item.document_type === 'exploit_document'">{{'DocumentNeedToBeExploited'|l}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="at in ctrl.Item.attachment">
+                      <td>
+                        <attachment-show attachment-show-item="at"
+                          attachment-show-func="ctrl.loadfile(params)"
+                          attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                          attachment-show-service-name="'workflow_play'">
+                        </attachment-show>
+                        <modal-button-sign-a-file-2 modal-button-sign-a-file-ctrlname="{{ctrl._ctrlName}}"
+                          ng-show="ctrl.Item.allow_sign"
+                          modal-button-sign-a-file-name="at.display"
+                          modal-button-sign-a-file-sign="ctrl.sign"
+                          modal-button-sign-a-file-show-button="ctrl.Item.allowSign"
+                          modal-button-sign-a-file-quotation-mark="ctrl.quotationMark"
+                          modal-button-sign-a-file-params="{name:at.name}"
+                          modal-button-sign-a-file-objname="WFP"
+                          modal-button-sign-a-file-actionname="signAFile"
+                          modal-button-sign-a-file-func="ctrl.signAFileAndApproval(params)">
+                        </modal-button-sign-a-file-2>
+                      </td>
+
+                      <td ng-show="$index === 0">
+                        <div class="mt-2" ng-repeat="at in ctrl.Item.appendix">
+                          <attachment-show attachment-show-item="at"
+                            attachment-show-func="ctrl.loadfile(params)" attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                            attachment-show-service-name="'workflow_play'">
+                          </attachment-show>
+                        </div>
+                      </td>
+                      <td >
+                        <ul style="list-style-type: none">
+                          <li ng-repeat="sign in at.sign" style="padding: 3px">
+                            <show-username hide-image="true" with-department="true" username="sign.username">
+                            </show-username>_<span class="grey-text">{{('Signed'|l).toLowerCase()}}</span>
+                          </li>
+                        </ul>
+
+                      </td>
+
+                      <td ng-show="$index === 0">
+                        <div ng-repeat="at in ctrl.mergedRelatedFiles">
+                          <attachment-show attachment-show-item="at" attachment-show-func="ctrl.loadfile(params)"
+                            attachment-show-params="{id:ctrl.Item._id,name:at.name}" attachment-show-service-name="'workflow_play'"
+                            attachment-show-owner="true">
+                          </attachment-show>
+                        </div>
+                      </td>
+
+                      <td ng-show="$index === 0">
+                        <div
+                          ng-show="(ctrl.getNodeType() === 'process' || ctrl.Item.status === 'ExploitedDocument') && ctrl.Item.document_type === 'exploit_document'"
+                          ng-repeat="at in ctrl.Item.archived_documents">
+                          <attachment-show attachment-show-item="at" attachment-show-func="ctrl.loadfile(params)"
+                            attachment-show-params="{id:ctrl.Item._id,name:at.name}" attachment-show-service-name="'workflow_play'">
+                          </attachment-show>
+                        </div>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="
+                border-top: 1px solid #c2cfd6;
+                border-left: 2px solid #20a8d8;
+              "></div>
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;">
+              <div class="col-md-12" style=" margin-top: 10px;"><i
+                  class="fas fa-angle-double-right"></i>&nbsp;<b><i>{{'Workflow'|l}}</i></b></div>
+              <div class="col-md-12" style="
+
+                  margin-bottom: 10px;
+
+                "></div>
+              <div class="col-md-12 pb-4">
+                <div style="
+                    display: flex;
+                    overflow-x: auto;
+                    height: auto;
+                    overflow-y: hidden;
+                  ">
+                  <div style="height: 200px; display: flex" ng-class="{'current-node':ctrl.Item.node===0}">
+
+                    <div style="
+                        height: 200px;
+                        min-width: 210px;
+                        max-width: 250px;
+                        padding: 10px;
+                        border-left: 2px solid #20a8d8;
+                        border-bottom: 2px solid #20a8d8;
+                        border-radius: 5px;
+                        overflow-y: auto;
+                      " class="generic-shadow">
+                      <div style="
+                          text-align: center;
+                          border-bottom: 1px solid #20a8d8;
+                          width: 100%;
+                        ">
+                        <i class="fas fa-file-signature text-primary"></i>
+                        {{'Submitter'|l}}
+                      </div>
+                      <div style="margin-top: 10px;">
+                        {{'Status'|l}}:&nbsp;<span style="color: #20a8d8;"
+                          ng-show="ctrl.Item.node>0">{{'Completed'|l}}</span><span class="text-primary"
+                          ng-show="ctrl.Item.node===0">{{'Processing'|l}}</span>
+                      </div>
+                      <div style="line-height: 26px; margin-top: 5px;">
+                        <i class="fas fa-genderless text-success"></i>
+                        <show-username username="ctrl.Item.username">
+                        </show-username>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="height: 200px; display: flex" ng-repeat="item in ctrl.Item.flow"
+                    ng-class="{'current-node':ctrl.Item.node===($index+1)}">
+                    <div style="text-align: center; width: 80px; height: 200px">
+                      <i class="fas fa-arrow-alt-circle-right fa-3x" style="line-height: 200px; color: #20a8d8"></i>
+                    </div>
+                    <div style="
+                        height: 200px;
+                        max-width: 250px;
+                        padding: 10px;
+                        border-left: 2px solid #20a8d8;
+                        border-bottom: 2px solid #20a8d8;
+                        overflow-y: auto;
+                        border-radius: 5px
+                      " class="generic-shadow">
+                      <div style="
+                          text-align: center;
+                          border-bottom: 1px solid #20a8d8;
+                          width: 100%;
+                        ">
+                        <i class="fas fa-genderless text-primary"></i>&nbsp;{{item.title}}
+                      </div>
+                      <div style="margin-top: 10px;">
+                        <i class="fas fa-signature text-primary"></i>
+                        {{item.type|getFieldL:'key':'title':ctrl.Type}}
+                      </div>
+                      <div style="margin-top: 10px;  font-weight: 700;">
+                        {{'Status'|l}}:&nbsp;
+                        <span style="color: #20a8d8;" ng-show="ctrl.Item.node>($index+1) || ctrl.Item.node === -1">{{'Completed'|l}}</span>
+                        <span class="text-primary" ng-show="ctrl.Item.node===($index+1) && !ctrl.Item.allow_additional_document">{{'Processing'|l}}</span>
+                        <span class="text-primary" ng-show="ctrl.Item.node===($index+1) && ctrl.Item.allow_additional_document">{{'Released'|l}}</span>
+                        <span class="grey-text" ng-show="ctrl.Item.node<($index+1) && ctrl.Item.node !== -1">{{'WaitingForProgressing'|l}}</span>
+                      </div>
+                      <div style="margin-top: 10px;">
+                        <i class="fas fa-clock text-success"></i> {{'NormTime'|l}}:&nbsp;{{item.duration.amount}}&nbsp;<span class="lowercase">({{item.duration.unit|showNormTimeUnit}})</span>
+                      </div>
+                      <div style="margin-top: 10px;">
+                        <i class="fas fa-clock text-success"></i> {{'Processing time'|l}}:&nbsp;<b><time-show ng-if="item.expected_complete_at" time-show-data="item.expected_complete_at" time-show-type="long"></time-show><span ng-if="!item.expected_complete_at">{{'NotYet'|l}}</span></b>
+                        </time-show>
+                      </div>
+                      <div ng-repeat="itemNode in item.items" style="line-height: 20px;margin-top: 10px;">
+                        <i class="fas fa-genderless text-success"></i>
+                        <span ng-show="itemNode.competence">
+                          {{'Competence'|l}}:&nbsp;
+                          <get-field-directory id-value="itemNode.competence" extend="ctrl.Competence_Config"
+                            localization="true"></get-field-directory>-
+                        </span>
+                        <span ng-show="itemNode.role">
+                          {{'Role'|l}}:&nbsp;
+                          <get-field field="title" load-details-func="ctrl.loadRole_details(params)"
+                            id-value="itemNode.role" localization="true"></get-field>-
+                        </span>
+
+                        <get-field field="title" load-details-func="ctrl.loadDepartment_details(params)"
+                          id-value="itemNode.department" localization="true"></get-field>
+                      </div>
+
+                      <div ng-repeat="tf in ctrl.listTransformSign" ng-show="tf.node === ($parent.$index + 1)">
+                        <span>
+                          <show-username username="tf.username">
+                          </show-username>
+                          {{'transformSign'|l}}
+                          <show-username username="tf.receiver">
+                          </show-username>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="padding-left: 16px; color: red">
+                <span style="font-weight: bolder">Hướng dẫn:</span>
+                Vui lòng in văn bản trình ký sau khi phê duyệt -> Đóng mộc -> Scan -> Upload lại tệp trình ký vào hệ thống ở mục File Văn bản đi</div>
+            </div>
+
+            <div style="border-top: 1px solid #c2cfd6;border-left: 2px solid #20a8d8;"></div>
+
+            <!-- SHOW MODAL CREATED DISPATCH OUGOING -->
+            <!-- <div class="card-body row odb-process" style="border-left: 2px solid #20a8d8;">
+
+              <div class="form-group row" style="margin-left: 16px;">
+                <button-approval-item
+                  button-approval-item-func="ctrl.prepareInsertDispatchOutgoing(ctrl.Item)"
+                  button-label="{{'Processing document'}}"
+                  button-approval-item-modal="#modal_OD_Insert_WFP"
+                  ng-if="ctrl.Item.allow_create_dispatch_out"
+                />
+              </div>
+
+              <div class="form-group row" style="margin-left: 16px;">
+                <button-approval-item
+                  class="mr-2"
+                  ng-if="ctrl.Item.allow_additional_document"
+                  button-approval-item-modal="#modal_WFP_additional_document"
+                  button-approval-item-func="ctrl.prepareAdditional_document()"
+                  button-label="{{'Additional Document'}}"
+              />
+              </div>
+            </div> -->
+
+
+            <!-- ODB Form -->
+            <!-- <div class="card-body row odb-process" style="border-left: 2px solid #20a8d8;">
+              <form class="form-horizontal" name="insertForm" style="margin-left: 16px;">
+
+                <div class="card" style="box-shadow: none">
+
+                  <div class="card-body row">
+                    <div class="title-odb col-md-12">
+                      {{'SaveDispatchBook'|l}}
+                    </div>
+                    <div class="form-group col-md-6" style="margin-top: 12px">
+                      <div class="input-group-new">
+                        <div class="input-group-prepend-new">
+                          <span class="input-group-text-new">{{'NumberCodeDocument'|l}}</span>
+                        </div>
+                        <input
+                                type="text"
+                                ng-model="ctrl._insert_value.code"
+                                class="form-control"
+                                name="insert_code"
+                                placeholder="Input code"
+                                ng-class="{ 'is-invalid': insertForm.insert_code.$invalid }"
+                                style="font-weight: bold; background-color: #eee;"
+                                disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6" style="margin-top: 12px">
+                      <div class="input-group-new">
+                        <div class="input-group-prepend-new">
+                          <span class="input-group-text-new">{{'OutgoingReferenceNumber'|l}}</span>
+                        </div>
+                        <input
+                                type="text"
+                                ng-model="ctrl._insert_value.orderNumber"
+                                class="form-control"
+                                name="insert_code"
+                                placeholder="Input code"
+                                ng-class="{ 'is-invalid': insertForm.insert_code.$invalid }"
+                                style="font-weight: bold; background-color: #eee;"
+                                disabled
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <pick-modal-directory
+                        extend="ctrl.OutgoingDispatchBook_Config"
+                        pick-func="ctrl.pickODB_insert(params)"
+                        id-value="ctrl._insert_value.outgoing_dispatch_book"
+                        label="{{'OutgoingDispatchBook'|l}}"
+                        disable="ctrl.isOutgoingDispatchReleased()"
+                      ></pick-modal-directory>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <div class="input-group-new">
+                        <div class="input-group-prepend-new">
+                          <span class="input-group-text-new">{{'Workflow'|l}}</span>
+                        </div>
+                        <input
+                          type="text"
+                          ng-model="ctrl.Item.flow_info.title[$root.Language.current]"
+                          class="form-control"
+                          name="insert_workflow"
+                          placeholder="{{ctrl.Item.flow_info.title[$root.Language.current]}}"
+                          ng-class="{ 'is-invalid': insertForm.insert_workflow.$invalid }"
+                          style="font-weight: bold; background-color: #eee;"
+                          disabled
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                      <date
+                              id-value="ctrl._insert_value.document_date"
+                              func="ctrl.chooseDocumentDate_insert(params)"
+                              label="{{'DateDocument'|l}}"
+                              required="true"
+                              disable="ctrl.isOutgoingDispatchReleased()"
+                      ></date>
+                    </div>
+
+                    <div class="form-group col-md-6" style="pointer-events: none;">
+                      <pick-modal-directory
+                        extend="ctrl.DocumentType_Config"
+                        pick-func="ctrl.pickDocumentType_insert(params)"
+                        id-value="ctrl.Item.document_type"
+                        label="{{'TypeName'|l}}"
+                      ></pick-modal-directory>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="input-label">{{'OutgoingDocuments'|l}}</div>
+                      <div class="row" style="border: 2px solid #f0f2f3; border-radius: 4px">
+                        <div class="col-md-6">
+                          <div ng-if="ctrl._insert_value.files.length ==0" class="no-data">
+                            {{'NoAttachment' | l}}
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table table-sm">
+                              <tbody>
+                              <tr ng-repeat="item in ctrl._insert_value.outgoing_documents">
+                                <td>{{$index + 1}}</td>
+                                <td>
+                                  <attachment-just-show my-item="item"></attachment-just-show>
+                                </td>
+                                <td ng-if="!ctrl.isOutgoingDispatchReleased()" ><i class="fas fa-times text-danger"
+                                      ng-click="ctrl.removeOutgoingDocuments_insert(item)"></i></td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6" ng-if="!ctrl.isOutgoingDispatchReleased()">
+                          <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                            <tbody>
+                            <tr>
+                              <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                  colspan=" 0">
+                                <div class="diskuf-uploader">
+                                                  <span class="wd-fa-add-file-light">
+                                                      <span class="wd-fa-add-file-light-text">
+                                                          <span class="wd-fa-add-file-light-title">
+                                                              <span
+                                                                      class="wd-fa-add-file-light-title-text">{{'UploadFile' | l}}</span>
+                                                          </span>
+                                                          <span
+                                                                  class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload' | l}}</span>
+                                                      </span>
+                                                  </span>
+                                  <input class="diskuf-fileUploader wd-test-file-light-inp " type="file"
+                                        file-reading="ctrl._insert_value.outgoing_documents" size="1" multiple
+                                        style="width:100%;">
+                                </div>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="input-label">{{'AttachDocuments'|l}}</div>
+                      <div class="row" style="border: 2px solid #f0f2f3; border-radius: 4px">
+                        <div class="col-md-6">
+                          <div ng-if="ctrl._insert_value.attach_documents.length ==0" class="no-data">
+                            {{'NoAttachment' | l}}
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table table-sm">
+
+                              <tbody>
+                              <tr ng-repeat="item in ctrl._insert_value.attach_documents">
+                                <td>{{$index + 1}}</td>
+                                <td>
+                                  <attachment-just-show my-item="item"></attachment-just-show>
+                                </td>
+                                <td ng-if="!ctrl.isOutgoingDispatchReleased()"><i class="fas fa-times text-danger"
+                                      ng-click="ctrl.removeAttachDocuments_insert(item)"></i></td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6" ng-if="!ctrl.isOutgoingDispatchReleased()">
+                          <table class="diskuf-selector-table wd-fa-add-file-light-table">
+                            <tbody>
+                            <tr>
+                              <td class="diskuf-selector wd-fa-add-file-light-cell wd-fa-add-file-from-main"
+                                  colspan=" 0">
+                                <div class="diskuf-uploader">
+                                                  <span class="wd-fa-add-file-light">
+                                                      <span class="wd-fa-add-file-light-text">
+                                                          <span class="wd-fa-add-file-light-title">
+                                                              <span
+                                                                      class="wd-fa-add-file-light-title-text">{{'UploadFile' | l}}</span>
+                                                          </span>
+                                                          <span
+                                                                  class="wd-fa-add-file-light-descript">{{'DragTheFileHereToUpload' | l}}</span>
+                                                      </span>
+                                                  </span>
+                                  <input class="diskuf-fileUploader wd-test-file-light-inp " type="file"
+                                        file-reading="ctrl._insert_value.attach_documents" size="1" multiple
+                                        style="width:100%;">
+                                </div>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group" style="margin-top: 18px">
+                        <div class="input-label">{{'TheSigner'|l}}</div>
+                        <pick-user-multi pick-func=""
+                                        id-value="ctrl._insert_value.signers"
+                                        require="true" disable="ctrl.isOutgoingDispatchReleased()"></pick-user-multi>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6" style="pointer-events: none;">
+                      <organization disable="ctrl.isOutgoingDispatchReleased()" label="{{'SubmissionDepartment'|l}}" id-value="ctrl.Item.department"
+                                    select-func="">
+                      </organization>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <div class="input-label">
+                          {{'ReceivingDocumentDepartment' | l}}
+                      </div>
+                      <pick-user-department-multi
+                              disable="ctrl.isOutgoingDispatchReleased()"
+                              pick-func="ctrl.pickUserAndDepartment_insert(params)"
+                              id-value="ctrl._insert_value.userAndDepartment">
+                      </pick-user-department-multi>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <div class="input-label">
+                        {{'DocumentQuantity' | l}}
+                      </div>
+                      <input
+                              type="number"
+                              ng-model="ctrl._insert_value.document_quantity"
+                              class="form-control"
+                              name="insert_quantity"
+                              placeholder="{{'Input quantity'|l}}"
+                              ng-class="{'is-invalid': insertForm.insert_quantity.$invalid}"
+                              required
+                              ng-disabled="ctrl.isOutgoingDispatchReleased()"
+                      />
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                      <date
+                              id-value="ctrl._insert_value.transfer_date"
+                              func="ctrl.chooseTransferDate_insert(params)"
+                              label="{{'TransferDate'|l}}"
+                              required="true"
+                              disable="ctrl.isOutgoingDispatchReleased()"
+                      ></date>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                      <div class="input-label">{{'Note'|l}}</div>
+                      <input
+                              type="text"
+                              name="insert_note"
+                              ng-model="ctrl._insert_value.note"
+                              class="form-control"
+                              ng-class="{'is-invalid': insertForm.insert_note.$invalid}"
+                              ng-disabled="ctrl.isOutgoingDispatchReleased()"
+                              >
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                      <date id-value="ctrl._insert_value.expiration_date"
+                            func="ctrl.chooseExpirationDate_insert(params)"
+                            label="{{'ExpirationDate'|l}}" required="true" disable="ctrl.isOutgoingDispatchReleased()"></date>
+                      <div class="errorMsg" ng-show="ctrl.expirationDate_ErrorMsg && ctrl.Item.status !== 'SaveODB'">{{ ctrl.expirationDate_ErrorMsg }}</div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <pick-modal-directory extend="ctrl.IncommingDispatchPririoty_Config"
+                                            pick-func="ctrl.choosePriority_insert(params)"
+                                            id-value="ctrl._insert_value.priority"
+                                            label="{{'EmergencyLevel'|l}}"
+                                            disable="ctrl.isOutgoingDispatchReleased()"
+                                            
+                                            ></pick-modal-directory>
+                    </div>
+
+                    <div class="col-md-12 input-label">{{'Excerpt'|l}}</div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <text-area-with-suggestions id="insertODB_excerpt" 
+                         type="text" 
+                        ng-model="ctrl._insert_value.excerpt"
+                        ng-disabled="ctrl.isOutgoingDispatchReleased()"
+                        ></text-area-with-suggestions>
+                      </div>
+                    </div>
+                    <div class="col-md-12" style="display: flex;width: 100%; flex-direction: row-reverse;gap: 8px" ng-if="!ctrl.isOutgoingDispatchReleased()">
+                      <button type="button" modal-toggle="#modal_ODB_Release_Confirm"
+                              ng-click="ctrlChild.prepareDeleteProject()" class="btn btn-primary"
+                              ng-disabled="{{!(['Office.DispatchOutgoing.Release']|checkRule) || !ctrl.Item.outgoing_dispatch}}">
+                        {{'Release'|l}}
+                      </button>
+
+                      <modal-button-save modal-button-save-ctrlname="{{ctrl._ctrlName}}" modal-button-save-objname="ODB"
+                        modal-button-save-actionname="insert" modal-button-save-invalid="insertForm.$invalid || ctrl.expirationDate_ErrorMsg || ctrl._insert_value.odb_book===''"
+                        modal-button-save-func="ctrl.insertODB()">
+                      </modal-button-save>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div> -->
+            <!-- ODB Form -->
+            
+            <div ng-if="ctrl.archiveProfileCompleted()" class="" style="border-left: 2px solid #20a8d8; padding: 6px;" >
+              <div class="form-group col-md-12">
+                <div class="input-group-new">
+                    <pick-modal-advance-multi
+                            label="{{'RelatedInformation'|l}}" require="false"
+                            disable="$root.statusValue.get(ctrl._ctrlName,'waiting_storage','insert','doing')"
+                            load-data-func="ctrl.searchReference(params)"
+                            id-value="ctrl.ODBreferences"
+                            load-details-func="ctrl.loadDetailsReference(params)"
+                            show-field = "code"
+                            localized="false"
+                            pick-func="ctrl.chooseReference(params)"
+                            enable-insert-new-item="false">
+                    </pick-modal-advance-multi>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <div style="font-weight: bold; font-style: italic;">{{'Task'|l}}</div>
+                <table class="table table-sm table-hover">
+                  <thead style="color: #9e9e9e">
+                  <tr>
+                    <td style="font-weight: 600;vertical-align: middle;width: 160px">{{'Code'|l}}</td>
+                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                      {{'Type'|l}}
+                    </td>
+                  </tr>
+                  </thead>
+                    <tbody id="taskList">
+                        <tr ng-repeat="item in ctrl.ODBreferences">
+                            <td style="width: 140px;">
+                                <span class="text-dark">{{item.code}}</span>
+                            </td>
+                            <td
+                                style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                                <span class="text-dark">{{item.object|l }}</span>
+                            </td>                         
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+              <div class="col-md-12" style="display: flex;width: 100%; flex-direction: row-reverse;gap: 8px" >
+                <button type="button"
+                        ng-click="ctrl.updateReferencesODB_service()" class="btn btn-primary"
+                        ng-disabled="{{!ctrl.Item.outgoing_dispatch}}">
+                  {{'ArchiveProfileComplete'|l}}
+                </button>
+              </div>
+            </div>
+            <div id="" style="border-left: 2px solid #20a8d8; padding: 15px;margin-top: -5px;" ng-if="ctrl.parentTaskDetails">
+              <div class="table-responsive">
+                <div style="font-weight: bold; font-style: italic;">{{'Task'|l}}</div>
+                <table class="table table-sm table-hover">
+                  <thead style="color: #9e9e9e">
+                  <tr>
+                    <td style="font-weight: 600;vertical-align: middle;width: 160px">{{'Title'|l}}</td>
+                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                      {{'Creator'|l}}
+                    </td>
+                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                      {{'FromDate'|l}}
+                    </td>
+                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 160px;">
+                      {{'ToDate'|l}}
+                    </td>
+                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                      {{'PriorityLevel'|l}}
+                    </td>
+                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                      {{'Progress'|l}}
+                    </td>
+                    <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                      <div class="title">{{'Status'|l}}</div>
+                    </td>
+                  </tr>
+                  </thead>
+                  <tbody id="taskList">
+                      <tr>
+                          <td style="width: 140px;">
+                              <a class="text-dark" href="/task-details?code={{ctrl.parentTaskDetails.code}}">{{ctrl.parentTaskDetails.title}}</a>
+                              <div class="showfile-bar" ng-if="ctrl.parentTaskDetails.attachment.length>0">
+                                  <attachment-show ng-repeat="at in ctrl.parentTaskDetails.attachment"
+                                      attachment-show-item="at"
+                                      attachment-show-func="ctrl.loadfile(params)"
+                                      attachment-show-params="{id:item._id,name:at.name}"
+                                      attachment-show-service-name="'task'">
+                                  </attachment-show>
+                              </div>
+                          </td>
+                          <td
+                              style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                              <show-username username="ctrl.parentTaskDetails.username" just-name="true">
+                              </show-username>
+                          </td>
+                          <td
+                              style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                              <time-show2 time-show-data="ctrl.parentTaskDetails.from_date" time-show-type="just_date">
+                              </time-show2>
+                          </td>
+                          <td
+                              style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                              <time-show2 time-show-data="ctrl.parentTaskDetails.to_date" time-show-type="just_date">
+                              </time-show2>
+                          </td>
+                          <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                              <show-priority id-value="ctrl.parentTaskDetails.priority">{{priority}}</show-priority>
+                          </td>
+                          <td style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                              <show-progress id-value="ctrl.parentTaskDetails.progress"></show-progress>
+                          </td>
+                          <td
+                              style="font-weight: 600;vertical-align: middle;text-align: center;width: 120px;">
+                              <show-status id-value="ctrl.parentTaskDetails.status"></show-status>
+                          </td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--  -->
+
+
+            <div style="
+                border-top: 1px solid #c2cfd6;
+                border-left: 2px solid #20a8d8;
+              "></div>
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding-top:8px">
+              <div class="col-md-12" style="font-size: 12px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 10px;">
+                {{'Events'|l}}
+              </div>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                      <thead style="color: #9e9e9e">
+                          <tr>
+                          <th class="hour">{{'Time'|l}}</th>
+                          <th>{{'Creator'|l}}</th>
+                          <th>{{'Action'|l}}</th>
+                          <th>{{'Comment'|l}}</th>
+                          </tr>
+                    <tbody>
+                      <tr ng-repeat="item in ctrl.Item.event|orderBy:'-time'">
+                        <td class="hour">
+                          <small><span class="grey-text float-left"><i class="fa fa-clock" aria-hidden="true"></i>
+                              <time-show2 time-show-type="short" time-show-data="item.time">
+                              </time-show2> </span></small>
+                        </td>
+                        <td>
+                          <show-username hide-image="true" username="item.username">
+                          </show-username>
+                        </td>
+                        <td>{{item.action|l}} {{item.action === 'transformSign'? item.receiver: ''}}</td>
+                        <td>{{item.comment}} <br>
+                          <attachment-show ng-if="item.relatedfile.length > 0" ng-repeat="at in item.relatedfile"
+                            attachment-show-item="at"
+                            attachment-show-func="ctrl.loadfile(params)"
+                            attachment-show-params="{id:ctrl.Item._id,name:at.name}"
+                            attachment-show-service-name="'task'">
+                          </attachment-show>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </content-content>
+</my-content>
+</div>

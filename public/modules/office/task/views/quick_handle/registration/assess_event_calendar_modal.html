@@ -1,0 +1,244 @@
+<div class="modal fade" id="modal_EventCalendarRegistration_Assess" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <modal-header modal-header-title="{{'ProcessRegistration'|l }}"></modal-header>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+            <table class="col-md-12">
+              <tr>
+                <td class="font-weight-bolder">
+                  {{'Title'|l}}
+                </td>
+                <td>
+                  {{ ctrlChild._assess_registration_value.title }}
+                </td>
+                <td class="font-weight-bolder"> {{'RegistrationCode'|l}} </td>
+                <td> {{ctrlChild._assess_registration_value.code}} </td>
+              </tr>
+              <tr>
+                <td class="font-weight-bolder">{{'Type'|l}}</td>
+                <td>{{ ctrlChild._assess_registration_value.type|l }}</td>
+                <td class="font-weight-bolder">{{'LevelEvent'|l}}</td>
+                <td>{{ ctrlChild._assess_registration_value.level|l }}</td>
+              </tr>
+
+              <tr>
+                <td class="font-weight-bolder">{{'Start date'|l}}</td>
+                <td>
+                  <time-show time-show-type="long-no-second" time-show-data="ctrlChild._assess_registration_value.start_date" />
+                </td>
+                <td class="font-weight-bolder">{{'End date'|l}}</td>
+                <td>
+                  <time-show time-show-type="long-no-second" time-show-data="ctrlChild._assess_registration_value.start_date" />
+                </td>
+              </tr>
+              <tr>
+
+                <td class="font-weight-bolder">{{'HostPerson'|l}}</td>
+                <td colspan="3">
+                  <show-username-onlyname username="ctrlChild._assess_registration_value.main_person" hide-image="true" />
+                </td>
+              </tr>
+              <tr>
+                <td class="font-weight-bolder">{{'Participant'|l}}</td>
+                <td colspan="3">
+                  <span ng-repeat="n in ctrlChild._assess_registration_value.participants">
+                    <show-username-onlyname
+                      hide-image="true"
+                      username="n"
+                    ></show-username-onlyname><span ng-show="!$last">,&nbsp;</span>
+                  </span>
+                </td>
+              </tr>
+
+              <tr ng-if="ctrlChild._assess_registration_value.room_booking_id">
+                <td class="font-weight-bolder">{{'Room'|l}}</td>
+                <td colspan="3">
+                  <span ng-if="!ctrlChild._assess_registration_value.showRoom">
+                    {{ "PendingApprovalEVC" | l }}
+                  </span>
+
+                  <get-field-directory 
+                    ng-if="ctrlChild._assess_registration_value.showRoom"
+                    id-value="ctrlChild._assess_registration_value.meeting_room_registration.room"
+                    extend="ctrlChild.room_config" 
+                    localization="true"
+                  />
+                </td>
+              </tr>
+
+              <tr ng-if="ctrlChild._assess_registration_value.vehicle_booking_id">
+                <td class="font-weight-bolder">{{'Car'|l}}</td>
+                <td colspan="3">
+                  <span ng-if="!ctrlChild._assess_registration_value.showCar">
+                    {{ "PendingApprovalEVC" | l }}
+                  </span>
+                  <get-field-directory 
+                    ng-if="ctrlChild._assess_registration_value.showCar && !ctrlChild._assess_registration_value.vehicle_registration.assgin_card"
+                    id-value="ctrlChild._assess_registration_value.vehicle_registration.car"
+                    extend="ctrlChild.vehicle_list_config" 
+                    localization="true"
+                  />
+
+                  <get-field-directory 
+                    ng-if="ctrlChild._assess_registration_value.showCar && ctrlChild._assess_registration_value.vehicle_registration.assgin_card"
+                    id-value="ctrlChild._assess_registration_value.vehicle_registration.card"
+                    extend="ctrlChild.card_list_config" 
+                    localization="true"
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td class="font-weight-bolder">{{'ParticipateDepartments'|l}}</td>
+                <td colspan="3">
+                  <span ng-repeat="department in ctrlChild._assess_registration_value.departments">
+                    <show-department 
+                      department="department"
+                    ></show-department><span ng-show="!$last">,&nbsp;</span>
+                  </span>
+                </td>
+              </tr>
+              <tr ng-if="ctrlChild._assess_registration_value.type === 'Other'">
+                <td class="font-weight-bolder">{{'Note'|l}}</td>
+                <td colspan="3">
+                  <span>
+                    {{ ctrlChild._assess_registration_value.other_info}}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="font-weight-bolder">{{'Content'|l}}</td>
+                <td colspan="3">{{ctrlChild._assess_registration_value.content}}</td>
+              </tr>
+              <tr>
+                <td class="font-weight-bolder">{{'Attachment'|l}}</td>
+                <td colspan="3">
+                  <attachment-show ng-repeat="at in ctrlChild._assess_registration_value.attachments" attachment-show-item="at"
+                    attachment-show-func="ctrlChild.loadfileEventCalendar(params)"
+                    attachment-show-params="{id:ctrlChild._assess_registration_value._id, code:ctrlChild._assess_registration_value.code, name:at.name}"
+                    attachment-show-service-name="'car_management'"></attachment-show>
+                  <span ng-if="ctrlChild._assess_registration_value.attachments.length ==0" class="no-data">
+                    {{'NoData'|l}}
+                  </span>
+                </td>
+              </tr>
+            </table>
+
+
+          </div>
+        </div>
+        <form class="form-horizontal" name="assessForm">
+          <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding: 10px;">
+              <div class="col-md-12">
+                <div class="input-group-new">
+                  <div class="input-group-prepend-new">
+                    <span  >{{'AccessNote'|l}}</span>
+                    <span class="require-sympton" ng-show="ctrlChild._assess_registration_value.note_required">*</span>
+                  </div>
+                  <div class="form-group">
+                    <text-area-with-suggestions-2
+                      ng-model="ctrlChild._assess_registration_value.note"
+                      ng-required="ctrlChild._assess_registration_value.note_required"
+                      placeholder="{{ctrlChild._assess_registration_value.note_placeholder}}"
+                      function-apply="ctrlChild.function_apply_suggestions_event_calendar"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer" ng-switch="ctrlChild._assess_registration_value.action">
+        <modal-button-approval
+          ng-switch-when="approve_department"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="EventCalendar"
+          modal-button-approval-actionname="approve_department"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_department_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureApprovalThisRegistration'}}"
+          modal-button-approval-label="{{'Approval'|l}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_department"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="EventCalendar"
+          modal-button-reject-actionname="reject_department"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_department_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_host"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="EventCalendar"
+          modal-button-approval-actionname="approve_host"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_host_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureApprovalThisRegistration'}}"
+          modal-button-approval-label="{{'Approval'|l}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_host"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="EventCalendar"
+          modal-button-reject-actionname="reject_host"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_host_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureRejectThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_recall_department"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="EventCalendar"
+          modal-button-approval-actionname="approve_recall_department"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_recall_department_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureApprovalRecallThisRegistration'}}"
+          modal-button-approval-label="{{'ApproveRecall'|l}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_recall_department"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="EventCalendar"
+          modal-button-reject-actionname="reject_recall_department"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_recall_department_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureRejectRecallThisRegistration'}}"
+        />
+
+        <modal-button-approval
+          ng-switch-when="approve_recall_host"
+          modal-button-approval-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-approval-objname="EventCalendar"
+          modal-button-approval-actionname="approve_recall_host"
+          modal-button-approval-invalid="assessForm.$invalid"
+          modal-button-approval-func="ctrlChild.approve_recall_host_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureApprovalRecallThisRegistration'}}"
+          modal-button-approval-label="{{'ApproveRecall'|l}}"
+        />
+
+        <modal-button-reject
+          ng-switch-when="reject_recall_host"
+          modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+          modal-button-reject-objname="EventCalendar"
+          modal-button-reject-actionname="reject_recall_host"
+          modal-button-reject-invalid="assessForm.$invalid"
+          modal-button-reject-func="ctrlChild.reject_recall_host_event_calendar()"
+          modal-button-confirm-text="{{'AreYouSureRejectRecallThisRegistration'}}"
+        />
+
+        <modal-button-close></modal-button-close>
+    </div>
+  </div>
+</div>

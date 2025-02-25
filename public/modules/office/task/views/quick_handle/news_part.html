@@ -1,0 +1,142 @@
+<div class="task-part" 
+ng-show="
+[
+    'Office.Notify.ApprovalLevel_1',
+    'Office.Notify.ApproveExternal',
+    'Office.Notify.ApprovalLevel_2'
+]|checkRule"
+>
+    <div class="title" id="headingNews">
+        <div style="display: inline-block;" class="label" ng-click="ctrlChild.toogleCollapseNews()" class="btn btn-link"
+            data-toggle="collapse" data-target="#collapseNews" aria-expanded="true" aria-controls="collapseNews"
+            style="font-style: bold;">
+            <i class="fas fa-angle-down" ng-show="ctrlChild.collapseNews"></i><i class="fas fa-angle-right"
+                ng-show="!ctrlChild.collapseNews"></i>&nbsp;&nbsp;<label>{{'Newsletter'|l}}&nbsp;(<span>{{ctrlChild.totalItems_news}}</span>)</label>&nbsp;&nbsp;
+        </div>
+        <div style="display: inline-block;" ng-hide="ctrlChild.collapseNews === false">
+            <span class="overdue">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_needtohandle_news"
+                    ng-change="ctrlChild.refreshData_document()" />&nbsp;{{'NeedToHandle'|l}}
+            </span>&nbsp;&nbsp;
+            <span class="gonnalate">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_gonnalate_news"
+                    ng-change="ctrlChild.refreshData_document()" />&nbsp;{{'GonnaLate'|l}}
+            </span>
+        </div>
+    </div>
+    <div id="collapseNews" class="collapse" ng-class="{'show':ctrlChild.collapseNews}" aria-labelledby="headingNews">
+        <div class="the-content">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover" ng-class="{'no-data':ctrlChild.news.length ===0}">
+                    <thead>
+                        <tr>
+                            <td style="font-weight: 600;vertical-align: middle; width: 30px;text-align: center;">#</td>
+                            <td style="font-weight: 600;vertical-align: middle; width: 110px;">{{'Created date' | l}}
+                            </td>
+                            <td style="font-weight: 600;vertical-align: middle; width: 220px; text-align: center;">{{'Title' | l}}</td>
+                            <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 140px;">
+                                {{'Creator' | l}}</td>
+                            <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 140px;">
+                                {{'Scope' | l}}</td>
+                            <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 140px;">
+                                {{'Type' | l}}</td>
+                            <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 140px;">
+                                {{'Status' | l}}</td>
+                            <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 140px;"></td>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrlChild.news track by $index">
+                            <td style="font-weight: 600;vertical-align: middle; width: 30px;text-align: center;">
+                                {{$index+1}}</td>
+                            <td style="font-weight: 600;vertical-align: middle;  width: 110px; text-wrap: nowrap; text-align: center;">
+                                <small>
+                                    <span class="grey-text float-left">
+                                        <i class="fa fa-clock" aria-hidden="true"></i>
+                                        <time-show2 time-show-data="item.event[0].time"
+                                            time-show-type="long"></time-show2>
+                                    </span>
+                                </small>
+                            </td>
+                            <td class="auto-width" style="text-align: center;">
+                                <a class="text-dark" link-details link-details-display="{{item.title}}"
+                                    link-details-url="/notify-details?code={{item.code}}"
+                                    link-details-route="notify-details">{{item.title}}</a>
+                                <div class="showfile-bar" ng-if="item.attachments.length>0">
+                                    <attachment-show ng-repeat="at in item.attachments" attachment-show-item="at"
+                                        attachment-show-func="ctrlChild.loadfile_news(params)"
+                                        attachment-show-params="{id:item._id, code:item.code, name:at.name}"
+                                        attachment-show-service-name="'notify'"></attachment-show>
+                                </div>
+                            </td>
+                            <td style="vertical-align: middle; width: 100px;text-align: center;">
+                                <show-username-onlyname hide-image="true" username="item.username"></show-username-onlyname>
+                            </td>
+                            <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 90px;">
+                                {{item.scope|l}}
+                            </td>
+                            <td style="font-weight: 600;vertical-align: middle;text-align: center; width: 90px;">
+                                {{item.group|l}}
+                            </td>
+                            <td style="vertical-align: middle;text-align: center; width: 160px;">
+                                <show-status id-value="item.status_to_show === 'Pending' ? 'CreatedNotify' : (item.status_to_show === 'PendingRecalled' ? 'RegisteredRecall' : item.status_to_show)"></show-status>
+                                <br>
+                                <span style="font-size: 0.7rem; color: grey;text-wrap: wrap;">
+                                  {{'by' |l}}        
+                                  <show-username-onlyname hide-image="true" username="item.event[item.event.length-1].username"></show-username-onlyname>
+                                </span>
+                                <div ng-show="item.status == 'Rejected'">Lý do: {{item.event[item.event.length - 1].reason}}
+                                </div>
+                            </td>
+                            <td style="font-weight: 600;vertical-align: middle; width: 200px;">
+                                <button-approval-item
+                                    button-approval-item-modal="#notify_edit_modal"
+                                    button-approval-item-func="ctrlChild.prepareEdit_news(params,'approve')"
+                                    button-approval-item-params="item"
+                                    button-label="{{'Approval'}}"
+                                    ng-if="item.allowApproveDepartment"
+                                />
+                                <button-approval-item
+                                    ng-if="item.allowApprove"
+                                    button-approval-item-modal="#notify_approve_modal"
+                                    button-approval-item-func="ctrlChild.prepareApprove_news(params)"
+                                    button-approval-item-params="item"
+                                    button-label="{{'Approval'}}" />
+                                <button-reject-item
+                                    ng-if="item.allowApprove || item.allowApproveDepartment"
+                                    button-reject-item-modal="#notify_approve_modal"
+                                    button-reject-item-func="ctrlChild.prepareRecall_news(params)"
+                                    button-reject-item-params="item"
+                                    button-label="{{'Reject'}}"
+                                />
+                                <button-approval-item 
+                                    ng-if="item.allowApprove_recall"
+                                    button-approval-item-modal="#notify_approve_modal"
+                                    button-approval-item-func="ctrlChild.prepareApprove_news(params)"
+                                    button-approval-item-params="item"
+                                    button-label="{{'ApproveRecall'}}">
+                                </button-approval-item>
+                                <button-reject-item
+                                    ng-if="item.allowApprove_recall"
+                                    button-reject-item-modal="#notify_approve_modal"
+                                    button-reject-item-func="ctrlChild.prepareRecall_news(params)" 
+                                    button-reject-item-params="item"
+                                    button-label="{{'RejectRecall'}}" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div ng-if="ctrlChild.news.length ==0" class="no-data">
+                {{'NoData'|l}}
+            </div>
+            <pagination ng-show="ctrlChild.totalItems_news>0" pagination-ctrlname="{{ctrlChild._ctrlName}}"
+                pagination-objname="News" pagination-actionname="count"
+                pagination-currentpage="ctrlChild.currentPage_news" pagination-noi="ctrlChild.numOfItemPerPage"
+                pagination-total="ctrlChild.totalItems_news" pagination-func="ctrlChild.load_news(params)">
+            </pagination>
+        </div>
+    </div>
+</div>

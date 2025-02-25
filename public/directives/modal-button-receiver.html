@@ -1,0 +1,63 @@
+<div>
+    <my-async async-status-label="'Approving...'" async-ctrlname="{{modalButtonReceiverCtrlname}}"
+    async-objname="{{modalButtonReceiverObjname}}"
+    async-actionname="{{modalButtonReceiverActionname}}">
+    <async-default>
+        <button class="btn btn-success" type="button"
+            ng-class='{"btn-sm":modalButtonReceiverType==="small"}'
+            ng-disabled="modalButtonReceiverInvalid||$root.statusValue.get(modalButtonReceiverCtrlname,modalButtonReceiverObjname,modalButtonReceiverActionname,'doing')"
+            
+            modal-toggle="#{{ctrl._ctrlName}}"
+            >
+            <i class="fas fa-check"></i>&nbsp;{{modalButtonReceiverLabel ?modalButtonReceiverLabel
+            :('Approval'|l)}}</button>
+    </async-default>
+    <async-doing>
+        <div class="sk-wave">
+            <div class="sk-rect sk-rect1"></div>
+            <div class="sk-rect sk-rect2"></div>
+            <div class="sk-rect sk-rect3"></div>
+            <div class="sk-rect sk-rect4"></div>
+            <div class="sk-rect sk-rect5"></div>
+        </div> {{loadingLabel ||'Approving...'}}
+    </async-doing>
+    <async-success>
+        <span class="btn" style="color: #4dbd74;"
+            ng-class='{"btn-sm":modalButtonReceiverType==="small"}'>
+            {{'SuccessApproval'|l}}
+        </span>
+    </async-success>
+    <async-fail>
+        <span class="btn" style="color: #f86c6b;"
+            ng-class='{"btn-sm":modalButtonReceiverType==="small"}'>
+            {{$root.statusValue.get(modalButtonReceiverCtrlname,modalButtonReceiverObjname,modalButtonReceiverActionname,'message')|l}}
+        </span>
+        <button class="btn btn-outline-success" type="button"
+            ng-class='{"btn-sm":modalButtonReceiverType==="small"}'
+            ng-disabled="modalButtonReceiverInvalid||$root.statusValue.get(modalButtonReceiverCtrlname,modalButtonReceiverObjname,modalButtonReceiverActionname,'doing')"
+            ng-click="modalButtonReceiverClick()">
+            <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+        </button>
+    </async-fail>
+</my-async>
+    
+
+    <div class="modal fade" id="{{ctrl._ctrlName}}" role="dialog" tabindex="-1">
+        <div class="modal-dialog" style="width: 100%; max-width: 420px;">
+            <div class="modal-content">
+                <modal-header modal-header-title="{{'Approval'|l }}"></modal-header>
+                <div class="modal-body">
+                    {{'Are you sure you confirm that received this'|l}}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" type="button" ng-class='{"btn-sm":modalButtonReceiverType==="small"}'
+                    ng-disabled="modalButtonReceiverInvalid||$root.statusValue.get(modalButtonReceiverCtrlname,modalButtonReceiverObjname,modalButtonReceiverActionname,'doing')"
+                    ng-click="modalButtonReceiverClick()"
+                    >
+                    <i class="fas fa-check"></i>&nbsp;{{modalButtonReceiverLabel ?modalButtonReceiverLabel:('Approval'|l)}}</button>
+                    <modal-button-close></modal-button-close>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

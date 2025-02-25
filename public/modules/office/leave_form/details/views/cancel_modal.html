@@ -1,0 +1,27 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_JTF_Cancel">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'CancelJourneyTimeForm'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="insertForm">
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-12">
+                                <text-area-with-suggestions ng-model="ctrl.note" style="width: 100%;"
+                                    placeholder="{{'InputNote'|l}}"></text-area-with-suggestions>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-reject modal-button-reject-ctrlname="{{ctrl._ctrlName}}" modal-button-reject-label="{{'CancelJourneyTimeForm'|l}}"
+                    modal-button-reject-objname="LeaveForm" modal-button-reject-actionname="cancel"
+                    modal-button-reject-func="ctrl.cancel()">
+                </modal-button-reject>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

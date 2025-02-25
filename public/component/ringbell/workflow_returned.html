@@ -1,0 +1,26 @@
+<a class="waves-effect ringbell-header-item project_update_info" href="/signing-details?code={{item.params.code}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span>
+                <show-username-onlyname username="item.params.actionBy" without-tooltip="true">
+                </show-username-onlyname>
+                <span class="ringbell-action warning">{{'returned the signature'|l}}</span>
+                <span class="title" >[{{item.params.code}}]&nbsp;{{item.params.title}}</span>
+                <span class="text-lowercase" >{{'WrittenBy'|l}}</span>
+                <show-username-onlyname username="item.params.createdBy" without-tooltip="true">
+                </show-username-onlyname>
+            </span>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+
+    </div>
+
+</a>

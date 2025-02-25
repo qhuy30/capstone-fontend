@@ -1,0 +1,115 @@
+﻿<div class="row" style="margin:10px 0">
+    <div class="col-md-6">
+        <div class="col-md-12 row" style="margin-top:5px; margin-bottom:5px" ng-show="showgroup">
+            <label>
+                Chọn nhóm:
+            </label>
+            <div>
+                <div class="col-md-8">
+                    <select style="padding:5px; width:100%" ng-change="changeGroup()" ng-model="chon.selectedgroup" ng-options="item as item.Title for item in groupar|chooseUserGroup:ssChoosen.group:'id'"></select>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" ng-click="chooseGroup()"><i class="fa fa-plus-circle"></i>&nbsp;Thêm</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-12 row" style="margin-top:5px; margin-bottom:5px" ng-show="showchoncanhan">
+            <label>
+                Chọn cá nhân:
+            </label>
+            <div>
+                <div class="col-md-8">
+                    <select style="padding:5px; width:100%" ng-model="chon.selecteduser" ng-options="item as item.username for item in userar|chooseUserGroup:ssChoosen.username:'username'"></select>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" ng-click="chooseUser()"><i class="fa fa-plus-circle"></i>&nbsp;Thêm</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6" style="margin:10px 0">
+        <label>
+            Phần đã chọn:
+        </label>
+        <div>
+
+            <div ng-repeat="user in ssChoosen.username" class=" row-info2 ng-scope col-md-10" style="margin:5px 0">
+                <div class="col-md-1" style=" padding:0; text-align:center">
+                    <img height="30" width="30">
+                </div>
+                <div class="col-md-11 title-info" style="margin-top:3px">
+                    <div style="width: 100%;font-size: 14px;color:#2196F3!important" class="ng-binding">{{user}}</div>
+
+                    <div class="remove-wrap">
+                        <a class="" href="" style="text-decoration: none; color:#ababab" ng-click="removeUser(user)">⛌</a>
+                    </div>
+                </div>
+
+            </div>
+            <div style="color:#c12e2a; font-style:italic; font-size:15px" ng-show="showtbdoituong">
+                <i class="fa fa-exclamation"></i>&nbsp;Chưa chọn đối tượng nào
+            </div>
+
+
+            <div ng-repeat="group in ssChoosen.group" class=" row-info2 ng-scope col-md-10" style="margin:5px 0">
+                <div class="col-md-1" style=" padding-top:4px !important; text-align:center; padding:0">
+                    <i style="font-size:20px; color:gray" class="fas fa-user"></i>
+                </div>
+                <div class="col-md-11 title-info" style="margin-top:3px">
+                    <div style="width: 100%;font-size: 14px;color:#2196F3!important" class="ng-binding">{{group|getField:'id':'Title':groupar}} </div>
+
+                    <div class="remove-wrap">
+                        <a class="" href="" style="text-decoration: none; color:#ababab" ng-click="removeGroup(group)">⛌</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">
+    <div class="col-lg-6">
+        2/Phan chon :<br />
+        +User:<br />
+        <span ng-repeat="user in userar|chooseUserGroup:ssChoosen.username:'username'">
+            <input type="checkbox" ng-model="user.selected" />
+            {{user.username}}
+        </span> <br />
+        Da chon:<br />
+        <span style="cursor: pointer;"
+              ng-repeat="user in ssChoosen.username"
+              ng-click="removeUser(user)">
+            {{user}}
+        </span> <br />
+        <button type="button" ng-click="chooseUser()">ok</button> <br />
+
+        +Group:<br />
+        <span ng-repeat="group in groupar|chooseUserGroup:ssChoosen.group:'id'">
+            <input type="checkbox" ng-model="group.selected" />
+            {{group.Title}}
+        </span> <br />
+        Da chon:<br />
+        <span style="cursor: pointer;"
+              ng-repeat="group in ssChoosen.group"
+              ng-click="removeGroup(group)">
+            {{group|getField:'username':'Title':groupar}}
+        </span> <br />
+        <button type="button" ng-click="chooseGroup()">ok</button> <br />
+
+    </div>
+    <div class="col-lg-6">
+        Phần đã chọn:<br />
+
+        <div ng-repeat="user in ssChoosen.username">----{{user}}</div>
+
+        <span ng-repeat="group in ssChoosen.group">{{group|getField:'id':'Title':groupar}}</span>
+
+    </div>
+</div>-->
+
+
+
+

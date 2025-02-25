@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal_Task_ObtainedObject" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'CheckObtainedObject'|l }}"></modal-header>
+            <div class="modal-body">
+                {{'DoYouWantCheckObtainedObject'|l:{title:ctrlChild._update_object_value.title} }}
+            </div>
+            <div class="modal-footer">
+                <my-async async-status-label="'Saving...'" async-ctrlname="{{ctrlChild._ctrlName}}"
+                    async-objname="{{'Task'}}" async-actionname="{{'obtainedObject'}}">
+                    <async-default>
+                        <button class="btn btn-primary" type="button"
+                            ng-disabled="modalButtonSaveInvalid||$root.statusValue.get(ctrlChild._ctrlName,'Task','obtainedObject','doing')"
+                            ng-click="ctrlChild.obtainedObject()">
+                            <i class="fas fa-check"></i>&nbsp;{{'Submit'|l}}</button>
+                    </async-default>
+                    <async-doing>
+                        <div class="sk-wave">
+                            <div class="sk-rect sk-rect1"></div>
+                            <div class="sk-rect sk-rect2"></div>
+                            <div class="sk-rect sk-rect3"></div>
+                            <div class="sk-rect sk-rect4"></div>
+                            <div class="sk-rect sk-rect5"></div>
+                        </div> {{loadingLabel ||'Updating...'}}
+                    </async-doing>
+                    <async-success>
+                        <span class="btn" style="color: #4dbd74;" >
+                            {{'Updated'|l}}
+                        </span>
+                        <!-- <button class="btn btn-outline-success" type="button"
+                            ng-class='{"btn-sm":modalButtonSaveType==="small"}'
+                            ng-click="$root.statusValue.generate(modalButtonSaveCtrlname,modalButtonSaveObjname,modalButtonSaveActionname)">
+                            <i class="fas fa-check"></i>&nbsp;{{'UpdateMore'|l}}
+                        </button> -->
+                    </async-success>
+                    <async-fail>
+                        <span class="btn" style="color: #f86c6b;" >
+                            {{$root.statusValue.get(ctrlChild._ctrlName,'Task','obtainedObject','message')|l}}
+                        </span>
+                        <button class="btn btn-outline-primary" type="button"
+                            ng-disabled="$root.statusValue.get(ctrlChild._ctrlName,'Task','obtainedObject','doing')"
+                            ng-click="ctrlChild.obtainedObject()">
+                            <i class="fas fa-redo"></i>&nbsp;{{'Retry'|l}}
+                        </button>
+                    </async-fail>
+                </my-async>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

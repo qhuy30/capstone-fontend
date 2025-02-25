@@ -1,0 +1,23 @@
+<a class="waves-effect ringbell-header-item notify_rejected" 
+    href="/event-calendar-details?code={{item.params.id}}"
+>
+    <i class="fas fa-times-circle"></i>
+    <div class="content">
+        <div>
+            <span >
+                <show-username-onlyname username="item.params.action_by" without-tooltip="true">
+                </show-username-onlyname>
+                <span class="ringbell-action danger">{{'rejected the event calendar registration'|l}}</span>
+                <span class="title" >[{{item.params.title}}]</span>
+            </span>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+    </div>
+</a>

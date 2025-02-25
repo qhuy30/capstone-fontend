@@ -1,0 +1,26 @@
+<div class="row" ng-controller="user_profile_general_controller as ctrl">
+    <div class="col-md-12 ">
+        <div class="card ">
+            <h5
+                style="height: 40px; line-height: 40px;margin-bottom: 0px;font-weight: 450;font-size: 14px;padding-left: 20px;">
+                <i class="fas fa-star-of-david text-blue"></i>&nbsp;&nbsp;Avatar</h5>
+            <div style="border-top:1px solid #eee;margin:10px;margin-top: 0px;">
+            </div>
+            <div class="card-body card-body-cascade text-center">
+                <div style="width: 100px;height:100px;display: block; overflow: hidden;margin: 0 auto;">
+                    <img ng-src="{{$root.logininfo.data.avatar.url}}" alt="User Photo" style="width: 100%;"
+                        id="user_profile_img">
+                </div>
+
+                <input id="user_profile_avatar" style="display: none;" type="file" />
+                <p class="text-muted"><small>{{'ProfilePhotoWillBChangedAutomatically'|l}}</small></p>
+                <div class="row flex-center">
+                    <button class="btn btn-info btn-blue btn-rounded btn-sm "
+                        open-dialog="user_profile_avatar">{{'UploadNewPhoto'|l}}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

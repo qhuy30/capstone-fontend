@@ -1,0 +1,34 @@
+<div class="modal fade" id="notify_reject_modal" role="dialog" tabindex="-1" ng-form="rejectForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Reject'|l }}"></modal-header>
+            <div class="modal-body">
+                <span ng-bind-html="ctrl._approve_value.allowApprove_recall 
+                ? ('RejectRecallRequestForThisNotify' | l:{title: '<strong>' + ctrlChild._reject_value_news.title + '</strong>'})
+                : ('DoYouWantRejectNotify' | l:{title: '<strong>' + ctrlChild._reject_value_news.title + '</strong>'})">
+                </span>
+                <div class="input-group-edit">
+                    <div class="input-group-prepend-new">
+                        <span class="input-group-text-new" style="margin: 12px 4px 4px 0px;">{{'Reason'|l}}:</span>
+                        <span class="require-sympton">*</span>
+                    </div>
+                    <textarea style="border: 1px solid black;" ng-model="ctrlChild._reject_value_news.reason"
+                        placeholder="{{'InputReason'|l}}"required class="form-control" type="text"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <modal-button-reject
+                    modal-button-reject-ctrlname="{{ctrlChild._ctrlName}}"
+                    modal-button-reject-objname="News" 
+                    modal-button-reject-actionname="reject"
+                    modal-button-reject-func="ctrlChild.reject_news()"
+                    ng-show="ctrlChild._reject_value_news.reason"
+                    modal-button-confirm-text="{{'AreYouSureYouRejectThisNotify'}}"
+                    modal-button-reject-label="{{ctrlChild._reject_value_news.allowApprove_recall ? ('RejectRecall'|l) : null}}"
+                >
+                </modal-button-reject>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

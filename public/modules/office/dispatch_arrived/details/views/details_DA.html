@@ -1,0 +1,11 @@
+<div ng-controller="da_details_controller as ctrl">
+  <my-content>
+    <content-breadcrumb>
+      <breadcrumb items="ctrl.breadcrumb"></breadcrumb>
+    </content-breadcrumb>
+    <content-content>
+      <dispatch-arrived-details item-id="ctrl.thisId" item-code="ctrl.code"
+        set-breadcrumb="ctrl.setBreadcrumb(params)">  </dispatch-arrived-details>
+    </content-content>
+  </my-content>
+</div>

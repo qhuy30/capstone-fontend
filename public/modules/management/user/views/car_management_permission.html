@@ -1,0 +1,209 @@
+<div id="car_management_permision">
+    <div class="main-permission">
+        <ul>
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền sử dụng tính năng thẻ xe
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.CarManagement.Use'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.CarManagement.Use'"
+                        />
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền đăng ký tính năng thẻ xe
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.CarManagement.Create'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.CarManagement.Create'"
+                        />
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Được quyền phê duyệt đăng ký xe cấp đơn vị <i class="small">({{'This is the right reserved for department leaders'|l}}.)</i>
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Not allow'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.Review'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.CarManagement.Review'" value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For department is working'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.Review'].value"
+                                       value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'All departments'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.Review'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For specific departments'|l}}
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.CarManagement.Review'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.CarManagement.Review'"
+                                                     disable="ctrl.rule['Office.CarManagement.Review'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.Review'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Nhận thông báo thuộc về phòng ban
+                    </div>
+                </div>
+                <ul>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'Not allow'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.NotifyDepartment'].value"
+                                       brige-func="ctrl.updateRule(params)"
+                                       brige-value="'Office.CarManagement.NotifyDepartment'" value="None" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For department is working'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.NotifyDepartment'].value"
+                                       value="Working" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'All departments'|l}}
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.NotifyDepartment'].value"
+                                       value="All" />
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item">
+                            <div class="label">
+                                {{'For specific departments'|l}}
+                                <organization-multi  label="{{''}}"
+                                                     id-value="ctrl.rule['Office.CarManagement.NotifyDepartment'].department"
+                                                     select-func="ctrl.update_Department_Permission(params)"
+                                                     my-params="'Office.CarManagement.NotifyDepartment'"
+                                                     disable="ctrl.rule['Office.CarManagement.NotifyDepartment'].value!='Specific'">
+                                </organization-multi>
+                            </div>
+                            <div class="tool">
+                                <input type="radio" ng-model="ctrl.rule['Office.CarManagement.NotifyDepartment'].value"
+                                       value="Specific" />
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền xác nhận xe/ thẻ xe
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.CarManagement.Confirm'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.CarManagement.Confirm'"
+                        />
+                    </div>
+
+                </div>
+            </li>
+
+            <li>
+                <div class="item">
+                    
+                    <div class="label">
+                        Cấp quyền phê duyệt cấp lãnh đạo <strong>Văn phòng trường</strong> cấp xe/ thẻ xe
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.CarManagement.Approve'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.CarManagement.Approve'"
+                        />
+                    </div>
+                </div>
+            </li>
+            
+            <li>
+                <div class="item">
+                    <div class="label">
+                        Cấp quyền phê duyệt cấp lãnh đạo <strong>trường</strong> cấp xe/ thẻ xe
+                    </div>
+                    <div class="tool">
+                        <input 
+                            type="checkbox" 
+                            ng-model="ctrl.rule['Office.CarManagement.ApproveExternal'].value" 
+                            brige-func="ctrl.updateRule(params)" 
+                            brige-value="'Office.CarManagement.ApproveExternal'"
+                        />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

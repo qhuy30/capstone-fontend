@@ -1,0 +1,72 @@
+<div class="modal fade" id="modal_RecycleBin_Delete" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'Alert'|l }}"></modal-header>
+            <div class="modal-body">
+                <div class="form-group">
+                    {{'DoYouWantDeleteThisInformation'|l }}
+                </div>
+                <my-Async async-ctrlname="{{ctrl._ctrlName}}" async-objname="RecycleBin"
+                    async-actionname="loadDetailsForDelete">
+                    <async-success>
+                        <div class="form-group">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'UserName'|l}}</span>
+                                </div>
+                                <div class="form-control bg-light">
+                                    {{ctrl._delete_value.username}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'DBName'|l}}</span>
+                                </div>
+                                <div class="form-control bg-light">
+                                    {{ctrl._delete_value.dbname}}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span
+                                        class="input-group-text">{{'Collection'|l}}</span>
+                                </div>
+                                <div class="form-control bg-light">
+                                    {{ctrl._delete_value.collection}}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-prepend input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">{{'Time'|l}}</span>
+                                </div>
+                                <div class="form-control bg-light">
+                                    {{ctrl._delete_value.time}}
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group-prepend"><span class="input-group-text">{{'Data'|l}}</span>
+                            </div>
+                            <div class=" bg-light">
+                                {{ctrl._delete_value.data}}
+                            </div>
+                        </div>
+                    </async-success>
+                </my-Async>
+
+            </div>
+            <div class="modal-footer">
+                <modal-button-delete modal-button-delete-ctrlname="{{ctrl._ctrlName}}"
+                    modal-button-delete-objname="RecycleBin" modal-button-delete-actionname="delete"
+                    modal-button-delete-func="ctrl.delete_func()">
+                </modal-button-delete>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

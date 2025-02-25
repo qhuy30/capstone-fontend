@@ -1,0 +1,231 @@
+<my-content>
+  <content-content>
+    <div ng-controller="system_home_controller as ctrl" class="home-page-container">
+      <div class="notification container">
+        <div class="notification-label">
+          <i class="fa fa-bell" style="color: #ff9900;"></i>&nbsp;&nbsp;&nbsp;{{'InternalNotification'|l}}
+        </div>
+        <div class="content card-body" style="padding-bottom: 10px" ng-scroll="ctrl.loadMore()">
+          <div class="input-search-container">
+            <div class="input-search">
+              <input-search load-data-func="ctrl.searchNotify(params)" />
+            </div>
+            <div class="manage-button">
+              <a href="/notify"><i class="fa fa-cogs"></i> {{'ManageNotify'|l}}</a>
+            </div>
+          </div>
+
+
+          <div class="form-group row align-items-center col-md-12 pl-2">
+            <div class="col-md-2">
+              <div class="title-filter" style="color: #778294; margin-bottom: 5px">
+                {{'FromDate' | l}}
+              </div>
+              <div class="value" style="display: flex; align-items: center">
+                <input
+                  type="date"
+                  ng-model="ctrl.dateStart"
+                  ng-change="ctrl.refreshData()"
+                  style="
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    font-size: 14px;
+                  "
+                />
+              </div>
+            </div>
+            <div class="col-md-2" style="border-right: 1px solid rgb(202, 202, 202);">
+              <div class="title-filter" style="color: #778294; margin-bottom: 5px">
+                {{'ToDate' | l}}
+              </div>
+              <div class="value" style="display: flex; align-items: center">
+                <input
+                  type="date"
+                  ng-model="ctrl.dateEnd"
+                  ng-change="ctrl.refreshData()"
+                  style="
+                    border: none;
+                    outline: none;
+                    background: transparent;
+                    font-size: 14px;
+                  "
+                />
+              </div>
+            </div>
+            <div class="col-md-3 pb-3">
+              <pick-modal-directory
+                  extend="ctrl.notify_group_config"
+                  pick-func="ctrl.on_pick_notify_group(params)"
+                  id-value="ctrl._filterNewsType"
+                  label="{{'NewsType'|l}}"
+                  disable="$root.statusValue.get(ctrl._ctrlName,'Notify','load','doing')"
+                ></pick-modal-directory>
+            </div>
+            <div class="col-md-3 pb-3">
+              <organization 
+                label="{{'Show department'|l}}"
+                id_value="ctrl._filterDepartment"
+                select-func="ctrl.applyFilters(params)">
+              </organization>
+            </div>
+
+            <div class="col-md-2 pl-5 pt-2">
+              <button class="btn btn-light" ng-click="ctrl.resetFilter()">
+                <span> <i class="fa fa-undo" style="font-size: 12px;"></i></span> {{'Reset'|l}}
+              </button>
+            </div>
+          </div>
+
+
+
+          <div class="tab-content">
+
+            <div class="wrapper">
+              <input type="radio" name="select" id="option-1" checked>
+              <input type="radio" name="select" id="option-2">
+
+              <label for="option-1" class="option option-1" ng-click="ctrl.switchTab('all')">
+                <div class="dot"></div>
+                <span>{{'All'|l}}</span>
+              </label>
+
+              <!-- <label for="option-2" class="option option-2" ng-click="ctrl.switchTab('bookmark')">
+                <div class="dot"></div>
+                <span>{{'Bookmark'|l}}</span>
+              </label> -->
+
+              <label ng-class="{'active': ctrl.isBookmarkActive}"  for="option-2" class="option option-2" ng-click="ctrl.switchTab('bookmark')" id="bookmark-btn">
+                <i class="fa fa-bookmark" id="bookmark-icon"></i>
+                <span>{{'Bookmark'|l}}</span>
+              </label>
+            </div>
+            
+            <div class="tab-pane fade show active" id="all-content">
+              <div class="feed-item" ng-repeat="item in ctrl.notify.items">
+                <div class="feed-header">
+                  <div class="feed-header-top">
+                    <p>{{ item.scope | l }}</p>
+                    <div class="feed-header-actions">
+                      <i class="fa fa-bookmark fa-lg" ng-class="{'bookmarked': item.bookmarked}"
+                        ng-click="ctrl.toggleBookmark(item)" style="cursor: pointer;"></i>
+                    </div>
+                  </div>
+                  
+                  <!-- <div class="feed-header-bottom">
+                    <show-username-notify 
+                        ng-if="item.event | filter: {status: 'Approved'}" 
+                        time-notify="(item.event | filter: {status: 'Approved'})[0].time" 
+                        username="item.username">
+                    </show-username-notify>
+                  </div> -->
+
+
+                  <div class="feed-header-bottom">
+                    <show-username-notify time-notify="item.changeStatusTime" username="item.username"></show-username-notify>
+                  </div>
+
+                </div>
+                <div class="feed-body">
+                  <a class="feed-title" 
+                  link-details link-details-display="{{item.title}}"
+                  link-details-url="/notify-details?code={{item.code}}"
+                  link-details-route="notify-details">
+                    {{ item.title }}
+                  </a>
+                  <div class="feed-content" ng-class="{'expanded': item.expanded}" ng-bind-html="item.content">
+                    {{ item.content }}
+                  </div>
+                  <see-more item="item" max-lines="3"></see-more>
+                  <div class="attachment-gallery" ng-if="item.attachments && item.attachments.length > 0"
+                    ng-repeat="(index, at) in item.attachments">
+                    <img ng-if="at.isImage" ng-src="{{at.fileInfo.url}}" class="attachment-image"
+                      ng-click="ctrl.previewImage(index, item)" />
+                  </div>
+                  <p class="note note-primary attachment" ng-show="item.attachments.length>0">
+                    <strong>{{"Attachment"|l}}:</strong>
+                    <attachment-show ng-repeat="(index, at) in item.attachments" attachment-show-item="at"
+                      attachment-show-func="ctrl.loadfile(params)"
+                      attachment-show-params="{id:item._id, code:item.code, name:at.name}" attachment-show-service-name="'notify'">
+                    </attachment-show>
+                  </p>
+                  <div class="feed-footer">
+                    <div class="love-action-button">
+                      <a class="btn btn-pink waves-effect waves-light" ng-click="ctrl.like(item)">
+                        <i ng-class="{'far fa-heart': !item.liked, 'fas fa-heart': item.liked}"></i>
+                        <span class="hidden-md-down">{{'Love'|l}}</span>
+                      </a>
+                      <span class="counter">{{item.like.length}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade show active" id="bookmark-content">
+                <div class="feed-item" ng-repeat="item in ctrl.bookmarkNotify.items">
+                  <div class="feed-header">
+                    <div class="feed-header-top">
+                      <p>{{ item.scope | l }}</p>
+                      <div class="feed-header-actions">
+                        <i class="fa fa-bookmark fa-lg" ng-class="{'bookmarked': item.bookmarked}"
+                          ng-click="ctrl.toggleBookmark(item)" style="cursor: pointer;"></i>
+                      </div>
+                    </div>
+                    <div class="feed-header-bottom">
+                      <show-username-notify time-notify="item.event[0].time" username="item.username"></show-username-notify>
+                      <!-- <div class="date-container">
+                        <i class="fa fa-clock"></i>&nbsp;&nbsp;
+                        <time-show time-show-data="item.event[0].time" time-show-type="short"></time-show>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="feed-body">
+                    <a class="feed-title" 
+                      link-details link-details-display="{{item.title}}"
+                      link-details-url="/notify-details?code={{item.code}}"
+                      link-details-route="notify-details">
+                      {{ item.title }}
+                    </a>
+                    <div class="feed-content" ng-class="{'expanded': item.expanded}" ng-bind-html="item.content">
+                      {{ item.content }}
+                    </div>
+                    <see-more item="item" max-lines="3"></see-more>
+                    <div class="attachment-gallery" ng-if="item.attachments && item.attachments.length > 0"
+                      ng-repeat="(index, at) in item.attachments">
+                      <img ng-if="at.isImage" ng-src="{{at.fileInfo.url}}" class="attachment-image"
+                        ng-click="ctrl.previewImage(index, item)" />
+                    </div>
+                    <p class="note note-primary attachment" ng-show="item.attachments.length>0">
+                      <strong>{{"Attachment"|l}}:</strong>
+                      <attachment-show ng-repeat="(index, at) in item.attachments" attachment-show-item="at"
+                        attachment-show-func="ctrl.loadfile(params)"
+                        attachment-show-params="{id:item._id, code:item.code, name:at.name}" attachment-show-service-name="'notify'">
+                      </attachment-show>
+                    </p>
+                  </div>
+                  <div class="feed-footer">
+                    <div class="love-action-button">
+                      <a class="btn btn-pink waves-effect waves-light" ng-click="ctrl.like(item)">
+                        <i ng-class="{'far fa-heart': !item.liked, 'fas fa-heart': item.liked}"></i>
+                        <span class="hidden-md-down">{{'Love'|l}}</span>
+                      </a>
+                      <span class="counter">{{item.like.length}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="additional-text" ng-if="ctrl.noMoreData">
+                <p><i class="fa fa-info-circle"></i> {{'No more notify'|l}}</p>
+              </div>
+              <div id="imagePreviewModal" class="modal" ng-show="ctrl.isImagePreviewVisible">
+                <span class="close" ng-click="ctrl.closeImagePreview()">&times;</span>
+                <img class="modal-content" id="previewImage">
+                <a class="prev" ng-click="ctrl.prevImage()">&#10094;</a>
+                <a class="next" ng-click="ctrl.nextImage()">&#10095;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </content-content>
+</my-content>

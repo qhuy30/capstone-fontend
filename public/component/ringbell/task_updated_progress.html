@@ -1,0 +1,28 @@
+<a class="waves-effect ringbell-header-item project_update_info" href="/task-details?code={{item.params.taskCode}}">
+    <i class="fas fa-exclamation"></i>
+    <div class="content">
+        <div>
+            <span  >
+                <span >{{'Task'|l}}</span>
+                <span class="title" >[{{item.params.taskCode}}]&nbsp;{{item.params.title}}</span>
+                <span >{{'is updated progress from'|l}}</span>
+                <span class="title" >{{item.params.from_progress}}%</span>
+                <span >{{'to progress'|l}}</span>
+                <span class="title">{{item.params.to_progress}}%</span>
+                <span>{{'by'|l}}</span>
+                <show-username-onlyname username="item.params.username_updated_progress" without-tooltip="true" >
+                </show-username-onlyname>
+            </span>
+        </div>
+
+        <div>
+            <small class="grey-text">
+                <i class="fa fa-clock" aria-hidden="true"></i>
+                <time-show time-show-type="long" time-show-data="item.notify_time">
+                </time-show>
+            </small>
+        </div>
+
+    </div>
+
+</a>

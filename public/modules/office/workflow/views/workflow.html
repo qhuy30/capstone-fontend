@@ -1,0 +1,151 @@
+<my-content>
+    <content-content>
+        <div ng-controller="workflow_controller as ctrl" class="office-workflow-feature">
+            <!-- <div class="card">
+                <div class="card-body">
+                    <pick-modal-directory extend="ctrl.DocumentType_Config" pick-func="ctrl.chooseWFT(params)"
+                        id-value="ctrl._filterWFT" label="{{'DocumentType'|l}}"
+                        disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','load','doing')">
+                    </pick-modal-directory>
+                </div>
+            </div>
+            <div class="card" ng-show="ctrl.organizations.length>0">
+                <div class="card-body">
+                    <organizational-chart-workflow my-data="ctrl.organizations" ctrl="ctrl">
+                    </organizational-chart-workflow>
+                </div>
+            </div> -->
+            <div class="card">
+                <div class="card-body">
+                    <ul class="department-container">
+                        <li>
+                            <div class="department-item">
+                                <div class="title">
+                                    <div class="search">
+                                        <input type="text" ng-model="ctrl._searchByKeyToFilterData" my-watch-text-input
+                                            my-scope="ctrl._searchByKeyToFilterData" my-func="ctrl.refreshData()"
+                                            my-start="!ctrl._notyetInit" placeholder="{{'FindWorkflowByName'|l}}">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                </div>
+                                <div class="key">
+                                    {{'DocumentType'|l}}
+                                    <filter-directory extend="ctrl.DocumentType_Config"
+                                        pick-func="ctrl.chooseWFT(params)" id-value="ctrl._filterWFT"
+                                        label="{{'DocumentType'|l}}"
+                                        disable="$root.statusValue.get(ctrl._ctrlName,'Workflow','load','doing')">
+                                    </filter-directory>
+                                </div>
+                                <div class="tool">
+                                   
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="department-item can-expand">
+                                <div class="title">
+                                <span ng-click="ctrl.expandForGeneralDeparment()" style="font-weight: bold; font-style: italic;">
+                                        <span>
+                                            <i class="fas fa-angle-right" ng-show="!ctrl.generalWorkflow.open"></i>
+                                            <i class="fas fa-angle-down" ng-show="ctrl.generalWorkflow.open"></i>
+                                        </span>
+                                        &nbsp;&nbsp;{{'Workflow'|l}} {{'General'|l}}
+                                </span>
+                                </div>
+                                <div class="key">
+                                    {{item.key}}
+                                </div>
+                                <div class="tool">
+                                    <button-new button-new-func="ctrl.prepareInsert('all')"
+                                        button-new-label="{{'NewWorkflow'|l}}"
+                                        button-new-modal="#modal_Workflow_Insert"
+                                        ng-show="!ctrl._filterDepartment">
+                                    </button-new>
+                                </div>
+                            </div>
+                            <div ng-show="ctrl.generalWorkflow.open" class="workflow-item" ng-repeat="wf in ctrl.generalWorkflow.wfs">
+                                <div class="title">
+
+                                    <i
+                                        class="fas fa-signature text-primary"></i>&nbsp;&nbsp;{{wf.title[$root.Language.current]}}
+
+                                </div>
+                                <div class="key">
+                                    <get-field-directory id-value="wf.key" extend="ctrl.DocumentType_Config"
+                                        localization="true"></get-field-directory>
+                                </div>
+                                
+                                <div class="tool">
+                                    <button-edit-item 
+                                        button-edit-item-modal="#modal_Workflow_Update"
+                                        button-edit-item-func="ctrl.prepareUpdate(params)" 
+                                        button-edit-item-params="wf"
+                                        ng-show="!ctrl._filterDepartment">
+                                    </button-edit-item>
+                                    <button-delete-item 
+                                        button-delete-item-modal="#modal_Workflow_Delete"
+                                        button-delete-item-func="ctrl.prepareDelete(params)"
+                                        button-delete-item-params="wf"
+                                        ng-show="!ctrl._filterDepartment">
+                                    </button-delete-item>
+                                </div>
+                            </div>
+                        </li>
+                        <li ng-repeat="item in ctrl.organizations">
+                            <div class="department-item" ng-class="{'can-expand':item.canExpand}">
+                                <div class="title">
+                                    <span ng-click="ctrl.expandDepartment(item)">
+                                        <span ng-show="item.canExpand">
+                                            <i class="fas fa-angle-right" ng-show="!item.open"></i>
+                                            <i class="fas fa-angle-down" ng-show="item.open"></i>
+                                        </span>
+                                        &nbsp;&nbsp;{{item.title[$root.Language.current]}}
+                                    </span>
+                                </div>
+                                <div class="key">
+                                    {{item.key}}
+                                </div>
+                                <div class="tool">
+                                    <button-new button-new-func="ctrl.prepareInsert(item)"
+                                        button-new-label="{{'NewWorkflow'|l}}"
+                                        button-new-modal="#modal_Workflow_Insert">
+                                    </button-new>
+                                </div>
+                            </div>
+                            <div ng-show="item.open" class="workflow-item" ng-repeat="wf in item.wfs">
+                                <div class="title">
+
+                                    <i
+                                        class="fas fa-signature text-primary"></i>&nbsp;&nbsp;{{wf.title[$root.Language.current]}}
+
+                                </div>
+                                <div class="key">
+                                    <get-field-directory id-value="wf.key" extend="ctrl.DocumentType_Config"
+                                        localization="true"></get-field-directory>
+                                </div>
+                                
+                                <div class="tool">
+                                    <button-edit-item button-edit-item-modal="#modal_Workflow_Update"
+                                        button-edit-item-func="ctrl.prepareUpdate(params)" button-edit-item-params="wf">
+                                    </button-edit-item>
+                                    <button-delete-item button-delete-item-modal="#modal_Workflow_Delete"
+                                        button-delete-item-func="ctrl.prepareDelete(params)"
+                                        button-delete-item-params="wf">
+                                    </button-delete-item>
+                                </div>
+                            </div>
+                            <workflow-feature-department-child item="item" ctrl="ctrl"></workflow-feature-department-child>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div ng-include="ctrl._urlNode_insertModal"></div>
+            <div ng-include="ctrl._urlNode_updateModal"></div>
+            <div ng-include="ctrl._urlInsertModal"></div>
+            <div ng-include="ctrl._urlUpdateModal"></div>
+            <div ng-include="ctrl._urlDeleteModal"></div>
+            <div ng-include="ctrl._urlNodeModal"></div>
+        </div>
+    </content-content>
+</my-content>

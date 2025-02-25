@@ -1,0 +1,94 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_CarMnanagement_Update">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <modal-header modal-header-title="{{'UpdateCarInformation'|l}}"></modal-header>
+        <div class="modal-body">
+          <div class="part">
+            <form class="form-horizontal" name="updateCarManagementForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="input-group-new">
+                      <div class="input-group-prepend-new">
+                        <span class="input-group-text-new">{{'Car Name'|l}}</span>
+                        <span class="require-sympton">*</span>
+                      </div>
+                      <input 
+                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','update','doing')" 
+                        type="text"
+                        ng-model="ctrl._update_value.title[$root.Language.current]" 
+                        class="form-control" 
+                        name="updateCarManagement_name"
+                        placeholder="input displayname"
+                        ng-class="{ 'is-invalid': updateCarManagementForm.updateCarManagement_name.$invalid }" 
+                        vld-sync
+                        vld-sync-func="$root.validate.min(model,params)"
+                        vld-sync-params="{min:1}"
+                        required/>
+                        <invalid
+                        invalid-status="updateForm.update_ordernumber.$error.vldsync"
+                        >
+                          {{'AtLeast'|l:({title:1})}}.
+                      </invalid>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="input-group-new">
+                      <div class="input-group-prepend-new">
+                        <span class="input-group-text-new"> {{'License Plate'|l}}</span>
+                        <span class="require-sympton">*</span>
+                      </div>
+                      <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','update','doing')" type="text"
+                        ng-model="ctrl._update_value.licensePlate" class="form-control" name="updateCarManagement_licensePlate"
+                        placeholder="input displayname"
+                        ng-class="{ 'is-invalid': updateCarManagementForm.updateCarManagement_licensePlate.$invalid }" required/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="input-group-new">
+                      <div class="input-group-prepend-new">
+                        <span class="input-group-text-new">{{'Seating Capacity'|l}}</span>
+                        <span class="require-sympton">*</span>
+                      </div>
+                      <input 
+                        ng-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','update','doing')" 
+                        type="number"
+                        ng-model="ctrl._update_value.seatingCapacity" 
+                        class="form-control" 
+                        name="updateCarManagement_seatingCapacity"
+                        placeholder="input displayname"
+                        ng-class="{ 'is-invalid': updateCarManagementForm.updateCarManagement_seatingCapacity.$invalid }" 
+                        required/>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 user-is-active">
+                  <div class="form-group">
+                    <input-checkbox input-checkbox-label="{{'IsUse'|l}}"
+                      input-checkbox-model="ctrl._update_value.isactive"
+                      input-checkbox-disabled="$root.statusValue.get(ctrl._ctrlName,'CarManagement','update','doing')">
+                    </input-checkbox>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <modal-button-save
+            modal-button-save-ctrlname="{{ctrl._ctrlName}}"
+            modal-button-save-objname="CarManagement"
+            modal-button-save-actionname="update"
+            modal-button-save-invalid=" updateCarManagementForm.$invalid"
+            modal-button-save-func="ctrl.update()"
+          >
+        </div>
+      </div>
+    </div>
+  </div>

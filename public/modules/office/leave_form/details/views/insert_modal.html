@@ -1,0 +1,37 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_JTF_Insert">
+    <div class="modal-dialog modal-full" role="document">
+        <div class="modal-content">
+            <modal-header modal-header-title="{{'AddJourneyTimeForm'|l}}"></modal-header>
+            <div class="modal-body">
+                <form class="form-horizontal " name="insertForm">
+                    <div class="card">
+                        <div class="card-body row" style="border-left:2px solid #20a8d8">
+                            <div class="form-group col-md-12">
+                                <div class="input-prepend input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">{{'NumberOfDays'|l}}</span>
+                                    </div>
+                                    <input ng-disabled="$root.statusValue.get(ctrl._ctrlName,'LeaveForm','insert','doing')"
+                                        type="number" ng-model="ctrl._insert_value.number_day" class="form-control"
+                                        name="insert_number_day" 
+                                        ng-class="{ 'is-invalid': insertForm.insert_number_day.$invalid }" required />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <text-area-with-suggestions ng-model="ctrl._insert_value.note" style="width: 100%;"
+                                placeholder="{{'InputNote'|l}}"></text-area-with-suggestions>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </form>
+            </div>
+            <div class="modal-footer">
+                <modal-button-new modal-button-new-ctrlname="{{ctrl._ctrlName}}" modal-button-new-label="{{'AddJourneyTimeForm'|l}}"
+                    modal-button-new-objname="LeaveForm" modal-button-new-actionname="insert"
+                    modal-button-new-invalid="insertForm.$invalid" modal-button-new-func="ctrl.insert()">
+                </modal-button-new>
+                <modal-button-close></modal-button-close>
+            </div>
+        </div>
+    </div>
+</div>

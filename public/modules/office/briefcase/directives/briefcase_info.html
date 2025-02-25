@@ -1,0 +1,100 @@
+<div class="office-briefcase-info">
+    <section class="pb-3">
+        <div class="card">
+            <div class="card-body row" style="border-left: 2px solid #20a8d8;padding-top: 16px;">
+                <div class="col-md-12">
+                    <div style="width: 100%">
+                        <h5>
+                            <a><strong>{{'ProfileDetails'|l}}: {{item.title}}</strong></a>
+                        </h5>
+                        <div ng-if="item.cancelled_reason">
+                            <show-status id-Value="'Cancelled'"></show-status>
+                        </div>
+                        <p class="grey-text">
+                            {{'Creator'|l}}
+                            <a>
+                                <show-username username="item.username">
+                                </show-username> </a>
+                        </p>
+                    </div>
+                    <div ng-if="item.state">
+                        <show-state id-Value="item.state"></show-state>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span class="label">{{'Code'|l}}:</span>
+                            {{item.code}}
+                        </p>
+                    </div>
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span
+                                class="label">{{'IdentifierCodeOfTheAgencyOrOrganizationCompilingTheBriefcaseInventory'|l}}:</span>
+                            {{item.organ_id}}
+                        </p>
+                    </div>
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span class="label">{{'NumberAndNotationOfBriefcase'|l}}:</span>
+                            {{item.file_notation}}
+                        </p>
+                    </div>
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span class="label">{{'StorageDuration'|l}}:</span>
+                            {{item.maintenance_time.amount + ' ' + (item.maintenance_time.unit|l)}}
+                        </p>
+                    </div>
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span class="label">{{'UsageMode'|l}}:</span>
+                            {{item.rights}}
+                        </p>
+                    </div>
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span class="label">{{'Language'|l}}:</span>
+                            {{item.language|l}}
+                        </p>
+                    </div>
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span class="label">{{'Year the briefcase was created'|l}}:</span>
+                            {{item.year}}
+                        </p>
+                    </div>
+                    <div class="col-md-6 info-item">
+                        <p>
+                            <span class="label">{{'Note'|l}}:</span>
+                            {{item.description}}
+                        </p>
+                    </div>
+
+                    <div class="col-md-6 info-item" ng-if="item.cancelled_reason">
+                        <p>
+                            <span class="label" style="font-weight: bolder;color:#000000">{{'CancellationReason'|l}}:</span>
+                            {{item.cancelled_reason}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div class="input-group-new">
+                        <div class="input-group-prepend-new">
+                            <span class="input-group-text-new">{{'Additional document'|l}}</span>
+                        </div>
+                        <attachment-show
+                            ng-repeat="at in item.addtional_documents"
+                            attachment-show-item="at"
+                            attachment-show-func="load_file_info(params)"
+                            attachment-show-params="{id: item._id,name:at.name}"
+                            attachment-show-service-name="'briefcase'"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
