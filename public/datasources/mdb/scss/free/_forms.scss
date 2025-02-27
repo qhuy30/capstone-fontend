@@ -283,12 +283,12 @@
 
       // Focused input style
       &:focus:not([readonly]) {
-        border-color: #4285f4;
-        box-shadow: inset 0px 0px 0px 1px #4285f4;
+        border-color: #FF0000;
+        box-shadow: inset 0px 0px 0px 1px #FF0000;
 
         // Focused label style
         +label {
-          color: #4285f4;
+          color: #FF0000;
         }
       }
 
@@ -481,7 +481,7 @@
       transition: color .2s;
 
       &:focus {
-        color: #4285f4;
+        color: #FF0000;
       }
     }
 

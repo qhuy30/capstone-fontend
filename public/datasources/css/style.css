@@ -59,8 +59,8 @@
 .btn-light:not([disabled]):not(.disabled):active,
 .btn-light:not([disabled]):not(.disabled).active,
 .show>.btn-light.dropdown-toggle {
-    background-color: rgb(17, 144, 203)!important;
-    border-color: rgb(17, 144, 203)!important;
+    background-color: red!important;
+    border-color: red!important;
     color: white!important;
 }
 
@@ -93,7 +93,7 @@
 }
 
 .modal-header .modal-new {
-    background-color: #20a8d8;
+    background-color: #e70303;
     color: #fff;
 }
 
@@ -177,7 +177,7 @@
 }
 
 .tabs-primary {
-    background-color: #4285f4 !important;
+    background-color: #FF0000 !important;
 }
 
 .tabs-danger {
@@ -453,7 +453,7 @@
 }
 
 .dropdown-menu.dropdown-primary .dropdown-item:hover {
-    background-color: #4285f4!important;
+    background-color: #FF0000!important;
     -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
     -webkit-border-radius: .125rem;
@@ -674,11 +674,11 @@ h2 {
 }
 
 .bq-primary {
-    border-left: 3px solid #4285f4 !important;
+    border-left: 3px solid #FF0000 !important;
 }
 
 .bq-primary .bq-title {
-    color: #4285f4 !important;
+    color: #FF0000 !important;
 }
 
 .bq-danger {
@@ -2305,8 +2305,8 @@ h2 {
 .md-form input[type=search-md]:focus:not([readonly]),
 .md-form input[type=search]:focus:not([readonly]),
 .md-form textarea.md-textarea:focus:not([readonly]) {
-    box-shadow: 0 1px 0 0 #4285f4;
-    border-bottom: 1px solid #4285f4;
+    box-shadow: 0 1px 0 0 #FF0000;
+    border-bottom: 1px solid #FF0000;
 }
 
 .md-form input[type=text]:focus:not([readonly])+label,
@@ -2321,7 +2321,7 @@ h2 {
 .md-form input[type=search-md]:focus:not([readonly])+label,
 .md-form input[type=search]:focus:not([readonly])+label,
 .md-form textarea.md-textarea:focus:not([readonly])+label {
-    color: #4285f4;
+    color: #FF0000;
 }
 
 .md-form input[type=text]+label:after,
@@ -2722,7 +2722,7 @@ ul.stepper .md-form label {
 .primary-color,
 ul.stepper li.active a .circle,
 ul.stepper li.completed a .circle {
-    background-color: #4285f4 !important;
+    background-color: #FF0000 !important;
 }
 
 .primary-color-dark {
@@ -3019,7 +3019,7 @@ a:not([href]):not([tabindex]):hover {
 }
 
 .bg-primary {
-    background-color: #4285f4 !important;
+    background-color: #FF0000 !important;
     color: #fff!important;
 }
 
@@ -3031,7 +3031,7 @@ button.bg-primary:focus {
 }
 
 .border-primary {
-    border-color: #4285f4 !important;
+    border-color: #FF0000 !important;
 }
 
 .bg-danger {
@@ -3212,11 +3212,11 @@ h6 {
 }
 
 .bq-primary {
-    border-left: 3px solid #4285f4 !important;
+    border-left: 3px solid #FF0000 !important;
 }
 
 .bq-primary .bq-title {
-    color: #4285f4 !important;
+    color: #FF0000 !important;
 }
 
 .bq-danger {
@@ -3344,7 +3344,7 @@ h6 {
 }
 
 .text-primary {
-    color: #4285f4 !important;
+    color: #FF0000 !important;
 }
 
 a.text-primary:hover,
@@ -3429,7 +3429,7 @@ a.text-light:focus {
 .primary-color,
 ul.stepper li.active a .circle,
 ul.stepper li.completed a .circle {
-    background-color: #4285f4!important;
+    background-color: #FF0000!important;
 }
 
 .primary-color-dark {
@@ -4099,7 +4099,7 @@ a.badge-dark:focus {
 }
 
 .badge-primary {
-    background-color: #4285f4!important;
+    background-color: #FF0000!important;
     color: #fff!important
 }
 
@@ -4148,7 +4148,7 @@ a.badge-dark:focus {
     padding: 0;
     width: 100%;
     position: relative;
-    border: 2px dashed  #20a8d8 !important;
+    border: 2px dashed  #e70303 !important;
     border-radius: 3px;
 }
 

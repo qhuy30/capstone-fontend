@@ -1,13 +1,13 @@
 $body--bgc:rgb(250, 250, 250); 
 $header--bgc:#fff; 
 $sidebar--bgc:rgb(250, 250, 250); 
-$icon:#4285f4;
+$icon:#FF0000;
 $icon--hover:rgb(15, 165, 235);
 $modal--border-color:rgba(200, 200, 200, 0.952);
 $modal--color:rgb(62,64,66);
 $modal--bgc:rgb(255, 255, 255); 
 $modal__header--bgc:rgb(255, 255, 255);
-$modal__header--color:rgb(17, 144, 203);
+$modal__header--color:red;
 $message--reply--bgc: rgb(240, 233, 233);
 
 $message--out--bgc: rgba(0,132,255);
@@ -18,11 +18,11 @@ $message--reply: rgb(255,255,255);
 
 $show-user--border:hsla(0,0%,78.4%,.952); 
 
-$input-label-color: #4285f4;
+$input-label-color: #FF0000;
 $input-label-bgc: rgb(255, 255, 255);
 
 $inactive--color: #b3b2b2;
-$active-color-primary:#4285f4;
+$active-color-primary:#FF0000;
 $active-color-warning:#ffbb33;
 $active-color-danger:#F93154;
 
@@ -33,7 +33,7 @@ $value-background-hover-primary: #e3e7ea;
 $scrollbar-color: #98a2b1;
 $scrollbar-border-color: #8892a0;
 
-$icon-dropdown-color: #4285f4;
+$icon-dropdown-color: #FF0000;
 
 $input-border-color: #d3d9e2;
 $input-hover-color:#f2f2f4;
