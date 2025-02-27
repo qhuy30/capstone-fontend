@@ -1,0 +1,42 @@
+<my-content class="task-feature">
+    <content-content>
+        <div class="card" ng-controller="support_controller as ctrl">
+            <div class="card-body">
+                <div class="direction-container">
+                    <div class="direction-content">
+                        <div class="direction-item" style="font-size: 0.8rem;" 
+                            ng-class="{'active': ctrl.tab==='faq'}"
+                            ng-click="ctrl.switchTab('faq')">
+                            <i class="fa fa-question-circle"></i>&nbsp;&nbsp;{{'FAQ'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;"
+                            ng-class="{'active': ctrl.tab==='user_manual'}" 
+                            ng-click="ctrl.switchTab('user_manual')">
+                            <i class="fa fa-book"></i>&nbsp;&nbsp;{{'User Manual'|l}}
+                        </div>
+                        <div class="direction-item" style="font-size: 0.8rem;"
+                            ng-class="{'active': ctrl.tab==='contact_support'}"
+                            ng-click="ctrl.switchTab('contact_support')">
+                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;{{'Contact Support'|l}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="content-container">
+                    <div class="task-quick-handle-feature">
+                        <div class="section-1" style="margin-bottom:10px;">
+                            <!-- <button-new ng-show="''|checkRuleCreateTaskAll" button-new-func="ctrlChild.prepareInsert()"
+                                button-new-label=" {{'AddTask'|l}}" button-new-modal="#modal_Head_Task_Insert_In_Department_Dashboard">
+                            </button-new> -->
+                        </div>
+
+                        <div class="section-2">
+                            <div ng-include="ctrl._urlContent"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </content-content>
+</my-content>

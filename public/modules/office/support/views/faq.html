@@ -1,0 +1,29 @@
+<div ng-controller="faq_controller as ctrlChild">
+    <div class="task-part" ng-repeat="faq in ctrlChild.faq_list track by $index">
+        <div class="title row" 
+            id="headingFAQ-{{$index}}"
+            ng-click="faq.isCollapsed = !faq.isCollapsed" 
+            data-toggle="collapse" 
+            data-target="#collapseFAQ-{{$index}}"
+            aria-expanded="true"
+            aria-controls="collapseFAQ-{{$index}}"        
+        >
+            <div style="font-style: bold;">
+                <label>
+                    {{$index+1}}. &nbsp;&nbsp; {{faq.question}}
+                </label>
+            </div>
+            <div class="ml-auto">
+                <i class="fas" ng-class="{'fa-angle-down': !faq.isCollapsed, 'fa-angle-right': faq.isCollapsed}"></i>
+            </div>
+        </div>
+        <div id="collapseFAQ-{{$index}}" 
+             class="collapse" 
+             ng-class="{'show': !faq.isCollapsed}" 
+             aria-labelledby="headingFAQ-{{$index}}">
+            <div class="the-content">
+                {{faq.answer}}
+            </div>
+        </div>
+    </div>
+</div>

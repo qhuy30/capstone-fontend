@@ -624,6 +624,7 @@ myApp.registerCtrl('group_controller', ['group_service', '$q', '$rootScope', '$t
         { name: "Office.Task.CreateExternal", type: "checkbox" },
         { name: "Office.Task.observerExternal", type: "checkbox" },
         { name: "Office.Task.ReceiveExternal", type: "checkbox" },
+        { name: "Office.Task.Receive_task", type: "checkbox" },
         
         { name: "Office.Task.Delete_Task_Department", type: "radio_department" },
         { name: "Office.Task.Follow_Task_Department", type: "radio_department" },
@@ -684,6 +685,7 @@ myApp.registerCtrl('group_controller', ['group_service', '$q', '$rootScope', '$t
         { name: "Office.Task.Director_Manage", type: "checkbox" },
         { name: "Office.Task.Leader_Mangage", type: "radio_project" },
         { name: "Office.Task.Department_Leader_Manage", type: "radio_project" },
+        { name: "Office.Task.Show_StatisticExternal", type: "checkbox" },
         /* TASKMANAGEMENT RULES */
 
         /* STORAGE RULES */

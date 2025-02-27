@@ -1,0 +1,44 @@
+<div ng-controller="user_manual_controller as ctrlChild">
+    <div class="task-part" ng-repeat="user_manual in ctrlChild.user_manual_list track by $index">
+        <div class="title row">
+            <div style="font-style: bold;">
+                <label>
+                    {{$index+1}}. &nbsp;&nbsp; {{user_manual.title}}
+                </label>
+            </div>
+            <div class="ml-auto row">
+                <attachment-show
+                    attachment-show-item="user_manual.attachment"
+                    attachment-show-func="ctrlChild.load_file_info(params)"
+                    attachment-show-params="{id: user_manual.attachment.id,fileInfo:user_manual.attachment}"
+                    attachment-show-service-name="'support'">
+                </attachment-show>
+                <div class="sample-file">
+                    <button type="button" ng-click="ctrlChild.downloadfile(user_manual.attachment)"
+                        ng-disabled="ctrlChild.downloading" style="padding: 0 7px;
+                        margin-left: 5px;
+                        box-shadow: none;
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        border-radius: 5px;
+                        height: 30px;
+                        width: 100px;
+                        font-weight: bold;" class="btn btn-outline-primary btn-sm">
+                        <i style="display: inline-block;  margin-right: 5px; font-size: 15px;"
+                            class="fas fa-download"></i>
+                        {{'Download'|l}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="collapseUM-{{$index}}" 
+             class="collapse" 
+             ng-class="{'show': !user_manual.isCollapsed}" 
+             aria-labelledby="headingFAQ-{{$index}}">
+            <div class="the-content">
+                {{user_manual.content}}
+            </div>
+        </div>
+    </div>
+</div>

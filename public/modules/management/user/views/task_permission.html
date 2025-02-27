@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </li>
-            <li>
+            <!-- <li>
                 <div class="item">
                     <div class="label">
                         Ủy quyền phân công công việc cho cấp trên
@@ -21,8 +21,8 @@
                         <input type="checkbox" ng-model="ctrl.rule['Office.Task.AuthorizationToAssignWorkToSuperiors'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.AuthorizationToAssignWorkToSuperiors'"/>
                     </div>
                 </div>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
                 <div class="item">
                     <div class="label">
                         Tạo công việc có tính chất lặp lại theo chu kỳ
@@ -31,7 +31,7 @@
                         <input type="checkbox" ng-model="ctrl.rule['Office.Task.Create_RepetitiveCycle_Department'].value" brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Create_RepetitiveCycle_Department'"/>
                     </div>
                 </div>
-            </li>
+            </li> -->
             <li>
                 <div class="item">
                     <div class="label">
@@ -71,9 +71,9 @@
                 ng-click="ctrl.switchTaskTab('department')">
                 <i class="fas fa-people-carry"></i>&nbsp;&nbsp;{{'Department'|l}}
             </div>
-            <div class="item" ng-class="{'active':ctrl.tabTask==='project'}" ng-click="ctrl.switchTaskTab('project')">
+            <!-- <div class="item" ng-class="{'active':ctrl.tabTask==='project'}" ng-click="ctrl.switchTaskTab('project')">
                 <i class="fas fa-project-diagram"></i>&nbsp;&nbsp;{{'Project'|l}}
-            </div>
+            </div> -->
             <div class="item" ng-class="{'active':ctrl.tabTask==='personal'}" ng-click="ctrl.switchTaskTab('personal')">
                 <i class="fas fa-user-clock"></i>&nbsp;&nbsp;{{'Personal'|l}}
             </div>

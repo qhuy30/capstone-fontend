@@ -1572,15 +1572,18 @@ ctrl.refresh_data = function(){
 
 function init() {
   const dfdAr = [];
-  setUrlContent(); 
-  dfdAr.push(load_employee_detail());
-  dfdAr.push(load_employee_info());
-  dfdAr.push(ctrl.loadDetails());
-  dfdAr.push(ctrl.load_receive_task());
-  $q.all(dfdAr).then(function(){
-  }, function(err){
-    dfd.reject(err)
-  })
+
+  const loaddetail_page = setUrlContent(); 
+  if (loaddetail_page) {
+    dfdAr.push(load_employee_detail());
+    dfdAr.push(load_employee_info());
+    dfdAr.push(ctrl.loadDetails());
+    dfdAr.push(ctrl.load_receive_task());
+    $q.all(dfdAr).then(function(){
+    }, function(err){
+      dfd.reject(err)
+    })
+  }
   
   // load_employee_detail();
   // init_service();
@@ -1598,23 +1601,26 @@ function setUrlContent() {
   switch (ctrl.thisUrl) {
     case "add-task":
       ctrl._urlContent = urlAddTask
-      break;
+      return false;
 
     case "add-tasks-for-departments":
       ctrl._urlContent = urlAddTasksForDepartments
-      break;
+      return false;
 
     case "add-tasks-for-projects":
       ctrl._urlContent = urlAddTasksForProjects
-      break;
+      return false;
 
     case "add-recurring-department-tasks":
       ctrl._urlContent = urlAddRecurringDepartmentTasks
-      break;
+      return false;
 
     case "department":
       ctrl._urlContent = urlDepartmentDetails
-      break;
+      return false;
+    
+    default:
+      return true;
   }
 }
 
@@ -3994,6 +4000,7 @@ function load_users_and_department_service() {
       ctrl._update_value.label, //label
       ctrl._update_value.estimate, //estimate,
     ).then(function(res){
+      $rootScope.$broadcast("importTask:accessDone");
       ctrl.loadDetails();
       ctrl._customToastScope.addToastValue({
         message: $filter('l')('Update successfully'),

@@ -14,7 +14,18 @@
         <li>
             <div class="item">
                 <div class="label">
-                    Cấp quyền sử dụng tính năng thêm công việc cho tất cả phòng ban
+                    Cấp quyền Khai báo - Chỉnh sửa nhãn
+                </div>
+                <div class="tool">
+                    <input type="checkbox" ng-model="ctrl.rule['Office.Task.Management_MajorLabels_Department'].value"
+                           brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Management_MajorLabels_Department'" />
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="label">
+                    Cấp quyền sử dụng tính năng <b>Import công việc</b> cho phòng ban
                 </div>
                 <div class="tool">
                     <input type="checkbox" ng-model="ctrl.rule['Office.Task.Import_Multiple_Departments'].value"
@@ -22,7 +33,7 @@
                 </div>
             </div>
         </li>
-        <li>
+        <!-- <li>
             <div class="item">
                 <div class="label">
                     Cấp quyền sử dụng tính năng thêm công việc cho tất cả dự án.
@@ -45,7 +56,6 @@
             </div>
         </li>
 
-        <!-- Working new  -->
         <li>
             <div class="item">
                 <div class="label">
@@ -56,11 +66,11 @@
                            brige-func="ctrl.updateRule(params)" brige-value="'Office.Task.Director_Manage'" />
                 </div>
             </div>
-        </li>
+        </li> -->
     </ul>
 
 
-    <div class="main-permission" style="background-color: white;">
+    <!-- <div class="main-permission" style="background-color: white;">
         <ul style="background-color: #e8f0fe">
             <li>
                 <div class="item">
@@ -188,5 +198,5 @@
                 </ul>
             </li>
         </ul>
-    </div>
+    </div> -->
 </div>

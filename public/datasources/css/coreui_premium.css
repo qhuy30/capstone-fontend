@@ -12484,7 +12484,7 @@ base-chart.chart {
     overflow-x: hidden;
     overflow-y: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-    width: 200px
+    width: 240px
 }
 
 .sidebar .sidebar-nav::-webkit-scrollbar {
@@ -12510,7 +12510,7 @@ base-chart.chart {
 }
 
 .sidebar .nav {
-    width: 200px;
+    width: 240px;
     -ms-flex-direction: column;
     flex-direction: column;
     min-height: 100%
@@ -15038,7 +15038,7 @@ base-chart.chart {
 .sidebar-fixed .sidebar {
     position: fixed;
     z-index: 1019;
-    width: 200px;
+    width: 240px;
     height: calc(100vh - 55px)
 }
 

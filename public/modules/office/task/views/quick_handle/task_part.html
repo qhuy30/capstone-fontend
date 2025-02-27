@@ -17,16 +17,16 @@
             </span>&nbsp;&nbsp;
             <span class="gonnalate">
                 <input type="checkbox" ng-model="ctrlChild.checkbox_gonnalate_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'GonnaLate'|l}}
-            </span>
+            </span>&nbsp;&nbsp;
             <!-- <span class="overdue">
                 <input type="checkbox" ng-model="ctrlChild.checkbox_dispatch_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'WorkflowNodeDispatchArrived'|l}}
             </span> -->
+            <span class="overdue">
+                <input type="checkbox" ng-model="ctrlChild.checkbox_approval_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'Task need approval'|l}}
+            </span>&nbsp;&nbsp;
             <span class="overdue" ng-if="['Office.Task.Receive_task']|checkRule">
-                <input type="checkbox" ng-model="ctrlChild.checkbox_receiver_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'TaskTransfer'|l}}
-            </span>
-            <span class="overdue" ng-if="['Office.Task.Receive_task']|checkRule">
-                <input type="checkbox" ng-model="ctrlChild.checkbox_approval_receiver_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'Task recive need approval'|l}}
-            </span>
+                <input type="checkbox" ng-model="ctrlChild.checkbox_receiver_task" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'WaitingReceive'|l}}
+            </span>&nbsp;&nbsp;
             <span class="is_get_all"  ng-if="['Office.Task.Director_Manage']|checkRule">
                 <input type="checkbox" ng-model="ctrlChild.checkbox_is_get_all" ng-change="ctrlChild.refreshData_task()"/>&nbsp;{{'Display task of all departments'|l}}&nbsp;<i class="far fa-question-circle" 
                 custom-tooltip 
@@ -372,7 +372,7 @@
                                     button-reject-item-params="{item}"
                                     button-label="{{'Reject receive task'}}"
                                 /> -->
-                                <button-approval-item
+                                <!-- <button-approval-item
                                     ng-if="item.allow_recive_task"
                                     button-approval-item-modal="#modal_Receive_Task_Assess_QH_detail"
                                     button-approval-item-func="ctrlChild.prepareReceive_Task(params)"
@@ -401,7 +401,7 @@
                                     button-reject-item-func="ctrlChild.prepareReceive_Task(params)"
                                     button-reject-item-params="{ item:item, action: 'approve_recive_task' }"
                                     button-label="{{'Reject'}}"
-                                />
+                                /> -->
 
 
 

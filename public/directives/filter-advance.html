@@ -3,7 +3,7 @@
         {{label}}<span>&nbsp;&nbsp;&nbsp;</span><span ng-if="require" class="require-sympton">*</span>
     </div>
     <div class="value-label" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <div class="show-value-label" style="display:flex;align-items: center;cursor: pointer" ng-click="init()">
+        <div class="show-value-label" style="display:flex;align-items: center;cursor: pointer; justify-content: space-between;" ng-click="init()">
             <div style="width: 90%; overflow: hidden;">
                 <div ng-repeat="item in selectedItems" class="label-container">
                     <span>{{_translate ? (item.showValue|l) : item.showValue}}</span>

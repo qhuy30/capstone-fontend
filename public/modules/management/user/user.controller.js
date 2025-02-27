@@ -741,6 +741,8 @@ myApp.registerCtrl('user_controller', ['user_service', '$q', '$rootScope', '$tim
         { name: "Office.Task.Follow_Task_Project", type: "radio_project" },
         { name: "Office.Task.Create_Task_Project", type: "radio_project" },
         { name: "Office.Task.Edit_Task_Project", type: "radio_project" },
+
+        { name: "Office.Task.Show_StatisticExternal", type: "checkbox" },
         /**END TASK RULES */
         /**DOCUMENT RULES */
         { name: "Office.File.Use", type: "radio_project" },

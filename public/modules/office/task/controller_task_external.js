@@ -73,21 +73,6 @@ myApp.registerCtrl("task_external_controller", ["task_service", "$q", "$rootScop
       WAITING_RECEIVE: "WaitingReceive"
     };
 
-    ctrl.loadLabel = function ({ search, top, offset, sort }) {
-      var dfd = $q.defer();
-      task_service.load_label(search, top, offset, sort).then(
-        function (res) {
-          dfd.resolve(res.data);
-          dfd = undefined;
-        },
-        function (err) {
-          dfd.reject(err);
-          err = undefined;
-        }
-      );
-      return dfd.promise;
-    };
-
     ctrl.loadLabel_details = function ({ ids }) {
       var dfd = $q.defer();
       task_service.loadLabel_details(ids).then(
@@ -352,20 +337,19 @@ myApp.registerCtrl("task_external_controller", ["task_service", "$q", "$rootScop
       return dfd.promise;
     };
 
-    ctrl.load_taskGroup_filter = function (params) {
-      return new Promise((resolve, reject) => {
-        const taskGroupListFilter = [
-          {
-            _id: "department",
-            title: "Department",
-          },
-          {
-            _id: "project",
-            title: "Project",
-          },
-        ];
-        return resolve(taskGroupListFilter);
-      });
+    ctrl.load_department_filter = function (params) {
+      var dfd = $q.defer();
+      task_service.load_deparment(1).then(
+        function (res) {
+          dfd.resolve(res.data);
+          dfd = undefined;
+        },
+        function (err) {
+          dfd.reject(err);
+          err = undefined;
+        }
+      );
+      return dfd.promise;
     };
 
     ctrl.load_role_filter = function (params) {
@@ -406,6 +390,11 @@ myApp.registerCtrl("task_external_controller", ["task_service", "$q", "$rootScop
 
     ctrl.pickLabelFilter = function (value) {
       ctrl._filter_value_label = value;
+      ctrl.refreshData();
+    };
+
+    ctrl.pickDepartmentFilter = function (value) {
+      ctrl._filter_value_department = value;
       ctrl.refreshData();
     };
 
@@ -453,6 +442,10 @@ myApp.registerCtrl("task_external_controller", ["task_service", "$q", "$rootScop
         obj.label_filter = angular.copy(ctrl._filter_value_label);
       }
 
+      if (ctrl._filter_value_department) {
+        obj.department_filter = angular.copy(ctrl._filter_value_department);
+      }
+
       if (ctrl._filter_value_role) {
         obj.role_filter = angular.copy(ctrl._filter_value_role);
       }
@@ -474,6 +467,7 @@ myApp.registerCtrl("task_external_controller", ["task_service", "$q", "$rootScop
         _filter.priority_filter,
         _filter.state_filter,
         _filter.label_filter,
+        _filter.department_filter,
         _filter.role_filter
       ).then(function(res){
         ctrl.headTasks = res.data.map(item => ({
@@ -566,6 +560,8 @@ myApp.registerCtrl("task_external_controller", ["task_service", "$q", "$rootScop
         _filter.priority_filter,
         _filter.state_filter,
         _filter.label_filter,
+        _filter.department_filter,
+        _filter.role_filter
       ).then(function(res){
         ctrl.totalHeadTaskItems = res.data[0].count;
         dfd.resolve(res.data);
@@ -578,8 +574,7 @@ myApp.registerCtrl("task_external_controller", ["task_service", "$q", "$rootScop
     }
 
     ctrl.refreshData = function(){
-      ctrl.load();
-      ctrl.count();
+      $q.all([ctrl.load(), ctrl.count()]);
     }
 
     ctrl.loadfile = function (params) {
@@ -819,6 +814,7 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
     { name: "Task", action: "removeFile" },
     { name: "Task", action: "loadTemplate" },
     { name: "Task", action: "loadDepartments" },
+    { name: "Task", action: "loadObservers" },
     { name: "Task", action: "import_excel_task" },
 
   ];
@@ -839,6 +835,7 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
     ctrl.dataExcelConverted = [];
     ctrl._search = '';
     ctrl.department = [];
+    ctrl.observer = [];
     ctrl.project = [];
     ctrl.task_type = [{key: 1, value: 'Công việc'}, {key: 2, value: 'Trình ký'}, {key: 3, value: 'Thông báo'}];
     ctrl.dataSendToBe = [];
@@ -878,7 +875,6 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
     ctrl.handleDataForDepartment = false;
     task_service.load_template_for_departments().then(
         function (res) {
-          console.log(res);
           
             FileSaver.saveAs(res.data, 'Tep-tin-mau-Them-cong-viec.xlsx');
             dfd.resolve(true);
@@ -918,6 +914,21 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
             ...item,
             optionTitle: item.title['vi-VN'],
         }));
+        dfd.resolve(true);
+      }, function () {
+        dfd.reject(false);
+        err = undefined;
+      })
+      return dfd.promise;
+  }
+
+  ctrl.loadObservers = function(){
+    return $rootScope.statusValue.execute(ctrl._ctrlName, "Task", "loadObservers", loadObserver_service);
+  }
+  function loadObserver_service() {
+      var dfd = $q.defer();
+      task_service.loadUserByRule().then((res) => {
+        ctrl.observer = res.data;
         dfd.resolve(true);
       }, function () {
         dfd.reject(false);
@@ -1073,6 +1084,11 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
               indexes.push({ index, property: key, details: ctrl.errorEmpty });
           }
         }
+
+        const itemDepartment = ctrl.department.find((department) => department.optionTitle === object.orig_department);
+        const itemObserver = itemDepartment ? ctrl.observer.find((ob) => ob.departmentId === itemDepartment.id) : undefined;
+        object.observer =  itemObserver ? itemObserver.username : undefined;
+
         if (object.from_date) {
             ctrl.converttoISOString(object.from_date);
             isValidFormatFromDate = moment(object.from_date, format, true).isValid();
@@ -1090,7 +1106,6 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
         if (isValidFormatFromDate && isValidFormatToDate && moment(object.from_date, format).unix() > moment(object.to_date, format).unix()) {
             indexes.push({ index, property: 'from_date', details: "Trường 'Từ ngày' phải nhỏ hơn trường 'Đến ngày'" })
         }
-
     });
     if (indexes.length > 0) {
         ctrl.listErrorExcelImport = indexes;
@@ -1199,6 +1214,18 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
       ctrl.validateProperties(ctrl.dataExcelConverted);
   };
 
+  ctrl.chooseObserver = function (item, observer) {
+      item.observer = observer.username;
+      groupData();
+      ctrl.validateProperties(ctrl.dataExcelConverted);
+  };
+
+  ctrl.handleInvalidObserver = function (item) {
+    item.observer = undefined;
+    groupData();
+    ctrl.validateProperties(ctrl.dataExcelConverted);
+  };
+
   ctrl.selectOption = function (index, option, id, type) {
     ctrl.selectedValue = option;
     ctrl.isDropdownOpen = false;
@@ -1305,6 +1332,7 @@ myApp.registerCtrl("add_task_with_template_controller", ["task_service", "$q", "
   function init() {
     const dfdAr = [];
     dfdAr.push(ctrl.loadDepartments());
+    dfdAr.push(ctrl.loadObservers())
     $q.all(dfdAr).then(function(){
         ctrl._notyetInit = false;
     }, function(err){

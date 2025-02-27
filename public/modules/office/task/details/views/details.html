@@ -632,7 +632,7 @@ input[type="range"].form-control-range::-moz-range-thumb {
                                 </div>
                                 
                                 <!-- CÔNG VIỆC CON VÀ CÔNG VIỆC PHIẾU CHUYỂN -->
-                                <div class="part" ng-show="$root.logininfo.data.department === ctrl.Item.department.id">
+                                <div class="part" ng-show="ctrl.Item.permission.allow_follow_otherTask">
                                     <div class="table-responsive" style="margin-top: 4px margin-right= 10px" ng-show="ctrl.Item.work_items.length">
                                         <div style="font-weight: bold;">{{'ChildTask'|l}}</div>
                                         <!-- <div style="margin-bottom: 4px; color:#4dbd74"><small>{{'PercentWorkRemaining'|l:({percentRemaining:ctrl.percentParentLeft})}}</small></div> -->

@@ -1,4 +1,779 @@
 <div ng-controller="task_statistic_controller as ctrlChild" class="task-statistic-feature">
+    <div>
+        <div class="task-content box-shadow:0">
+            <div
+                class="head-task"
+                style="margin-top: 12px; padding: 6px 10px;"
+            >
+                <div class="card">
+                    <div
+                        class="card-header"
+                        style="border-bottom-color: #00000020; font-size: 14px"
+                    >
+                        {{'ListOfEmployeesNotAssignedToTasks'|l}}
+                    </div>
+                    <div class="card-body mt-0">
+                        <div class="task-container">
+                            <div class="task-content">
+                                <div class="row col-12 mb-2 mt-0 align-items-center">
+                                    <div class="d-flex align-items-center col-md-6 pl-0" ng-if="ctrl._permission.show_all_department">
+                                        <div
+                                            class="input-group-text py-1"
+                                            style="border-top-right-radius: 0; border-bottom-right-radius: 0"
+                                        >
+                                            {{'Department'|l}}
+                                        </div>
+                                        <div class="flex-1">
+                                            <filter-advance 
+                                                disable="" 
+                                                load-data-func="ctrlChild.load_departments_filter(params)"
+                                                id-value="ctrlChild._filter_value_department_no_task" 
+                                                load-details-func=""
+                                                localized="true"
+                                                field-value="id"
+                                                pick-func="ctrlChild.pickDepartmentsNoTask(params)"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center col-md-6 pr-0">
+                                        <div
+                                            class="input-group-text py-1"
+                                            style="border-top-right-radius: 0; border-bottom-right-radius: 0"
+                                        >
+                                            {{'Employee'|l}}
+                                        </div>
+                                        <div class="flex-1">
+                                            <!-- <filter-advance-employee
+                                                disable=""
+                                                load-data-func="ctrlChild.load_employee_filter(params)"
+                                                id-value="ctrlChild._filter_value_employee_no_task"
+                                                load-details-func=""
+                                                localized="false"
+                                                pick-func="ctrlChild.pickEmployeesNoTask(params)"
+                                                search-event="true"
+                                            /> -->
+                                            <filter-advance
+                                              disable=""
+                                              load-data-func="ctrlChild.load_employee_no_task_filter(params)"
+                                              id-value="ctrlChild._filter_value_employee_no_task"
+                                              localized="false"
+                                              pick-func="ctrlChild.pickEmployeesNoTask(params)"
+                                              search-event="true"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-sm table-hover"
+                                        ng-class="{'no-data':ctrlChild.employeeNoTask.length === 0}"
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        padding-left: 5px;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    {{'Employee'|l}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        padding-left: 5px;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    {{'Department'|l}}
+                                                </td>                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody id="taskList">
+                                            <tr
+                                                ng-repeat="item in ctrlChild.employeeNoTask"
+                                            >
+                                                <td style="font-weight: 500; text-align: left">                                    
+                                                    {{item.title}}
+                                                </td>
+                                                <td style="font-weight: 500; text-align: left">                                    
+                                                    {{item.departmentTitle}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+    
+                                <div
+                                    ng-if="ctrlChild.employeeNoTask.length === 0"
+                                    class="no-data"
+                                >
+                                    {{'NoData'|l}}
+                                </div>
+                                <pagination
+                                    pagination-ctrlname="{{ctrlChild._ctrlName}}"
+                                    pagination-objname="Task"
+                                    pagination-actionname="countEmployeeNoTask"
+                                    pagination-currentpage="ctrlChild.currentEmployeeNoTaskPage"
+                                    pagination-noi="ctrlChild.numOfItemPerPageEmployeeNoTask"
+                                    pagination-total="ctrlChild.totalEmployeeNoTask"
+                                    pagination-func="ctrlChild.load_employee_no_task(params)"
+                                ></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="task-content box-shadow:0">
+            <div
+                class="head-task"
+                style="margin-top: 12px; padding: 6px 10px;"
+            >
+                <div class="card">
+                    <div
+                        class="card-header"
+                        style="border-bottom-color: #00000020; font-size: 14px"
+                    >
+                        {{'ListUncompletedTasks'|l}}
+                    </div>
+                    <div class="card-body mt-0">
+                        <div class="task-container">
+                            <div class="task-content">
+                                <div class="form-group row align-items-center">
+                                    <button
+                                        type="button"
+                                        style="padding: 0 7px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: 400;"
+                                        ng-click="ctrlChild.export_uncompleted_tasks()"
+                                        ng-class="{'disabled-placeholder': !ctrlChild.checkImportPermission}"
+                                        class="btn btn-square btn-outline-primary ml-auto align-self-center"
+                                    >
+                                        <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;" class="fas fa-file-excel"></i>
+                                        {{'Download'|l}}
+                                    </button>
+
+                                    <div class="date-filter" style="padding-bottom:0.5rem; max-width: none">
+                                        <div class="date-filter-item col-md-2">
+                                            <div class="title-filter">{{'FromDate'|l}}</div>
+                                            <div class="value mt-2">
+                                                <div>
+                                                    <input type="date" ng-model="ctrlChild._filterFromDateUnCompleted"
+                                                        ng-change="ctrlChild.refreshDataUnCompleted()" />
+                                                </div>
+                                                <div>
+                                                    <time-show2 time-show-data="ctrlChild._filterFromDateUnCompleted" time-show-type="just_date"
+                                                        bind-object="true"></time-show2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="date-filter-item col-md-2">
+                                            <div class="title-filter">{{'ToDate'|l}}</div>
+                                            <div class="value mt-2">
+                                                <div>
+                                                    <input type="date" ng-model="ctrlChild._filterToDateUnCompleted"
+                                                        ng-change="ctrlChild.refreshDataUnCompleted()" />
+                                                </div>
+                                                <div>
+                                                    <time-show2 time-show-data="ctrlChild._filterToDateUnCompleted"
+                                                        time-show-type="just_date" bind-object="true">
+                                                    </time-show2>
+                                                </div>
+                            
+                                            </div>
+                                        </div>
+                            
+                                        <div class="event-filter-item col-md-4" ng-if="ctrl._permission.show_all_department">
+                                            <div class="title-filter pl-3">{{'Department'|l}}:</div>
+                                            <filter-advance
+                                              disable=""
+                                              load-data-func="ctrlChild.load_departments_filter(params)"
+                                              id-value="ctrlChild._filter_value_department_uncompleted"
+                                              load-details-func=""
+                                              localized="true"
+                                              field-value="id"
+                                              pick-func="ctrlChild.pickDepartmentsUncompleted(params)"
+                                              translate="false"
+                                            />
+                                            </filter-advance>
+                                        </div>
+                                        <div class="event-filter-item col-md-4">
+                                            <div class="title-filter pl-3">{{'Employee'|l}}:</div>
+                                            <filter-advance
+                                              disable=""
+                                              load-data-func="ctrlChild.load_employee_task_uncomplete_filter(params)"
+                                              id-value="ctrlChild._filter_value_employee_uncompleted"
+                                              localized="false"
+                                              pick-func="ctrlChild.pickEmployeesUncompleted(params)"
+                                              search-event="true"
+                                            />
+                                          </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-sm table-hover"
+                                        ng-class="{'no-data':ctrlChild.statisticTasksUncompleted.length === 0}"
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        width: 70px;
+                                                        padding-left: 5px;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    {{'Employee'|l}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        width: 70px;
+                                                        padding-left: 5px;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    {{'TaskCode'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 270px">
+                                                    {{'TaskName'|l}}
+                                                </td>
+                                               
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'RequestCompletedTime'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'StartTime'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'Deadline'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    <div class="title">{{'Status'|l}}</div>
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    <div class="title">{{'Role'|l}}</div>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="taskList">
+                                            <tr
+                                                ng-repeat="item in ctrlChild.statisticTasksUncompleted"
+                                            >
+                                                <td style="font-weight: 500; width: 180px; text-align: left">                                    
+                                                    {{item.titleName}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        text-align: right;
+                                                        width: 70px;
+                                                        padding-left: 5px;
+                                                    "
+                                                >
+                                                    <a
+                                                        class="text-nowrap d-flex align-items-center"
+                                                        href="/task-details?code={{item.code}}"
+                                                    >
+                                                    <span
+                                                        ng-if="item.labelTitles && item.labelTitles.length > 0"
+                                                        class="badge"
+                                                        ng-class="{ 'badge-primary': !item.color }"
+                                                        ng-style="{ 'background-color': item.color, 'color': '#fff' }"
+                                                    >
+                                                        {{item.abbreviation}}
+                                                    </span>
+                                                        &nbsp;{{item.code}}
+                                                    </a>
+                                                </td>
+                                                <td
+                                                    style="vertical-align: middle; text-align: left; width: 270px"
+                                                >
+                                                    {{item.title}}
+                                                    <span
+                                                        class="text-dark"
+                                                        ng-if="item.childs.length>0"
+                                                        ng-click="ctrlChild.loadHeadTaskChild(item._id,item.childs)"
+                                                        style="text-decoration: underline; cursor: pointer"
+                                                        data-toggle="collapse"
+                                                        data-target="#collapseChild{{item._id}}"
+                                                        >
+                                                    </span>
+                                                
+                                                    
+                                                    <div
+                                                        id="collapseChild{{item._id}}"
+                                                        style="
+                                                            max-height: 300px;
+                                                            overflow-y: auto;
+                                                            padding-top: 10px;
+                                                        "
+                                                        class="collapse"
+                                                        aria-labelledby="headingOne"
+                                                        data-parent="#taskList"
+                                                    >
+                                                        &nbsp;&nbsp;<a
+                                                            ng-repeat="t in item.childTask"
+                                                            class="text-dark"
+                                                            link-details
+                                                            link-details-display="{{t.title}}"
+                                                            href="/task-details?code={{t.code}}"
+                                                            ><i>- {{t.title}}</i></a
+                                                        >
+                                                    </div>
+                                                </td>
+                                                
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 80px;
+                                                    "
+                                                >
+                                                    {{item.estimate}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    <time-show
+                                                        time-show-data="item.from_date"
+                                                        time-show-type="long"
+                                                    >
+                                                    </time-show>
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    <time-show
+                                                        time-show-data="item.to_date"
+                                                        time-show-type="long"
+                                                    >
+                                                    </time-show>
+                                                </td>                                               
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    
+                                                        <show-status id-value="item.status"></show-status>
+                                                </td>
+                                                <td
+                                                        style="
+                                                            font-weight: 500;
+                                                            vertical-align: middle;
+                                                            text-align: center;
+                                                            width: 105px;
+                                                        "
+                                                    >
+                                                        <span ng-repeat="role in item.roles">
+                                                            {{ role === "main_person" ? ('HostPerson' | l) : '' }}
+                                                            {{ role === "participant" ? ('Coordinator' | l) : '' }}
+                                                            {{ role === "observer" ? ('Observer' | l) : '' }}
+                                                            <span ng-if="!$last">, </span>
+                                                        </span>
+                                                    </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+    
+                                <div
+                                    ng-if="ctrlChild.statisticTasksUncompleted.length === 0"
+                                    class="no-data"
+                                >
+                                    {{'NoData'|l}}
+                                </div>
+                                <pagination
+                                    pagination-ctrlname="{{ctrlChild._ctrlName}}"
+                                    pagination-objname="Task"
+                                    pagination-actionname="countStatisticStatisticTaskUncompleted"
+                                    pagination-currentpage="ctrlChild.currentPageStatisticTaskUncompleted"
+                                    pagination-noi="ctrlChild.numOfItemPerPageStatisticTaskUncompleted"
+                                    pagination-total="ctrlChild.totalStatisticTaskUncompleted"
+                                    pagination-func="ctrlChild.load_statistic_task_uncompleted(params)"
+                                ></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="task-content box-shadow:0">
+            <div
+                class="head-task"
+                style="margin-top: 12px; padding: 6px 10px;"
+            >
+                <div class="card">
+                    <div
+                        class="card-header"
+                        style="border-bottom-color: #00000020; font-size: 14px"
+                    >
+                        {{'ListCompletedTasks'|l}}
+                    </div>
+                    <div class="card-body mt-0">
+                        <div class="task-container">
+                            <div class="task-content">
+                                <div class="form-group row align-items-center">
+                                    <button
+                                        type="button"
+                                        style="padding: 0 7px;
+                                        box-shadow: none;
+                                        display: flex;
+                                        justify-content: space-around;
+                                        align-items: center;
+                                        border-radius: 5px;
+                                        height: 30px;
+                                        font-weight: 400;"
+                                        ng-click="ctrlChild.export_completed_tasks()"
+                                        ng-class="{'disabled-placeholder': !ctrlChild.checkImportPermission}"
+                                        class="btn btn-square btn-outline-primary ml-auto align-self-center"
+                                        >
+                                        <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;" class="fas fa-file-excel"></i>
+                                        {{'Download'|l}}
+                                    </button>
+                                    <div class="date-filter" style="padding-bottom:0.5rem; max-width: none">
+                                        <div class="date-filter-item col-md-2">
+                                            <div class="title-filter">{{'FromDate'|l}}</div>
+                                            <div class="value mt-2">
+                                                <div>
+                                                    <input type="date" ng-model="ctrlChild._filterFromDate"
+                                                        ng-change="ctrlChild.refreshDataCompleted()" />
+                                                </div>
+                                                <div>
+                                                    <time-show2 time-show-data="ctrlChild._filterFromDate" time-show-type="just_date"
+                                                        bind-object="true"></time-show2>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="date-filter-item col-md-2">
+                                            <div class="title-filter">{{'ToDate'|l}}</div>
+                                            <div class="value mt-2">
+                                                <div>
+                                                    <input type="date" ng-model="ctrlChild._filterToDate"
+                                                        ng-change="ctrlChild.refreshDataCompleted()" />
+                                                </div>
+                                                <div>
+                                                    <time-show2 time-show-data="ctrlChild._filterToDate"
+                                                        time-show-type="just_date" bind-object="true">
+                                                    </time-show2>
+                                                </div>
+                            
+                                            </div>
+                                        </div>
+                            
+                                        <div class="event-filter-item col-md-4" ng-if="ctrl._permission.show_all_department">
+                                            <div class="title-filter pl-3">{{'Department'|l}}:</div>
+                                            <filter-advance
+                                              disable=""
+                                              load-data-func="ctrlChild.load_departments_filter(params)"
+                                              id-value="ctrlChild._filter_value_department"
+                                              load-details-func=""
+                                              localized="true"
+                                              pick-func="ctrlChild.pickDepartments(params)"
+                                              translate="false"
+                                              field-value="id"
+                                            />
+                                            </filter-advance>
+                                        </div>
+                                        <div class="event-filter-item col-md-4">
+                                            <div class="title-filter pl-3">{{'Employee'|l}}:</div>
+                                            <filter-advance
+                                              disable=""
+                                              load-data-func="ctrlChild.load_employee_task_complete_filter(params)"
+                                              id-value="ctrlChild._filter_value_employee"
+                                              localized="false"
+                                              pick-func="ctrlChild.pickEmployees(params)"
+                                              search-event="true"
+                                            >
+                                            </filter-advance>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-sm table-hover"
+                                        ng-class="{'no-data':ctrlChild.statisticTasksCompleted.length === 0}"
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        width: 70px;
+                                                        padding-left: 5px;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    {{'Employee'|l}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        width: 70px;
+                                                        padding-left: 5px;
+                                                        text-align: center;
+                                                    "
+                                                >
+                                                    {{'TaskCode'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 270px">
+                                                    {{'TaskName'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'Project'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'RequestCompletedTime'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'ActualCompletionTime'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'StartTime'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'Deadline'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    {{'EndTime'|l}}
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    <div class="title">{{'State'|l}}</div>
+                                                </td>
+                                                <td style="font-weight: 600; vertical-align: middle; width: 105px">
+                                                    <div class="title">{{'Role'|l}}</div>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="taskList">
+                                            <tr
+                                                ng-repeat="item in ctrlChild.statisticTasksCompleted"
+                                            >
+                                                <td style="font-weight: 500; width: 180px; text-align: left">                                    
+                                                    {{item.titleName}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 600;
+                                                        vertical-align: middle;
+                                                        text-align: right;
+                                                        width: 70px;
+                                                        padding-left: 5px;
+                                                    "
+                                                >
+                                                    <a
+                                                        class="text-nowrap d-flex align-items-center"
+                                                        href="/task-details?code={{item.code}}"
+                                                    >
+                                                        <span
+                                                            ng-if="item.labelTitles && item.labelTitles.length > 0"
+                                                            class="badge"
+                                                            ng-class="{ 'badge-primary': !item.color }"
+                                                            ng-style="{ 'background-color': item.color, 'color': '#fff' }"
+                                                        >
+                                                            {{item.abbreviation}}
+                                                        </span>
+                                                        &nbsp;{{item.code}}
+                                                    </a>
+                                                </td>
+                                                <td
+                                                    style="vertical-align: middle; text-align: left; width: 270px"
+                                                >
+                                                    {{item.title}}
+                                                    <span
+                                                        class="text-dark"
+                                                        ng-if="item.childs.length>0"
+                                                        ng-click="ctrlChild.loadHeadTaskChild(item._id,item.childs)"
+                                                        style="text-decoration: underline; cursor: pointer"
+                                                        data-toggle="collapse"
+                                                        data-target="#collapseChild{{item._id}}"
+                                                        >
+                                                    </span>
+                                                
+                                                    
+                                                    <div
+                                                        id="collapseChild{{item._id}}"
+                                                        style="
+                                                            max-height: 300px;
+                                                            overflow-y: auto;
+                                                            padding-top: 10px;
+                                                        "
+                                                        class="collapse"
+                                                        aria-labelledby="headingOne"
+                                                        data-parent="#taskList"
+                                                    >
+                                                        &nbsp;&nbsp;<a
+                                                            ng-repeat="t in item.childTask"
+                                                            class="text-dark"
+                                                            link-details
+                                                            link-details-display="{{t.title}}"
+                                                            href="/task-details?code={{t.code}}"
+                                                            ><i>- {{t.title}}</i></a
+                                                        >
+                                                    </div>
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: left;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    {{item.projectTitle}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 80px;
+                                                    "
+                                                >
+                                                    {{item.estimate}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 80px;
+                                                    "
+                                                >
+                                                    {{item.worktimes}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    <time-show
+                                                        time-show-data="item.from_date"
+                                                        time-show-type="long"
+                                                    >
+                                                    </time-show>
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    <time-show
+                                                        time-show-data="item.to_date"
+                                                        time-show-type="long"
+                                                    >
+                                                    </time-show>
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    {{item.date_completed}}
+                                                </td>                                               
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 105px;
+                                                    "
+                                                >
+                                                    <span ng-show="item.state"
+                                                        ><show-state id-value="item.state"></show-state
+                                                    ></span>
+                                                </td>
+                                                <td
+                                                        style="
+                                                            font-weight: 500;
+                                                            vertical-align: middle;
+                                                            text-align: center;
+                                                            width: 105px;
+                                                        "
+                                                    >
+                                                        <span ng-repeat="role in item.roles">
+                                                            {{ role === "main_person" ? ('HostPerson' | l) : '' }}
+                                                            {{ role === "participant" ? ('Coordinator' | l) : '' }}
+                                                            {{ role === "observer" ? ('Observer' | l) : '' }}
+                                                            <span ng-if="!$last">, </span>
+                                                        </span>
+                                                    </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+    
+                                <div
+                                    ng-if="ctrlChild.statisticTasksCompleted.length === 0"
+                                    class="no-data"
+                                >
+                                    {{'NoData'|l}}
+                                </div>
+                                <pagination
+                                    pagination-ctrlname="{{ctrlChild._ctrlName}}"
+                                    pagination-objname="Task"
+                                    pagination-actionname="countStatisticStatisticTaskCompleted"
+                                    pagination-currentpage="ctrlChild.currentPageStatisticTaskCompleted"
+                                    pagination-noi="ctrlChild.numOfItemPerPageStatisticTaskCompleted"
+                                    pagination-total="ctrlChild.totalStatisticTaskCompleted"
+                                    pagination-func="ctrlChild.load_statistic_task_completed(params)"
+                                ></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--     
     <div class="tool">
         <div class="item">
             <div class="title">
@@ -163,4 +938,5 @@
             </div>
         </div>
     </div>
+     -->
 </div>

@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 form-group">
-                            <date
+                            <date-old
                                 id-value="ctrl._update_value.from_date"
                                 func="ctrl.chooseFromDate_update(params)"
                                 label="{{'FromDate'|l}}"
@@ -28,7 +28,7 @@
                             <div class="errorMsg" ng-show="ctrl.fromDate_update_ErrorMsg">{{ ctrl.fromDate_update_ErrorMsg }}</div>
                         </div>
                         <div class="col-md-4 form-group">
-                            <date
+                            <date-old
                                 id-value="ctrl._update_value.to_date"
                                 func="ctrl.chooseToDate_update(params)"
                                 label="{{'ToDate'|l}}"
@@ -168,7 +168,7 @@
                     modal-button-save-ctrlname="{{ctrl._ctrlName}}"
                     modal-button-save-objname="Task"
                     modal-button-save-actionname="update"
-                    modal-button-save-invalid="updateTaskForm.$invalid || ctrl.fromDate_update_ErrorMsg"
+                    modal-button-save-invalid="ctrl.fromDate_update_ErrorMsg"
                     modal-button-save-func="ctrl.update()"
                 />
                 <modal-button-close></modal-button-close>

@@ -920,7 +920,8 @@ myApp.registerCtrl('task_personal_controller', ['task_service', 'workflow_play_s
             ctrl.load_task_created(),
             ctrl.count_task_created(),
             statistic_personal_count(),
-            statistic_personal_growth()
+            statistic_personal_growth(),
+            statistic_tasks_person(),
         ];
         dfdAr.push();
         $q.all(dfdAr).then(function () {
@@ -1450,7 +1451,6 @@ myApp.registerCtrl('task_personal_controller', ['task_service', 'workflow_play_s
     }
 
     ctrl.prepareUpdate = function (value) {
-        console.log('value', value);
         ctrl.workflow_plays = [];
         $rootScope.statusValue.generate(ctrl._ctrlName, "Task", "update");
         if(value.workflowPlay) {
@@ -1590,4 +1590,20 @@ myApp.registerCtrl('task_personal_controller', ['task_service', 'workflow_play_s
         ctrl._update_value.workflowPlay_id = data[0]._id;
         ctrl.workflow_plays = data;
     };
+
+    // PERSONAL STATISTICSS
+    function statistic_tasks_person() {
+        var dfd = $q.defer();
+        ctrl.statistic_tasks_person = [];
+            task_service.statistic_tasks_person().then(
+                function (res) {
+                    ctrl.statistic_tasks_person = res.data.result;
+                },
+                function (err) {
+                    console.log(err);
+                },
+            );
+        
+        return dfd.promise;
+    }
 }]);

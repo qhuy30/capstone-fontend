@@ -285,7 +285,7 @@ myApp.registerCtrl('task_quick_handle_controller',
     ctrl.checkbox_is_get_all = false;
     ctrl.checkbox_dispatch_task = false;
     ctrl.checkbox_receiver_task = false;
-    ctrl.checkbox_approval_receiver_task = false;
+    ctrl.checkbox_approval_task = false;
 
     ctrl.checkbox_filter_room = true;
     ctrl.checkbox_filter_vehicle = true;
@@ -1188,8 +1188,8 @@ myApp.registerCtrl('task_quick_handle_controller',
             obj.is_receiver_task = true; 
         }
 
-        if (ctrl.checkbox_approval_receiver_task) {
-            obj.is_approval_receiver_task = true; 
+        if (ctrl.checkbox_approval_task) {
+            obj.is_approval_task = true; 
         }
 
         if (ctrl.checkbox_is_get_all) {
@@ -1214,7 +1214,7 @@ myApp.registerCtrl('task_quick_handle_controller',
                 _filter.state,
                 _filter.is_dispatch_arrived,
                 _filter.is_receiver_task,
-                _filter.is_approval_receiver_task,
+                _filter.is_approval_task,
                 _filter.is_get_all,
                 ctrl.numOfItemPerPage,
                 ctrl.offset_task,

@@ -23,9 +23,9 @@
 
             <div aria-labelledby="headingTwo" data-parent="#accordion2">
               <div class="task-container" style="padding: 0 1.25rem;">
-                    <div class="task-filter" style="padding-bottom:0.5rem; border-bottom: 1px solid rgb(202, 202, 202);">
-                        <div class="task-filter-item col-md-2">
-                            <div class="title-filter">{{'FromDate'|l}}:</div>
+                    <div class="date-filter" style="padding-bottom:0.5rem; border-bottom: 1px solid rgb(202, 202, 202); max-width: none">
+                        <div class="date-filter-item col-md-2">
+                            <div class="title-filter">{{'FromDate'|l}}</div>
                             <div class="value">
                                 <div>
                                     <input type="date" ng-model="ctrl._filterFromDate" ng-change="ctrl.refreshData()" />
@@ -35,8 +35,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="task-filter-item col-md-2">
-                            <div class="title-filter">{{'ToDate'|l}}:</div>
+                        <div class="date-filter-item col-md-2">
+                            <div class="title-filter">{{'ToDate'|l}}</div>
                             <div class="value">
                                 <div>
                                     <input type="date" ng-model="ctrl._filterToDate" ng-change="ctrl.refreshData()" />
@@ -75,8 +75,8 @@
                     <div class="mt-2">
                         <more-option-bar>
                             <bar-content class="row">
-                                <div class="col-md-3 advance-filter">
-                                    <div class="title-filter" style="margin-bottom: 4px">{{'Priority'|l}}:</div>
+                                <div class="col-md-4 advance-filter">
+                                    <div class="title-filter pl-3" style="margin-bottom: 4px">{{'Priority'|l}}:</div>
                                     <div>
                                         <filter-advance
                                           load-data-func="ctrl.load_priority_filter(params)"
@@ -88,8 +88,8 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="col-md-3 advance-filter">
-                                    <div class="title-filter" style="margin-bottom: 4px">{{'StatusProcess'|l}}:</div>
+                                <div class="col-md-4 advance-filter">
+                                    <div class="title-filter pl-3" style="margin-bottom: 4px">{{'StatusProcess'|l}}:</div>
                                     <div>
                                         <filter-advance2
                                           disable=""
@@ -103,8 +103,8 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="col-md-3 advance-filter" style="border-right: none">
-                                    <div class="title-filter" style="margin-bottom: 4px">{{'State'|l}}:</div>
+                                <div class="col-md-4 advance-filter" style="border-right: none">
+                                    <div class="title-filter pl-3" style="margin-bottom: 4px">{{'State'|l}}:</div>
                                     <div>
                                         <filter-advance
                                           disable=""
@@ -118,8 +118,8 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-md-3 advance-filter">
-                                    <div class="title-filter" style="margin-bottom: 4px">{{'Label'|l}}:</div>
+                                <div class="col-md-4 advance-filter">
+                                    <div class="title-filter pl-3" style="margin-bottom: 4px">{{'Label'|l}}:</div>
                                     <div>
                                         <filter-advance
                                           disable=""
@@ -132,23 +132,24 @@
                                         />
                                     </div>
                                 </div>
-                                <div class="col-md-3 advance-filter">
-                                    <div class="title-filter" style="margin-bottom: 4px">{{'Department'|l}}:</div>
+                                <div class="col-md-4 advance-filter">
+                                    <div class="title-filter pl-3" style="margin-bottom: 4px">{{'Department'|l}}:</div>
                                     <div>
                                         <filter-advance
                                           disable=""
-                                          load-data-func="ctrl.load_taskGroup_filter(params)"
-                                          id-value="ctrl._filter_value_taskGroup"
+                                          load-data-func="ctrl.load_department_filter(params)"
+                                          id-value="ctrl._filter_value_department"
                                           load-details-func=""
-                                          localized="false"
-                                          pick-func="ctrl.pickTaskGroup(params)"
-                                          translate="true"
+                                          localized="true"
+                                          pick-func="ctrl.pickDepartmentFilter(params)"
+                                          translate="false"
+                                          field-value="id"
                                         />
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 advance-filter">
-                                    <div class="title-filter" style="margin-bottom: 4px">{{'Role'|l}}:</div>
+                                <div class="col-md-4 advance-filter" style="border-right: none">
+                                    <div class="title-filter pl-3" style="margin-bottom: 4px">{{'Role'|l}}:</div>
                                     <div>
                                         <filter-advance
                                           disable=""

@@ -50,7 +50,7 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.47.0",
     "webpack-fix-style-only-entries": "^0.4.0",
-    "winston": "^2.4.2"
+    "winston": "^2.4.7"
   },
   "devDependencies": {
     "sp-request": "^2.1.3",

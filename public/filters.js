@@ -769,6 +769,7 @@ myApp.filter('getPermissionTask', ['$rootScope', '$filter', function ($rootScope
             OBSERVER_EXTERNAL: "Office.Task.observerExternal", // Giám sát công việc cấp 1
             RECEIVE_EXTERNAL: "Office.Task.ReceiveExternal", // Tiếp nhận công việc cấp 1
             RECEIVE_TASK: "Office.Task.Receive_task", // Tiếp nhận công việc từ phòng ban khác
+            FOLLOW_DEPARTMENT:"Office.Task.Follow_Task_Department", // Theo dõi công việc của phòng ban
         };
 
         const permission = {};
@@ -777,6 +778,7 @@ myApp.filter('getPermissionTask', ['$rootScope', '$filter', function ($rootScope
         const isObserver = item.observer.includes(currentUser.username);
         const isParticipant = item.participant.includes(currentUser.username);
         const isCreator = item.username.includes(currentUser.username);
+        const isFollower = $filter('checkRuleDepartmentRadio')(item.department, TASK_RULE.FOLLOW_DEPARTMENT);
 
         permission.disableProgressBar = true;
         permission.allow_edit = false;
@@ -788,7 +790,8 @@ myApp.filter('getPermissionTask', ['$rootScope', '$filter', function ($rootScope
         permission.allow_create_child_task = false;
         permission.allowCreateTransferTicket = false;
         permission.allow_assignment = false;
-
+        permission.allow_follow_otherTask = isFollower;
+        permission.allow_comment = isMainPerson || isObserver || isParticipant;
 
         switch(item.status){
             case TASK_STATUS.NOT_SEEN:
@@ -839,9 +842,6 @@ myApp.filter('getPermissionTask', ['$rootScope', '$filter', function ($rootScope
                 break;
         }
 
-        if(isMainPerson || isObserver || isParticipant){
-            permission.allow_comment = true;
-        }
         return permission;
     };
 }]);

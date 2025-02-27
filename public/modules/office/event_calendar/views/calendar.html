@@ -61,59 +61,87 @@
         <li class="nav-item" ng-show="ctrlCalendar.show_my_employee" ng-click="ctrlCalendar.switchTabChild('my_employee')">
           <a class="nav-link" ng-class="{'active':ctrlCalendar.tabChild =='my_employee'}">{{'MyEmployeeEventCalendar'|l}}</a>
         </li>
+        <li class="nav-item" ng-show="ctrlCalendar.show_whole_school_calendar" ng-click="ctrlCalendar.switchTabChild('whole_school')">
+          <a class="nav-link" ng-class="{'active':ctrlCalendar.tabChild =='whole_school'}">{{'WholeSchoolCalendar'|l}}</a>
+        </li>
       </ul>
     </div>
 
     <div class="form-group row align-items-start">
-      <div class="event-filter-item col-md-2">
-        <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px;">{{'FromDate' | l}}</div>
-        <div class="value" style="display: flex; align-items: center;">
-            <input type="date" 
-                   ng-model="ctrlCalendar.weekDays[0].date"
-                   ng-change="ctrlCalendar.load_calendar()" 
-                   style="border: none; outline: none; background: transparent; font-size: 14px;" />
+      <div class="date-filter" style="padding-bottom:0.5rem; max-width: none">
+        <div class="date-filter-item col-md-2">
+            <div class="title-filter">{{'FromDate'|l}}</div>
+            <div class="value mt-2">
+                <div>
+                    <input type="date" ng-model="ctrlCalendar.weekDays[0].date"
+                        ng-change="ctrlCalendar.load_calendar()" />
+                </div>
+                <div>
+                    <time-show2 time-show-data="ctrlCalendar.weekDays[0].date"
+                        time-show-type="just_date" bind-object="true"></time-show2>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="event-filter-item col-md-2">
-        <div class="title-filter" style="color: #a3a3a3; margin-bottom: 5px;">{{'ToDate' | l}}</div>
-        <div class="value" style="display: flex; align-items: center;">
-          <input type="date" 
-                  ng-model="ctrlCalendar.weekDays[ctrlCalendar.weekDays.length - 1].date"
-                  ng-change="ctrlCalendar.load_calendar()" 
-                  style="border: none; outline: none; background: transparent; font-size: 14px;" />
+        <div class="date-filter-item col-md-2">
+            <div class="title-filter">{{'ToDate'|l}}</div>
+            <div class="value mt-2">
+                <div>
+                    <input type="date" ng-model="ctrlCalendar.weekDays[ctrlCalendar.weekDays.length - 1].date"
+                        ng-change="ctrlCalendar.load_calendar()" />
+                </div>
+                <div>
+                    <time-show2 time-show-data="ctrlCalendar.weekDays[ctrlCalendar.weekDays.length - 1].date" time-show-type="just_date"
+                        bind-object="true">
+                    </time-show2>
+                </div>
+  
+            </div>
         </div>
-      </div>
-      <div class="event-filter-item col-md-3" ng-if="ctrlCalendar.tabChild =='my_employee'">
-        <div class="title-filter pl-3">{{'Employee'|l}}:</div>
-        <filter-advance
-          disable=""
-          load-data-func="ctrlCalendar.load_employee_filter(params)"
-          id-value="ctrlCalendar._filter_value_employee"
-          localized="false"
-          pick-func="ctrlCalendar.pickEmployees(params)"
-          search-event="true"
-        >
-        </filter-advance>
-      </div>
-      <div class="ml-auto">
 
-        <button
-          class="btn btn-success "
-          ng-if="ctrlCalendar.show_export_lv2 && ctrlCalendar.tabChild === 'my_department_calendar'"
-          ng-click="ctrlCalendar.export_excel()"
-        >
-          <i class="fas fa-file-excel"></i>
-          <!-- Excel file icon -->
-          {{'ExportToExcel' | l}}
-        </button>
-        <button
-          class="btn btn-success "
-          ng-if="ctrlCalendar.show_export_lv1 && ctrlCalendar.tabChild === 'my_director_calendar'"
-          ng-click="ctrlCalendar.export_excel_manage()"
-        >
-          <i class="fas fa-file-excel"></i>
-          {{'ExportToExcelManage' | l}}
-        </button>
+        <div class="event-filter-item col-md-5" ng-if="ctrlCalendar.tabChild =='my_employee'">
+          <div class="title-filter pl-3">{{'Employee'|l}}:</div>
+          <filter-advance
+            disable=""
+            load-data-func="ctrlCalendar.load_employee_filter(params)"
+            id-value="ctrlCalendar._filter_value_employees"
+            localized="false"
+            pick-func="ctrlCalendar.pickEmployees(params)"
+            search-event="true"
+          >
+          </filter-advance>
+        </div>
+        <div class="event-filter-item col-md-5" ng-if="ctrlCalendar.tabChild =='whole_school'">
+          <div class="title-filter pl-3">{{'Department'|l}}:</div>
+          <filter-advance
+            disable=""
+            load-data-func="ctrlCalendar.load_department_filter(params)"
+            id-value="ctrlCalendar._filter_value_departments"
+            load-details-func=""
+            localized="true"
+            pick-func="ctrlCalendar.pickDepartmentFilter(params)"
+            translate="false"
+            field-value="id"
+          />
+          </filter-advance>
+        </div>
+        <div class="ml-auto align-self-center">
+          <button
+            class="btn btn-success "
+            ng-if="ctrlCalendar.show_export_lv2 && ctrlCalendar.tabChild === 'my_department_calendar'"
+            ng-click="ctrlCalendar.export_excel()"
+          >
+            <i class="fas fa-file-excel"></i>
+            {{'ExportToExcel' | l}}
+          </button>
+          <button
+            class="btn btn-success "
+            ng-if="ctrlCalendar.show_export_lv1 && ctrlCalendar.tabChild === 'my_director_calendar'"
+            ng-click="ctrlCalendar.export_excel_manage()"
+          >
+            <i class="fas fa-file-excel"></i>
+            {{'ExportToExcelManage' | l}}
+          </button>
+        </div>
       </div>
       
     </div>

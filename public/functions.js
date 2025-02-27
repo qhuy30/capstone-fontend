@@ -3,28 +3,22 @@
 window.modeProduction = "development";
 window.FrontendDomain = {
     development: "http://localhost:3005",
-    production: 'https://vpdt.pnt.edu.vn'
 };
 window.primaryDomain = {
     development: "http://localhost:3005",
-    production: 'https://vpdt.pnt.edu.vn'
 };
 window.domainB = {
     development: "http://localhost",
-    production: 'https://vpdt-be.pnt.edu.vn'
 };
 window.portB = {
     development: "9002",
-    production: false
 };
 
 window.domainSocket = {
     development: "http://localhost",
-    production: "https://vpdt-be.pnt.edu.vn"
 };
 window.portSocket = {
     development: "9002",
-    production: false
 };
 // Using to seperate the checkRouter API
 window.originalDomain = 'https://tenant.vnadev.com';

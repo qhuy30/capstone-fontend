@@ -1610,6 +1610,7 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
     ctrl.show_my_calendars = false;
     ctrl.show_my_department_calendar = false;
     ctrl.show_my_director_calendar = false;
+    ctrl.show_whole_school_calendar = false;
 
     ctrl.show_export_manage = false;
     ctrl.show_export_department = false;
@@ -1776,7 +1777,7 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
         filter.checks,
         filter.levels,
         ctrl.tabChild,
-        filter.employees_filter
+        filter.sub_filter
     )
         .then(function (res) {
             const file_name = `${$filter('l')('EventManagement')}_${$filter('showDate')(filter.from_date)}_to_${$filter('showDate')(filter.to_date)}`;
@@ -1855,7 +1856,7 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
     }
     obj.checks = [];
     obj.levels = [];
-
+    obj.sub_filter = {};
     if (ctrl.checkbox_created && ctrl.show_checkbox_created) {
         obj.checks.push("Created");
     }
@@ -1881,8 +1882,12 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
       obj.levels.push(LEVEL_EVENT_CALENDAR.LEVEL_2);
     }
 
+    // sub_filter
     if (ctrl._filter_value_employees) {
-      obj.employees_filter = angular.copy(ctrl._filter_value_employees);
+      obj.sub_filter.employees = angular.copy(ctrl._filter_value_employees);
+    }
+    if (ctrl._filter_value_departments) {
+      obj.sub_filter.departments = angular.copy(ctrl._filter_value_departments);
     }
 
     //reset to time start date
@@ -1917,7 +1922,7 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
       _filter.from_date,
       _filter.to_date,
       ctrl.tabChild,
-      _filter.employees_filter
+      _filter.sub_filter
     ).then(function(res){
       ctrl._eventCalendar = res.data;
       ctrl.my_calendars = [];
@@ -2036,6 +2041,8 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
 
   ctrl.switchTabChild = function (val) {
     ctrl.tabChild = val;
+    ctrl._filter_value_employees = null;
+    ctrl._filter_value_departments = null;
     ctrl.load_calendar();
   }
 
@@ -2065,6 +2072,25 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
     return dfd.promise;
   };
 
+  ctrl.load_department_filter = function (params) {
+    var dfd = $q.defer();
+    event_calendar_service.load_deparment_filter(1).then(
+      function (res) {
+        dfd.resolve(res.data);
+        dfd = undefined;
+      },
+      function (err) {
+        dfd.reject(err);
+        err = undefined;
+      }
+    );
+    return dfd.promise;
+  };
+
+  ctrl.pickDepartmentFilter = function (value) {
+    ctrl._filter_value_departments = value;
+    ctrl.load_calendar();
+  };
 
 
   function init() {
@@ -2072,20 +2098,23 @@ myApp.registerCtrl("event_calendar_controller", ["event_calendar_service", "$q",
       ctrl.show_my_calendars = true;
       ctrl.show_my_department_calendar = true;
       ctrl.show_my_director_calendar = true;
-  }
+    }
+
+    if($filter('hasRule')(RULE_EVENT_CALENDAR.CREATE)){
+      ctrl.show_export_lv2 = true;
+      ctrl.show_export_lv1 = true;
+    }
 
     if($filter('hasRule')(RULE_EVENT_CALENDAR.APPROVE_DEPARTMENT)){
         ctrl.show_export_lv2 = true;
-        ctrl.show_my_employee = true;
+        ctrl.show_my_employee = true; 
         ctrl.show_my_calendars = true;
         ctrl.show_my_department_calendar = true;
         ctrl.show_my_director_calendar = true;
     }
 
     if($filter('hasRule')(RULE_EVENT_CALENDAR.MANAGE)){
-      ctrl.show_checkbox_manage = true;
-      ctrl.show_export_lv2 = true;
-      ctrl.show_export_lv1 = true;
+      ctrl.show_whole_school_calendar = true;
     }
 
     var dfdAr = [];

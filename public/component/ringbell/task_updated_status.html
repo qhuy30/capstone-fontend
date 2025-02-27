@@ -5,20 +5,31 @@
             <show-username-onlyname username="item.params.username_updated_status" without-tooltip="true">
             </show-username-onlyname>
             <span ng-switch="item.params.action">
-                <span ng-switch-when="startTask">
+                <span class="ringbell-action primary" ng-switch-when="startTask">
                     {{'started task'|l}}
                 </span>
-                <span ng-switch-when="doneTask">
+                <span class="ringbell-action success" ng-switch-when="doneTask">
                     {{'done task'|l}}
                 </span>
-                <span ng-switch-when="completedTask">
+                <span class="ringbell-action success" ng-switch-when="completedTask">
                     {{'marked to completed task'|l}}
                 </span>
-                <span ng-switch-when="cancelTask">
+                <span class="ringbell-action danger" ng-switch-when="cancelTask">
                     {{'cancel task'|l}}
+                </span>
+                <span class="ringbell-action danger" ng-switch-when="notApproved">
+                    {{'not approved task'|l}}
                 </span>
             </span>
             <span class="title">[{{item.params.taskCode}}]&nbsp;{{item.params.title}}</span>
+        </div>
+        <div class="ringbell-action danger" ng-switch="item.params.action">
+            <span ng-switch-when="doneTask">
+                <i class="fas fa-check"></i>&nbsp;{{'Need you to review and approve registration'|l}}
+            </span>
+            <span ng-switch-when="notApproved">
+                <i class="fas fa-book"></i>&nbsp;{{'Need you to review your current task'|l}}
+            </span>
         </div>
 
         <div>

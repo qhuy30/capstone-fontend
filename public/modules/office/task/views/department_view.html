@@ -96,9 +96,10 @@
                                         ng-click="ctrlChild.export_tasks()"
                                         ng-disabled="!ctrlChild.checkImportPermission"
                                         class="btn btn-square btn-outline-primary ng-binding ng-isolate-scope">
-                                    <a class="text-dark" link-details link-details-display="Thêm công việc bằng template"
-                                       link-details-url="/task-details?add-task"
-                                       link-details-route="task-details">
+                                    <a class="text-dark" link-details 
+                                        link-details-display="{{'Add Task by template for department'|l}}"
+                                        link-details-url="/task-details?add-tasks-for-departments"
+                                        link-details-route="task-details">
                                         <i style="display: inline-block; color: green; margin-right: 5px; font-size: 15px;" class="fas fa-file-excel"></i>
                                         {{'AddTask'|l}}
                                     </a>

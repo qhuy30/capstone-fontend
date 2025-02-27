@@ -2,6 +2,142 @@ myApp.registerFtr('task_service', ['fRoot', '$filter', '$rootScope', function (f
     var obj = {};
     //**TASK */
 
+    obj.export_completed_tasks = function (from_date, to_date, employee, department) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/export_statistic_task_completed",
+            method: "POST",
+            data: JSON.stringify({ from_date, to_date, employee, department }),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose",
+            },
+            responseType: 'blob'
+        });
+    }
+
+    obj.export_uncompleted_tasks = function (from_date, to_date, employee, department) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/export_statistic_task_uncompleted",
+            method: "POST",
+            data: JSON.stringify({ from_date, to_date, employee, department }),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose",
+            },
+            responseType: 'blob'
+        });
+    }
+    
+    obj.load_statistic_task_completed = function (
+        search,
+        from_date,
+        to_date,
+        top,
+        offset,
+        employee,
+        department,
+    ) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/load_statistic_task_completed",
+            method: "POST",
+            data: JSON.stringify({
+                search,
+                from_date,
+                to_date,
+                top,
+                offset,
+                employee,
+                department,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json;odata=verbose",
+            },
+        });
+    };
+
+    obj.count_statistic_task_completed = function (
+        from_date,
+        to_date,
+        employee,
+        department,
+    ) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/count_statistic_task_completed",
+            method: "POST",
+            data: JSON.stringify({
+                from_date,
+                to_date,
+                employee,
+                department,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json;odata=verbose",
+            },
+        });
+    };
+
+    obj.load_statistic_task_uncompleted = function (
+        from_date,
+        to_date,
+        top,
+        offset,
+        employee,
+        department,
+    ) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/load_statistic_task_uncompleted",
+            method: "POST",
+            data: JSON.stringify({
+                from_date,
+                to_date,
+                top,
+                offset,
+                employee,
+                department,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json;odata=verbose",
+            },
+        });
+    };
+
+    obj.count_statistic_task_uncompleted = function (
+        from_date,
+        to_date,
+        employee,
+        department,
+    ) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/count_statistic_task_uncompleted",
+            method: "POST",
+            data: JSON.stringify({
+                from_date,
+                to_date,
+                employee,
+                department,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json;odata=verbose",
+            },
+        });
+    };
+
+    obj.statistic_tasks_person = function () {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/statistic_tasks_person",
+            method: "POST",
+            data: JSON.stringify(),
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json;odata=verbose",
+            },
+        });
+    };
+
     obj.load_task = function (tab, search, from_date, to_date, top, offset, priority, status, state, task_type, label, task_group, projects) {
         return fRoot.requestHTTP({
             url: BackendDomain + "/office/task/load",
@@ -14,11 +150,11 @@ myApp.registerFtr('task_service', ['fRoot', '$filter', '$rootScope', function (f
         });
     }
 
-    obj.load_task_quickhandle = function (search, state,is_dispatch_arrived, is_receiver_task, is_approval_receiver_task, is_get_all, top, offset) {
+    obj.load_task_quickhandle = function (search, state,is_dispatch_arrived, is_receiver_task, is_approval_task, is_get_all, top, offset) {
         return fRoot.requestHTTP({
             url: BackendDomain + "/office/task/load_quickhandle",
             method: "POST",
-            data: JSON.stringify({ search, top, offset, state,is_dispatch_arrived, is_receiver_task, is_approval_receiver_task, is_get_all }),
+            data: JSON.stringify({ search, top, offset, state,is_dispatch_arrived, is_receiver_task, is_approval_task, is_get_all }),
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json;odata=verbose"
@@ -80,6 +216,18 @@ myApp.registerFtr('task_service', ['fRoot', '$filter', '$rootScope', function (f
             url: BackendDomain + "/office/label/load",
             method: "POST",
             data: JSON.stringify({ department, search, top, offset, sort }),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose"
+            }
+        })
+    }
+
+    obj.load_deparment = function (level, id) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/organization/load",
+            method: "POST",
+            data: JSON.stringify({ level, id }),
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json;odata=verbose"
@@ -780,6 +928,30 @@ myApp.registerFtr('task_service', ['fRoot', '$filter', '$rootScope', function (f
                 "Accept": "application/json;odata=verbose"
             }
         });
+    }
+
+    obj.load_employee_by_departments_filter = function (departments, search, top, offset) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + `/office/organization/load_employee_by_departments`,
+            method: "POST",
+            data: JSON.stringify({ departments, search, top, offset }),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose"
+            }
+        });
+    }
+    
+    obj.load_deparment_filter = function (level, id) {
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/organization/load",
+            method: "POST",
+            data: JSON.stringify({ level, id }),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose"
+            }
+        })
     }
 
     obj.load_project_by_department = function (department, search, top, offset) {
@@ -1717,12 +1889,13 @@ myApp.registerFtr('task_service', ['fRoot', '$filter', '$rootScope', function (f
         priority,
         state,
         label,
+        departments,
         roles
     ){
         return fRoot.requestHTTP({
             url: BackendDomain + "/office/task/load_task_external",
             method: "POST",
-            data: JSON.stringify({top, offset, sort, search, from_date, to_date, status, priority, state, label, roles}),
+            data: JSON.stringify({top, offset, sort, search, from_date, to_date, status, priority, state, label, departments, roles}),
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json;odata=verbose"
@@ -1738,12 +1911,13 @@ myApp.registerFtr('task_service', ['fRoot', '$filter', '$rootScope', function (f
         priority,
         state,
         label,
+        departments,
         roles
     ){
         return fRoot.requestHTTP({
             url: BackendDomain + "/office/task/count_task_external",
             method: "POST",
-            data: JSON.stringify({search, from_date, to_date, status, priority, state, label, roles}),
+            data: JSON.stringify({search, from_date, to_date, status, priority, state, label, departments, roles}),
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json;odata=verbose"
@@ -1802,11 +1976,55 @@ myApp.registerFtr('task_service', ['fRoot', '$filter', '$rootScope', function (f
         });
     };
 
+    obj.loadUserByRule = function (top = 100, offset = 0, rule = "Office.Task.observerExternal") {
+        return fRoot.requestHTTP({
+            url: BackendDomain + '/management/user/load_by_rule',
+            method: 'POST',
+            data: JSON.stringify({ rule, top, offset }),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose"
+            }
+        });
+    };
+
     obj.loadDepartmentDetails = function(id){
         return fRoot.requestHTTP({
             url: BackendDomain + "/office/organization/loaddetails",
             method: "POST",
             data: JSON.stringify({ id}),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose"
+            }
+        });
+    }
+
+    obj.loadAllUserNoTask = function(
+        top,
+        offset,
+        employee,
+        department,){
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/load_employee_no_task",
+            method: "POST",
+            data: JSON.stringify({ isactive: true, top, offset, employee, department }),
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json;odata=verbose"
+            }
+        });
+    }
+
+    obj.countAllUserNoTask = function(
+        top,
+        offset,
+        employee,
+        department,){
+        return fRoot.requestHTTP({
+            url: BackendDomain + "/office/task/count_employee_no_task",
+            method: "POST",
+            data: JSON.stringify({ isactive: true, top, offset, employee, department }),
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json;odata=verbose"

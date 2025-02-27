@@ -231,6 +231,12 @@
                                             </td>
                                             <td class="">
                                                 <p>
+                                                    {{'Observer'|l}}
+                                                    <span style="color: red;">*</span>
+                                                </p>
+                                            </td>
+                                            <td class="">
+                                                <p>
                                                     {{'PriorityLevel'|l}}
                                                     <span style="color: red;">*</span>
                                                 </p>
@@ -343,8 +349,27 @@
                                                 <pick-modal-generic data="ctrl.department"
                                                     invalid-value-func="ctrl.handleInvalidDepartment(item)"
                                                     pick-func="ctrl.chooseDepartment(item, params)"
-                                                    show-field="optionTitle" localized="false" id-field="optionTitle"
+                                                    localized="true" id-field="optionTitle"
                                                     id-value="item.department" enable-search="true"></pick-modal-generic>
+                                            </td>
+                                            <td class="colorBlue px-3">
+                                                <!-- <div class="errorMess"
+                                                    ng-hide="ctrl.isOpenAddmorePeople === item.id && ctrl.togglePerson === 'department'">
+                                                    <span ng-repeat="(key, errorItem) in ctrl.listErrorExcelImport">
+                                                        <span class="tooltipError"
+                                                            ng-if="item.idx === errorItem.index && errorItem.property === 'department'">
+                                                            <i class="circle-warning fa fa-info-circle" aria-hidden="true"></i>
+                                                            <span class="tooltipErrorText">
+                                                                {{ errorItem.details}}
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </div> -->
+                                                <pick-modal-generic data="ctrl.observer"
+                                                    invalid-value-func="ctrl.handleInvalidDepartment(item)"
+                                                    pick-func="ctrl.chooseObserver(item, params)"
+                                                    show-field="title" localized="false" id-field="username"
+                                                    id-value="item.observer" enable-search="true"></pick-modal-generic>
                                             </td>
                                             <td class="px-3">
                                                 <div class="errorMess">

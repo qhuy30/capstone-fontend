@@ -3,8 +3,8 @@ myApp.registerFtr("event_calendar_service", [
   function (fRoot) {
     var obj = {};
 
-    obj.load = function (tab, offset, top, search, sort, checks, levels = [], from_date = null, to_date = null, tab_child, filter_employee) {
-      const data = {tab, offset, top, search, sort, checks, levels, tab_child, filter_employee };
+    obj.load = function (tab, offset, top, search, sort, checks, levels = [], from_date = null, to_date = null, tab_child, sub_filter) {
+      const data = {tab, offset, top, search, sort, checks, levels, tab_child, sub_filter };
         if(from_date && to_date){
             data.from_date = from_date;
             data.to_date = to_date;
@@ -396,11 +396,11 @@ myApp.registerFtr("event_calendar_service", [
       });
   }
 
-  obj.export_excel = function (from_date, to_date, checks, levels, tab_child, filter_employee) {
+  obj.export_excel = function (from_date, to_date, checks, levels, tab_child, sub_filter) {
     return fRoot.requestHTTP({
         url: BackendDomain + "/office/event_calendar/export-excel",
         method: "POST",
-        data: JSON.stringify({ from_date, to_date, checks, levels, tab_child, filter_employee }),
+        data: JSON.stringify({ from_date, to_date, checks, levels, tab_child, sub_filter }),
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json;odata=verbose",
@@ -444,7 +444,19 @@ myApp.registerFtr("event_calendar_service", [
             "Accept": "application/json;odata=verbose"
         }
     });
-}
+  }
+
+  obj.load_deparment_filter = function (level, id) {
+    return fRoot.requestHTTP({
+        url: BackendDomain + "/office/organization/load",
+        method: "POST",
+        data: JSON.stringify({ level, id }),
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json;odata=verbose"
+        }
+    })
+  }
 
   return obj;
 }]);

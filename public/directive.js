@@ -9445,7 +9445,8 @@ myApp.directive('filterAdvance', ['$q', '$rootScope', 'fRoot', function ($q, $ro
             insertItemFunc: "&",
             translate: "@",
             searchEvent: "@",
-            defaultValue: "@"
+            defaultValue: "@",
+            fieldValue: "@"
         },
         link: function (scope) {
             const _statusValueSet = [
@@ -9471,6 +9472,7 @@ myApp.directive('filterAdvance', ['$q', '$rootScope', 'fRoot', function ($q, $ro
             scope.selectedItems = [];
             scope.selectedChildItems = [];
             scope.idItems = scope.idValue || [];
+            scope.fieldValue = scope.fieldValue || "_id";
             $rootScope.statusValue.generateSet(scope._ctrlName, _statusValueSet);
             scope.disable = scope.disable || false;
             scope.selectAll = false;
@@ -9506,14 +9508,14 @@ myApp.directive('filterAdvance', ['$q', '$rootScope', 'fRoot', function ($q, $ro
                 scope.selectedItems = scope.data.filter(function (item) {
                     return item.isSelected;
                 }).map(function (item) {
-                    scope.idItems.push(item._id);
+                    scope.idItems.push(item[scope.fieldValue]);
                     return item;
                 });
                 scope.data.forEach(function (item) {
                     if (item.child_labels && item.child_labels.length > 0) {
                         item.child_labels.forEach(function (child) {
                             if (child.isSelected) {
-                                scope.idItems.push(child._id);
+                                scope.idItems.push(child[scope.fieldValue]);
                                 scope.selectedItems.push(child);
                             }
                         });
@@ -9528,14 +9530,14 @@ myApp.directive('filterAdvance', ['$q', '$rootScope', 'fRoot', function ($q, $ro
                     scope.data = data.map(item => ({
                         ...item,
                         showValue: (scope._localized ? item[scope.showField][$rootScope.Language.current] : item[scope.showField]) || '',
-                        isSelected: scope.idItems.includes(item._id)
+                        isSelected: scope.idItems.includes(item[scope.fieldValue])
                     }));
                     scope.data.forEach(item => {
                         if (item.child_labels && item.child_labels.length > 0) {
                             item.child_labels = item.child_labels.map(child => ({
                                 ...child,
                                 showValue: (scope._localized ? child[scope.showField][$rootScope.Language.current] : child[scope.showField]) || '',
-                                isSelected: scope.idItems.includes(child._id)
+                                isSelected: scope.idItems.includes(child[scope.fieldValue])
                             }));
                         }
                     });
@@ -9548,7 +9550,7 @@ myApp.directive('filterAdvance', ['$q', '$rootScope', 'fRoot', function ($q, $ro
             }
 
             scope.checkIsSelected = function (item) {
-                return scope.idItems.indexOf(item._id) !== -1;
+                return scope.idItems.indexOf(item[scope.fieldValue]) !== -1;
             }
 
             scope.load = function (val) {

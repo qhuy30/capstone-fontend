@@ -829,38 +829,6 @@ myApp.registerCtrl("task_department_controller", [
       return dfd.promise;
     }
 
-    ctrl.checkRuleImportListTask = function () {
-      ctrl.exportTask = false;
-      const exportTaskDepartmentRule = $rootScope.logininfo.data.rule.find(
-        (rule) => rule.rule === "Office.Task.Import_Task_Department"
-      );
-      if (exportTaskDepartmentRule) {
-            switch(exportTaskDepartmentRule.details.type) {
-          case "All":
-            ctrl.exportTask = true;
-            break;
-          case "NotAllow":
-            ctrl.exportTask = false;
-            break;
-          case "Specific":
-                    if (exportTaskDepartmentRule.details.department.indexOf(ctrl.currentDepartment.id) !== -1){
-              ctrl.exportTask = true;
-                    }else{
-              ctrl.exportTask = false;
-            }
-            break;
-          case "Working":
-                    if (ctrl.currentDepartment.id === $rootScope.logininfo.data.department){
-              ctrl.exportTask = true;
-                    }else{
-              ctrl.exportTask = false;
-            }
-            break;
-        }
-        return ctrl.exportTask;
-      }
-    }
-
     /**LOAD , COUNT  FOR TASK */
     function getPermission(item){
       const permission = {};
@@ -953,9 +921,9 @@ myApp.registerCtrl("task_department_controller", [
             ctrl.headTasks = ctrl.headTasks.map(task =>({
               ...task,
               ...$filter('getPermissionTask')(task),
-          }))
+            }))
 
-            ctrl.checkImportPermission = ctrl.checkRuleImportListTask(ctrl.headTasks);
+            ctrl.checkImportPermission = $filter('hasRule')('Office.Task.Import_Multiple_Departments');
             dfd.resolve(true);
           },
           function () {

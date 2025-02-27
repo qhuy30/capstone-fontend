@@ -9,8 +9,136 @@
     <wfp-insert-modal insert-success-func="ctrlChild.handleInsertWFPSuccess(params)"></wfp-insert-modal>
 
     <div class="assigned container">
+        <div class="box-shadow:0">
+            <div class="head-task pb-0">
+                <div class="card">
+                    <div
+                        class="card-header"
+                        style="border-bottom-color: #00000020; font-size: 14px"
+                    >
+                        {{'Overview'|l}}
+                    </div>
+                    <div class="card-body mt-0">
+                        <div class="task-container px-0">
+                            <div class="task-content">
+                                <div class="table-responsive">
+                                    <table
+                                        class="table table-sm table-hover mt-0"
+                                        ng-class="{'no-data':ctrlChild.statistic_tasks_person.length === 0}"
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <td
+                                                    style="
+                                                        font-weight: 700;
+                                                        color: #000;
+                                                        vertical-align: middle;
+                                                        width: 180px;
+                                                        text-align: center;
+                                                        font-style: normal;
+                                                    "
+                                                >
+                                                    {{'Role'|l}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 700;
+                                                        color: #000;
+                                                        vertical-align: middle;
+                                                        width: 160px;
+                                                        font-style: normal;
+                                                    "
+                                                >
+                                                    <div class="title">{{'NumberOfCompletedTasks'|l}}&nbsp;/&nbsp;{{'AmountOfTask'|l}}</div>
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 700;
+                                                        color: #000;
+                                                        vertical-align: middle;
+                                                        width: 160px;
+                                                        font-style: normal;
+                                                    "
+                                                >
+                                                <div class="title">{{'NumberOfTasksInProgress'|l}}&nbsp;/&nbsp;{{'Uncompleted'|l}}</div>
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 700;
+                                                        color: #000;
+                                                        vertical-align: middle;
+                                                        width: 160px;
+                                                        font-style: normal;
+                                                    "
+                                                >
+                                                    <div class="title">{{'TotalActualTime'|l}}&nbsp;/&nbsp;{{'TotalTimeRequired'|l}}
+                                                        <span>&nbsp;({{'Hour'|l}})</span>
+                                                    </div>
+                                                </td>                                                       
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in ctrlChild.statistic_tasks_person">
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: left;
+                                                        width: 180px;
+                                                    "
+                                                >
+                                                    <span ng-if="item.key === 'main_person'">{{'Leader'|l}}</span>
+                                                    <span ng-if="item.key === 'participant'">{{'Support'|l}}</span>
+                                                    <span ng-if="item.key === 'observer'">{{'Supervisor'|l}}</span>
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        width: 180px;
+                                                    "
+                                                >
+                                                    {{item.completedTasks}}/{{item.totalTasks}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 160px;
+                                                    "
+                                                >
+                                                    {{item.processingTasks}}/{{item.notCompletedTasks}}
+                                                </td>
+                                                <td
+                                                    style="
+                                                        font-weight: 500;
+                                                        vertical-align: middle;
+                                                        text-align: center;
+                                                        width: 160px;
+                                                    "
+                                                >
+                                                    {{item.totalWorktimes}}/{{item.totalEstimate}}
+                                                </td>                                                        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div
+                                    ng-if="ctrlChild.statistic_tasks_project.length === 0"
+                                    class="no-data"
+                                >
+                                    {{'NoData'|l}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="content" style="min-height: 400px">
             <div class="task-container" style="padding: 0 1.25rem;">
+                
                 <div class="task-filter"
                     style="padding-bottom:0.5rem; border-bottom: 1px solid rgb(202, 202, 202);max-width: none">
                     <div class="task-filter-item col-md-2">
