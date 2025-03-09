@@ -1,3 +1,5 @@
+import { log } from "winston";
+
 myApp
 .directive('includeReplace', includeReplace)
 .directive('a', preventClickDirective)
